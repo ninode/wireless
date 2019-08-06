@@ -132,6 +132,28 @@ static void _WDRV_WINC_MACConnectNotifyCallback
     }
     else
     {
+        if (WDRV_WINC_OP_MODE_STA == pDcpt->operatingMode)
+        {
+            if (0 == errorCode)
+            {
+                /* For a normal STA disconnect return to the open state. */
+                if ((true == pDcpt->isLinkActive) &&
+                    (WDRV_WINC_DRV_STATE_CONNECTED == pDcpt->wincDrvState))
+                {
+                    pDcpt->wincDrvState = WDRV_WINC_DRV_STATE_OPEN;
+                }
+            }
+            else
+            {
+                /* For a disconnect with error, return to the open state
+                 if currently trying to connect. */
+                if (WDRV_WINC_DRV_STATE_CONNECTING == pDcpt->wincDrvState)
+                {
+                    pDcpt->wincDrvState = WDRV_WINC_DRV_STATE_OPEN;
+                }
+            }
+        }
+
         pDcpt->isLinkActive = false;
     }
 }
@@ -357,7 +379,7 @@ static void _WDRV_WINC_MACDrvStateMachine(WDRV_WINC_MACDCPT *const pDcpt)
         {
             if (true == pDcpt->isOpen)
             {
-                pDcpt->wincDrvH = WDRV_WINC_Open(0, NULL);
+                pDcpt->wincDrvH = WDRV_WINC_Open(0, 0);
 
                 if (DRV_HANDLE_INVALID != pDcpt->wincDrvH)
                 {
@@ -390,7 +412,7 @@ static void _WDRV_WINC_MACDrvStateMachine(WDRV_WINC_MACDCPT *const pDcpt)
                                     &pDcpt->bssCtx, &pDcpt->authCtx, NULL, NULL))
                     {
                         pDcpt->wincDrvState = WDRV_WINC_DRV_STATE_CONNECTED;
-                        pDcpt->isLinkActive     = true;
+                        pDcpt->isLinkActive = true;
                     }
                 }
                 else if (WDRV_WINC_OP_MODE_STA == pDcpt->operatingMode)
@@ -1149,7 +1171,7 @@ TCPIP_MAC_RES WDRV_WINC_MACRegisterStatisticsGet
   Function:
     size_t WDRV_WINC_MACConfigGet
     (
-        TCPIP_MODULE_MAC_ID modId,
+        TCPIP_MAC_HANDLE modId,
         void* configBuff,
         size_t buffSize,
         size_t* pConfigSize
@@ -1166,7 +1188,7 @@ TCPIP_MAC_RES WDRV_WINC_MACRegisterStatisticsGet
 
 size_t WDRV_WINC_MACConfigGet
 (
-    TCPIP_MODULE_MAC_ID modId,
+    TCPIP_MAC_HANDLE modId,
     void* configBuff,
     size_t buffSize,
     size_t* pConfigSize
