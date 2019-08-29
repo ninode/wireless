@@ -48,10 +48,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 
 /** WPS PIN number */
-#define MAIN_WPS_PIN_NUMBER              12345670
+#define MAIN_WPS_PIN_NUMBER              35964933
 
 /** WPS Push Button Feature */
-#define MAIN_WPS_PUSH_BUTTON_FEATURE     true
+#define MAIN_WPS_PUSH_BUTTON_FEATURE     false
 
 /** Settings for button and timer */
 #define MAIN_BIT0                        (0x0001)
