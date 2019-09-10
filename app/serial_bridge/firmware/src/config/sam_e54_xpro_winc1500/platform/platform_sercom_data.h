@@ -3,7 +3,7 @@
 
 #include "peripheral/sercom/usart/plib_sercom_usart_common.h"
 
-#define PLATFORM_USART_INT_SOURCE   SERCOM2_0_IRQn //hseth SERCOM2_IRQn
+#define PLATFORM_USART_INT_SOURCE   SERCOM2_0_IRQn 
 #define PLATFORM_USART_REGS         SERCOM2_REGS
 
 typedef struct
