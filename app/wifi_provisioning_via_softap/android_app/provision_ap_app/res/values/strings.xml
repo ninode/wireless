@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Provision AP</string>
+	<string name="connect_buttons">Connect to WINC1500</string>
+	<string name="ssidchange_buttons">SSID / Security / PW</string>
+
+</resources>
