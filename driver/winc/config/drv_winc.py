@@ -46,8 +46,8 @@ def importIncFile(component, configName, incFileEntry, firmwarePath = None):
     incFileSym = component.createFileSymbol(symName, None)
     incFileSym.setSourcePath('driver/winc/' + secSName + 'include/' + incFile)
     incFileSym.setOutputName(incFile)
-    incFileSym.setDestPath('driver/winc/include/' + secDName)
-    incFileSym.setProjectPath('config/' + configName + '/driver/winc/include/' + secDName)
+    incFileSym.setDestPath('driver/wifi/winc/include/' + secDName)
+    incFileSym.setProjectPath('config/' + configName + '/driver/wifi/winc/include/' + secDName)
     incFileSym.setType('HEADER')
     incFileSym.setOverwrite(True)
     incFileSym.setEnabled(isEnabled)
@@ -89,8 +89,8 @@ def importSrcFile(component, configName, srcFileEntry, firmwarePath = None):
     srcFileSym = component.createFileSymbol(symName, None)
     srcFileSym.setSourcePath('driver/winc/' + secSName + srcFile)
     srcFileSym.setOutputName(srcFile.rsplit('/', 1)[-1])
-    srcFileSym.setDestPath('driver/winc/' + secDName)
-    srcFileSym.setProjectPath('config/' + configName + '/driver/winc/' + secDName)
+    srcFileSym.setDestPath('driver/wifi/winc/' + secDName)
+    srcFileSym.setProjectPath('config/' + configName + '/driver/wifi/winc/' + secDName)
     srcFileSym.setType('SOURCE')
     srcFileSym.setEnabled(isEnabled)
 
@@ -104,7 +104,7 @@ def setIncPath(component, configName, incPathEntry):
     dependencies = incPathEntry[1][2]
 
     incPathSym = component.createSettingSymbol('WINC_INC_PATH' + incPath.replace('.', '_').replace('/', '_').upper(), None)
-    incPathSym.setValue('../src/config/' + configName + '/driver/winc/include' + incPath + ';')
+    incPathSym.setValue('../src/config/' + configName + '/driver/wifi/winc/include' + incPath + ';')
     incPathSym.setCategory('C32')
     incPathSym.setKey('extra-include-directories')
     incPathSym.setAppend(True, ';')
