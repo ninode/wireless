@@ -81,6 +81,8 @@ def setIncPath(component, configName, incPathEntry):
 def instantiateComponent(drvPic32mzw1Component):
     print('PIC32MZW1 Driver Component')
     configName = Variables.get('__CONFIGURATION_NAME')
+    
+    drvPic32mzw1Component.setCapabilityEnabled("libdrvPic32mzw1Mac", True)
 
     ############################################################################
     #### Code Generation ####
