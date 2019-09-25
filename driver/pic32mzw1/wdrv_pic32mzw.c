@@ -1604,7 +1604,7 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 //*******************************************************************************
 /*
   Function:
-    void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object)
+    void WDRV_PIC32MZW_TasksRFMACISR(void)
 
   Summary:
     PIC32MZW RF MAC interrupt service routine.
@@ -1617,7 +1617,7 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 
 */
 
-void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object)
+void WDRV_PIC32MZW_TasksRFMACISR(void)
 {
     wdrv_pic32mzw_mac_isr(1);
     IFS2bits.RFMACIF = 0;
@@ -1626,7 +1626,7 @@ void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object)
 //*******************************************************************************
 /*
   Function:
-    void WDRV_PIC32MZW_TasksRFTimer0ISR(SYS_MODULE_OBJ object)
+    void WDRV_PIC32MZW_TasksRFTimer0ISR(void)
 
   Summary:
     PIC32MZW RF Timer 0 interrupt service routine.
@@ -1639,7 +1639,7 @@ void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object)
 
 */
 
-void WDRV_PIC32MZW_TasksRFTimer0ISR(SYS_MODULE_OBJ object)
+void WDRV_PIC32MZW_TasksRFTimer0ISR(void)
 {
     wdrv_pic32mzw_timer_tick_isr(0);
     IFS2bits.RFTM0IF = 0;

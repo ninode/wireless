@@ -1,6 +1,36 @@
-###############################################################################
-###################### PIC32MZW1 Drvier Configurations ########################
-###############################################################################
+"""*****************************************************************************
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*****************************************************************************"""
+
+################################################################################
+#### Global Variables ####
+################################################################################
+
+global interruptsChildren
+interruptsChildren = ATDF.getNode('/avr-tools-device-file/devices/device/interrupts').getChildren()
+
+################################################################################
+#### Business Logic ####
+################################################################################
 
 def importIncFile(component, configName, incFileEntry):
     incFilePath  = incFileEntry[0]
@@ -78,11 +108,23 @@ def setIncPath(component, configName, incPathEntry):
     incPathSym.setEnabled(isEnabled)
     incPathSym.setDependencies(callback, dependencies)
 
+################################################################################
+#### Component ####
+################################################################################
+
 def instantiateComponent(drvPic32mzw1Component):
     print('PIC32MZW1 Driver Component')
     configName = Variables.get('__CONFIGURATION_NAME')
 
     drvPic32mzw1Component.setCapabilityEnabled("libdrvPic32mzw1Mac", True)
+
+    Database.setSymbolValue("core", 'RFMAC_INTERRUPT_ENABLE', True, 1)
+    Database.setSymbolValue("core", 'RFMAC_INTERRUPT_HANDLER_LOCK', True, 1)
+    Database.setSymbolValue("core", 'RFMAC_INTERRUPT_HANDLER', 'WDRV_PIC32MZW_TasksRFMACISR', 1)
+
+    Database.setSymbolValue("core", 'RFTM0_INTERRUPT_ENABLE', True, 1)
+    Database.setSymbolValue("core", 'RFTM0_INTERRUPT_HANDLER_LOCK', True, 1)
+    Database.setSymbolValue("core", 'RFTM0_INTERRUPT_HANDLER', 'WDRV_PIC32MZW_TasksRFTimer0ISR', 1)
 
     # Log Level
     pic32mzw1LogLevel = drvPic32mzw1Component.createComboSymbol('DRV_WIFI_PIC32MZW1_LOG_LEVEL', None, ['None', 'Error', 'Inform', 'Trace', 'Verbose'])
@@ -233,18 +275,6 @@ def instantiateComponent(drvPic32mzw1Component):
     drvpic32mzw1SystemRtosTasksFile.setMarkup(True)
     drvpic32mzw1SystemRtosTasksFile.setEnabled((Database.getSymbolValue('HarmonyCore', 'SELECT_RTOS') != 'BareMetal'))
     drvpic32mzw1SystemRtosTasksFile.setDependencies(setEnabledRTOSTask, ['HarmonyCore.SELECT_RTOS'])
-
-    drvpic32mzw1IntWeakHandleFile = drvPic32mzw1Component.createFileSymbol('DRV_WIFI_PIC32MZW1_INTERRUPT_WEAK_HANDLERS', None)
-    drvpic32mzw1IntWeakHandleFile.setType('STRING')
-    drvpic32mzw1IntWeakHandleFile.setOutputName('core.LIST_SYSTEM_INTERRUPT_WEAK_HANDLERS')
-    drvpic32mzw1IntWeakHandleFile.setSourcePath('driver/pic32mzw1/templates/system/interrupts_weak_handlers.h.ftl')
-    drvpic32mzw1IntWeakHandleFile.setMarkup(True)
-
-    drvpic32mzw1IntTableFile = drvPic32mzw1Component.createFileSymbol('DRV_WIFI_PIC32MZW1_INTERRUPT_HANDLERS', None)
-    drvpic32mzw1IntTableFile.setType('STRING')
-    drvpic32mzw1IntTableFile.setOutputName('core.LIST_SYSTEM_INTERRUPT_HANDLERS')
-    drvpic32mzw1IntTableFile.setSourcePath('driver/pic32mzw1/templates/system/interrupts_vector_table.h.ftl')
-    drvpic32mzw1IntTableFile.setMarkup(True)
 
 def setVisibilityRTOSMenu(symbol, event):
     if (event['value'] == None):

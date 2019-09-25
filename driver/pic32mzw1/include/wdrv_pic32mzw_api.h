@@ -321,7 +321,7 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 //*******************************************************************************
 /*
   Function:
-    void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object)
+    void WDRV_PIC32MZW_TasksRFMACISR(void)
 
   Summary:
     PIC32MZW RF MAC interrupt service routine.
@@ -332,9 +332,6 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
   Precondition:
     WDRV_PIC32MZW_Initialize must have been called before calling this function.
 
-  Parameters:
-    object  - Driver object handle, returned from WDRV_PIC32MZW_Initialize
-
   Returns:
     None.
 
@@ -344,12 +341,12 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 
 */
 
-void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object);
+void WDRV_PIC32MZW_TasksRFMACISR(void);
 
 //*******************************************************************************
 /*
   Function:
-    void WDRV_PIC32MZW_TasksRFTimer0ISR(SYS_MODULE_OBJ object)
+    void WDRV_PIC32MZW_TasksRFTimer0ISR(void)
 
   Summary:
     PIC32MZW RF Timer 0 interrupt service routine.
@@ -360,9 +357,6 @@ void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object);
   Precondition:
     WDRV_PIC32MZW_Initialize must have been called before calling this function.
 
-  Parameters:
-    object  - Driver object handle, returned from WDRV_PIC32MZW_Initialize
-
   Returns:
     None.
 
@@ -372,7 +366,7 @@ void WDRV_PIC32MZW_TasksRFMACISR(SYS_MODULE_OBJ object);
 
 */
 
-void WDRV_PIC32MZW_TasksRFTimer0ISR(SYS_MODULE_OBJ object);
+void WDRV_PIC32MZW_TasksRFTimer0ISR(void);
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus
