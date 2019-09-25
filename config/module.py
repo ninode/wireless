@@ -5,7 +5,7 @@ def loadModule():
     ## WIFI Driver
     drvWifiWincComponent = Module.CreateComponent('drvWifiWinc', 'WINC', '/Harmony/Drivers/Wi-Fi/', 'driver/winc/config/drv_winc.py')
     drvWifiWincComponent.addCapability('wdrv_winc', 'WDRV_WINC', True)
-    
+
     drvWifiPic32mzw1Component = Module.CreateComponent('drvWifiPic32mzw1', 'PIC32MZW1', '/Harmony/Drivers/Wi-Fi/', 'driver/pic32mzw1/config/drv_pic32mzw1.py')
     drvWifiPic32mzw1Component.addCapability('wdrv_pic32mzw1', 'WDRV_PIC32MZW1', True)
     drvWifiPic32mzw1Component.addCapability('libdrvPic32mzw1Mac', 'MAC')
