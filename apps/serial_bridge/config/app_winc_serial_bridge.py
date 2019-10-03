@@ -23,7 +23,7 @@ def instantiateComponent(appWincSerialBridgeApp):
     appPLIB.setDefaultValue('')
 
     appPlatformSercomDataHdr = appWincSerialBridgeApp.createFileSymbol('APP_PLATFORM_SERCOM_DATA_FILE_SRC', None)
-    appPlatformSercomDataHdr.setSourcePath('app/serial_bridge/templates/platform_sercom_data.c.ftl')
+    appPlatformSercomDataHdr.setSourcePath('apps/serial_bridge/templates/platform_sercom_data.c.ftl')
     appPlatformSercomDataHdr.setOutputName('platform_sercom_data.c')
     appPlatformSercomDataHdr.setDestPath('platform')
     appPlatformSercomDataHdr.setProjectPath('config/' + configName + '/platform/')
@@ -32,7 +32,7 @@ def instantiateComponent(appWincSerialBridgeApp):
     appPlatformSercomDataHdr.setOverwrite(True)
 
     appPlatformSercomDataSrc = appWincSerialBridgeApp.createFileSymbol('APP_PLATFORM_SERCOM_DATA_FILE_HEADER', None)
-    appPlatformSercomDataSrc.setSourcePath('app/serial_bridge/templates/platform_sercom_data.h.ftl')
+    appPlatformSercomDataSrc.setSourcePath('apps/serial_bridge/templates/platform_sercom_data.h.ftl')
     appPlatformSercomDataSrc.setOutputName('platform_sercom_data.h')
     appPlatformSercomDataSrc.setDestPath('platform')
     appPlatformSercomDataSrc.setProjectPath('config/' + configName + '/platform/')
