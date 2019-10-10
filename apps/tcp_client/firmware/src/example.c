@@ -103,7 +103,7 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
             if ((NULL != pRecvMessage) && (pRecvMessage->s16BufferSize > 0))
             {
-                APP_DebugPrintf("Socket receive, size = %d bytes [", pRecvMessage->s16BufferSize);
+                APP_DebugPrintf("Socket receive, size = %d bytes ", pRecvMessage->s16BufferSize);
 
                 if (pRecvMessage->s16BufferSize > 20)
                 {
