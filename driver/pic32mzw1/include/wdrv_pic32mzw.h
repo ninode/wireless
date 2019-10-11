@@ -116,6 +116,9 @@ typedef struct _WDRV_PIC32MZW_CTRLDCPT
     /* Time spent on each passive channel listening for beacons. */
     uint16_t scanPassiveListenTime;
 
+    /* Access semaphore for MAC firmware library. */
+    OSAL_SEM_HANDLE_TYPE drvAccessSemaphore;
+
     /* Bitmap of enabled 2.4GHz channels for scanning. */
     WDRV_PIC32MZW_CHANNEL24_MASK scanChannelMask24;
 

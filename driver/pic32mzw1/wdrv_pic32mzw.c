@@ -380,6 +380,8 @@ SYS_MODULE_OBJ WDRV_PIC32MZW_Initialize
 
         pic32mzwCtrlDescriptor.handle = DRV_HANDLE_INVALID;
 
+        OSAL_SEM_Create(&pic32mzwCtrlDescriptor.drvAccessSemaphore, OSAL_SEM_TYPE_BINARY, 1, 1);
+
         wdrv_pic32mzw_hook_wlan_event_handle(_WDRV_PIC32MZW_EventCallback);
 
         SYS_INT_SourceEnable(INT_SOURCE_RFMAC);
@@ -466,6 +468,12 @@ void WDRV_PIC32MZW_Deinitialize(SYS_MODULE_OBJ object)
     {
         SYS_INT_SourceDisable(INT_SOURCE_RFMAC);
         SYS_INT_SourceDisable(INT_SOURCE_RFTM0);
+
+        OSAL_SEM_Delete(&pic32mzwCtrlDescriptor.drvAccessSemaphore);
+    }
+    else if (pDcpt == &pic32mzwDescriptor[1])
+    {
+        OSAL_SEM_Delete(&pic32mzwMACDescriptor.eventSemaphore);
     }
 
     /* Clear internal state. */
@@ -556,10 +564,18 @@ void WDRV_PIC32MZW_Tasks(SYS_MODULE_OBJ object)
         {
             if (pDcpt == &pic32mzwDescriptor[0])
             {
-                wdrv_pic32mzw_user_main();
+                if (OSAL_RESULT_TRUE == OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvAccessSemaphore, 0))
+                {
+                    wdrv_pic32mzw_user_main();
+                    OSAL_SEM_Post(&pic32mzwCtrlDescriptor.drvAccessSemaphore);
+                    pDcpt->sysStat = SYS_STATUS_READY;
+                }
+            }
+            else
+            {
+                pDcpt->sysStat = SYS_STATUS_READY;
             }
 
-            pDcpt->sysStat = SYS_STATUS_READY;
             break;
         }
 
@@ -568,24 +584,31 @@ void WDRV_PIC32MZW_Tasks(SYS_MODULE_OBJ object)
         {
             SGL_LIST_NODE *pNode;
 
-            if (TCPIP_Helper_ProtectedSingleListCount(&pic32mzwWIDTxQueue) > 0)
+            if (OSAL_RESULT_TRUE == OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvAccessSemaphore, 0))
             {
-                pNode = TCPIP_Helper_ProtectedSingleListHeadRemove(&pic32mzwWIDTxQueue);
-
-                if (NULL != pNode)
+                if (TCPIP_Helper_ProtectedSingleListCount(&pic32mzwWIDTxQueue) > 0)
                 {
-                    wdrv_pic32mzw_process_cfg_message(_DRV_PIC32MZW_PacketToBuf((TCPIP_MAC_PACKET*)pNode));
+                    pNode = TCPIP_Helper_ProtectedSingleListHeadRemove(&pic32mzwWIDTxQueue);
+
+                    if (NULL != pNode)
+                    {
+                        wdrv_pic32mzw_process_cfg_message(_DRV_PIC32MZW_PacketToBuf((TCPIP_MAC_PACKET*)pNode));
+                    }
                 }
-            }
 
-            if (TCPIP_Helper_ProtectedSingleListCount(&pic32mzwWIDRxQueue) > 0)
-            {
-                pNode = TCPIP_Helper_ProtectedSingleListHeadRemove(&pic32mzwWIDRxQueue);
-
-                if (NULL != pNode)
+                if (TCPIP_Helper_ProtectedSingleListCount(&pic32mzwWIDRxQueue) > 0)
                 {
-                    DRV_PIC32MZW_ProcessHostRsp(_DRV_PIC32MZW_PacketToBuf((TCPIP_MAC_PACKET*)pNode));
+                    pNode = TCPIP_Helper_ProtectedSingleListHeadRemove(&pic32mzwWIDRxQueue);
+
+                    if (NULL != pNode)
+                    {
+                        DRV_PIC32MZW_ProcessHostRsp(_DRV_PIC32MZW_PacketToBuf((TCPIP_MAC_PACKET*)pNode));
+                    }
                 }
+
+                wdrv_pic32mzw_mac_controller_task();
+
+                OSAL_SEM_Post(&pic32mzwCtrlDescriptor.drvAccessSemaphore);
             }
             break;
         }
@@ -976,7 +999,9 @@ TCPIP_MAC_RES WDRV_PIC32MZW_MACPacketTx(DRV_HANDLE hMac, TCPIP_MAC_PACKET* ptrPa
     WDRV_PIC32MZW_MAC_TX_PKT_INSPECT_HOOK(ptrPacket);
 #endif
 
+    OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvAccessSemaphore, OSAL_WAIT_FOREVER);
     wdrv_pic32mzw_wlan_send_packet(payLoadPtr, pktLen, pkt_tos, pktoffset);
+    OSAL_SEM_Post(&pic32mzwCtrlDescriptor.drvAccessSemaphore);
 
     return TCPIP_MAC_RES_OK;
 }
@@ -1043,8 +1068,6 @@ TCPIP_MAC_PACKET* WDRV_PIC32MZW_MACPacketRx
 
 TCPIP_MAC_RES WDRV_PIC32MZW_MACProcess(DRV_HANDLE hMac)
 {
-    wdrv_pic32mzw_mac_controller_task();
-
     return TCPIP_MAC_RES_OK;
 }
 
@@ -1242,8 +1265,6 @@ bool WDRV_PIC32MZW_MACEventMaskSet
     {
         pic32mzwMACDescriptor.eventMask &= ~macEvents;
     }
-
-    pic32mzwMACDescriptor.events &= pic32mzwMACDescriptor.eventMask;
 
     OSAL_SEM_Post(&pic32mzwMACDescriptor.eventSemaphore);
 
@@ -1816,44 +1837,6 @@ static TCPIP_MAC_PACKET* _DRV_PIC32MZW_AllocPkt
 
 void DRV_PIC32MZW_MACPostEvent(uint16_t qid)
 {
-    TCPIP_MAC_EVENT event = TCPIP_MAC_EV_NONE;
-    TCPIP_MAC_EVENT events;
-
-    switch(qid)
-    {
-        case HOST_RX_EVENT_QID:
-        {
-            event = TCPIP_EV_RX_PKTPEND;
-            break;
-        }
-
-        case WLAN_RX_EVENT_QID:
-        {
-            event = TCPIP_EV_RX_DONE;
-            break;
-        }
-
-        case MISC_EVENT_QID:
-        case HOST_DTX_EVENT_QID:
-        case HOST_CTX_EVENT_QID_INIT:
-        {
-            event = TCPIP_EV_TX_DONE;
-            break;
-        }
-
-        default:
-        {
-            event = TCPIP_EV_RX_PKTPEND;
-            break;
-        }
-    }
-
-    OSAL_SEM_Pend(&pic32mzwMACDescriptor.eventSemaphore, OSAL_WAIT_FOREVER);
-    pic32mzwMACDescriptor.events |= event;
-    events = pic32mzwMACDescriptor.events;
-    OSAL_SEM_Post(&pic32mzwMACDescriptor.eventSemaphore);
-
-    pic32mzwMACDescriptor.eventF(events, pic32mzwMACDescriptor.eventParam);
 }
 
 //*******************************************************************************
@@ -1895,6 +1878,7 @@ void DRV_PIC32MZW_MACEthernetSendPacket
 )
 {
     TCPIP_MAC_PACKET *p_packet;
+    TCPIP_MAC_EVENT events;
 
     if (NULL == pEthMsg)
     {
@@ -1926,7 +1910,15 @@ void DRV_PIC32MZW_MACEthernetSendPacket
     TCPIP_Helper_ProtectedSingleListTailAdd(&pic32mzwMACDescriptor.ethRxPktList, (SGL_LIST_NODE*)p_packet);
 
     /* Notify stack of received packet. */
-    DRV_PIC32MZW_MACPostEvent(WLAN_RX_EVENT_QID);
+    OSAL_SEM_Pend(&pic32mzwMACDescriptor.eventSemaphore, OSAL_WAIT_FOREVER);
+    events = pic32mzwMACDescriptor.events | ~pic32mzwMACDescriptor.eventMask;
+    pic32mzwMACDescriptor.events |= TCPIP_EV_RX_DONE;
+    OSAL_SEM_Post(&pic32mzwMACDescriptor.eventSemaphore);
+
+    if (0 == (events & TCPIP_EV_RX_DONE))
+    {
+        pic32mzwMACDescriptor.eventF(TCPIP_EV_RX_DONE, pic32mzwMACDescriptor.eventParam);
+    }
 }
 
 //*******************************************************************************
