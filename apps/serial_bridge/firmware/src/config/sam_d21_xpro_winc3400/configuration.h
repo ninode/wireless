@@ -102,6 +102,7 @@ extern "C" {
 #define WDRV_WINC_DEVICE_WINC3400
 #define WDRV_WINC_DEVICE_SPLIT_INIT
 #define WDRV_WINC_DEVICE_MULTI_GAIN_TABLE
+#define WDRV_WINC_DEVICE_USE_FLASH_INIT
 #define WDRV_WINC_DEBUG_LEVEL               WDRV_WINC_DEBUG_TYPE_NONE
 
 /* SPI Driver Instance 0 Configuration Options */
