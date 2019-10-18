@@ -14,3 +14,16 @@ const PLATFORM_USART_PLIB_INTERFACE platformUsartPlibAPI = {
     .errorGet               = SERCOM2_USART_ErrorGet,
     .serialSetup            = SERCOM2_USART_SerialSetup
 };
+
+	
+const DRV_USART_INTERRUPT_SOURCES platformInterruptSources =
+{	
+    /* Peripheral has more than one interrupt vector */
+    .isSingleIntSrc                        = false,
+ 
+    /* Peripheral interrupt lines */
+    .intSources.multi.usartTxCompleteInt   = SERCOM2_1_IRQn,
+    .intSources.multi.usartTxReadyInt      = SERCOM2_0_IRQn,
+    .intSources.multi.usartRxCompleteInt   = SERCOM2_2_IRQn,
+    .intSources.multi.usartErrorInt        = SERCOM2_OTHER_IRQn,
+};

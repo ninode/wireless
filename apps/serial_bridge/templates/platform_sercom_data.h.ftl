@@ -1,9 +1,9 @@
 #ifndef PLATFORM_HARMONY_INT_SERCOM_DATA_H
 #define PLATFORM_HARMONY_INT_SERCOM_DATA_H
 
+#include "driver/usart/drv_usart.h"
 #include "peripheral/sercom/usart/plib_sercom_usart_common.h"
 
-#define PLATFORM_USART_INT_SOURCE   ${APP_USART_PLIB}_IRQn
 #define PLATFORM_USART_REGS         ${APP_USART_PLIB}_REGS
 
 typedef struct
@@ -24,5 +24,6 @@ typedef struct
 } PLATFORM_USART_PLIB_INTERFACE;
 
 extern const PLATFORM_USART_PLIB_INTERFACE platformUsartPlibAPI;
+extern const DRV_USART_INTERRUPT_SOURCES platformInterruptSources;
 
 #endif /* PLATFORM_HARMONY_INT_SERCOM_DATA_H */

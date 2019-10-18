@@ -148,15 +148,46 @@ void SerialBridge_PlatformUARTSetBaudRate(uint32_t baud)
 size_t SerialBridge_PlatformUARTReadGetCount(void)
 {
     size_t count;
-    bool intEnabled;
-
-    intEnabled = SYS_INT_SourceDisable(PLATFORM_USART_INT_SOURCE);
+    const DRV_USART_INTERRUPT_SOURCES* intInfo = &platformInterruptSources;
+    const DRV_USART_MULTI_INT_SRC* multiVector = &(intInfo->intSources.multi);
+    bool usartInterruptStatus = false;
+    bool usartRxCompleteIntStatus = false;
+            
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Disable USART interrupt */
+        usartInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+    }
+    else
+    {
+        /* Disable USART interrupt sources */
+        if(multiVector->usartRxCompleteInt != -1)
+        {
+            usartRxCompleteIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartRxCompleteInt);
+        }
+    }
 
     count = usartReceiveLength;
 
-    if (true == intEnabled)
+    if (intInfo->isSingleIntSrc == true)
     {
-        SYS_INT_SourceEnable(PLATFORM_USART_INT_SOURCE);
+        if (true == usartInterruptStatus)
+        {
+            /* Enable USART interrupt */
+            //SYS_INT_SourceRestore((INT_SOURCE)intInfo->intSources.usartInterrupt, usartInterruptStatus);
+            SYS_INT_SourceEnable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+        }
+    }
+    else
+    {
+        if (true == usartRxCompleteIntStatus)
+        {
+            /* Enable USART interrupt sources */
+            if(multiVector->usartRxCompleteInt != -1)
+            {
+                SYS_INT_SourceEnable((INT_SOURCE)multiVector->usartRxCompleteInt);
+            }
+        }
     }
 
     return count;
@@ -176,7 +207,10 @@ uint8_t SerialBridge_PlatformUARTReadGetByte(void)
 
 size_t SerialBridge_PlatformUARTReadGetBuffer(void *pBuf, size_t numBytes)
 {
-    bool intEnabled;
+    const DRV_USART_INTERRUPT_SOURCES* intInfo = &platformInterruptSources;
+    const DRV_USART_MULTI_INT_SRC* multiVector = &(intInfo->intSources.multi);
+    bool usartInterruptStatus = false;
+    bool usartRxCompleteIntStatus = false;
 
     size_t count = SerialBridge_PlatformUARTReadGetCount();
 
@@ -216,13 +250,43 @@ size_t SerialBridge_PlatformUARTReadGetBuffer(void *pBuf, size_t numBytes)
         usartReceiveOutOffset += numBytes;
     }
 
-    intEnabled = SYS_INT_SourceDisable(PLATFORM_USART_INT_SOURCE);
+     if (intInfo->isSingleIntSrc == true)
+    {
+        /* Disable USART interrupt */
+        usartInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+    }
+    else
+    {
+        /* Disable USART interrupt sources */
+
+        if(multiVector->usartRxCompleteInt != -1)
+        {
+           usartRxCompleteIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartRxCompleteInt);
+        }
+    }
 
     usartReceiveLength -= numBytes;
 
-    if (true == intEnabled)
+
+    if (intInfo->isSingleIntSrc == true)
     {
-        SYS_INT_SourceEnable(PLATFORM_USART_INT_SOURCE);
+        if (true == usartInterruptStatus)
+        {
+            /* Enable USART interrupt */
+//            SYS_INT_SourceRestore((INT_SOURCE)intInfo->intSources.usartInterrupt, usartInterruptStatus);
+            SYS_INT_SourceEnable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+        }
+    }
+    else
+    {
+        if (true == usartRxCompleteIntStatus)
+        {
+            /* Enable USART interrupt sources */
+            if(multiVector->usartRxCompleteInt != -1)
+            {
+                SYS_INT_SourceEnable((INT_SOURCE)multiVector->usartRxCompleteInt);
+            }
+        }
     }
 
     return numBytes;
@@ -231,15 +295,59 @@ size_t SerialBridge_PlatformUARTReadGetBuffer(void *pBuf, size_t numBytes)
 size_t SerialBridge_PlatformUARTWriteGetCount(void)
 {
     size_t count;
-    bool intEnabled;
+    const DRV_USART_INTERRUPT_SOURCES* intInfo = &platformInterruptSources;
+    const DRV_USART_MULTI_INT_SRC* multiVector = &(intInfo->intSources.multi);
+    bool usartInterruptStatus = false;
+    bool usartTxReadyIntStatus = false;
+    bool usartTxCompleteIntStatus = false;
+    
+    if (intInfo->isSingleIntSrc == true)
+    {
+        /* Disable USART interrupt */
+        usartInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+    }
+    else
+    {
+        /* Disable USART interrupt sources */
+        if(multiVector->usartTxReadyInt != -1)
+        {
+            usartTxReadyIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartTxReadyInt);
+        }
 
-    intEnabled = SYS_INT_SourceDisable(PLATFORM_USART_INT_SOURCE);
+        if(multiVector->usartTxCompleteInt != -1)
+        {
+            usartTxCompleteIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartTxCompleteInt);
+        }
+    }
 
     count = usartTransmitLength;
 
-    if (true == intEnabled)
+    if (intInfo->isSingleIntSrc == true)
     {
-        SYS_INT_SourceEnable(PLATFORM_USART_INT_SOURCE);
+        if (true == usartInterruptStatus)
+        {
+            /* Enable USART interrupt */
+            SYS_INT_SourceEnable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+        }
+    }
+    else
+    {
+        if (true == usartTxReadyIntStatus)
+        {
+            /* Enable USART interrupt sources */
+            if(multiVector->usartTxReadyInt != -1)
+            {
+                SYS_INT_SourceEnable((INT_SOURCE)multiVector->usartTxReadyInt);
+            }
+        }
+
+        if (true == usartTxCompleteIntStatus)
+        {
+            if(multiVector->usartTxCompleteInt != -1)
+            {
+                SYS_INT_SourceEnable((INT_SOURCE)multiVector->usartTxCompleteInt);                
+            }
+        }
     }
 
     return count;
@@ -252,7 +360,11 @@ bool SerialBridge_PlatformUARTWritePutByte(uint8_t b)
 
 bool SerialBridge_PlatformUARTWritePutBuffer(const void *pBuf, size_t numBytes)
 {
-    bool intEnabled;
+    const DRV_USART_INTERRUPT_SOURCES* intInfo = &platformInterruptSources;
+    const DRV_USART_MULTI_INT_SRC* multiVector = &(intInfo->intSources.multi);
+    bool usartInterruptStatus = false;
+    bool usartTxReadyIntStatus = false;
+    bool usartTxCompleteIntStatus = false;
 
     if ((NULL == pBuf) || (0 == numBytes))
     {
@@ -294,13 +406,53 @@ bool SerialBridge_PlatformUARTWritePutBuffer(const void *pBuf, size_t numBytes)
             usartTransmitInOffset += numBytes;
         }
 
-        intEnabled = SYS_INT_SourceDisable(PLATFORM_USART_INT_SOURCE);
+        if (intInfo->isSingleIntSrc == true)
+        {
+            /* Disable USART interrupt */
+            usartInterruptStatus = SYS_INT_SourceDisable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+        }
+        else
+        {
+            /* Disable USART interrupt sources */
+            if(multiVector->usartTxReadyInt != -1)
+            {
+                usartTxReadyIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartTxReadyInt);
+            }
 
+            if(multiVector->usartTxCompleteInt != -1)
+            {
+                usartTxCompleteIntStatus = SYS_INT_SourceDisable((INT_SOURCE)multiVector->usartTxCompleteInt);
+            }
+        }
+        
         usartTransmitLength += numBytes;
 
-        if (true == intEnabled)
+        if (intInfo->isSingleIntSrc == true)
         {
-            SYS_INT_SourceEnable(PLATFORM_USART_INT_SOURCE);
+            if (true == usartInterruptStatus)
+            {
+                /* Enable USART interrupt */
+                SYS_INT_SourceEnable((INT_SOURCE)intInfo->intSources.usartInterrupt);
+            }
+        }
+        else
+        {
+            if (true == usartTxReadyIntStatus)
+            {
+                /* Enable USART interrupt sources */
+                if(multiVector->usartTxReadyInt != -1)
+                {
+                    SYS_INT_SourceEnable((INT_SOURCE)multiVector->usartTxReadyInt);
+                }
+            }
+
+            if (true == usartTxCompleteIntStatus)
+            {
+                if(multiVector->usartTxCompleteInt != -1)
+                {
+                    SYS_INT_SourceEnable((INT_SOURCE)multiVector->usartTxCompleteInt);                
+                }
+            }
         }
 
         if (false == platformUsartPlibAPI.writeIsBusy())
