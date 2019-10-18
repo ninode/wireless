@@ -279,10 +279,13 @@ def instantiateComponent(drvPic32mzw1Component):
 def setVisibilityRTOSMenu(symbol, event):
     if (event['value'] == None):
         symbol.setVisible(False)
+        print("WiFi Driver Bare Metal")
     elif (event['value'] != 'BareMetal'):
         symbol.setVisible(True)
+        print("WiFi Driver RTOS")
     else:
         symbol.setVisible(False)
+        print("WiFi Driver Bare Metal")
 
 def setVisibilityRTOSTaskConfig(symbol, event):
     if (event['value'] == 'Standalone'):
