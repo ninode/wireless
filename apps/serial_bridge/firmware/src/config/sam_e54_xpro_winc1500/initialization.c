@@ -239,7 +239,6 @@ void SYS_Initialize ( void* data )
 
     TC3_TimerInitialize();
 
-	BSP_Initialize();
 
     /* Initialize the WINC Driver */
     sysObj.drvWifiWinc = WDRV_WINC_Initialize(0, NULL);
