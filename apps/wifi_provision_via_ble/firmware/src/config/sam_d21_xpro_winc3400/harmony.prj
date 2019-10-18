@@ -283,8 +283,8 @@
           <Name dnOrder="1">nmspi.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/driver/winc/drv/driver/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/winc/drv/driver/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">787B7381D542E57EDF303B7C5A6A400F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">787B7381D542E57EDF303B7C5A6A400F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A33F50456B86219556C79AF80EC669DC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A33F50456B86219556C79AF80EC669DC</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">SOURCE</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">socket.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/driver/winc/drv/socket/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/winc/drv/socket/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7DA18BA9F03270C10E3EFF4614A1D4F7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7DA18BA9F03270C10E3EFF4614A1D4F7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">57D376EBCA082860EE29D8902D5EDB6A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">57D376EBCA082860EE29D8902D5EDB6A</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">SOURCE</Type>
@@ -427,8 +427,8 @@
           <Name dnOrder="1">sys_console_uart.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/system/console/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/console/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EDCD2754E46F6D0638A4CD331F90DE96</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EDCD2754E46F6D0638A4CD331F90DE96</UserChecksum>
+          <GeneratedChecksum dnOrder="4">635C7CC6CC208FC8B7FAC29E4809C3E8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">635C7CC6CC208FC8B7FAC29E4809C3E8</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">SOURCE</Type>
@@ -451,8 +451,8 @@
           <Name dnOrder="1">sys_debug.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/debug/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">28FACC455B92DDF18FABB8E2F670083A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">28FACC455B92DDF18FABB8E2F670083A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">310F44D37E7B3DD7CF26883E248AB57B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">310F44D37E7B3DD7CF26883E248AB57B</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">SOURCE</Type>
