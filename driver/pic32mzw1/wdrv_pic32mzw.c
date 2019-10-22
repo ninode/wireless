@@ -393,6 +393,7 @@ SYS_MODULE_OBJ WDRV_PIC32MZW_Initialize
     else if (TCPIP_MODULE_MAC_PIC32MZW1 == index)
     {
         const TCPIP_MAC_MODULE_CTRL* const stackData = ((TCPIP_MAC_INIT*)init)->macControl;
+        //const TCPIP_MODULE_MAC_PIC32MZW1_CONFIG* initData = (const TCPIP_MODULE_MAC_PIC32MZW1_CONFIG*)((TCPIP_MAC_INIT*)init)->moduleData;
 
         pDcpt = &pic32mzwDescriptor[1];
 

@@ -66,6 +66,22 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #define WDRV_PIC32MZW_SYS_IDX_0         0
+        
+/*  WiFi MAC Initialization Data
+
+  Summary:
+    Data that's passed to the MAC at initialization time as part of the
+    TCPIP_MAC_INIT data structure.
+
+  Description:
+    This structure defines the MAC initialization data for the
+    WiFi MAC/Ethernet controller.
+
+*/
+
+typedef struct
+{
+} TCPIP_MODULE_MAC_PIC32MZW1_CONFIG;
 
 // *****************************************************************************
 // *****************************************************************************
