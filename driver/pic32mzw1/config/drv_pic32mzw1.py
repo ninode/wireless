@@ -287,6 +287,9 @@ def setVisibilityRTOSMenu(symbol, event):
         symbol.setVisible(False)
         print("WiFi Driver Bare Metal")
 
+    Database.setSymbolValue('HarmonyCore', 'ENABLE_SYS_COMMON', True)
+    Database.setSymbolValue('HarmonyCore', 'ENABLE_DRV_COMMON', True)
+
 def setVisibilityRTOSTaskConfig(symbol, event):
     if (event['value'] == 'Standalone'):
         symbol.setVisible(True)
