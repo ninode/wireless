@@ -224,6 +224,7 @@ def instantiateComponent(drvWincComponent):
     wincUseTcpipStack = drvWincComponent.createBooleanSymbol('DRV_WIFI_WINC_USE_TCPIP_STACK', wincDriverMode)
     wincUseTcpipStack.setLabel('Use Harmony TCP/IP Stack?')
     wincUseTcpipStack.setVisible(False)
+    wincUseTcpipStack.setDefaultValue(False)
     wincUseTcpipStack.setDependencies(setVisibilityUseTcpipStack, ['DRV_WIFI_WINC_DRIVER_MODE'])
     # At startup, Hide Mac Capability
     drvWincComponent.setCapabilityEnabled("libdrvWincMac", False)
@@ -233,6 +234,7 @@ def instantiateComponent(drvWincComponent):
     wincUseIwprivIntf.setLabel('Use Simple IWPRIV Control Interface?')
     wincUseIwprivIntf.setVisible(False)
     wincUseIwprivIntf.setDependencies(setVisibilityUseIwprivIntf, ['DRV_WIFI_WINC_USE_TCPIP_STACK'])
+    wincUseIwprivIntf.setDefaultValue(False)
 
     # RTOS Configuration
     wincRtosMenu = drvWincComponent.createMenuSymbol('DRV_WIFI_WINC_RTOS_MENU', None)
@@ -508,6 +510,7 @@ def instantiateComponent(drvWincComponent):
         ['/drv/common',                         condAlways],
         ['/drv/driver',                         condAlways],
         ['/drv/socket',                         condSocketMode],
+        ['/drv/spi_flash',                      condAlways],
         ['/drv/at_ble_api',                     condBle],
         ['/drv/ble_stack',                      condBle],
         ['/drv/platform',                       condBle]
@@ -663,7 +666,10 @@ def setEnableSocketMode(symbol, event):
     component = symbol.getComponent()
 
     setSocketMode  =  component.getSymbolValue('DRV_WIFI_WINC_DRIVER_MODE')
+    if ((setSocketMode == 'Socket Mode') and (checkPrefix(symbol))):
+        symbol.setEnabled(True)
     else:
+        symbol.setEnabled(False)
 
 def setEnableEthernetMode(symbol, event):
     if ((event['value'] == 'Ethernet Mode') and (checkPrefix(symbol))):
@@ -676,7 +682,7 @@ def setEnableEthernetMode(symbol, event):
 
 def setEnableBlePresent(symbol, event):
     component = symbol.getComponent()
-    if event['value'] == 'True':
+
     wincDeviceMode   = component.getSymbolValue('DRV_WIFI_WINC_DEVICE')
     useBleDriverMode = component.getSymbolValue('DRV_WIFI_WINC_USE_BLUETOOTH_WINC3400')
 
