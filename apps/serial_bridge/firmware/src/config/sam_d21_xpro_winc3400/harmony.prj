@@ -179,16 +179,16 @@
           <Name dnOrder="1">nmspi.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/driver/winc/drv/driver/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/winc/drv/driver/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">787B7381D542E57EDF303B7C5A6A400F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">787B7381D542E57EDF303B7C5A6A400F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A33F50456B86219556C79AF80EC669DC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A33F50456B86219556C79AF80EC669DC</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">platform_sercom_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/platform/</LogicalPath>
           <PhysicalPath dnOrder="3">/platform/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">847DC1639296044EF033385BB4EE9722</GeneratedChecksum>
-          <UserChecksum dnOrder="5">847DC1639296044EF033385BB4EE9722</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F419EE13669F7B7101087AFA165A6F8B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F419EE13669F7B7101087AFA165A6F8B</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -275,8 +275,8 @@
           <Name dnOrder="1">socket.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/driver/winc/drv/socket/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/winc/drv/socket/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7DA18BA9F03270C10E3EFF4614A1D4F7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7DA18BA9F03270C10E3EFF4614A1D4F7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">57D376EBCA082860EE29D8902D5EDB6A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">57D376EBCA082860EE29D8902D5EDB6A</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
@@ -915,8 +915,8 @@
           <Name dnOrder="1">platform_sercom_data.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/platform/</LogicalPath>
           <PhysicalPath dnOrder="3">/platform/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3F5F16CFFC9DEF10069F7FB62F5599F4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3F5F16CFFC9DEF10069F7FB62F5599F4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9C97B0DB6D339D4531F87D2BDDF090C0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9C97B0DB6D339D4531F87D2BDDF090C0</UserChecksum>
         </File>
         <File dnOrder="114">
           <Type dnOrder="0">HEADER</Type>

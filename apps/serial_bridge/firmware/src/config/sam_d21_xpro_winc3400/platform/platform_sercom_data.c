@@ -14,3 +14,13 @@ const PLATFORM_USART_PLIB_INTERFACE platformUsartPlibAPI = {
     .errorGet               = SERCOM3_USART_ErrorGet,
     .serialSetup            = SERCOM3_USART_SerialSetup
 };
+
+	
+const DRV_USART_INTERRUPT_SOURCES platformInterruptSources =
+{	
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+ 
+    /* Peripheral interrupt line */
+    .intSources.usartInterrupt             = SERCOM3_IRQn,
+};
