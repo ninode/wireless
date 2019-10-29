@@ -104,6 +104,9 @@ typedef struct _WDRV_PIC32MZW_CTRLDCPT
     /* Flag indicating if a connection has been established. */
     bool isConnected;
 
+    /* Flag indicating if a connection attempt is in progress. */
+    bool isConnecting;
+
     /* Flag indicating if a BSS scan is currently in progress. */
     bool scanInProgress;
 
@@ -208,6 +211,64 @@ typedef struct _WDRV_PIC32MZW_DCPT
     /* Pointer to instance specific descriptor (MAC). */
     WDRV_PIC32MZW_MACDCPT   *pMac;
 } WDRV_PIC32MZW_DCPT;
+
+// *****************************************************************************
+/*  
+
+  Summary:
+    
+
+  Description:
+    
+
+  Remarks:
+    None.
+*/
+
+typedef struct _WDRV_PIC32MZW_MAC_ACCESS_COUNTER
+{
+    /* Number of memory allocation function calls. */
+    uint32_t alloc;
+    
+    /* Number of memory allocation free function call. */
+    uint32_t free;
+    
+    /* Currently allocated memory size. */
+    uint32_t allocSize;
+    
+    /* Currently unallocated memory size. */
+    uint32_t freeSize;
+} WDRV_PIC32MZW_MAC_ACCESS_COUNTER;
+
+// *****************************************************************************
+/*  
+
+  Summary:
+    
+
+  Description:
+    
+
+  Remarks:
+    None.
+*/
+
+typedef struct _WDRV_PIC32MZW_MAC_MEM_STATISTICS
+{
+    /* Number of transmit and receive frames handled to/from the driver layer. */
+    struct
+    {
+        uint32_t tx;
+        uint32_t rx;
+    } pkt;
+
+    /* Packet memory allocation counters.
+     * Index 0 to 4 are the order of PRIORITY_LEVEL. */
+    WDRV_PIC32MZW_MAC_ACCESS_COUNTER pri[5];
+
+    /* Memory allocation counters. */
+    WDRV_PIC32MZW_MAC_ACCESS_COUNTER mem;
+} WDRV_PIC32MZW_MAC_MEM_STATISTICS;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -401,6 +462,45 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_InfoOpChanGet
     DRV_HANDLE handle,
     WDRV_PIC32MZW_CHANNEL_ID *const pOpChan
 );
+
+
+//*******************************************************************************
+/*
+  Function:
+    void WDRV_PIC32MZW_GetStatistics
+    (
+        DRV_HANDLE handle,
+        WDRV_PIC32MZW_MAC_MEM_STATISTICS *pStats
+    );
+
+  Summary:
+    Retrieves the static data of the PIC32MZW.
+
+  Description:
+    Retrieves the static data of the PIC32MZW..
+
+  Precondition:
+    WDRV_PIC32MZW_Initialize should have been called.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
+
+  Parameters:
+    handle - Client handle obtained by a call to WDRV_PIC32MZW_Open.
+    pStats - Pointer to buffer to receive the statistic data.
+
+  Returns:
+    WDRV_PIC32MZW_STATUS_OK             - The information has been returned.
+    WDRV_PIC32MZW_STATUS_INVALID_ARG    - The parameters were incorrect.
+
+  Remarks:
+    None.
+*/
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_GetStatistics
+(
+    DRV_HANDLE handle,
+    WDRV_PIC32MZW_MAC_MEM_STATISTICS *pStats
+);
+#endif
 
     // DOM-IGNORE-BEGIN
 #ifdef __cplusplus

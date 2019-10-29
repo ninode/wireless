@@ -189,6 +189,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSConnect
 
     pDcpt->pCtrl->pfConnectNotifyCB = pfNotifyCallback;
     pDcpt->pCtrl->isConnected       = false;
+    pDcpt->pCtrl->isConnecting      = true;
 
     return WDRV_PIC32MZW_STATUS_OK;
 }
@@ -226,8 +227,8 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSDisconnect(DRV_HANDLE handle)
         return WDRV_PIC32MZW_STATUS_NOT_OPEN;
     }
 
-    /* Ensure PIC32MZW is not connected. */
-    if (false == pDcpt->pCtrl->isConnected)
+    /* Ensure PIC32MZW is not connected or attempting to connect. */
+    if ((false == pDcpt->pCtrl->isConnected) && (false == pDcpt->pCtrl->isConnecting))
     {
         return WDRV_PIC32MZW_STATUS_REQUEST_ERROR;
     }

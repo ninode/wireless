@@ -199,6 +199,10 @@ static PROTECTED_SINGLE_LIST pic32mzwWIDRxQueue;
 /* This is the driver to firmware transmit WID queue. */
 static PROTECTED_SINGLE_LIST pic32mzwWIDTxQueue;
 
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+static WDRV_PIC32MZW_MAC_MEM_STATISTICS pic32mzMemStatistics;
+#endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: PIC32MZW Driver Internal Implementation
@@ -441,6 +445,10 @@ SYS_MODULE_OBJ WDRV_PIC32MZW_Initialize
     pDcpt->pCtrl   = &pic32mzwCtrlDescriptor;
     pDcpt->pMac    = &pic32mzwMACDescriptor;
 
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+    memset(&pic32mzMemStatistics, 0, sizeof(pic32mzMemStatistics));
+#endif
+
     return (SYS_MODULE_OBJ)pDcpt;
 }
 
@@ -597,20 +605,21 @@ void WDRV_PIC32MZW_Tasks(SYS_MODULE_OBJ object)
                     }
                 }
 
-                if (TCPIP_Helper_ProtectedSingleListCount(&pic32mzwWIDRxQueue) > 0)
-                {
-                    pNode = TCPIP_Helper_ProtectedSingleListHeadRemove(&pic32mzwWIDRxQueue);
-
-                    if (NULL != pNode)
-                    {
-                        DRV_PIC32MZW_ProcessHostRsp(_DRV_PIC32MZW_PacketToBuf((TCPIP_MAC_PACKET*)pNode));
-                    }
-                }
-
                 wdrv_pic32mzw_mac_controller_task();
 
                 OSAL_SEM_Post(&pic32mzwCtrlDescriptor.drvAccessSemaphore);
             }
+
+            if (TCPIP_Helper_ProtectedSingleListCount(&pic32mzwWIDRxQueue) > 0)
+            {
+                pNode = TCPIP_Helper_ProtectedSingleListHeadRemove(&pic32mzwWIDRxQueue);
+
+                if (NULL != pNode)
+                {
+                    DRV_PIC32MZW_ProcessHostRsp(_DRV_PIC32MZW_PacketToBuf((TCPIP_MAC_PACKET*)pNode));
+                }
+            }
+
             break;
         }
 
@@ -714,6 +723,7 @@ DRV_HANDLE WDRV_PIC32MZW_Open(const SYS_MODULE_INDEX index, const DRV_IO_INTENT 
             pDcpt->pCtrl->handle                = (DRV_HANDLE)pDcpt;
             pDcpt->pCtrl->isAP                  = false;
             pDcpt->pCtrl->isConnected           = false;
+            pDcpt->pCtrl->isConnecting          = false;
             pDcpt->pCtrl->scanInProgress        = false;
             pDcpt->pCtrl->scanActiveScanTime    = DRV_PIC32MZW_DEFAULT_ACTIVE_SCAN_TIME;
             pDcpt->pCtrl->scanPassiveListenTime = DRV_PIC32MZW_DEFAULT_PASSIVE_SCAN_TIME;
@@ -771,7 +781,8 @@ void WDRV_PIC32MZW_Close(DRV_HANDLE handle)
 
     if (handle == pDcpt->pCtrl->handle)
     {
-        pDcpt->pCtrl->isConnected = false;
+        pDcpt->pCtrl->isConnected  = false;
+        pDcpt->pCtrl->isConnecting = false;
 
         for (i=0; i<WDRV_PIC32MZW_NUM_ASSOCS; i++)
         {
@@ -781,6 +792,45 @@ void WDRV_PIC32MZW_Close(DRV_HANDLE handle)
 
     pDcpt->isOpen = false;
 }
+//*******************************************************************************
+/*
+  Function:
+    void WDRV_PIC32MZW_GetStatistics
+    (
+        DRV_HANDLE handle,
+        WDRV_PIC32MZW_MAC_MEM_STATISTICS *pStats
+    );
+
+  Summary:
+    Retrieves the static data of the PIC32MZW.
+
+  Description:
+    Retrieves the static data of the PIC32MZW..
+
+  Remarks:
+    See wdrv_pic32mzw.h for usage information.
+
+ */
+
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_GetStatistics
+(
+    DRV_HANDLE handle,
+    WDRV_PIC32MZW_MAC_MEM_STATISTICS *pStats
+)
+{
+    WDRV_PIC32MZW_DCPT *const pDcpt = (WDRV_PIC32MZW_DCPT *const)handle;
+
+    if ((NULL == pDcpt) || (NULL == pStats))
+    {
+        return WDRV_PIC32MZW_STATUS_INVALID_ARG;
+    }
+
+    memcpy(pStats, &pic32mzMemStatistics, sizeof(WDRV_PIC32MZW_MAC_MEM_STATISTICS));
+
+    return WDRV_PIC32MZW_STATUS_OK;
+}
+#endif
 
 // *****************************************************************************
 // *****************************************************************************
@@ -1001,6 +1051,9 @@ TCPIP_MAC_RES WDRV_PIC32MZW_MACPacketTx(DRV_HANDLE hMac, TCPIP_MAC_PACKET* ptrPa
 #endif
 
     OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvAccessSemaphore, OSAL_WAIT_FOREVER);
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+    pic32mzMemStatistics.pkt.tx++;
+#endif
     wdrv_pic32mzw_wlan_send_packet(payLoadPtr, pktLen, pkt_tos, pktoffset);
     OSAL_SEM_Post(&pic32mzwCtrlDescriptor.drvAccessSemaphore);
 
@@ -1043,6 +1096,10 @@ TCPIP_MAC_PACKET* WDRV_PIC32MZW_MACPacketRx
     {
 #ifdef WDRV_PIC32MZW_MAC_RX_PKT_INSPECT_HOOK
         WDRV_PIC32MZW_MAC_RX_PKT_INSPECT_HOOK(ptrPacket);
+#endif
+
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+        pic32mzMemStatistics.pkt.rx++;
 #endif
 
         ptrPacket->next = NULL;
@@ -1493,12 +1550,19 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
                 break;
             }
 
-            WDRV_DBG_VERBOSE_PRINT("WIFI_WID_ASSOC_STAT: %d, %d\r\n", *pData, pCtrl->isConnected);
+            WDRV_DBG_VERBOSE_PRINT("WIFI_WID_ASSOC_STAT: %d, %d, %d\r\n", *pData, pCtrl->isConnected, pCtrl->isConnecting);
 
-            if ((0 == *pData) && (true == pCtrl->isConnected))
+            if ((0 == *pData) && ((true == pCtrl->isConnecting) || (true == pCtrl->isConnected)))
             {
-                pCtrl->isConnected = false;
-                pCtrl->opChannel   = WDRV_PIC32MZW_CID_ANY;
+                WDRV_PIC32MZW_CONN_STATE ConnState = WDRV_PIC32MZW_CONN_STATE_FAILED;
+                pCtrl->opChannel    = WDRV_PIC32MZW_CID_ANY;
+                pCtrl->isConnecting = false;
+
+                if (true == pCtrl->isConnected)
+                {
+                    ConnState = WDRV_PIC32MZW_CONN_STATE_DISCONNECTED;
+                    pCtrl->isConnected  = false;
+                }
 
                 if (false == pCtrl->isAP)
                 {
@@ -1506,13 +1570,14 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
                     {
                         /* Update user application via callback if set. */
 
-                        pCtrl->pfConnectNotifyCB((DRV_HANDLE)pDcpt, (WDRV_PIC32MZW_ASSOC_HANDLE)&pCtrl->assocInfo[0], WDRV_PIC32MZW_CONN_STATE_DISCONNECTED);
+                        pCtrl->pfConnectNotifyCB((DRV_HANDLE)pDcpt, (WDRV_PIC32MZW_ASSOC_HANDLE)&pCtrl->assocInfo[0], ConnState);
                     }
                 }
             }
             else if ((1 == *pData) && (false == pCtrl->isConnected))
             {
-                pCtrl->isConnected = true;
+                pCtrl->isConnected  = true;
+                pCtrl->isConnecting = false;
 
                 if (false == pCtrl->isAP)
                 {
@@ -1544,6 +1609,7 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
         case DRV_WIFI_WID_CURR_OPER_CHANNEL:
         {
             pCtrl->opChannel = *pData;
+            break;
         }
 
         case DRV_WIFI_WID_BSSID:
@@ -1582,6 +1648,8 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 
                 WDRV_PIC32MZW_BSSFindNext(pCtrl->handle, pCtrl->pfBSSFindNotifyCB);
             }
+
+            break;
         }
 
         case DRV_WIFI_WID_STA_JOIN_INFO:
@@ -1720,6 +1788,17 @@ static bool DRV_PIC32MZW_AllocPktCallback
         pktmem_pri = (pktmem_priority_t*)ackParam;
 
         pktmem_pri->num_allocd--;
+
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+        {
+            uint32_t idx = ((uint32_t)pktmem_pri - (uint32_t)g_pktmem_pri)/sizeof(pktmem_priority_t);
+            uint16_t size = (idx == MEM_PRI_CONFIG)?
+                                pktHandle->pDSeg->segSize :
+                                SHARED_PKT_MEM_BUFFER_SIZE;
+            pic32mzMemStatistics.pri[idx].free++;
+            pic32mzMemStatistics.pri[idx].freeSize += size;
+        }
+#endif
     }
 
     _TCPIP_PKT_PacketFree(pktHandle);
@@ -1810,34 +1889,6 @@ static TCPIP_MAC_PACKET* _DRV_PIC32MZW_AllocPkt
     p_packet->pDSeg->segFlags |= TCPIP_MAC_SEG_FLAG_STATIC;
 
     return p_packet;
-}
-
-//*******************************************************************************
-/*
-  Function:
-    void DRV_PIC32MZW_MACPostEvent(uint16_t qid)
-
-  Summary:
-    Post a MAC event.
-
-  Description:
-    Posts a MAC event for signalling to the TCP/IP stack.
-
-  Precondition:
-    TCP/IP stack must be initialized.
-
-  Parameters:
-    qid - Event ID.
-
-  Returns:
-    None.
-
-  Remarks:
-    None.
-*/
-
-void DRV_PIC32MZW_MACPostEvent(uint16_t qid)
-{
 }
 
 //*******************************************************************************
@@ -1961,7 +2012,10 @@ void* DRV_PIC32MZW_MemAlloc(uint16_t size)
     {
         return NULL;
     }
-
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+    pic32mzMemStatistics.mem.alloc++;
+    pic32mzMemStatistics.mem.allocSize += p_packet->pDSeg->segSize;
+#endif
     return _DRV_PIC32MZW_PacketToBuf(p_packet);
 }
 
@@ -1991,6 +2045,16 @@ void* DRV_PIC32MZW_MemAlloc(uint16_t size)
 
 int8_t DRV_PIC32MZW_MemFree(void *pBufferAddr)
 {
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+    TCPIP_MAC_PACKET *p_packet = _DRV_PIC32MZW_BufToPacket(pBufferAddr);
+    
+    if (NULL != p_packet)
+    {
+        pic32mzMemStatistics.mem.free++;
+        pic32mzMemStatistics.mem.freeSize += p_packet->pDSeg->segSize;
+    }
+#endif
+
     DRV_PIC32MZW_PacketMemFree(pBufferAddr);
     return 0;
 }
@@ -2038,6 +2102,11 @@ void *DRV_PIC32MZW_PacketMemAlloc(uint16_t size, MEM_PRIORITY_LEVEL_T priLevel)
             return NULL;
         }
 
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+        pic32mzMemStatistics.pri[MEM_PRI_HPRX].alloc++;
+        pic32mzMemStatistics.pri[MEM_PRI_HPRX].allocSize += SHARED_PKT_MEM_BUFFER_SIZE;
+ #endif
+
         return &((WDRV_PIC32MZW_PKT_LIST_NODE*)node)->pkt;
     }
 
@@ -2052,6 +2121,13 @@ void *DRV_PIC32MZW_PacketMemAlloc(uint16_t size, MEM_PRIORITY_LEVEL_T priLevel)
     g_pktmem_pri[priLevel].num_allocd++;
 
     p_packet->ackParam = &g_pktmem_pri[priLevel];
+
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+    pic32mzMemStatistics.pri[priLevel].alloc++;
+    pic32mzMemStatistics.pri[priLevel].allocSize +=
+            (priLevel == MEM_PRI_CONFIG)? p_packet->pDSeg->segSize:
+                                          SHARED_PKT_MEM_BUFFER_SIZE;
+#endif
 
     return _DRV_PIC32MZW_PacketToBuf(p_packet);
 }
@@ -2103,6 +2179,10 @@ void DRV_PIC32MZW_PacketMemFree(void *pPktBuff)
             if (pk0PktBuff == &pic32mzwHighPriPktList[i].pkt)
             {
                 TCPIP_Helper_DoubleListHeadAdd(&pic32mzwHighPriRxQueue, (DBL_LIST_NODE*)&pic32mzwHighPriPktList[i]);
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+                pic32mzMemStatistics.pri[MEM_PRI_HPRX].free++;
+                pic32mzMemStatistics.pri[MEM_PRI_HPRX].freeSize += SHARED_PKT_MEM_BUFFER_SIZE;
+#endif
                 return;
             }
         }

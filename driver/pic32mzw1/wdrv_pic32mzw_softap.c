@@ -215,8 +215,18 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_APStop(DRV_HANDLE handle)
     }
 
     DRV_PIC32MZW_MultiWIDInit(&wids, 16);
+
+    /* Switch to STA mode (0) */
     DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_SWITCH_MODE, 0);
+
+    /* Clear the SSID value */
     DRV_PIC32MZW_MultiWIDAddString(&wids, DRV_WIFI_WID_SSID, "\0");
+
+    /* Write the wids. */
+    if (false == DRV_PIC32MZW_MultiWid_Write(&wids))
+    {
+        return WDRV_PIC32MZW_STATUS_REQUEST_ERROR;
+    }
 
     /* Clear AP state. */
     pDcpt->pCtrl->isAP = false;

@@ -27,9 +27,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdint.h>
 #include <stdbool.h>
 
-#define DRV_PIC32MZW_MAX_SCAN_TIME                  120
+#define DRV_PIC32MZW_MAX_SCAN_TIME                  1500
 #define DRV_PIC32MZW_MIN_SCAN_TIME                  10
-#define DRV_PIC32MZW_DEFAULT_ACTIVE_SCAN_TIME       120
+#define DRV_PIC32MZW_DEFAULT_ACTIVE_SCAN_TIME       20
 #define DRV_PIC32MZW_DEFAULT_PASSIVE_SCAN_TIME      120
 
 /*
@@ -118,17 +118,6 @@ typedef struct
     uint8_t channel;
 } DRV_PIC32MZW_SCAN_RESULTS;
 
-/* Event Queue Identifier */
-typedef enum {HOST_RX_EVENT_QID       = 0,
-              WLAN_RX_EVENT_QID       = 1,
-              MISC_EVENT_QID          = 2,
-              HOST_DTX_EVENT_QID      = 3,
-              HOST_CTX_EVENT_QID_INIT = 4,
-              TIMER0_EXPIRED_QID      = 10,
-/* HOST_CTX_EVENT_QIDs: 4..., 1 per Host Type supported */
-} EVENT_QID_T;
-
-void DRV_PIC32MZW_MACPostEvent(uint16_t qid);
 void DRV_PIC32MZW_MACEthernetSendPacket(const uint8_t *const pEthMsg, uint16_t lengthEthMsg, uint8_t hdrOffset);
 void* DRV_PIC32MZW_MemAlloc(uint16_t size);
 int8_t DRV_PIC32MZW_MemFree(void *pBufferAddr);
