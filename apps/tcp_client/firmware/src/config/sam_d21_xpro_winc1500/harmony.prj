@@ -171,8 +171,8 @@
           <Name dnOrder="1">nmspi.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc1500/driver/winc/drv/driver/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/winc/drv/driver/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8553C555848FD1BCE5A55E6A411FC32D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8553C555848FD1BCE5A55E6A411FC32D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">50132D71906F92F55379F4FA06402606</GeneratedChecksum>
+          <UserChecksum dnOrder="5">50132D71906F92F55379F4FA06402606</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -259,8 +259,8 @@
           <Name dnOrder="1">socket.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc1500/driver/winc/drv/socket/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/winc/drv/socket/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B9484D95D282A2B1DA2EA0E2FDA1AD7F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B9484D95D282A2B1DA2EA0E2FDA1AD7F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4F545B6DDC75A7DFBEE9B0840585B182</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4F545B6DDC75A7DFBEE9B0840585B182</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">SOURCE</Type>
