@@ -32,7 +32,6 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-
 //DOM-IGNORE-END
 
 /**@defgroup m2m_wifi WLAN
@@ -50,7 +49,6 @@ INCLUDES
 
 #include "nm_common.h"
 #include "m2m_types.h"
-//#include "config/sam_d21_xpro_winc3400\driver\winc\include\drv\driver\m2m_types.h"
 #include "nmdrv.h"
 
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*

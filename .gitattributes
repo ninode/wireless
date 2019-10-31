@@ -20,4 +20,3 @@
 *.css -text
 *.exe -text
 *.bin -text
-*.cer -text
