@@ -33,7 +33,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #ifndef _NM_DEBUG_H_
 #define _NM_DEBUG_H_
 

@@ -33,7 +33,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #include "m2m_wifi.h"
 #include "m2m_hif.h"
 #include "nmasic.h"

@@ -33,7 +33,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #ifndef __ECC_TYPES_H__
 #define __ECC_TYPES_H__
 

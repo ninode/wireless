@@ -227,8 +227,8 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D988D3B171875791BD997D366EF15C31</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D988D3B171875791BD997D366EF15C31</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D435BC12CD03F909A7082D1ACF9E8436</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D435BC12CD03F909A7082D1ACF9E8436</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
@@ -1019,8 +1019,8 @@
           <Name dnOrder="1">plib_port.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro_winc3400/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">64F255E612D1DD9832ED08386DBD3555</GeneratedChecksum>
-          <UserChecksum dnOrder="5">64F255E612D1DD9832ED08386DBD3555</UserChecksum>
+          <GeneratedChecksum dnOrder="4">961EAFE5917CF13A1DFD1A34DFBE0401</GeneratedChecksum>
+          <UserChecksum dnOrder="5">961EAFE5917CF13A1DFD1A34DFBE0401</UserChecksum>
         </File>
         <File dnOrder="127">
           <Type dnOrder="0">HEADER</Type>

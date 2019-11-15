@@ -75,15 +75,6 @@
 #define WDRV_WINC_CHIP_EN_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 5)
 #define WDRV_WINC_CHIP_EN_PIN                  PORT_PIN_PB05
 
-/*** Macros for WDRV_WINC_RESETN pin ***/
-#define WDRV_WINC_RESETN_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 6)
-#define WDRV_WINC_RESETN_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 6)
-#define WDRV_WINC_RESETN_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 6)
-#define WDRV_WINC_RESETN_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 6)) & 0x01)
-#define WDRV_WINC_RESETN_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 6)
-#define WDRV_WINC_RESETN_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 6)
-#define WDRV_WINC_RESETN_PIN                  PORT_PIN_PB06
-
 /*** Macros for GPIO_PB07 pin ***/
 #define GPIO_PB07_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 7)
 #define GPIO_PB07_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 7)
@@ -101,6 +92,15 @@
 #define GPIO_PA15_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 15)
 #define GPIO_PA15_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 15)
 #define GPIO_PA15_PIN                  PORT_PIN_PA15
+
+/*** Macros for WDRV_WINC_RESETN pin ***/
+#define WDRV_WINC_RESETN_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 1)
+#define WDRV_WINC_RESETN_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 1)
+#define WDRV_WINC_RESETN_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 1)
+#define WDRV_WINC_RESETN_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 1)) & 0x01)
+#define WDRV_WINC_RESETN_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 1)
+#define WDRV_WINC_RESETN_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 1)
+#define WDRV_WINC_RESETN_PIN                  PORT_PIN_PB01
 
 
 
