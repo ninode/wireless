@@ -35,7 +35,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 /**
 *  @file        spi_flash_map.h
 *  @brief       This module contains spi flash CONTENT

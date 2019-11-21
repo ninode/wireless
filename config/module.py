@@ -11,4 +11,5 @@ def loadModule():
     drvWifiPic32mzw1Component.addCapability('wdrv_pic32mzw1', 'WDRV_PIC32MZW1', True)
     drvWifiPic32mzw1Component.addCapability('libdrvPic32mzw1Mac', 'MAC')
 
-    appSerBridge = Module.CreateComponent('appWincSerialBridge', 'Serial Bridge Application', '/Wireless/Applications/WINC/', 'apps/serial_bridge/config/app_winc_serial_bridge.py')
+    appSerBridge = Module.CreateComponent('appWincSerialBridge', 'Serial Bridge Application', '/Wireless/SerialBridge/', 'apps/serial_bridge/config/app_winc_serial_bridge.py')
+	
