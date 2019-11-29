@@ -204,6 +204,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
             /* Disable pullups */
             disable_pullups();
 
+#ifdef WDRV_WINC_DEVICE_WINC1500
             /* Set defined sleep mode */
             if (MAIN_PS_SLEEP_MODE == WDRV_WINC_PS_MODE_MANUAL) {
                 APP_DebugPrintf("WDRV_WINC_PS_MODE_MANUAL\r\n");
@@ -212,7 +213,9 @@ void APP_ExampleTasks(DRV_HANDLE handle)
                 {
                     break;
                 }
-            } else if (MAIN_PS_SLEEP_MODE == WDRV_WINC_PS_MODE_AUTO_LOW_POWER) {
+            }
+#endif            
+            if (MAIN_PS_SLEEP_MODE == WDRV_WINC_PS_MODE_AUTO_LOW_POWER) {
                 APP_DebugPrintf("WDRV_WINC_PS_MODE_AUTO_LOW_POWER\r\n");
 
                 uint16_t numBeaconIntervals= 0;
@@ -229,7 +232,9 @@ void APP_ExampleTasks(DRV_HANDLE handle)
                     break;
                 }
 
-            } else {
+            } 
+            else if (MAIN_PS_SLEEP_MODE == WDRV_WINC_PS_MODE_OFF)
+            {
                 APP_DebugPrintf("WDRV_WINC_PS_MODE_OFF\r\n");
             }
             
@@ -261,6 +266,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
         case EXAMP_STATE_CONNECTED_AP:
         {
             if (gu8SleepStatus == MAIN_PS_REQ_SLEEP) {
+#ifdef WDRV_WINC_DEVICE_WINC1500                
                 if (MAIN_PS_SLEEP_MODE == WDRV_WINC_PS_MODE_MANUAL) {
                     APP_DebugPrintf("WDRV_WINC_PowerSaveManualSleep() is called ...\r\n");
                     if (WDRV_WINC_STATUS_OK != WDRV_WINC_PowerSaveManualSleep(handle, MAIN_REQUEST_SLEEP_TIME))
@@ -269,6 +275,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
                     }
                     gu8SleepStatus = MAIN_PS_SLEEP;
                 }
+#endif               
              }
             
             int8_t rssi;
