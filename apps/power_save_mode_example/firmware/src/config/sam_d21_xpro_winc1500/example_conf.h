@@ -59,12 +59,7 @@
 #define MAIN_PS_REQ_SLEEP           3
 
 /** PowerSave mode Settings */
-#ifdef WDRV_WINC_DEVICE_WINC1500
 #define MAIN_PS_SLEEP_MODE          WDRV_WINC_PS_MODE_MANUAL /* WDRV_WINC_PS_MODE_MANUAL / WDRV_WINC_PS_MODE_AUTO_LOW_POWER / WDRV_WINC_PS_MODE_OFF */
-#elif WDRV_WINC_DEVICE_WINC3400
-/* < Only WDRV_WINC_PS_MODE_AUTO_LOW_POWER supported for WINC3400 */
-#define MAIN_PS_SLEEP_MODE          WDRV_WINC_PS_MODE_AUTO_LOW_POWER /*  WDRV_WINC_PS_MODE_AUTO_LOW_POWER / WDRV_WINC_PS_MODE_OFF */
-#endif
 
 
 /** Request sleep time for PowerSave manual mode */
