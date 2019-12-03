@@ -1654,17 +1654,31 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 
         case DRV_WIFI_WID_STA_JOIN_INFO:
         {
+            WDRV_PIC32MZW_CONN_STATE connState;
+
             if (false == pCtrl->isAP)
             {
                 break;
             }
 
+            if (0 == *pData)
+            {
+                connState = WDRV_PIC32MZW_CONN_STATE_DISCONNECTED;
+            }
+            else
+            {
+                connState = WDRV_PIC32MZW_CONN_STATE_CONNECTED;
+
+                pCtrl->assocInfo[0].handle            = (DRV_HANDLE)pCtrl;
+                pCtrl->assocInfo[0].peerAddress.valid = true;
+                pCtrl->assocInfo[0].authType          = WDRV_PIC32MZW_AUTH_TYPE_DEFAULT;
+                pCtrl->assocInfo[0].rssi              = 0;
+
+                memcpy(&pCtrl->assocInfo[0].peerAddress.addr, &pData[1], WDRV_PIC32MZW_MAC_ADDR_LEN);
+            }
+
             if (NULL != pCtrl->pfConnectNotifyCB)
             {
-                WDRV_PIC32MZW_CONN_STATE connState;
-
-                connState = (0 == *pData) ? WDRV_PIC32MZW_CONN_STATE_DISCONNECTED : WDRV_PIC32MZW_CONN_STATE_CONNECTED;
-
                 /* Update user application via callback if set. */
 
                 pCtrl->pfConnectNotifyCB((DRV_HANDLE)pDcpt, (WDRV_PIC32MZW_ASSOC_HANDLE)&pCtrl->assocInfo[0], connState);
@@ -2047,7 +2061,7 @@ int8_t DRV_PIC32MZW_MemFree(void *pBufferAddr)
 {
 #ifdef WDRV_PIC32MZW_STATS_ENABLE
     TCPIP_MAC_PACKET *p_packet = _DRV_PIC32MZW_BufToPacket(pBufferAddr);
-    
+
     if (NULL != p_packet)
     {
         pic32mzMemStatistics.mem.free++;
