@@ -588,7 +588,7 @@
           <LogicalPath dnOrder="2">packs/ATSAMD21J18A_DFP/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/ATSAMD21J18A_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">B18F4CFB912BEFBDECC3600F97649A90</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EB713B3E2B692D753528364E56C5DFA4</UserChecksum>
+          <UserChecksum dnOrder="5">B18F4CFB912BEFBDECC3600F97649A90</UserChecksum>
         </File>
         <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>

@@ -33,7 +33,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #include "nm_common.h"
 #include "wdrv_winc_common.h"
 #include "wdrv_winc_gpio.h"

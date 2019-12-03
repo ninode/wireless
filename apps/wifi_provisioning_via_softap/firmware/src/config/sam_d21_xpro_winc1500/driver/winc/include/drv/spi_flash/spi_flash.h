@@ -35,7 +35,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 /** \defgroup SPIFLASH Spi Flash
  * @file           spi_flash.h
  * @brief          This file describe SPI flash APIs, how to use it and limitations with each one.

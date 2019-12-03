@@ -35,7 +35,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #include "spi_flash.h"
 #define DUMMY_REGISTER  (0x1084)
 

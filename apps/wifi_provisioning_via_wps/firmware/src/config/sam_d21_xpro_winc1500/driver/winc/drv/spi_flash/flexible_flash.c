@@ -33,7 +33,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #include "spi_flash.h"
 #include "m2m_types.h"
 #include "flexible_flash.h"

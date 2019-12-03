@@ -34,7 +34,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #ifndef __M2M_SOCKET_HOST_IF_H__
 #define __M2M_SOCKET_HOST_IF_H__
 

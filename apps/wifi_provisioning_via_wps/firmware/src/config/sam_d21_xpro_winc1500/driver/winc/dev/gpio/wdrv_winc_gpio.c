@@ -35,7 +35,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #include <stdlib.h>
 #include <stdint.h>
 #include "configuration.h"

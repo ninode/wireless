@@ -35,7 +35,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-
 #include "osal/osal.h"
 #include "wdrv_winc_common.h"
 

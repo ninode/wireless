@@ -8,9 +8,6 @@
         <logicalFolder name="f1"
                        displayName="sam_e54_xpro_winc1500"
                        projectFiles="true">
-          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_e54_xpro_winc1500/bsp/bsp.h</itemPath>
-          </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f2" displayName="spi" projectFiles="true">
               <itemPath>../src/config/sam_e54_xpro_winc1500/driver/spi/drv_spi.h</itemPath>
@@ -213,6 +210,9 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm4.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
@@ -250,9 +250,6 @@
         <logicalFolder name="f1"
                        displayName="sam_e54_xpro_winc1500"
                        projectFiles="true">
-          <logicalFolder name="f6" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/sam_e54_xpro_winc1500/bsp/bsp.c</itemPath>
-          </logicalFolder>
           <logicalFolder name="f2" displayName="driver" projectFiles="true">
             <logicalFolder name="f2" displayName="spi" projectFiles="true">
               <itemPath>../src/config/sam_e54_xpro_winc1500/driver/spi/src/drv_spi.c</itemPath>

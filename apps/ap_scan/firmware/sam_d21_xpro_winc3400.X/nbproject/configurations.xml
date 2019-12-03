@@ -351,9 +351,9 @@
           <itemPath>../src/config/sam_d21_xpro_winc3400/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>../src/example.c</itemPath>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
-      <itemPath>../src/example.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
