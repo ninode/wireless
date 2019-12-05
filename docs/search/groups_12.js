@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['vector_20clarke_20transform_9189',['Vector Clarke Transform',['../group__clarke.html',1,'']]],
+  ['vector_20inverse_20clarke_20transform_9190',['Vector Inverse Clarke Transform',['../group__inv__clarke.html',1,'']]],
+  ['vector_20inverse_20park_20transform_9191',['Vector Inverse Park transform',['../group__inv__park.html',1,'']]],
+  ['vector_20park_20transform_9192',['Vector Park Transform',['../group__park.html',1,'']]],
+  ['vcoroutineschedule_9193',['vCoRoutineSchedule',['../group__v_co_routine_schedule.html',1,'']]],
+  ['version_9194',['Version',['../group___v_e_r_s_i_o_n.html',1,'']]],
+  ['vqueuedelete_9195',['vQueueDelete',['../group__v_queue_delete.html',1,'']]],
+  ['vsemaphorecreatebinary_9196',['vSemaphoreCreateBinary',['../group__v_semaphore_create_binary.html',1,'']]],
+  ['vsemaphoredelete_9197',['vSemaphoreDelete',['../group__v_semaphore_delete.html',1,'']]],
+  ['vstreambufferdelete_9198',['vStreamBufferDelete',['../group__v_stream_buffer_delete.html',1,'']]],
+  ['vtaskdelay_9199',['vTaskDelay',['../group__v_task_delay.html',1,'']]],
+  ['vtaskdelayuntil_9200',['vTaskDelayUntil',['../group__v_task_delay_until.html',1,'']]],
+  ['vtaskdelete_9201',['vTaskDelete',['../group__v_task_delete.html',1,'']]],
+  ['vtaskendscheduler_9202',['vTaskEndScheduler',['../group__v_task_end_scheduler.html',1,'']]],
+  ['vtaskgetinfo_9203',['vTaskGetInfo',['../group__v_task_get_info.html',1,'']]],
+  ['vtaskgetruntimestats_9204',['vTaskGetRunTimeStats',['../group__v_task_get_run_time_stats.html',1,'']]],
+  ['vtasklist_9205',['vTaskList',['../group__v_task_list.html',1,'']]],
+  ['vtaskpriorityset_9206',['vTaskPrioritySet',['../group__v_task_priority_set.html',1,'']]],
+  ['vtaskresume_9207',['vTaskResume',['../group__v_task_resume.html',1,'']]],
+  ['vtaskresumefromisr_9208',['vTaskResumeFromISR',['../group__v_task_resume_from_i_s_r.html',1,'']]],
+  ['vtaskstartscheduler_9209',['vTaskStartScheduler',['../group__v_task_start_scheduler.html',1,'']]],
+  ['vtasksuspend_9210',['vTaskSuspend',['../group__v_task_suspend.html',1,'']]],
+  ['vtasksuspendall_9211',['vTaskSuspendAll',['../group__v_task_suspend_all.html',1,'']]]
+];
