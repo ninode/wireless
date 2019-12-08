@@ -186,7 +186,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
             {
                 case WIFI_STATE_IDLE:
                 {
-                    uint8_t pinCode[6] = {1, 2, 3, 4};
+                    uint8_t pinCode[6] = {1, 2, 3, 4, 5, 6};
 
                     WDRV_WINC_BSSDisconnect(handle);
 
