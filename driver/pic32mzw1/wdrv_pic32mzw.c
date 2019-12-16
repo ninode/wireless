@@ -1691,6 +1691,23 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
         {
             break;
         }
+		case DRV_WIFI_WID_REG_DOMAIN:
+        {
+			if (NULL != pCtrl->pfRegulatoryDomainCB)
+            {
+                pCtrl->pfRegulatoryDomainCB((uint8_t *)pData, (size_t)length);
+            }
+            break;
+        }
+		
+		case DRV_WIFI_WID_LIST_REG_DOMAIN:
+			{
+				if (NULL != pCtrl->pfRegulatoryDomainCB)
+				{
+					pCtrl->pfRegulatoryDomainCB((uint8_t *)pData, (size_t)length);
+				}
+				break;
+			}
 
         default:
         {
@@ -2331,3 +2348,111 @@ DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask(WDRV_PIC32MZW_AUTH_TYPE authType)
 
     return dot11iInfo;
 }
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_ListRegDomain(DRV_HANDLE handle,
+    const WDRV_PIC32MZW_REG_DOMAIN_CALLBACK pfNotifyCallback)
+{
+	printf("\nMJJJJ: %s() line %d", __FUNCTION__, __LINE__);
+
+	WDRV_PIC32MZW_DCPT *const pDcpt = (WDRV_PIC32MZW_DCPT *const)handle;
+
+    /* Ensure the driver handle is valid. */
+    if (NULL == pDcpt)
+    {
+        return WDRV_PIC32MZW_STATUS_INVALID_ARG;
+    }
+
+    /* Ensure the driver instance has been opened for use. */
+    if ((false == pDcpt->isOpen) || (DRV_HANDLE_INVALID == pDcpt->pCtrl->handle))
+    {
+        return WDRV_PIC32MZW_STATUS_NOT_OPEN;
+    }
+
+	DRV_PIC32MZW_WIDCTX wids;
+
+    DRV_PIC32MZW_MultiWIDInit(&wids, 48);
+
+	DRV_PIC32MZW_MultiWIDAddQuery(&wids, DRV_WIFI_WID_LIST_REG_DOMAIN);
+
+	//DRV_PIC32MZW_MultiWIDAddData(&wids, DRV_WIFI_WID_REG_DOMAIN, pRDName, 6);
+	
+	DRV_PIC32MZW_MultiWid_Write(&wids);
+	
+	/* Store callback supplied. */
+	pDcpt->pCtrl->pfRegulatoryDomainCB = pfNotifyCallback;
+	
+    return WDRV_PIC32MZW_STATUS_OK;
+}
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_GetRegDomain(DRV_HANDLE handle,
+    const WDRV_PIC32MZW_REG_DOMAIN_CALLBACK pfNotifyCallback)
+{
+	printf("\nMJJJJ: %s() line %d", __FUNCTION__, __LINE__);
+
+    WDRV_PIC32MZW_DCPT *const pDcpt = (WDRV_PIC32MZW_DCPT *const)handle;
+
+    /* Ensure the driver handle is valid. */
+    if (NULL == pDcpt)
+    {
+        return WDRV_PIC32MZW_STATUS_INVALID_ARG;
+    }
+
+    /* Ensure the driver instance has been opened for use. */
+    if ((false == pDcpt->isOpen) || (DRV_HANDLE_INVALID == pDcpt->pCtrl->handle))
+    {
+        return WDRV_PIC32MZW_STATUS_NOT_OPEN;
+    }
+
+	DRV_PIC32MZW_WIDCTX wids;
+
+    DRV_PIC32MZW_MultiWIDInit(&wids, 48);
+
+	DRV_PIC32MZW_MultiWIDAddQuery(&wids, DRV_WIFI_WID_REG_DOMAIN);
+
+	//DRV_PIC32MZW_MultiWIDAddData(&wids, DRV_WIFI_WID_REG_DOMAIN, pRDName, 6);
+	
+	DRV_PIC32MZW_MultiWid_Write(&wids);
+	
+	/* Store callback supplied. */
+	pDcpt->pCtrl->pfRegulatoryDomainCB= pfNotifyCallback;
+	
+    return WDRV_PIC32MZW_STATUS_OK;
+	
+}
+
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_SetRegDomain(DRV_HANDLE handle,
+    const WDRV_PIC32MZW_REG_DOMAIN_CALLBACK pfNotifyCallback, uint8_t *pRDName)
+{
+	printf("\nMJJJJ: %s() line %d", __FUNCTION__, __LINE__);
+
+    WDRV_PIC32MZW_DCPT *const pDcpt = (WDRV_PIC32MZW_DCPT *const)handle;
+
+    /* Ensure the driver handle is valid. */
+    if (NULL == pDcpt)
+    {
+        return WDRV_PIC32MZW_STATUS_INVALID_ARG;
+    }
+
+    /* Ensure the driver instance has been opened for use. */
+    if ((false == pDcpt->isOpen) || (DRV_HANDLE_INVALID == pDcpt->pCtrl->handle))
+    {
+        return WDRV_PIC32MZW_STATUS_NOT_OPEN;
+    }
+
+	DRV_PIC32MZW_WIDCTX wids;
+
+    DRV_PIC32MZW_MultiWIDInit(&wids, 48);
+
+	//DRV_PIC32MZW_MultiWIDAddQuery(&wids, DRV_WIFI_WID_REG_DOMAIN);
+
+	DRV_PIC32MZW_MultiWIDAddData(&wids, DRV_WIFI_WID_REG_DOMAIN, pRDName, 6);
+	
+	DRV_PIC32MZW_MultiWid_Write(&wids);
+	
+	/* Store callback supplied. */
+	//pDcpt->pCtrl->pfRegulatoryDomainCB= pfNotifyCallback;
+	
+	return WDRV_PIC32MZW_STATUS_OK;
+}
+

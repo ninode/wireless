@@ -79,6 +79,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #define WDRV_PIC32MZW_NUM_ASSOCS    1
 
+typedef bool (*WDRV_PIC32MZW_REG_DOMAIN_CALLBACK)
+(
+	uint8_t *buf,
+	size_t size
+);
+
+
 // *****************************************************************************
 /*  PIC32MZW Control Driver Descriptor
 
@@ -139,6 +146,10 @@ typedef struct _WDRV_PIC32MZW_CTRLDCPT
 
     /* Callback to use for retrieving association RSSI information from the PIC32MZW. */
     WDRV_PIC32MZW_ASSOC_RSSI_CALLBACK pfAssociationRSSICB;
+
+	/* Callback to use for retrieving association RSSI information from the PIC32MZW. */
+    WDRV_PIC32MZW_REG_DOMAIN_CALLBACK pfRegulatoryDomainCB;
+		
 } WDRV_PIC32MZW_CTRLDCPT;
 
 // *****************************************************************************
@@ -463,6 +474,11 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_InfoOpChanGet
     WDRV_PIC32MZW_CHANNEL_ID *const pOpChan
 );
 
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_ListRegDomain(DRV_HANDLE handle, const WDRV_PIC32MZW_REG_DOMAIN_CALLBACK pfNotifyCallback); 
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_GetRegDomain(DRV_HANDLE handle, const WDRV_PIC32MZW_REG_DOMAIN_CALLBACK pfNotifyCallback);
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_SetRegDomain(DRV_HANDLE handle, const WDRV_PIC32MZW_REG_DOMAIN_CALLBACK pfNotifyCallback, uint8_t *pRDName);
 
 //*******************************************************************************
 /*
