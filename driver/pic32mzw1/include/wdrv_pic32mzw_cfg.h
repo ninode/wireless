@@ -464,8 +464,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 #define DRV_WIFI_WID_11N_CURRENT_TX_BW                  0x00C8
 
-
-
 // *****************************************************************************
 /*
                     Short Type WIDs
@@ -1007,6 +1005,36 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
         DRV_WIFI_WID_USER_STATUS_INFO provide the user status information.
 */
 #define DRV_WIFI_WID_USER_STATUS_INFO                       0x400B
+
+// *****************************************************************************
+/*
+    Summary:
+        WID for regulatory domain.
+    Description:
+        DRV_WIFI_WID_REG_DOMAIN is used to set the regulatory domain.
+        Six bytes containing the regulatory name.
+*/
+#define DRV_WIFI_WID_REG_DOMAIN                             0x4010
+
+// *****************************************************************************
+/*
+    Summary:
+        WID for regulatory domain information.
+    Description:
+        DRV_WIFI_WID_REG_DOMAIN_INFO is used to request and report information about regulatory domains.
+
+        Driver -> WLAN - Report request
+        Single byte: 0 = All, 1 = Current
+
+        WLAN -> Driver - Report of single regulatory domain
+        Byte:
+            0           - Index within a group of DRV_WIFI_WID_REG_DOMAIN_INFO reports. 0 = error.
+            1           - Total number of reports in a group. 0 = error.
+            2           - 0 = Not current, 1 = current
+            3 to 8      - Six bytes containing the regulatory name.
+                            note: Names shorter than 6 characters are left-justified with trailing zeros ('\0').
+*/
+#define DRV_WIFI_WID_REG_DOMAIN_INFO                        0x4011
 
 typedef enum
 {

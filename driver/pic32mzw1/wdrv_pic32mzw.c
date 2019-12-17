@@ -732,6 +732,7 @@ DRV_HANDLE WDRV_PIC32MZW_Open(const SYS_MODULE_INDEX index, const DRV_IO_INTENT 
             pDcpt->pCtrl->pfBSSFindNotifyCB     = NULL;
             pDcpt->pCtrl->pfConnectNotifyCB     = NULL;
             pDcpt->pCtrl->pfAssociationRSSICB   = NULL;
+            pDcpt->pCtrl->pfRegDomCB            = NULL;
 
             for (i=0; i<WDRV_PIC32MZW_NUM_ASSOCS; i++)
             {
@@ -1689,6 +1690,38 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 
         case DRV_WIFI_WID_USER_STATUS_INFO:
         {
+            break;
+        }
+
+        case DRV_WIFI_WID_REG_DOMAIN_INFO:
+        {
+            if (NULL != pCtrl->pfRegDomCB)
+            {
+                char regName[WDRV_PIC32MZW_REGDOMAIN_MAX_NAME_LEN+1];
+                bool current;
+
+                if (1 == pData[2])
+                {
+                    current = true;
+                }
+                else
+                {
+                    current = false;
+                }
+
+                memcpy(regName, &pData[3], WDRV_PIC32MZW_REGDOMAIN_MAX_NAME_LEN);
+                regName[WDRV_PIC32MZW_REGDOMAIN_MAX_NAME_LEN] = '\0';
+
+                if ((0 == pData[0]) || (0 == pData[1]))
+                {
+                    pCtrl->pfRegDomCB((DRV_HANDLE)pDcpt, 0, 0, false, regName);
+                }
+                else
+                {
+                    pCtrl->pfRegDomCB((DRV_HANDLE)pDcpt, pData[0], pData[1], current, regName);
+                }
+            }
+
             break;
         }
 

@@ -64,6 +64,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "tcpip/src/link_list.h"
 #include "wdrv_pic32mzw_bssfind.h"
 #include "wdrv_pic32mzw_assoc.h"
+#include "wdrv_pic32mzw_regdomain.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus // Provide C++ Compatibility
@@ -139,6 +140,9 @@ typedef struct _WDRV_PIC32MZW_CTRLDCPT
 
     /* Callback to use for retrieving association RSSI information from the PIC32MZW. */
     WDRV_PIC32MZW_ASSOC_RSSI_CALLBACK pfAssociationRSSICB;
+
+    /* Callback to use for retrieving regulatory domain information. */
+    WDRV_PIC32MZW_REGDOMAIN_CALLBACK pfRegDomCB;
 } WDRV_PIC32MZW_CTRLDCPT;
 
 // *****************************************************************************
@@ -213,13 +217,13 @@ typedef struct _WDRV_PIC32MZW_DCPT
 } WDRV_PIC32MZW_DCPT;
 
 // *****************************************************************************
-/*  
+/*
 
   Summary:
-    
+
 
   Description:
-    
+
 
   Remarks:
     None.
@@ -229,25 +233,25 @@ typedef struct _WDRV_PIC32MZW_MAC_ACCESS_COUNTER
 {
     /* Number of memory allocation function calls. */
     uint32_t alloc;
-    
+
     /* Number of memory allocation free function call. */
     uint32_t free;
-    
+
     /* Currently allocated memory size. */
     uint32_t allocSize;
-    
+
     /* Currently unallocated memory size. */
     uint32_t freeSize;
 } WDRV_PIC32MZW_MAC_ACCESS_COUNTER;
 
 // *****************************************************************************
-/*  
+/*
 
   Summary:
-    
+
 
   Description:
-    
+
 
   Remarks:
     None.
