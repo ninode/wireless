@@ -60,6 +60,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "wdrv_pic32mzw_assoc.h"
 #include "wdrv_pic32mzw_softap.h"
 #include "wdrv_pic32mzw_sta.h"
+#include "wdrv_pic32mzw_regdomain.h"
 #include "wdrv_pic32mzw_common.h"
 
 #endif /* _WDRV_PIC32MZW_CLIENT_API_H */

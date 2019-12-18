@@ -198,6 +198,7 @@ def instantiateComponent(drvPic32mzw1Component):
         ['wdrv_pic32mzw_common.h',      condAlways],
         ['wdrv_pic32mzw_debug.h',       condAlways],
         ['wdrv_pic32mzw_mac.h',         condAlways],
+        ['wdrv_pic32mzw_regdomain.h',   condAlways],
         ['wdrv_pic32mzw_softap.h',      condAlways],
         ['wdrv_pic32mzw_sta.h',         condAlways]
     ]
@@ -213,6 +214,7 @@ def instantiateComponent(drvPic32mzw1Component):
         ['wdrv_pic32mzw_bssfind.c',     condAlways],
         ['wdrv_pic32mzw_cfg.c',         condAlways],
         ['wdrv_pic32mzw_int.c',         condAlways],
+        ['wdrv_pic32mzw_regdomain.c',   condAlways],
         ['wdrv_pic32mzw_softap.c',      condAlways],
         ['wdrv_pic32mzw_sta.c',         condAlways]
     ]
