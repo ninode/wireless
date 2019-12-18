@@ -185,7 +185,7 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
         case SOCKET_MSG_RECV:
         {
             tstrSocketRecvMsg *pRecvMessage = (tstrSocketRecvMsg*)pMessage;
-            tstrM2mWifiWepParams wep_parameters;
+            tstrM2mWifiWepParams wep_parameters = {0,0,{0}};
             
             if ((NULL != pRecvMessage) && (pRecvMessage->s16BufferSize > 0))
             {
