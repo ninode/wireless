@@ -975,9 +975,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 #define DRV_WIFI_WID_JOIN_REQ                               0x3205
 
-#define DRV_WIFI_WID_REG_DOMAIN				   				0x3400
-#define DRV_WIFI_WID_LIST_REG_DOMAIN 			   			0x3401
-
 
 // *****************************************************************************
 /*
