@@ -126,6 +126,9 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_APStart
         dot11iInfo |= DRV_PIC32MZW_Modify11iMask(pAuthCtx->authMod);
     }
 
+    /* Indicate that the dot11i settings are intended for AP mode. */
+    dot11iInfo |= DRV_PIC32MZW_AP;
+
     /* Allocate memory for the WIDs. */
     DRV_PIC32MZW_MultiWIDInit(&wids, 512);
 
@@ -144,7 +147,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_APStart
     DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_11I_SETTINGS, (int)dot11iInfo);
 
     /* Set credentials for whichever auth types are enabled. */
-    if (DRV_PIC32MZW_PRIVACY == dot11iInfo)
+    if (DRV_PIC32MZW_PRIVACY == (dot11iInfo & ~DRV_PIC32MZW_AP))
     {
         /* Set WEP credentials. */
         DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_KEY_ID, pAuthCtx->authInfo.WEP.idx-1);
