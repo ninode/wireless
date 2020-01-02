@@ -118,6 +118,14 @@ typedef struct
     uint8_t channel;
 } DRV_PIC32MZW_SCAN_RESULTS;
 
+typedef struct
+{
+    uint8_t index;
+    uint8_t ofTotal;
+    uint8_t current;
+    uint8_t country_code[6];
+} DRV_PIC32MZW_REG_INFO;
+
 void DRV_PIC32MZW_MACEthernetSendPacket(const uint8_t *const pEthMsg, uint16_t lengthEthMsg, uint8_t hdrOffset);
 void* DRV_PIC32MZW_MemAlloc(uint16_t size);
 int8_t DRV_PIC32MZW_MemFree(void *pBufferAddr);
