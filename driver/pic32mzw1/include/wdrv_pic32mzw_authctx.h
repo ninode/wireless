@@ -97,13 +97,11 @@ typedef enum
     /* Note that a WPA2-only STA will not connect to a WPA2 mixed mode AP.   */
     WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL,
 
-#if (defined AUTH_PMF) && (defined AUTH_SAE)
     /* WPA3 SAE transition mode. (CCMP, IGTK can be BIP or none) */
     WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL,
 
     /* WPA3 SAE authentication. (CCMP, IGTK is BIP) */
     WDRV_PIC32MZW_AUTH_TYPE_WPA3_PERSONAL,
-#endif /* AUTH_PMF && AUTH_SAE */
 
     /* Authentication types with this value or above are not recognised. */
     WDRV_PIC32MZW_AUTH_TYPE_MAX
@@ -126,12 +124,10 @@ typedef enum
 typedef enum
 {
     WDRV_PIC32MZW_AUTH_MOD_NONE     = 0,
-#ifdef AUTH_PMF
     /* Require protection of management frames.
      * Not valid with Open, WEP or WPAWPA2 auth types.
      * Ignored for WPA3-only auth types (PMF is mandatory in WPA3). */
     WDRV_PIC32MZW_AUTH_MOD_MFPR     = 0x01,
-#endif /* AUTH_PMF */
 } WDRV_PIC32MZW_AUTH_MOD_MASK;
 
 // *****************************************************************************

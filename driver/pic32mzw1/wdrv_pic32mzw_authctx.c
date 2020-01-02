@@ -157,7 +157,6 @@ static bool _DRV_PIC32MZW_PersonalKeyIsValid
         return false;
     }
 
-#if (defined AUTH_PMF) && (defined AUTH_SAE)
     /* If password is to be used for SAE, we place the same upper limit on
      * length as for PSK passphrases. Note this is an implementation-specific
      * restriction, not an 802.11 (2016) restriction. */
@@ -168,7 +167,6 @@ static bool _DRV_PIC32MZW_PersonalKeyIsValid
             return false;
         }
     }
-#endif /* AUTH_PMF && AUTH_SAE */
 
     if (dot11iInfo & DRV_PIC32MZW_11I_PSK)
     {
@@ -242,20 +240,18 @@ bool WDRV_PIC32MZW_AuthCtxIsValid(const WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthC
         return false;
     }
 
-#ifdef AUTH_PMF
-    /* Open, WEP and WPA must not mandate management frame protection. */
-    if (
-            (pAuthCtx->authMod & WDRV_PIC32MZW_AUTH_MOD_MFPR)
-        &&  (
-                    (WDRV_PIC32MZW_AUTH_TYPE_OPEN == pAuthCtx->authType)
-                ||  (WDRV_PIC32MZW_AUTH_TYPE_WEP == pAuthCtx->authType)
-                ||  (WDRV_PIC32MZW_AUTH_TYPE_WPAWPA2_PERSONAL == pAuthCtx->authType)
-            )
-    )
+    if (pAuthCtx->authMod & WDRV_PIC32MZW_AUTH_MOD_MFPR)
     {
-        return false;
+        /* Management frame protection cannot be mandated in Open, WEP or WPA authentication. */
+        if (
+                (WDRV_PIC32MZW_AUTH_TYPE_OPEN == pAuthCtx->authType)
+            ||  (WDRV_PIC32MZW_AUTH_TYPE_WEP == pAuthCtx->authType)
+            ||  (WDRV_PIC32MZW_AUTH_TYPE_WPAWPA2_PERSONAL == pAuthCtx->authType)
+        )
+        {
+            return false;
+        }
     }
-#endif /* AUTH_PMF */
 
     switch (pAuthCtx->authType)
     {
@@ -282,10 +278,8 @@ bool WDRV_PIC32MZW_AuthCtxIsValid(const WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthC
         /* Check Personal authentication. */
         case WDRV_PIC32MZW_AUTH_TYPE_WPAWPA2_PERSONAL:
         case WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL:
-#if (defined AUTH_PMF) && (defined AUTH_SAE)
         case WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL:
         case WDRV_PIC32MZW_AUTH_TYPE_WPA3_PERSONAL:
-#endif
         {
             if (false == _DRV_PIC32MZW_PersonalKeyIsValid(
                     (uint8_t *const)(pAuthCtx->authInfo.personal.password),
@@ -483,23 +477,14 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
 
     if (WDRV_PIC32MZW_AUTH_TYPE_DEFAULT == authType)
     {
-#if (defined AUTH_PMF) && (defined AUTH_SAE)
         /* Set authentication type to SAE transition mode. */
         authType = WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL;
-#else
-        /* Set authentication type to WPA2-only mode. */
-        authType = WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL;
-#endif /* AUTH_PMF && AUTH_SAE */
     }
 
     dot11iInfo = DRV_PIC32MZW_Get11iMask(authType);
 
     /* Ensure the requested auth type is valid for Personal authentication. */
-#if (defined AUTH_PMF) && (defined AUTH_SAE)
     if (!(dot11iInfo & (DRV_PIC32MZW_11I_PSK | DRV_PIC32MZW_11I_SAE)))
-#else
-    if (!(dot11iInfo & DRV_PIC32MZW_11I_PSK))
-#endif /* AUTH_PMF && AUTH_SAE */
     {
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }

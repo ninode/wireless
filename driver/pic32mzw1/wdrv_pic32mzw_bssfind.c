@@ -455,7 +455,6 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSFindGetInfo
     /* Otherwise check CCMP-128 is offered and recommend WPA2 or WPA3. */
     else if (dot11iInfo & DRV_PIC32MZW_11I_CCMP128)
     {
-#if (defined AUTH_PMF) && (defined AUTH_SAE)
         /* WPA3-Personal if available. */
         if (
                 (dot11iInfo & DRV_PIC32MZW_11I_SAE)
@@ -464,15 +463,8 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSFindGetInfo
         {
             pBSSInfo->authTypeRecommended = WDRV_PIC32MZW_AUTH_TYPE_WPA3_PERSONAL;
         }
-        else
-#endif /* AUTH_PMF && AUTH_SAE */
         /* Otherwise WPA2-Personal. */
-        if (
-                (dot11iInfo & DRV_PIC32MZW_11I_PSK)
-#ifndef AUTH_PMF
-            &&  !(dot11iInfo & DRV_PIC32MZW_11I_MFP_REQUIRED)
-#endif
-        )
+        else if (dot11iInfo & DRV_PIC32MZW_11I_PSK)
         {
             pBSSInfo->authTypeRecommended = WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL;
         }
