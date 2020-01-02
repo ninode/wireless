@@ -57,6 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask(WDRV_PIC32MZW_AUTH_TYPE authType);
+DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Modify11iMask(WDRV_PIC32MZW_AUTH_MOD_MASK mod);
 
 //*******************************************************************************
 /*
@@ -122,6 +123,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_APStart
         }
         /* Convert auth type to 11i bitmap. */
         dot11iInfo = DRV_PIC32MZW_Get11iMask(pAuthCtx->authType);
+        dot11iInfo |= DRV_PIC32MZW_Modify11iMask(pAuthCtx->authMod);
     }
 
     /* Allocate memory for the WIDs. */
@@ -155,6 +157,15 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_APStart
                 pAuthCtx->authInfo.personal.password,
                 pAuthCtx->authInfo.personal.size);
     }
+#ifdef AUTH_SAE
+    if (dot11iInfo & DRV_PIC32MZW_11I_SAE)
+    {
+        /* Set SAE credentials. */
+        DRV_PIC32MZW_MultiWIDAddData(&wids, DRV_WIFI_WID_RSNA_PASSWORD,
+                pAuthCtx->authInfo.personal.password,
+                pAuthCtx->authInfo.personal.size);
+    }
+#endif /* AUTH_SAE */
 
     /* Set 11g compatibility mode 1 (2). */
     DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_11G_OPERATING_MODE, 2);

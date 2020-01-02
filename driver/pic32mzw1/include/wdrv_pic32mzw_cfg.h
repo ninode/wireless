@@ -907,17 +907,17 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
         DRV_WIFI_WID_WEP_KEY_VALUE is valid in AP/STA mode.
         This field contains the value of the WEP encryption key for the currently configured WEP key identifier.
         The configuration parameter DRV_WIFI_WID_KEY_ID should be used for configuring the required WEP key identifier before the corresponding WEP key is programmed.
-        The length of the field is 5 bytes for WEP-64 encryption and 13 bytes for WEP-128 encryption (refer to DRV_WIFI_WID_802_11I_MODE).
+        The length of the field is 5 bytes for WEP-64 encryption and 13 bytes for WEP-128 encryption.
 */
 #define DRV_WIFI_WID_WEP_KEY_VALUE                          0x3004
 
 // *****************************************************************************
 /*
     Summary:
-        WID for pass phrase key for WPA/WPA2.
+        WID for pass phrase key for WPA/WPA2 Personal.
     Description:
         DRV_WIFI_WID_11I_PSK is valid in AP/STA mode.
-        This field gives the pass phrase used to generate the Pre-Shared Key when WPA/WPA2 is enabled (refer to DRV_WIFI_WID_802_11I_MODE).
+        This field gives the pass phrase used to generate the Pre-Shared Key when WPA/WPA2 Personal is enabled.
         The length of the field can vary from 8 to 64 bytes. If the input is 64 bytes, then it is taken as the encryption/decryption key directly instead of pre-shared key.
 */
 #define DRV_WIFI_WID_11I_PSK                            0x3008
@@ -1035,6 +1035,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
                             note: Names shorter than 6 characters are left-justified with trailing zeros ('\0').
 */
 #define DRV_WIFI_WID_REG_DOMAIN_INFO                        0x4011
+
+// *****************************************************************************
+/*
+    Summary:
+        WID for password for WPA3 Personal.
+    Description:
+        DRV_WIFI_WID_RSNA_PASSWORD is valid in AP/STA mode.
+        This field gives the password used in Simultaneous Authentication of
+        Equals for WPA3 Personal.
+        The length of the field can vary from 0 to 63 bytes.
+*/
+#define DRV_WIFI_WID_RSNA_PASSWORD                          0x4012
 
 typedef enum
 {
