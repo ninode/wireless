@@ -1692,6 +1692,7 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
         {
             break;
         }
+
         case DRV_WIFI_WID_REG_DOMAIN_INFO:
         {
             if (NULL != pCtrl->pfRegDomCB)

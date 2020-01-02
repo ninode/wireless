@@ -975,7 +975,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 #define DRV_WIFI_WID_JOIN_REQ                               0x3205
 
-
 // *****************************************************************************
 /*
                     Binary Type WIDs
