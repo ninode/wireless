@@ -507,3 +507,50 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
 
     return WDRV_PIC32MZW_STATUS_OK;
 }
+
+//*******************************************************************************
+/*
+  Function:
+    WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired
+    (
+        WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+        bool isRequired
+    )
+
+  Summary:
+    Configure the Management Frame Protection Required bit of an authentication
+    context.
+
+  Description:
+    The Management Frame Protection Required bit of the authentication context
+    is set/cleared according to the isRequired parameter.
+
+  Remarks:
+    See wdrv_pic32mzw_authctx.h for usage information.
+
+*/
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired
+(
+    WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+    bool isRequired
+)
+{
+    /* Ensure authentication context is valid. */
+    if (NULL == pAuthCtx)
+    {
+        return WDRV_PIC32MZW_STATUS_INVALID_ARG;
+    }
+
+    /* Set/clear the MFPR modifier. */
+    if (true == isRequired)
+    {
+        pAuthCtx->authMod |= WDRV_PIC32MZW_AUTH_MOD_MFPR;
+    }
+    else
+    {
+        pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFPR;
+    }
+
+    return WDRV_PIC32MZW_STATUS_OK;
+}
