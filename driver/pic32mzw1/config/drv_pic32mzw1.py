@@ -187,6 +187,7 @@ def instantiateComponent(drvPic32mzw1Component):
 
     wdrvIncFiles = [
         ['drv_pic32mzw1.h',             condAlways],
+        ['drv_pic32mzw1_crypto.h',      condAlways],
         ['wdrv_pic32mzw.h',             condAlways],
         ['wdrv_pic32mzw_api.h',         condAlways],
         ['wdrv_pic32mzw_assoc.h',       condAlways],
@@ -207,6 +208,7 @@ def instantiateComponent(drvPic32mzw1Component):
         importIncFile(drvPic32mzw1Component, configName, incFileEntry)
 
     wdrvSrcFiles = [
+        ['drv_pic32mzw1_crypto.c',      condAlways],
         ['wdrv_pic32mzw.c',             condAlways],
         ['wdrv_pic32mzw_assoc.c',       condAlways],
         ['wdrv_pic32mzw_authctx.c',     condAlways],
