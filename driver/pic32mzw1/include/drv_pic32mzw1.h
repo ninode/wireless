@@ -87,7 +87,8 @@ typedef enum
     DRV_PIC32MZW_11I_MFP_REQUIRED   = 0x0100,
     DRV_PIC32MZW_11I_1X             = 0x0200,
     DRV_PIC32MZW_11I_PSK            = 0x0400,
-    DRV_PIC32MZW_11I_SAE            = 0x0800
+    DRV_PIC32MZW_11I_SAE            = 0x0800,
+    DRV_PIC32MZW_AP                 = 0x8000    // Indicates whether the settings are intended for STA or AP mode
 } DRV_PIC32MZW_11I_MASK;
 
 /* Harmony to library calls */
