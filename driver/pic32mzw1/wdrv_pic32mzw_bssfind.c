@@ -128,7 +128,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSFindFirst
     }
 
     /* Ensure the driver instance has been opened for use. */
-    if ((false == pDcpt->isOpen) || (DRV_HANDLE_INVALID == pDcpt->pCtrl->handle))
+    if ((false == pDcpt->isOpen) || (NULL == pDcpt->pCtrl) || (DRV_HANDLE_INVALID == pDcpt->pCtrl->handle))
     {
         return WDRV_PIC32MZW_STATUS_NOT_OPEN;
     }
@@ -149,6 +149,12 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSFindFirst
         filter |= 0x10;
     }
 
+    /* Scan operation is not supported in AP mode */
+    if (true == pDcpt->pCtrl->isAP)
+    {
+        return WDRV_PIC32MZW_STATUS_OPERATION_NOT_SUPPORTED;
+    }     
+    
     scanResultCache.numDescrs = 0;
 
     DRV_PIC32MZW_MultiWIDInit(&wids, 512);
