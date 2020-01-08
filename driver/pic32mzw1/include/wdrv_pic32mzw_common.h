@@ -207,7 +207,10 @@ typedef enum _WDRV_PIC32MZW_STATUS
     WDRV_PIC32MZW_STATUS_NO_ETH_BUFFER,
 
     /* Not currently connected. */
-    WDRV_PIC32MZW_STATUS_NOT_CONNECTED
+    WDRV_PIC32MZW_STATUS_NOT_CONNECTED,
+
+    /* Not currently connected. */
+    WDRV_PIC32MZW_STATUS_FEATURE_NOT_SUPPORTED            
 } WDRV_PIC32MZW_STATUS;
 
 // *****************************************************************************
