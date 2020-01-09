@@ -121,12 +121,6 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSFindFirst
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }
 
-    /* Scan is not supported in AP mode */
-    if (pDcpt->pCtrl != NULL && pDcpt->pCtrl->isAP == true)
-    {
-        return WDRV_PIC32MZW_STATUS_FEATURE_NOT_SUPPORTED;
-    }    
-
     /* Ensure request channel is valid. */
     if (channel > WDRV_PIC32MZW_CID_2_4G_CH13)
     {
