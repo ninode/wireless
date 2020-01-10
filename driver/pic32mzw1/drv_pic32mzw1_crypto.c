@@ -2,7 +2,7 @@
   PIC32MZW Wireless Driver
 
   File Name:
-    wdrv_pic32mzw_crypto.c
+    drv_pic32mzw1_crypto.c
 
   Summary:
     PIC32MZW wireless driver interface to crypto functionality.
@@ -49,17 +49,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "drv_pic32mzw1.h"
 #include "drv_pic32mzw1_crypto.h"
 #include "crypto/crypto.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: PIC32MZW Driver Defines
-// *****************************************************************************
-// *****************************************************************************
-
-static union {
-    CRYPT_HMAC_CTX   hmac_context;
-    CRYPT_RNG_CTX    rng_context;
-} g_context;
+#include "osal/osal.h"
 
 /*****************************************************************************/
 /* Big integer functions:   DRV_PIC32MZW1_Crypto_BigIntCompare               */
@@ -104,27 +94,40 @@ bool DRV_PIC32MZW1_Crypto_BigIntRandom
         uint16_t        param_len
 )
 {
+    CRYPT_RNG_CTX *rng_context;
+
     if (NULL == out)
     {
         return false;
     }
-    if (0 > CRYPT_RNG_Initialize(&g_context.rng_context))
+
+    rng_context = OSAL_Malloc(sizeof(CRYPT_RNG_CTX));
+    if (NULL == rng_context)
     {
         return false;
+    }
+
+    if (0 > CRYPT_RNG_Initialize(rng_context))
+    {
+        goto ERR;
     }
 
     if (NULL == limit)
     {
         /* If limit is not specified, any random block will do. */
-        if (0 > CRYPT_RNG_BlockGenerate(&g_context.rng_context,
+        if (0 > CRYPT_RNG_BlockGenerate(rng_context,
                                         out,
                                         param_len))
         {
-            return false;
+            goto ERR;
         }
     }
     else
     {
+        /* If the first non-zero byte of the limit is low, then it may take  */
+        /* several attempts to get a random stream which is low enough.      */
+        int tries = 2000;
+
         /* If the MSB of the limit is 0, set the MSB of the output to 0. */
         while ((param_len > 0) && (0 == *limit))
         {
@@ -134,21 +137,30 @@ bool DRV_PIC32MZW1_Crypto_BigIntRandom
         }
         if (0 == param_len)
         {
-            return false;
+            goto ERR;
         }
         /* Generate a random block of length param_len, and loop until it is */
         /* less than limit.                                                  */
         do
         {
-            if (0 > CRYPT_RNG_BlockGenerate(&g_context.rng_context,
+            if (0 == tries--)
+            {
+                goto ERR;
+            }
+            if (0 > CRYPT_RNG_BlockGenerate(rng_context,
                                             out,
                                             param_len))
             {
-                return false;
+                goto ERR;
             }
         } while (-1 != DRV_PIC32MZW1_Crypto_BigIntCompare(out, limit, param_len));
     }
+
+    OSAL_Free(rng_context);
     return true;
+ERR:
+    OSAL_Free(rng_context);
+    return false;
 }
 
 /*****************************************************************************/
@@ -164,6 +176,7 @@ bool DRV_PIC32MZW1_Crypto_HMACSHA256
         uint8_t         *digest
 )
 {
+    CRYPT_HMAC_CTX *hmac_context;
     int i;
 
     if ((NULL == salt) || (NULL == input_data_buffers) || (NULL == digest))
@@ -178,19 +191,39 @@ bool DRV_PIC32MZW1_Crypto_HMACSHA256
         }
     }
 
+    hmac_context = OSAL_Malloc(sizeof(CRYPT_HMAC_CTX));
+    if (NULL == hmac_context)
+    {
+        return false;
+    }
+
     /* Initialise the HMAC. */
-    CRYPT_HMAC_SetKey(&g_context.hmac_context, CRYPT_HMAC_SHA256, salt, salt_len);
+    if (0 != CRYPT_HMAC_SetKey(hmac_context, CRYPT_HMAC_SHA256, salt, salt_len))
+    {
+        goto ERR;
+    }
 
     /* Add each buffer. */
     for (i = 0; i < num_buffers; i++)
     {
-        CRYPT_HMAC_DataAdd( &g_context.hmac_context,
-                            input_data_buffers[i].data,
-                            input_data_buffers[i].data_len);
+        if (0 != CRYPT_HMAC_DataAdd(
+                hmac_context,
+                input_data_buffers[i].data,
+                input_data_buffers[i].data_len))
+        {
+            goto ERR;
+        }
     }
 
     /* Finalise the HMAC and obtain the digest. */
-    CRYPT_HMAC_Finalize(&g_context.hmac_context, digest);
+    if (0 != CRYPT_HMAC_Finalize(hmac_context, digest))
+    {
+        goto ERR;
+    }
 
+    OSAL_Free(hmac_context);
     return true;
+ERR:
+    OSAL_Free(hmac_context);
+    return false;
 }
