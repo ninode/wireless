@@ -102,11 +102,8 @@ typedef struct _WDRV_PIC32MZW_CTRLDCPT
     /* Flag indicating if this instance is operating as s station or soft-AP. */
     bool isAP;
 
-    /* Flag indicating if a connection has been established. */
-    bool isConnected;
-
-    /* Flag indicating if a connection attempt is in progress. */
-    bool isConnecting;
+    /* Variable to store the state of the connection. */
+    WDRV_PIC32MZW_CONN_STATE connectedState;
 
     /* Flag indicating if a BSS scan is currently in progress. */
     bool scanInProgress;
