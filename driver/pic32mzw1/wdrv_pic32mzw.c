@@ -286,68 +286,6 @@ static void* _DRV_PIC32MZW_PacketToBuf(TCPIP_MAC_PACKET *pPacket)
 // *****************************************************************************
 // *****************************************************************************
 
-//*******************************************************************************
-/*
-  Function:
-    int _WDRV_PIC32MZW_EventCallback
-    (
-        DRV_PIC32MZW_WLAN_EVENT_ID eventID,
-        void *pEventDataPtr
-    )
-
-  Summary:
-    WiFi event callback.
-
-  Description:
-    Callback to handle:
-      DRV_PIC32MZW_WLAN_EVENT_SCAN_DONE
-
-  Precondition:
-    None.
-
-  Parameters:
-    eventID       - Event ID.
-    pEventDataPtr - Pointer to event specific data.
-
-  Returns:
-    0
-
-  Remarks:
-    None.
-
-*/
-
-static int _WDRV_PIC32MZW_EventCallback
-(
-    DRV_PIC32MZW_WLAN_EVENT_ID eventID,
-    void *pEventDataPtr
-)
-{
-    WDRV_PIC32MZW_CTRLDCPT *const pDcpt = &pic32mzwCtrlDescriptor;
-
-    switch (eventID)
-    {
-        case DRV_PIC32MZW_WLAN_EVENT_SCAN_DONE:
-        {
-            if (false == pDcpt->scanInProgress)
-            {
-                break;
-            }
-
-            pDcpt->scanInProgress = false;
-            break;
-        }
-
-        default:
-        {
-            WDRV_DBG_TRACE_PRINT("_WDRV_PIC32MZW_EventCallback: %d\r\n", eventID);
-            break;
-        }
-    }
-
-    return 0;
-}
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: PIC32MZW Driver System Implementation
@@ -397,8 +335,6 @@ SYS_MODULE_OBJ WDRV_PIC32MZW_Initialize
         pic32mzwCtrlDescriptor.handle = DRV_HANDLE_INVALID;
 
         OSAL_SEM_Create(&pic32mzwCtrlDescriptor.drvAccessSemaphore, OSAL_SEM_TYPE_BINARY, 1, 1);
-
-        wdrv_pic32mzw_hook_wlan_event_handle(_WDRV_PIC32MZW_EventCallback);
 
         SYS_INT_SourceEnable(INT_SOURCE_RFMAC);
         SYS_INT_SourceEnable(INT_SOURCE_RFTM0);
@@ -1654,6 +1590,11 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
 
             DRV_PIC32MZW_StoreBSSScanResult(pScanRes);
 
+            if (0 == pScanRes->index)
+            {
+                pCtrl->scanInProgress = false;
+            }
+    
             if (NULL != pCtrl->pfBSSFindNotifyCB)
             {
                 /* Reuse find next function by pre-decrementing scan index. */
