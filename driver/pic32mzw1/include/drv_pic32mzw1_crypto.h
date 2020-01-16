@@ -27,6 +27,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdint.h>
 #include <stdbool.h>
 
+#define DRV_PIC32MZW1_CRYPTO_SHA256_DIGEST_SZ   32
+
 /* Generic type for handling data buffers. */
 typedef struct
 {
