@@ -124,9 +124,13 @@ typedef enum
 typedef enum
 {
     WDRV_PIC32MZW_AUTH_MOD_NONE     = 0,
-    /* Require protection of management frames.
-     * Not valid with Open, WEP or WPAWPA2 auth types.
-     * Ignored for WPA3-only auth types (PMF is mandatory in WPA3). */
+    /* Require protection of management frames.                              */
+    /* This modifier only applies to the following auth types:               */
+    /*      WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL                            */
+    /*      WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL                        */
+    /* It is ignored for all other auth types.                               */
+    /* It is initialised to 0 by WDRV_PIC32MZW_AuthCtxSetPersonal.           */
+    /* It may be set/cleared by WDRV_PIC32MZW_AuthCtxSetMfpRequired.         */
     WDRV_PIC32MZW_AUTH_MOD_MFPR     = 0x01,
 } WDRV_PIC32MZW_AUTH_MOD_MASK;
 
@@ -258,7 +262,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetDefaults
     Configure an authentication context for Open authentication.
 
   Description:
-    The type and state information are configured appropriately for Open
+    The auth type and information are configured appropriately for Open
       authentication.
 
   Precondition:
@@ -296,7 +300,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetOpen
     Configure an authentication context for WEP authentication.
 
   Description:
-    The type and state information are configured appropriately for WEP
+    The auth type and information are configured appropriately for WEP
       authentication.
 
   Precondition:
@@ -340,9 +344,9 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetWEP
     Configure an authentication context for WPA personal authentication.
 
   Description:
-    The type and state information are configured appropriately for personal
-      authentication (WPA2 or WPA2 mixed/compatibility mode) with the password
-      or PSK provided.
+    The auth type and information are configured appropriately for personal
+      authentication with the password or PSK provided. The
+      WDRV_PIC32MZW_AUTH_MOD_MFPR modifier is initialised to 0.
 
   Precondition:
     None.
@@ -356,6 +360,10 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetWEP
   Returns:
     WDRV_PIC32MZW_STATUS_OK             - The context has been configured.
     WDRV_PIC32MZW_STATUS_INVALID_ARG    - The parameters were incorrect.
+
+  Remarks:
+    None.
+
 */
 
 WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
@@ -376,24 +384,30 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
     )
 
   Summary:
-    Configure the Management Frame Protection Required bit of an authentication
+    Configure the WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of an authentication
     context.
 
   Description:
-    The Management Frame Protection Required bit of the authentication context
-    is set/cleared according to the isRequired parameter.
+    The WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of the authentication context is
+      set/cleared according to the isRequired parameter.
 
   Precondition:
     None.
 
   Parameters:
     pAuthCtx    - Pointer to an authentication context.
-    isRequired  - True to set the Management Frame Protection Required bit.
-                  False to clear the Management Frame Protection Required bit.
+    isRequired  - True to set the WDRV_PIC32MZW_AUTH_MOD_MFPR modifier.
+                  False to clear the WDRV_PIC32MZW_AUTH_MOD_MFPR modifier.
 
   Returns:
     WDRV_PIC32MZW_STATUS_OK             - The context has been modified.
     WDRV_PIC32MZW_STATUS_INVALID_ARG    - The parameters were incorrect.
+
+  Remarks:
+    This modifier only has an effect if the auth type is one of the following:
+        WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL
+        WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL
+    This modifier is initialised to 0 by WDRV_PIC32MZW_AuthCtxSetPersonal.
 */
 
 WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired

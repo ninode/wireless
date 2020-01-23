@@ -240,19 +240,6 @@ bool WDRV_PIC32MZW_AuthCtxIsValid(const WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthC
         return false;
     }
 
-    if (pAuthCtx->authMod & WDRV_PIC32MZW_AUTH_MOD_MFPR)
-    {
-        /* Management frame protection cannot be mandated in Open, WEP or WPA authentication. */
-        if (
-                (WDRV_PIC32MZW_AUTH_TYPE_OPEN == pAuthCtx->authType)
-            ||  (WDRV_PIC32MZW_AUTH_TYPE_WEP == pAuthCtx->authType)
-            ||  (WDRV_PIC32MZW_AUTH_TYPE_WPAWPA2_PERSONAL == pAuthCtx->authType)
-        )
-        {
-            return false;
-        }
-    }
-
     switch (pAuthCtx->authType)
     {
         /* Nothing to check for Open authentication. */
@@ -353,7 +340,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetDefaults
     Configure an authentication context for Open authentication.
 
   Description:
-    The type and state information are configured appropriately for Open
+    The auth type and information are configured appropriately for Open
       authentication.
 
   Remarks:
@@ -393,7 +380,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetOpen
     Configure an authentication context for WEP authentication.
 
   Description:
-    The type and state information are configured appropriately for WEP
+    The auth type and information are configured appropriately for WEP
       authentication.
 
   Remarks:
@@ -450,9 +437,9 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetWEP
     Configure an authentication context for WPA personal authentication.
 
   Description:
-    The type and state information are configured appropriately for personal
-      authentication (WPA2 or WPA2 mixed/compatibility mode) with the password
-      or PSK provided.
+    The auth type and information are configured appropriately for personal
+      authentication with the password or PSK provided. The
+      WDRV_PIC32MZW_AUTH_MOD_MFPR modifier is initialised to 0.
 
   Remarks:
     See wdrv_pic32mzw_authctx.h for usage information.
@@ -498,6 +485,10 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
     /* Set authentication type. */
     pAuthCtx->authType = authType;
 
+    /* Initialise the MFPR modifier to 0. Application may set it later if    */
+    /* desired via WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired. */
+    pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFPR;
+
     /* Copy the key and zero out unused parts of the buffer. */
     pAuthCtx->authInfo.personal.size = size;
     memset( pAuthCtx->authInfo.personal.password,
@@ -518,12 +509,12 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
     )
 
   Summary:
-    Configure the Management Frame Protection Required bit of an authentication
+    Configure the WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of an authentication
     context.
 
   Description:
-    The Management Frame Protection Required bit of the authentication context
-    is set/cleared according to the isRequired parameter.
+    The WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of the authentication context is
+    set/cleared according to the isRequired parameter.
 
   Remarks:
     See wdrv_pic32mzw_authctx.h for usage information.

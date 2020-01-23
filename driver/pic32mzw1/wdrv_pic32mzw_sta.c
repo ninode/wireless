@@ -57,7 +57,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask(WDRV_PIC32MZW_AUTH_TYPE authType);
-DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Modify11iMask(WDRV_PIC32MZW_AUTH_MOD_MASK mod);
+DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Modify11iMask(
+        WDRV_PIC32MZW_AUTH_TYPE type,
+        WDRV_PIC32MZW_AUTH_MOD_MASK mod
+);
 
 //*******************************************************************************
 /*
@@ -124,7 +127,8 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSConnect
 
         /* Convert authentication type to an 11i bitmap. */
         dot11iInfo = DRV_PIC32MZW_Get11iMask(pAuthCtx->authType);
-        dot11iInfo |= DRV_PIC32MZW_Modify11iMask(pAuthCtx->authMod);
+        dot11iInfo |= DRV_PIC32MZW_Modify11iMask(   pAuthCtx->authType,
+                                                    pAuthCtx->authMod);
     }
 
     channel = pBSSCtx->channel;
