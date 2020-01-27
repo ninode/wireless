@@ -670,8 +670,7 @@ DRV_HANDLE WDRV_PIC32MZW_Open(const SYS_MODULE_INDEX index, const DRV_IO_INTENT 
 
             pDcpt->pCtrl->handle                = (DRV_HANDLE)pDcpt;
             pDcpt->pCtrl->isAP                  = false;
-            pDcpt->pCtrl->isConnected           = false;
-            pDcpt->pCtrl->isConnecting          = false;
+            pDcpt->pCtrl->connectedState        = WDRV_PIC32MZW_CONN_STATE_DISCONNECTED;
             pDcpt->pCtrl->scanInProgress        = false;
             pDcpt->pCtrl->scanActiveScanTime    = DRV_PIC32MZW_DEFAULT_ACTIVE_SCAN_TIME;
             pDcpt->pCtrl->scanPassiveListenTime = DRV_PIC32MZW_DEFAULT_PASSIVE_SCAN_TIME;
@@ -730,8 +729,7 @@ void WDRV_PIC32MZW_Close(DRV_HANDLE handle)
 
     if (handle == pDcpt->pCtrl->handle)
     {
-        pDcpt->pCtrl->isConnected  = false;
-        pDcpt->pCtrl->isConnecting = false;
+        pDcpt->pCtrl->connectedState = WDRV_PIC32MZW_CONN_STATE_DISCONNECTED;
 
         for (i=0; i<WDRV_PIC32MZW_NUM_ASSOCS; i++)
         {
@@ -807,7 +805,7 @@ bool WDRV_PIC32MZW_MACLinkCheck(DRV_HANDLE hMac)
 {
     WDRV_PIC32MZW_DCPT *const pDcpt = (WDRV_PIC32MZW_DCPT *const)hMac;
 
-    return pDcpt->pCtrl->isConnected;
+    return (WDRV_PIC32MZW_CONN_STATE_CONNECTED == pDcpt->pCtrl->connectedState);
 }
 
 //*******************************************************************************
@@ -1421,7 +1419,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_InfoOpChanGet
         return WDRV_PIC32MZW_STATUS_NOT_OPEN;
     }
 
-    if (false == pDcpt->pCtrl->isConnected)
+    if (WDRV_PIC32MZW_CONN_STATE_CONNECTED != pDcpt->pCtrl->connectedState)
     {
         return WDRV_PIC32MZW_STATUS_NOT_CONNECTED;
     }
@@ -1499,19 +1497,19 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
                 break;
             }
 
-            WDRV_DBG_VERBOSE_PRINT("WIFI_WID_ASSOC_STAT: %d, %d, %d\r\n", *pData, pCtrl->isConnected, pCtrl->isConnecting);
+            WDRV_DBG_VERBOSE_PRINT("WIFI_WID_ASSOC_STAT: %d, %d\r\n", *pData, pCtrl->connectedState);
 
-            if ((0 == *pData) && ((true == pCtrl->isConnecting) || (true == pCtrl->isConnected)))
+            if ((0 == *pData) && (WDRV_PIC32MZW_CONN_STATE_DISCONNECTED != pCtrl->connectedState))
             {
                 WDRV_PIC32MZW_CONN_STATE ConnState = WDRV_PIC32MZW_CONN_STATE_FAILED;
-                pCtrl->opChannel    = WDRV_PIC32MZW_CID_ANY;
-                pCtrl->isConnecting = false;
+                pCtrl->opChannel = WDRV_PIC32MZW_CID_ANY;
 
-                if (true == pCtrl->isConnected)
+                if (WDRV_PIC32MZW_CONN_STATE_CONNECTED == pCtrl->connectedState)
                 {
                     ConnState = WDRV_PIC32MZW_CONN_STATE_DISCONNECTED;
-                    pCtrl->isConnected  = false;
                 }
+
+                pCtrl->connectedState = WDRV_PIC32MZW_CONN_STATE_DISCONNECTED;
 
                 if (false == pCtrl->isAP)
                 {
@@ -1523,10 +1521,9 @@ void WDRV_PIC32MZW_WIDProcess(uint16_t wid, uint16_t length, const uint8_t *cons
                     }
                 }
             }
-            else if ((1 == *pData) && (false == pCtrl->isConnected))
+            else if ((1 == *pData) && (WDRV_PIC32MZW_CONN_STATE_CONNECTED != pCtrl->connectedState))
             {
-                pCtrl->isConnected  = true;
-                pCtrl->isConnecting = false;
+                pCtrl->connectedState = WDRV_PIC32MZW_CONN_STATE_CONNECTED;
 
                 if (false == pCtrl->isAP)
                 {

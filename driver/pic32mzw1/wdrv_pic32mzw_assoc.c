@@ -144,7 +144,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AssocPeerAddressGet
 
         return WDRV_PIC32MZW_STATUS_OK;
     }
-    else if (true == pCtrl->isConnected)
+    else if (WDRV_PIC32MZW_CONN_STATE_CONNECTED == pCtrl->connectedState)
     {
         return WDRV_PIC32MZW_STATUS_RETRY_REQUEST;
     }
@@ -204,7 +204,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AssocRSSIGet
     /* Store the callback for use later. */
     pCtrl->pfAssociationRSSICB = pfAssociationRSSICB;
 
-    if (true == pCtrl->isConnected)
+    if (WDRV_PIC32MZW_CONN_STATE_CONNECTED == pCtrl->connectedState)
     {
         /* PIC32MZW is currently connected. */
 

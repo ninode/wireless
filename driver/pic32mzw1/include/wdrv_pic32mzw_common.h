@@ -231,6 +231,9 @@ typedef enum
     /* Association state is disconnected. */
     WDRV_PIC32MZW_CONN_STATE_DISCONNECTED,
 
+    /* Association state is connecting. */
+    WDRV_PIC32MZW_CONN_STATE_CONNECTING,
+
     /* Association state is connected. */
     WDRV_PIC32MZW_CONN_STATE_CONNECTED,
 
