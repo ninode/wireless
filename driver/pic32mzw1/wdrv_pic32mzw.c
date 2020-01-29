@@ -119,7 +119,7 @@ const TCPIP_MAC_OBJECT WDRV_PIC32MZW1_MACObject =
     WDRV_PIC32MZW_Deinitialize,
     WDRV_PIC32MZW_Reinitialize,
     WDRV_PIC32MZW_Status,
-    WDRV_PIC32MZW_Tasks,
+    WDRV_PIC32MZW_MACTasks,
     WDRV_PIC32MZW_Open,
     WDRV_PIC32MZW_Close,
     WDRV_PIC32MZW_MACLinkCheck,
@@ -480,6 +480,60 @@ SYS_STATUS WDRV_PIC32MZW_Status(SYS_MODULE_OBJ object)
 //*******************************************************************************
 /*
   Function:
+    void WDRV_PIC32MZW_MACTasks(SYS_MODULE_OBJ object)
+
+  Summary:
+    Maintains the PIC32MZW MAC drivers state machine.
+
+  Description:
+    This function is used to maintain the driver's internal state machine.
+
+  Remarks:
+    See wdrv_pic32mzw_api.h for usage information.
+
+*/
+
+void WDRV_PIC32MZW_MACTasks(SYS_MODULE_OBJ object)
+{
+    WDRV_PIC32MZW_DCPT *const pDcpt = (WDRV_PIC32MZW_DCPT *const)object;
+
+    switch (pDcpt->sysStat)
+    {
+        /* Uninitialised state. */
+        case SYS_STATUS_UNINITIALIZED:
+        {
+            break;
+        }
+
+        case SYS_STATUS_BUSY:
+        {
+            pDcpt->sysStat = SYS_STATUS_READY;
+            break;
+        }
+
+        /* Running steady state. */
+        case SYS_STATUS_READY:
+        {
+            break;
+        }
+
+        /* Error state.*/
+        case SYS_STATUS_ERROR:
+        {
+            break;
+        }
+
+        default:
+        {
+            pDcpt->sysStat = SYS_STATUS_ERROR;
+            break;
+        }
+    }
+}
+
+//*******************************************************************************
+/*
+  Function:
     void WDRV_PIC32MZW_Tasks(SYS_MODULE_OBJ object)
 
   Summary:
@@ -507,17 +561,10 @@ void WDRV_PIC32MZW_Tasks(SYS_MODULE_OBJ object)
 
         case SYS_STATUS_BUSY:
         {
-            if (pDcpt == &pic32mzwDescriptor[0])
-            {
                 if (OSAL_RESULT_TRUE == OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvAccessSemaphore, 0))
                 {
                     wdrv_pic32mzw_user_main();
                     OSAL_SEM_Post(&pic32mzwCtrlDescriptor.drvAccessSemaphore);
-                    pDcpt->sysStat = SYS_STATUS_READY;
-                }
-            }
-            else
-            {
                 pDcpt->sysStat = SYS_STATUS_READY;
             }
 

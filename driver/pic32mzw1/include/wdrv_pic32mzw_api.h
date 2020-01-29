@@ -266,6 +266,34 @@ SYS_STATUS WDRV_PIC32MZW_Status(SYS_MODULE_OBJ object);
 //*******************************************************************************
 /*
   Function:
+    void WDRV_PIC32MZW_MACTasks(SYS_MODULE_OBJ object)
+
+  Summary:
+    Maintains the PIC32MZW MAC drivers state machine.
+
+  Description:
+    This function is used to maintain the driver's internal state machine.
+
+  Precondition:
+    WDRV_PIC32MZW_Initialize must have been called before calling this function.
+
+  Parameters:
+    object  - Driver object handle, returned from WDRV_PIC32MZW_Initialize
+
+  Returns:
+    None.
+
+  Remarks:
+    This function is normally not called directly by an application. It is
+      called by the TCP/IP stack.
+
+*/
+
+void WDRV_PIC32MZW_MACTasks(SYS_MODULE_OBJ object);
+
+//*******************************************************************************
+/*
+  Function:
     void WDRV_PIC32MZW_Tasks(SYS_MODULE_OBJ object)
 
   Summary:
