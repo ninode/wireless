@@ -1766,6 +1766,15 @@ static bool DRV_PIC32MZW_AllocPktCallback
         return false;
     }
 
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+    if (ackParam == (const void*)&pic32mzMemStatistics.mem)
+    {
+        pic32mzMemStatistics.mem.free++;
+        pic32mzMemStatistics.mem.freeSize += pktHandle->pDSeg->segSize;
+        ackParam = (const void*)NULL;
+    }
+#endif
+
     if (NULL != ackParam)
     {
         pktmem_priority_t *pktmem_pri;
@@ -1998,6 +2007,7 @@ void* DRV_PIC32MZW_MemAlloc(uint16_t size)
         return NULL;
     }
 #ifdef WDRV_PIC32MZW_STATS_ENABLE
+    p_packet->ackParam = (void*)&pic32mzMemStatistics.mem;
     pic32mzMemStatistics.mem.alloc++;
     pic32mzMemStatistics.mem.allocSize += p_packet->pDSeg->segSize;
 #endif
@@ -2030,16 +2040,6 @@ void* DRV_PIC32MZW_MemAlloc(uint16_t size)
 
 int8_t DRV_PIC32MZW_MemFree(void *pBufferAddr)
 {
-#ifdef WDRV_PIC32MZW_STATS_ENABLE
-    TCPIP_MAC_PACKET *p_packet = _DRV_PIC32MZW_BufToPacket(pBufferAddr);
-
-    if (NULL != p_packet)
-    {
-        pic32mzMemStatistics.mem.free++;
-        pic32mzMemStatistics.mem.freeSize += p_packet->pDSeg->segSize;
-    }
-#endif
-
     DRV_PIC32MZW_PacketMemFree(pBufferAddr);
     return 0;
 }
