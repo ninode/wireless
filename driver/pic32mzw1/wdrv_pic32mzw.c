@@ -2130,6 +2130,13 @@ void *DRV_PIC32MZW_PacketMemAlloc(uint16_t size, MEM_PRIORITY_LEVEL_T priLevel)
 
         if (NULL == node)
         {
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+            // Print the error mesage few times....
+            if (++pic32mzMemStatistics.err.hprx > 10)
+            {
+                return NULL;
+            }
+#endif
             WDRV_DBG_ERROR_PRINT("PktMemAlloc: HPRX NULL\r\n");
             return NULL;
         }
@@ -2146,6 +2153,14 @@ void *DRV_PIC32MZW_PacketMemAlloc(uint16_t size, MEM_PRIORITY_LEVEL_T priLevel)
 
     if (NULL == p_packet)
     {
+#ifdef WDRV_PIC32MZW_STATS_ENABLE
+        // Print the error mesage few times....
+        if (++pic32mzMemStatistics.err.gen > 10)
+        {
+            return NULL;
+        }
+#endif
+      
         WDRV_DBG_ERROR_PRINT("PktMemAlloc: Alloc NULL\r\n");
         return NULL;
     }

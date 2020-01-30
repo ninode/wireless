@@ -269,6 +269,13 @@ typedef struct _WDRV_PIC32MZW_MAC_MEM_STATISTICS
 
     /* Memory allocation counters. */
     WDRV_PIC32MZW_MAC_ACCESS_COUNTER mem;
+    
+    /* Number of memory allocation errors. */
+    struct
+    {
+        uint32_t gen;
+        uint32_t hprx;
+    } err;
 } WDRV_PIC32MZW_MAC_MEM_STATISTICS;
 
 // *****************************************************************************
