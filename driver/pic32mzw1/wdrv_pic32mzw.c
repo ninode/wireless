@@ -2202,7 +2202,7 @@ void DRV_PIC32MZW_PacketMemFree(void *pPktBuff)
         pk0PktBuff = KVA1_TO_KVA0(pPktBuff);
     }
 
-    if ((pk0PktBuff >= (void*)&pic32mzwHighPriPktList[0].pkt) && (pk0PktBuff < (void*)&pic32mzwHighPriPktList[NUM_HIGH_PRI_PKTS].pkt))
+    if ((pk0PktBuff >= (void*)&pic32mzwHighPriPktList[0]) && (pk0PktBuff < (void*)&pic32mzwHighPriPktList[NUM_HIGH_PRI_PKTS]))
     {
         int i;
 
