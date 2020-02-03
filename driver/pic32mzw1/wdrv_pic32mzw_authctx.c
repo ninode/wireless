@@ -148,7 +148,7 @@ static bool _DRV_PIC32MZW_PersonalKeyIsValid
 (
     uint8_t *const pPassword,
     uint8_t size,
-    WDRV_PIC32MZW_AUTH_TYPE authType
+    DRV_PIC32MZW_11I_MASK dot11iInfo
 )
 {
     /* Check password is present. */
@@ -157,45 +157,59 @@ static bool _DRV_PIC32MZW_PersonalKeyIsValid
         return false;
     }
 
-    /* Determine if this is a password or direct PSK. */
-    if (WDRV_PIC32MZW_PSK_LEN == size)
+    /* If password is to be used for SAE, we place the same upper limit on
+     * length as for PSK passphrases. Note this is an implementation-specific
+     * restriction, not an 802.11 (2016) restriction. */
+    if (dot11iInfo & DRV_PIC32MZW_11I_SAE)
     {
-        /* PSK. */
-        while (size--)
+        if (WDRV_PIC32MZW_MAX_PSK_PASSWORD_LEN < size)
         {
-            char character = (char)(pPassword[size]);
+            return false;
+        }
+    }
 
-            /* Each character must be in the range '0-9', 'A-F' or 'a-f'. */
+    if (dot11iInfo & DRV_PIC32MZW_11I_PSK)
+    {
+        /* Determine if this is a password or direct PSK. */
+        if (WDRV_PIC32MZW_PSK_LEN == size)
+        {
+            /* PSK. */
+            while (size--)
+            {
+                char character = (char)(pPassword[size]);
+
+                /* Each character must be in the range '0-9', 'A-F' or 'a-f'. */
+                if (
+                        (('0' > character) || ('9' < character))
+                    &&  (('A' > character) || ('F' < character))
+                    &&  (('a' > character) || ('f' < character))
+                )
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            /* Password. */
+            /* Check password size. */
             if (
-                    (('0' > character) || ('9' < character))
-                &&  (('A' > character) || ('F' < character))
-                &&  (('a' > character) || ('f' < character))
+                    (WDRV_PIC32MZW_MAX_PSK_PASSWORD_LEN < size)
+                ||  (WDRV_PIC32MZW_MIN_PSK_PASSWORD_LEN > size)
             )
             {
                 return false;
             }
-        }
-    }
-    else
-    {
-        /* Password. */
-        /* Check password size. */
-        if (
-                (WDRV_PIC32MZW_MAX_PSK_PASSWORD_LEN < size)
-            ||  (WDRV_PIC32MZW_MIN_PSK_PASSWORD_LEN > size)
-        )
-        {
-            return false;
-        }
 
-        /* Each character must be in the range 0x20 to 0x7e. */
-        while (size--)
-        {
-            char character = (char)(pPassword[size]);
-
-            if ((0x20 > character) || (0x7e < character))
+            /* Each character must be in the range 0x20 to 0x7e. */
+            while (size--)
             {
-                return false;
+                char character = (char)(pPassword[size]);
+
+                if ((0x20 > character) || (0x7e < character))
+                {
+                    return false;
+                }
             }
         }
     }
@@ -251,11 +265,13 @@ bool WDRV_PIC32MZW_AuthCtxIsValid(const WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthC
         /* Check Personal authentication. */
         case WDRV_PIC32MZW_AUTH_TYPE_WPAWPA2_PERSONAL:
         case WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL:
+        case WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL:
+        case WDRV_PIC32MZW_AUTH_TYPE_WPA3_PERSONAL:
         {
             if (false == _DRV_PIC32MZW_PersonalKeyIsValid(
                     (uint8_t *const)(pAuthCtx->authInfo.personal.password),
                     pAuthCtx->authInfo.personal.size,
-                    pAuthCtx->authType
+                    DRV_PIC32MZW_Get11iMask(pAuthCtx->authType)
             ))
             {
                 return false;
@@ -324,7 +340,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetDefaults
     Configure an authentication context for Open authentication.
 
   Description:
-    The type and state information are configured appropriately for Open
+    The auth type and information are configured appropriately for Open
       authentication.
 
   Remarks:
@@ -364,7 +380,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetOpen
     Configure an authentication context for WEP authentication.
 
   Description:
-    The type and state information are configured appropriately for WEP
+    The auth type and information are configured appropriately for WEP
       authentication.
 
   Remarks:
@@ -421,9 +437,9 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetWEP
     Configure an authentication context for WPA personal authentication.
 
   Description:
-    The type and state information are configured appropriately for personal
-      authentication (WPA2 or WPA2 mixed/compatibility mode) with the password
-      or PSK provided.
+    The auth type and information are configured appropriately for personal
+      authentication with the password or PSK provided. The
+      WDRV_PIC32MZW_AUTH_MOD_MFPR modifier is initialised to 0.
 
   Remarks:
     See wdrv_pic32mzw_authctx.h for usage information.
@@ -448,19 +464,20 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
 
     if (WDRV_PIC32MZW_AUTH_TYPE_DEFAULT == authType)
     {
-        authType = WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL;
+        /* Set authentication type to SAE transition mode. */
+        authType = WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL;
     }
 
     dot11iInfo = DRV_PIC32MZW_Get11iMask(authType);
 
     /* Ensure the requested auth type is valid for Personal authentication. */
-    if (!(dot11iInfo & DRV_PIC32MZW_11I_PSK))
+    if (!(dot11iInfo & (DRV_PIC32MZW_11I_PSK | DRV_PIC32MZW_11I_SAE)))
     {
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }
 
     /* Ensure the password is valid. */
-    if (false == _DRV_PIC32MZW_PersonalKeyIsValid(pPassword, size, authType))
+    if (false == _DRV_PIC32MZW_PersonalKeyIsValid(pPassword, size, dot11iInfo))
     {
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }
@@ -468,12 +485,63 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
     /* Set authentication type. */
     pAuthCtx->authType = authType;
 
+    /* Initialise the MFPR modifier to 0. Application may set it later if    */
+    /* desired via WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired. */
+    pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFPR;
+
     /* Copy the key and zero out unused parts of the buffer. */
     pAuthCtx->authInfo.personal.size = size;
     memset( pAuthCtx->authInfo.personal.password,
             0,
             sizeof(pAuthCtx->authInfo.personal.password));
     memcpy(pAuthCtx->authInfo.personal.password, pPassword, size);
+
+    return WDRV_PIC32MZW_STATUS_OK;
+}
+
+//*******************************************************************************
+/*
+  Function:
+    WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired
+    (
+        WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+        bool isRequired
+    )
+
+  Summary:
+    Configure the WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of an authentication
+    context.
+
+  Description:
+    The WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of the authentication context is
+    set/cleared according to the isRequired parameter.
+
+  Remarks:
+    See wdrv_pic32mzw_authctx.h for usage information.
+
+*/
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired
+(
+    WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+    bool isRequired
+)
+{
+    /* Ensure authentication context is valid. */
+    if (NULL == pAuthCtx)
+    {
+        return WDRV_PIC32MZW_STATUS_INVALID_ARG;
+    }
+
+    /* Set/clear the MFPR modifier. */
+    if (true == isRequired)
+    {
+        pAuthCtx->authMod |= WDRV_PIC32MZW_AUTH_MOD_MFPR;
+    }
+    else
+    {
+        pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFPR;
+    }
 
     return WDRV_PIC32MZW_STATUS_OK;
 }
