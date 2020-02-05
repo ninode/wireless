@@ -438,8 +438,8 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetWEP
 
   Description:
     The auth type and information are configured appropriately for personal
-      authentication with the password or PSK provided. The
-      WDRV_PIC32MZW_AUTH_MOD_MFPR modifier is initialised to 0.
+      authentication with the password or PSK provided. The Management Frame
+      Protection configuration is initialised to WDRV_PIC32MZW_AUTH_MFP_ENABLED.
 
   Remarks:
     See wdrv_pic32mzw_authctx.h for usage information.
@@ -485,9 +485,11 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
     /* Set authentication type. */
     pAuthCtx->authType = authType;
 
-    /* Initialise the MFPR modifier to 0. Application may set it later if    */
-    /* desired via WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired. */
-    pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFPR;
+    /* Initialise the MFP configuration to WDRV_PIC32MZW_AUTH_MFP_ENABLED.   */
+    /* The Application may change the configuration later if desired via     */
+    /* WDRV_PIC32MZW_AuthCtxConfigureMfp.                                    */
+    pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFP_REQ;
+    pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFP_OFF;
 
     /* Copy the key and zero out unused parts of the buffer. */
     pAuthCtx->authInfo.personal.size = size;
@@ -502,29 +504,27 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
 //*******************************************************************************
 /*
   Function:
-    WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired
+    WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxConfigureMfp
     (
         WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
-        bool isRequired
+        WDRV_PIC32MZW_AUTH_MFP_CONFIG config
     )
 
   Summary:
-    Configure the WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of an authentication
-    context.
+    Set the Management Frame Protection configuration of an authentication
+      context.
 
   Description:
-    The WDRV_PIC32MZW_AUTH_MOD_MFPR modifier of the authentication context is
-    set/cleared according to the isRequired parameter.
+    The authentication context is updated with the Management Frame Protection
+      configuration specified in the config parameter.
 
   Remarks:
     See wdrv_pic32mzw_authctx.h for usage information.
-
 */
-
-WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxConfigureMfp
 (
     WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
-    bool isRequired
+    WDRV_PIC32MZW_AUTH_MFP_CONFIG config
 )
 {
     /* Ensure authentication context is valid. */
@@ -533,15 +533,29 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetMfpRequired
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }
 
-    /* Set/clear the MFPR modifier. */
-    if (true == isRequired)
+    /* Update the authentication context. */
+    switch (config)
     {
-        pAuthCtx->authMod |= WDRV_PIC32MZW_AUTH_MOD_MFPR;
-    }
-    else
-    {
-        pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFPR;
+        case WDRV_PIC32MZW_AUTH_MFP_ENABLED:
+        {
+            pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFP_REQ;
+            pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFP_OFF;
+            break;
+        }
+        case WDRV_PIC32MZW_AUTH_MFP_REQUIRED:
+        {
+            pAuthCtx->authMod |= WDRV_PIC32MZW_AUTH_MOD_MFP_REQ;
+            pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFP_OFF;
+            break;
+        }
+        case WDRV_PIC32MZW_AUTH_MFP_DISABLED:
+        {
+            pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_MFP_REQ;
+            pAuthCtx->authMod |= WDRV_PIC32MZW_AUTH_MOD_MFP_OFF;
+            break;
+        }
     }
 
     return WDRV_PIC32MZW_STATUS_OK;
 }
+

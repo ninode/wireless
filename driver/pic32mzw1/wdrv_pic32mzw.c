@@ -2384,7 +2384,7 @@ DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Modify11iMask(
 {
     DRV_PIC32MZW_11I_MASK dot11iInfo = 0;
 
-    if (mod & WDRV_PIC32MZW_AUTH_MOD_MFPR)
+    if (mod & WDRV_PIC32MZW_AUTH_MOD_MFP_REQ)
     {
         if (
                 (WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL == type)
@@ -2392,6 +2392,13 @@ DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Modify11iMask(
         )
         {
             dot11iInfo |= DRV_PIC32MZW_11I_BIPCMAC128 | DRV_PIC32MZW_11I_MFP_REQUIRED;
+        }
+    }
+    if (mod & WDRV_PIC32MZW_AUTH_MOD_MFP_OFF)
+    {
+        if (!(dot11iInfo & DRV_PIC32MZW_11I_MFP_REQUIRED))
+        {
+            dot11iInfo &= ~DRV_PIC32MZW_11I_BIPCMAC128;
         }
     }
 
