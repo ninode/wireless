@@ -2345,10 +2345,14 @@ void DRV_PIC32MZW_WIDTxQueuePush(void *pPktBuff)
 //*******************************************************************************
 /*
   Function:
-    DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask(WDRV_PIC32MZW_AUTH_TYPE authType)
+    DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask
+    (
+        WDRV_PIC32MZW_AUTH_TYPE authType,
+        WDRV_PIC32MZW_AUTH_MOD_MASK authMod
+    )
 
   Summary:
-    Convert authentication type to 11i info.
+    Convert authentication type and modifiers to 11i info.
 
   Description:
 
@@ -2357,44 +2361,43 @@ void DRV_PIC32MZW_WIDTxQueuePush(void *pPktBuff)
 
   Parameters:
     authType - Auth type to convert.
+    authMod  - Modifiers to the authentication type.
 
   Returns:
-    11i info mapped from auth type.
+    11i info mapped from auth type and modifiers.
 
   Remarks:
     None.
 */
 
-DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask(WDRV_PIC32MZW_AUTH_TYPE authType)
-{
-    DRV_PIC32MZW_11I_MASK dot11iInfo = 0;
-
-    if (authType < WDRV_PIC32MZW_AUTH_TYPE_MAX)
-    {
-        dot11iInfo = mapAuthTypeTo11i[authType];
-    }
-
-    return dot11iInfo;
-}
-
-DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Modify11iMask(
-        WDRV_PIC32MZW_AUTH_TYPE type,
-        WDRV_PIC32MZW_AUTH_MOD_MASK mod
+DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask
+(
+    WDRV_PIC32MZW_AUTH_TYPE authType,
+    WDRV_PIC32MZW_AUTH_MOD_MASK authMod
 )
 {
-    DRV_PIC32MZW_11I_MASK dot11iInfo = 0;
+    DRV_PIC32MZW_11I_MASK dot11iInfo;
 
-    if (mod & WDRV_PIC32MZW_AUTH_MOD_MFP_REQ)
+    if (authType >= WDRV_PIC32MZW_AUTH_TYPE_MAX)
+    {
+        return 0;
+    }
+
+    /* Convert auth type to 11i info. */
+    dot11iInfo = mapAuthTypeTo11i[authType];
+
+    /* Apply any relevant modifiers. */
+    if (authMod & WDRV_PIC32MZW_AUTH_MOD_MFP_REQ)
     {
         if (
-                (WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL == type)
-            ||  (WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL == type)
+                (WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL == authType)
+            ||  (WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL == authType)
         )
         {
             dot11iInfo |= DRV_PIC32MZW_11I_BIPCMAC128 | DRV_PIC32MZW_11I_MFP_REQUIRED;
         }
     }
-    if (mod & WDRV_PIC32MZW_AUTH_MOD_MFP_OFF)
+    if (authMod & WDRV_PIC32MZW_AUTH_MOD_MFP_OFF)
     {
         if (!(dot11iInfo & DRV_PIC32MZW_11I_MFP_REQUIRED))
         {

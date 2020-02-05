@@ -56,7 +56,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask(WDRV_PIC32MZW_AUTH_TYPE authType);
+DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask
+(
+    WDRV_PIC32MZW_AUTH_TYPE authType,
+    WDRV_PIC32MZW_AUTH_MOD_MASK authMod
+);
 
 //*******************************************************************************
 /*
@@ -271,7 +275,7 @@ bool WDRV_PIC32MZW_AuthCtxIsValid(const WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthC
             if (false == _DRV_PIC32MZW_PersonalKeyIsValid(
                     (uint8_t *const)(pAuthCtx->authInfo.personal.password),
                     pAuthCtx->authInfo.personal.size,
-                    DRV_PIC32MZW_Get11iMask(pAuthCtx->authType)
+                    DRV_PIC32MZW_Get11iMask(pAuthCtx->authType, pAuthCtx->authMod)
             ))
             {
                 return false;
@@ -468,7 +472,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetPersonal
         authType = WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL;
     }
 
-    dot11iInfo = DRV_PIC32MZW_Get11iMask(authType);
+    dot11iInfo = DRV_PIC32MZW_Get11iMask(authType, WDRV_PIC32MZW_AUTH_MOD_NONE);
 
     /* Ensure the requested auth type is valid for Personal authentication. */
     if (!(dot11iInfo & (DRV_PIC32MZW_11I_PSK | DRV_PIC32MZW_11I_SAE)))
