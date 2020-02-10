@@ -415,6 +415,11 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSetWEP
     /* Set authentication type to WEP. */
     pAuthCtx->authType = WDRV_PIC32MZW_AUTH_TYPE_WEP;
 
+    /* Initialise Shared Key authentication to disabled.                     */
+    /* The Application may enable Shared Key later if desired via            */
+    /* WDRV_PIC32MZW_AuthCtxSharedKey.                                       */
+    pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_SHARED_KEY;
+
     /* Set key index and size. */
     pAuthCtx->authInfo.WEP.idx  = idx;
     pAuthCtx->authInfo.WEP.size = size;
@@ -563,3 +568,47 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxConfigureMfp
     return WDRV_PIC32MZW_STATUS_OK;
 }
 
+//*******************************************************************************
+/*
+  Function:
+    WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSharedKey
+    (
+        WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+        bool enable
+    )
+
+  Summary:
+    Enable or disable Shared Key authentication in an authentication context.
+
+  Description:
+    The authentication context is updated to enable or disable Shared Key
+      authentication.
+
+  Remarks:
+    See wdrv_pic32mzw_authctx.h for usage information.
+*/
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSharedKey
+(
+    WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+    bool enable
+)
+{
+    /* Ensure authentication context is valid. */
+    if (NULL == pAuthCtx)
+    {
+        return WDRV_PIC32MZW_STATUS_INVALID_ARG;
+    }
+
+    /* Update the authentication context. */
+    if (true == enable)
+    {
+        pAuthCtx->authMod |= WDRV_PIC32MZW_AUTH_MOD_SHARED_KEY;
+    }
+    else
+    {
+        pAuthCtx->authMod &= ~WDRV_PIC32MZW_AUTH_MOD_SHARED_KEY;
+    }
+
+    return WDRV_PIC32MZW_STATUS_OK;
+}

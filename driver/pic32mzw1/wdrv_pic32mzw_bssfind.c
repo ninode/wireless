@@ -61,6 +61,7 @@ static WDRV_PIC32MZW_SCAN_RESULT_CACHE scanResultCache;
 
 static const WDRV_PIC32MZW_SEC_MASK map11iToSecMask[] = {
     0,                                  //DRV_PIC32MZW_PRIVACY
+    0,                                  //DRV_PIC32MZW_SKEY
     WDRV_PIC32MZW_SEC_BIT_WEP,          //DRV_PIC32MZW_11I_WEP
     WDRV_PIC32MZW_SEC_BIT_WEP,          //DRV_PIC32MZW_11I_WEP104
     0,                                  //DRV_PIC32MZW_11I_WPAIE

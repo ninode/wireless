@@ -125,20 +125,27 @@ typedef enum
 typedef enum
 {
     /* No modifiers set; the default behaviour for each auth type applies. */
-    WDRV_PIC32MZW_AUTH_MOD_NONE     = 0,
+    WDRV_PIC32MZW_AUTH_MOD_NONE         = 0,
     /* If set, this modifier causes management frame protection to be required.
      * It is relevant to the following auth types:
      *      WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL
      *      WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL
      * This modifier can be set/cleared by WDRV_PIC32MZW_AuthCtxConfigureMfp. */
-    WDRV_PIC32MZW_AUTH_MOD_MFP_REQ  = 0x01,
+    WDRV_PIC32MZW_AUTH_MOD_MFP_REQ      = 0x01,
     /* If set, this modifier causes management frame protection to be disabled.
      * It is relevant to the following auth types:
      *      WDRV_PIC32MZW_AUTH_TYPE_WPAWPA2_PERSONAL
      *      WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL
      * This modifier is ignored if WDRV_PIC32MZW_AUTH_MOD_MFP_REQ is set.
      * This modifier can be set/cleared by WDRV_PIC32MZW_AuthCtxConfigureMfp. */
-    WDRV_PIC32MZW_AUTH_MOD_MFP_OFF  = 0x02,
+    WDRV_PIC32MZW_AUTH_MOD_MFP_OFF      = 0x02,
+    /* If set, this modifier allows the device (as supplicant) to attempt
+     * Shared Key authentication in the event that Open System authentication
+     * is rejected by the authenticator.
+     * It is relevant to the following auth types:
+     *      WDRV_PIC32MZW_AUTH_TYPE_WEP
+     * This modifier can be set/cleared by WDRV_PIC32MZW_AuthCtxSharedKey. */
+    WDRV_PIC32MZW_AUTH_MOD_SHARED_KEY   = 0x04,
 } WDRV_PIC32MZW_AUTH_MOD_MASK;
 
 // *****************************************************************************
@@ -460,6 +467,47 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxConfigureMfp
 (
     WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
     WDRV_PIC32MZW_AUTH_MFP_CONFIG config
+);
+
+//*******************************************************************************
+/*
+  Function:
+    WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSharedKey
+    (
+        WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+        bool enable
+    )
+
+  Summary:
+    Enable or disable Shared Key authentication in an authentication context.
+
+  Description:
+    The authentication context is updated to enable or disable Shared Key
+      authentication.
+
+  Precondition:
+    None.
+
+  Parameters:
+    pAuthCtx    - Pointer to an authentication context.
+    enable      - True to enable Shared Key authentication, false to disable.
+
+  Returns:
+    WDRV_PIC32MZW_STATUS_OK             - The context has been updated.
+    WDRV_PIC32MZW_STATUS_INVALID_ARG    - The parameters were incorrect.
+
+  Remarks:
+    Shared Key authentication is initialised as disabled by
+      WDRV_PIC32MZW_AuthCtxSetWEP.
+    Shared Key is not available when the device is an authenticator.
+    Shared Key authentication is only attempted if Open System authentication
+      fails (i.e. not supported by the authenticator).
+*/
+
+WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_AuthCtxSharedKey
+(
+    WDRV_PIC32MZW_AUTH_CONTEXT *const pAuthCtx,
+    bool enable
 );
 
 #endif /* _WDRV_PIC32MZW_AUTHCTX_H */

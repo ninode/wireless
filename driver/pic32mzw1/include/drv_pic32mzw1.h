@@ -77,18 +77,20 @@ typedef enum
 typedef enum
 {
     DRV_PIC32MZW_PRIVACY            = 0x0001,  // Not 11i, but included here for convenience
-    DRV_PIC32MZW_11I_WEP            = 0x0002,
-    DRV_PIC32MZW_11I_WEP104         = 0x0004,
-    DRV_PIC32MZW_11I_WPAIE          = 0x0008,
-    DRV_PIC32MZW_11I_RSNE           = 0x0010,
-    DRV_PIC32MZW_11I_CCMP128        = 0x0020,
-    DRV_PIC32MZW_11I_TKIP           = 0x0040,
-    DRV_PIC32MZW_11I_BIPCMAC128     = 0x0080,
-    DRV_PIC32MZW_11I_MFP_REQUIRED   = 0x0100,
-    DRV_PIC32MZW_11I_1X             = 0x0200,
-    DRV_PIC32MZW_11I_PSK            = 0x0400,
-    DRV_PIC32MZW_11I_SAE            = 0x0800,
-    DRV_PIC32MZW_AP                 = 0x8000    // Indicates whether the settings are intended for STA or AP mode
+    DRV_PIC32MZW_SKEY               = 0x0002,  // Not 11i, but included here for convenience
+    DRV_PIC32MZW_11I_WEP            = 0x0004,
+    DRV_PIC32MZW_11I_WEP104         = 0x0008,
+    DRV_PIC32MZW_11I_WPAIE          = 0x0010,
+    DRV_PIC32MZW_11I_RSNE           = 0x0020,
+    DRV_PIC32MZW_11I_CCMP128        = 0x0040,
+    DRV_PIC32MZW_11I_TKIP           = 0x0080,
+    DRV_PIC32MZW_11I_BIPCMAC128     = 0x0100,
+    DRV_PIC32MZW_11I_MFP_REQUIRED   = 0x0200,
+    DRV_PIC32MZW_11I_1X             = 0x0400,
+    DRV_PIC32MZW_11I_PSK            = 0x0800,
+    DRV_PIC32MZW_11I_SAE            = 0x1000,
+    DRV_PIC32MZW_AP                 = 0x8000,   // Indicates whether the settings are intended for STA or AP mode
+    DRV_PIC32MZW_RSNA_MASK          = 0x1FF0,   // Mask of bits linked to RSNA's
 } DRV_PIC32MZW_11I_MASK;
 
 /* Harmony to library calls */

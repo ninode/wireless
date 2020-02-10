@@ -2404,6 +2404,13 @@ DRV_PIC32MZW_11I_MASK DRV_PIC32MZW_Get11iMask
             dot11iInfo &= ~DRV_PIC32MZW_11I_BIPCMAC128;
         }
     }
+    if (authMod & WDRV_PIC32MZW_AUTH_MOD_SHARED_KEY)
+    {
+        if (WDRV_PIC32MZW_AUTH_TYPE_WEP == authType)
+        {
+            dot11iInfo |= DRV_PIC32MZW_SKEY;
+        }
+    }
 
     return dot11iInfo;
 }

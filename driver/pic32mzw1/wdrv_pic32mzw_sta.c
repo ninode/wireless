@@ -163,7 +163,10 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSConnect
     DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_11I_SETTINGS, (uint32_t)dot11iInfo);
 
     /* Set credentials for whichever authentication types are enabled. */
-    if (DRV_PIC32MZW_PRIVACY == dot11iInfo)
+    if (
+            (dot11iInfo & DRV_PIC32MZW_PRIVACY)
+        &&  !(dot11iInfo & DRV_PIC32MZW_RSNA_MASK)
+    )
     {
         /* Set WEP credentials. */
         DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_KEY_ID, pAuthCtx->authInfo.WEP.idx-1);
