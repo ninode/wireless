@@ -115,16 +115,36 @@ def setIncPath(component, configName, incPathEntry):
 def instantiateComponent(drvPic32mzw1Component):
     print('PIC32MZW1 Driver Component')
     configName = Variables.get('__CONFIGURATION_NAME')
+    
+    Database.activateComponents(['HarmonyCore'])
+    Database.activateComponents(['lib_crypto'])
+    Database.activateComponents(['tcpipNetConfig'])
+    Database.activateComponents(['tcpipStack'])
 
-    drvPic32mzw1Component.setCapabilityEnabled("libdrvPic32mzw1Mac", True)
+    drvPic32mzw1Component.addDependency('Crypto_PIC32MZW1_Dependency', 'LIB_CRYPTO', True, True)
 
-    Database.setSymbolValue("core", 'RFMAC_INTERRUPT_ENABLE', True, 1)
-    Database.setSymbolValue("core", 'RFMAC_INTERRUPT_HANDLER_LOCK', True, 1)
-    Database.setSymbolValue("core", 'RFMAC_INTERRUPT_HANDLER', 'WDRV_PIC32MZW_TasksRFMACISR', 1)
+    drvPic32mzw1Component.setCapabilityEnabled('libdrvPic32mzw1Mac', True)
 
-    Database.setSymbolValue("core", 'RFTM0_INTERRUPT_ENABLE', True, 1)
-    Database.setSymbolValue("core", 'RFTM0_INTERRUPT_HANDLER_LOCK', True, 1)
-    Database.setSymbolValue("core", 'RFTM0_INTERRUPT_HANDLER', 'WDRV_PIC32MZW_TasksRFTimer0ISR', 1)
+    Database.setSymbolValue('core', 'RFMAC_INTERRUPT_ENABLE', True, 1)
+    Database.setSymbolValue('core', 'RFMAC_INTERRUPT_HANDLER_LOCK', True, 1)
+    Database.setSymbolValue('core', 'RFMAC_INTERRUPT_HANDLER', 'WDRV_PIC32MZW_TasksRFMACISR', 1)
+
+    Database.setSymbolValue('core', 'RFTM0_INTERRUPT_ENABLE', True, 1)
+    Database.setSymbolValue('core', 'RFTM0_INTERRUPT_HANDLER_LOCK', True, 1)
+    Database.setSymbolValue('core', 'RFTM0_INTERRUPT_HANDLER', 'WDRV_PIC32MZW_TasksRFTimer0ISR', 1)
+
+    # Enable dependent Harmony core components
+    if Database.getSymbolValue('HarmonyCore', 'ENABLE_DRV_COMMON') == False: 
+        Database.setSymbolValue('HarmonyCore', 'ENABLE_DRV_COMMON', True)
+
+    if Database.getSymbolValue('HarmonyCore', 'ENABLE_SYS_COMMON') == False: 
+        Database.setSymbolValue('HarmonyCore', 'ENABLE_SYS_COMMON', True)
+
+    if Database.getSymbolValue('HarmonyCore', 'ENABLE_SYS_INT') == False: 
+        Database.setSymbolValue('HarmonyCore', 'ENABLE_SYS_INT', True)
+
+    if Database.getSymbolValue('HarmonyCore', 'ENABLE_OSAL') == False: 
+        Database.setSymbolValue('HarmonyCore', 'ENABLE_OSAL', True)
 
     # Log Level
     pic32mzw1LogLevel = drvPic32mzw1Component.createComboSymbol('DRV_WIFI_PIC32MZW1_LOG_LEVEL', None, ['None', 'Error', 'Inform', 'Trace', 'Verbose'])
@@ -283,16 +303,13 @@ def instantiateComponent(drvPic32mzw1Component):
 def setVisibilityRTOSMenu(symbol, event):
     if (event['value'] == None):
         symbol.setVisible(False)
-        print("WiFi Driver Bare Metal")
+        print('WiFi Driver Bare Metal')
     elif (event['value'] != 'BareMetal'):
         symbol.setVisible(True)
-        print("WiFi Driver RTOS")
+        print('WiFi Driver RTOS')
     else:
         symbol.setVisible(False)
-        print("WiFi Driver Bare Metal")
-
-    Database.setSymbolValue('HarmonyCore', 'ENABLE_SYS_COMMON', True)
-    Database.setSymbolValue('HarmonyCore', 'ENABLE_DRV_COMMON', True)
+        print('WiFi Driver Bare Metal')
 
 def setVisibilityRTOSTaskConfig(symbol, event):
     if (event['value'] == 'Standalone'):
