@@ -116,10 +116,7 @@ def instantiateComponent(drvPic32mzw1Component):
     print('PIC32MZW1 Driver Component')
     configName = Variables.get('__CONFIGURATION_NAME')
     
-    Database.activateComponents(['HarmonyCore'])
-    Database.activateComponents(['lib_crypto'])
-    Database.activateComponents(['tcpipNetConfig'])
-    Database.activateComponents(['tcpipStack'])
+    Database.activateComponents(['HarmonyCore', 'lib_crypto', 'lib_wolfcrypt', 'tcpipNetConfig', 'tcpipStack'])
 
     drvPic32mzw1Component.addDependency('Crypto_PIC32MZW1_Dependency', 'LIB_CRYPTO', True, True)
 
@@ -145,6 +142,9 @@ def instantiateComponent(drvPic32mzw1Component):
 
     if Database.getSymbolValue('HarmonyCore', 'ENABLE_OSAL') == False: 
         Database.setSymbolValue('HarmonyCore', 'ENABLE_OSAL', True)
+
+    if Database.getSymbolValue('lib_wolfcrypt', 'wolfcrypt_sha256') == False: 
+        Database.setSymbolValue('lib_wolfcrypt', 'wolfcrypt_sha256', True)
 
     # Log Level
     pic32mzw1LogLevel = drvPic32mzw1Component.createComboSymbol('DRV_WIFI_PIC32MZW1_LOG_LEVEL', None, ['None', 'Error', 'Inform', 'Trace', 'Verbose'])
