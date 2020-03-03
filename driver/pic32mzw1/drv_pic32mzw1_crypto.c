@@ -109,7 +109,8 @@ bool DRV_PIC32MZW1_Crypto_BigIntRandom
 
     if (0 > CRYPT_RNG_Initialize(rng_context))
     {
-        goto ERR;
+        OSAL_Free(rng_context);
+        return false;
     }
 
     if (NULL == limit)
@@ -156,9 +157,15 @@ bool DRV_PIC32MZW1_Crypto_BigIntRandom
         } while (-1 != DRV_PIC32MZW1_Crypto_BigIntCompare(out, limit, param_len));
     }
 
+#ifdef CRYPT_RNG_Deinitialize
+    CRYPT_RNG_Deinitialize(rng_context);
+#endif
     OSAL_Free(rng_context);
     return true;
 ERR:
+#ifdef CRYPT_RNG_Deinitialize
+    CRYPT_RNG_Deinitialize(rng_context);
+#endif
     OSAL_Free(rng_context);
     return false;
 }
