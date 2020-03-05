@@ -74,6 +74,24 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 // *****************************************************************************
 // *****************************************************************************
+// Section: WiFi Firmware Information Definitions
+// *****************************************************************************
+// *****************************************************************************
+
+#define WDRV_PIC32MZW_WIFI_FIRMWARE_ID              IDHash
+#define WDRV_PIC32MZW_WIFI_FIRMWARE_BUILD_DATE      BuildDate
+#define WDRV_PIC32MZW_WIFI_FIRMWARE_BUILD_TIME      BuildTime
+
+#define WDRV_PIC32MZW_WiFiFirmwareInfo(NAME) DRV_PIC32MZW_LibraryInfo(NAME)
+
+// DOM-IGNORE-BEGIN
+extern const char DRV_PIC32MZW_LibraryInfo(IDHash)[];
+extern const char DRV_PIC32MZW_LibraryInfo(BuildDate)[];
+extern const char DRV_PIC32MZW_LibraryInfo(BuildTime)[];
+// DOM-IGNORE-END
+
+// *****************************************************************************
+// *****************************************************************************
 // Section: Data Type Definitions
 // *****************************************************************************
 // *****************************************************************************
