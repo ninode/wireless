@@ -194,6 +194,8 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_BSSConnect
     DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_ACK_POLICY, 0);
     /* Set 11n enabled (1). */
     DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_11N_ENABLE, 1);
+    /* Set short preamble to auto selection mode */
+    DRV_PIC32MZW_MultiWIDAddValue(&wids, DRV_WIFI_WID_PREAMBLE, 2);
 
     /* Write the WIDs. */
     if (false == DRV_PIC32MZW_MultiWid_Write(&wids))

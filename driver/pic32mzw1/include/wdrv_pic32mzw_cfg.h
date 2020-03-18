@@ -106,6 +106,20 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 /*
     Summary:
+        WID for short preamble capabilities
+    Description:
+        DRV_WIFI_WID_PREAMBLE is used for short preamble capabilities.
+        The supported values are shown below,
+                Description                     Value
+                Short preamble supported        0
+                Short preamble unsupported      1
+                Short preamble auto selection   2
+*/
+#define DRV_WIFI_WID_PREAMBLE                             0x0003
+
+// *****************************************************************************
+/*
+    Summary:
         WID for  operating mode values.
     Description:
         DRV_WIFI_WID_11G_OPERATING_MODE valid only when 11g or 11n is enabled.
