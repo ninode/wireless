@@ -1814,6 +1814,17 @@ void WDRV_PIC32MZW_TasksRFTimer0ISR(void)
     None.
 */
 
+static bool DRV_PIC32MZW_AllocPktCallbackDebug
+(
+    TCPIP_MAC_PACKET* pktHandle,
+    const void* ackParam
+)
+{
+    WDRV_DBG_ERROR_PRINT("Double free 0x%08x\r\n", pktHandle);
+    
+    return false;
+}
+
 static bool DRV_PIC32MZW_AllocPktCallback
 (
     TCPIP_MAC_PACKET* pktHandle,
@@ -1853,6 +1864,8 @@ static bool DRV_PIC32MZW_AllocPktCallback
         }
 #endif
     }
+    
+    pktHandle->ackFunc = DRV_PIC32MZW_AllocPktCallbackDebug;
 
     _TCPIP_PKT_PacketFree(pktHandle);
 
