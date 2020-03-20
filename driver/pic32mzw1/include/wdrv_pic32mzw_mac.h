@@ -69,10 +69,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac  - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac  - Client handle obtained by a call to WDRV_PIC32MZW_Open.
 
   Returns:
     Flag indicating network active state (true/false).
@@ -100,10 +100,10 @@ bool WDRV_PIC32MZW_MACLinkCheck(DRV_HANDLE hMac);
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac        - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac        - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     DestMACAddr - Pointer to new MAC address.
 
   Returns:
@@ -134,10 +134,10 @@ TCPIP_MAC_RES WDRV_PIC32MZW_MACRxFilterHashTableEntrySet
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac    - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac    - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     pwrMode - New power mode.
 
   Returns:
@@ -164,10 +164,10 @@ bool WDRV_PIC32MZW_MACPowerMode(DRV_HANDLE hMac, TCPIP_MAC_POWER_MODE pwrMode);
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     ptrPacket - Pointer to Ethernet frame to send.
 
   Returns:
@@ -198,10 +198,10 @@ TCPIP_MAC_RES WDRV_PIC32MZW_MACPacketTx(DRV_HANDLE hMac, TCPIP_MAC_PACKET* ptrPa
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     pRes      -
     ppPktStat -
 
@@ -233,10 +233,10 @@ TCPIP_MAC_PACKET* WDRV_PIC32MZW_MACPacketRx
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac - Client handle obtained by a call to WDRV_PIC32MZW_Open.
 
   Returns:
     None.
@@ -265,10 +265,10 @@ TCPIP_MAC_RES WDRV_PIC32MZW_MACProcess(DRV_HANDLE hMac);
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac          - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac          - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     pRxStatistics - Pointer to receive statistics structure.
     pTxStatistics - Pointer to transmit statistics structure.
 
@@ -303,10 +303,10 @@ TCPIP_MAC_RES WDRV_PIC32MZW_MACStatisticsGet
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac       - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac       - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     pMacParams - Pointer to structure to fill.
 
   Returns:
@@ -341,10 +341,10 @@ TCPIP_MAC_RES WDRV_PIC32MZW_MACParametersGet
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac        - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac        - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     pRegEntries -
     nEntries    -
     pHwEntries  -
@@ -423,10 +423,10 @@ size_t WDRV_PIC32MZW_MACConfigGet
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     macEvents - Mask of events to be changed.
     enable    - Flag indicating if the events are added or removed.
 
@@ -458,10 +458,10 @@ bool WDRV_PIC32MZW_MACEventMaskSet
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac      - Client handle obtained by a call to WDRV_PIC32MZW_Open.
     macEvents - Mask of events to be changed.
 
   Returns:
@@ -487,10 +487,10 @@ bool WDRV_PIC32MZW_MACEventAcknowledge(DRV_HANDLE hMac, TCPIP_MAC_EVENT macEvent
 
   Precondition:
     WDRV_PIC32MZW_MACInitialize should have been called.
-    WDRV_PIC32MZW_MACOpen should have been called to obtain a valid handle.
+    WDRV_PIC32MZW_Open should have been called to obtain a valid handle.
 
   Parameters:
-    hMac - Client handle obtained by a call to WDRV_PIC32MZW_MACOpen.
+    hMac - Client handle obtained by a call to WDRV_PIC32MZW_Open.
 
   Returns:
     None.
