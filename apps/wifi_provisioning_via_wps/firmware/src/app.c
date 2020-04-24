@@ -119,7 +119,7 @@ static void APP_DebugPrint(uint8_t *pBuf, size_t len)
             }
 
             memcpy(&printBuff[printBuffPtr], pBuf, len);
-            SYS_CONSOLE_Write(0, STDOUT_FILENO, &printBuff[printBuffPtr], len);
+            SYS_CONSOLE_Write(appData.consoleHandle, &printBuff[printBuffPtr], len);
 
             printBuffPtr = (printBuffPtr + len + 3) & ~3;
 
@@ -214,6 +214,9 @@ void APP_Tasks(void)
     {
         case APP_STATE_INIT:
         {
+            /* Get handles to both the USB console instances */
+            appData.consoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
+            
             if (SYS_STATUS_READY == WDRV_WINC_Status(sysObj.drvWifiWinc))
             {
                 appData.state = APP_STATE_WDRV_INIT_READY;

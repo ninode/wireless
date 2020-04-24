@@ -57,6 +57,7 @@
 #include <stdlib.h>
 #include "configuration.h"
 #include "definitions.h"
+#include "system/console/sys_console.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -114,7 +115,7 @@ typedef struct
     /* The application's current state */
     APP_STATES state;
 
-    /* TODO: Define any additional data used by the application. */
+    SYS_CONSOLE_HANDLE consoleHandle;
 
 } APP_DATA;
 
