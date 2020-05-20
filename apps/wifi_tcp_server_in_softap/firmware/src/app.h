@@ -200,8 +200,6 @@ char APP_HexToChar(uint8_t hex);
 
 void APP_DebugPrintBuffer(const uint8_t *pBuf, uint16_t bufLen);
 
-
-
 #endif /* _APP_H */
 
 //DOM-IGNORE-BEGIN

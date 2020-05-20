@@ -98,7 +98,6 @@ void EIC_Initialize(void)
                               EIC_CONFIG_SENSE7_NONE ;
 
     /* External Interrupt Asynchronous Mode enable */
-    EIC_REGS->EIC_WAKEUP = 0x10;
 
     /* External Interrupt enable*/
     EIC_REGS->EIC_INTENSET = 0x10;

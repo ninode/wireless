@@ -51,9 +51,8 @@
 // *****************************************************************************
 
 #include "app.h"
-#include "system/debug/sys_debug.h"
-#include "wdrv_winc_client_api.h"
-#include <stdarg.h>
+#include "driver/winc/include/wdrv_winc_client_api.h"
+#include "stdarg.h"
 
 
 
@@ -230,9 +229,9 @@ void APP_Tasks(void)
             wdrvHandle = WDRV_WINC_Open(0, 0);
 
             if (DRV_HANDLE_INVALID != wdrvHandle)
-            {
-                appData.state = APP_STATE_WDRV_OPEN;
+            {                
                 APP_ExampleInitialize(wdrvHandle);
+                appData.state = APP_STATE_WDRV_OPEN;
             }
             break;
         }
