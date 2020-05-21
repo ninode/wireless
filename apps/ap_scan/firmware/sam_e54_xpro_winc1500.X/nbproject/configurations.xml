@@ -76,6 +76,8 @@
                 <itemPath>../src/config/sam_e54_xpro_winc1500/driver/winc/include/wdrv_winc_wps.h</itemPath>
               </logicalFolder>
             </logicalFolder>
+            <itemPath>../src/config/sam_e54_xpro_winc1500/driver/driver.h</itemPath>
+            <itemPath>../src/config/sam_e54_xpro_winc1500/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f5" displayName="clock" projectFiles="true">

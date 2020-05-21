@@ -418,8 +418,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc1500/driver/winc/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">504B353A62277E6E502C76E03E595767</GeneratedChecksum>
-          <UserChecksum dnOrder="6">504B353A62277E6E502C76E03E595767</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E54B490D4B5BECC22D38961267ACF73F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E54B490D4B5BECC22D38961267ACF73F</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">SOURCE</Type>
@@ -562,8 +562,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc1500/driver/winc/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F71F59B4ACD8E200CE32CAF1AF2D50E4</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F71F59B4ACD8E200CE32CAF1AF2D50E4</UserChecksum>
+          <GeneratedChecksum dnOrder="5">29A99C3302D799CD8D98C0401BCE6F6A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">29A99C3302D799CD8D98C0401BCE6F6A</UserChecksum>
         </File>
         <File dnOrder="62">
           <Type dnOrder="0">SOURCE</Type>
@@ -1462,8 +1462,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc1500/driver/winc/include/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2295276BCD502891E59CCCA8E44FDB73</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2295276BCD502891E59CCCA8E44FDB73</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0A27BD31B1D584D675DE8996BDB11C72</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0A27BD31B1D584D675DE8996BDB11C72</UserChecksum>
         </File>
         <File dnOrder="162">
           <Type dnOrder="0">HEADER</Type>
@@ -1624,8 +1624,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc1500/driver/winc/include/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">68D60A20B770DE2CAA93279CA5AA19B1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">68D60A20B770DE2CAA93279CA5AA19B1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F6790781CBA0124F3BAC11F0E281344F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F6790781CBA0124F3BAC11F0E281344F</UserChecksum>
         </File>
         <File dnOrder="180">
           <Type dnOrder="0">HEADER</Type>
