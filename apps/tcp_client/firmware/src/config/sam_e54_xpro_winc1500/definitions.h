@@ -56,13 +56,12 @@
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/dmac/plib_dmac.h"
+#include "peripheral/cmcc/plib_cmcc.h"
 #include "peripheral/sercom/spim/plib_sercom4_spi.h"
 #include "peripheral/eic/plib_eic.h"
 #include "peripheral/tc/plib_tc3.h"
-#include "system/debug/sys_debug.h"
 #include "system/time/sys_time.h"
 #include "bsp/bsp.h"
-#include "driver/usart/drv_usart.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
 #include "driver/spi/drv_spi.h"
@@ -71,6 +70,7 @@
 #include "system/cache/sys_cache.h"
 #include "system/dma/sys_dma.h"
 #include "osal/osal.h"
+#include "system/debug/sys_debug.h"
 #include "app.h"
 
 
@@ -133,27 +133,27 @@ void SYS_Initialize( void *data );
 // *****************************************************************************
 /* System Tasks Function
 
-  Function:
+Function:
     void SYS_Tasks ( void );
 
-  Summary:
+Summary:
     Function that performs all polled system tasks.
 
-  Description:
+Description:
     This function performs all polled system tasks by calling the state machine
     "tasks" functions for all polled modules in the system, including drivers,
     services, middleware and applications.
 
-  Precondition:
+Precondition:
     The SYS_Initialize function must have been called and completed.
 
-  Parameters:
+Parameters:
     None.
 
-  Returns:
+Returns:
     None.
 
-  Example:
+Example:
     <code>
     SYS_Initialize ( NULL );
 
@@ -163,7 +163,7 @@ void SYS_Initialize( void *data );
     }
     </code>
 
-  Remarks:
+Remarks:
     If the module is interrupt driven, the system will call this routine from
     an interrupt context.
 */
@@ -175,22 +175,22 @@ void SYS_Tasks ( void );
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
+    
 // *****************************************************************************
 /* System Objects
-
-  Summary:
+        
+Summary:
     Structure holding the system's object handles
-
-  Description:
+        
+Description:
     This structure contains the object handles for all objects in the
     MPLAB Harmony project's system configuration.
-
-  Remarks:
+        
+Remarks:
     These handles are returned from the "Initialize" functions for each module
     and must be passed into the "Tasks" function for each module.
 */
-
+        
 typedef struct
 {
     SYS_MODULE_OBJ  drvWifiWinc;
@@ -200,12 +200,10 @@ typedef struct
     SYS_MODULE_OBJ  sysDebug;
 
     SYS_MODULE_OBJ  sysTime;
-    SYS_MODULE_OBJ  drvUsart0;
     SYS_MODULE_OBJ  sysConsole0;
 
 
 } SYSTEM_OBJECTS;
-
 
 // *****************************************************************************
 // *****************************************************************************

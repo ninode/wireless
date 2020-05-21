@@ -163,75 +163,6 @@ const DRV_SPI_INIT drvSPI0InitData =
 };
 
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
-
-static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0];
-
-/* USART transmit/receive transfer objects pool */
-static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0];
-
-const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
-    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)SERCOM2_USART_ReadCallbackRegister,
-    .read = (DRV_USART_PLIB_READ)SERCOM2_USART_Read,
-    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)SERCOM2_USART_ReadIsBusy,
-    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)SERCOM2_USART_ReadCountGet,
-    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)SERCOM2_USART_WriteCallbackRegister,
-    .write = (DRV_USART_PLIB_WRITE)SERCOM2_USART_Write,
-    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)SERCOM2_USART_WriteIsBusy,
-    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)SERCOM2_USART_WriteCountGet,
-    .errorGet = (DRV_USART_PLIB_ERROR_GET)SERCOM2_USART_ErrorGet,
-    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)SERCOM2_USART_SerialSetup
-};
-
-const uint32_t drvUsart0remapDataWidth[] = { 0x5, 0x6, 0x7, 0x0, 0x1 };
-const uint32_t drvUsart0remapParity[] = { 0x2, 0x0, 0x80000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-const uint32_t drvUsart0remapStopBits[] = { 0x0, 0xFFFFFFFF, 0x40 };
-const uint32_t drvUsart0remapError[] = { 0x4, 0x0, 0x2 };
-
-const DRV_USART_INTERRUPT_SOURCES drvUSART0InterruptSources =
-{
-    /* Peripheral has more than one interrupt vector */
-    .isSingleIntSrc                        = false,
-
-    /* Peripheral interrupt lines */
-    .intSources.multi.usartTxCompleteInt   = SERCOM2_1_IRQn,
-    .intSources.multi.usartTxReadyInt      = SERCOM2_0_IRQn,
-    .intSources.multi.usartRxCompleteInt   = SERCOM2_2_IRQn,
-    .intSources.multi.usartErrorInt        = SERCOM2_OTHER_IRQn,
-};
-
-const DRV_USART_INIT drvUsart0InitData =
-{
-    .usartPlib = &drvUsart0PlibAPI,
-
-    /* USART Number of clients */
-    .numClients = DRV_USART_CLIENTS_NUMBER_IDX0,
-
-    /* USART Client Objects Pool */
-    .clientObjPool = (uintptr_t)&drvUSART0ClientObjPool[0],
-
-    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
-
-    .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
-
-    /* Combined size of transmit and receive buffer objects */
-    .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX0,
-
-    /* USART transmit and receive buffer buffer objects pool */
-    .bufferObjPool = (uintptr_t)&drvUSART0BufferObjPool[0],
-
-    .interruptSources = &drvUSART0InterruptSources,
-
-    .remapDataWidth = drvUsart0remapDataWidth,
-
-    .remapParity = drvUsart0remapParity,
-
-    .remapStopBits = drvUsart0remapStopBits,
-
-    .remapError = drvUsart0remapError,
-};
-
-// </editor-fold>
 
 
 // *****************************************************************************
@@ -267,12 +198,12 @@ const SYS_DEBUG_INIT debugInit =
 
 const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
     .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC3_TimerCallbackRegister,
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC3_Timer16bitCounterGet,
-    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC3_Timer16bitPeriodSet,
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC3_TimerFrequencyGet,
-    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC3_Timer16bitCompareSet,
     .timerStart = (SYS_TIME_PLIB_START)TC3_TimerStart,
-    .timerStop = (SYS_TIME_PLIB_STOP)TC3_TimerStop
+    .timerStop = (SYS_TIME_PLIB_STOP)TC3_TimerStop,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC3_TimerFrequencyGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC3_Timer16bitPeriodSet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC3_Timer16bitCompareSet,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC3_Timer16bitCounterGet,
 };
 
 const SYS_TIME_INIT sysTimeInitData =
@@ -284,8 +215,6 @@ const SYS_TIME_INIT sysTimeInitData =
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Instance 0 Initialization Data">
 
-static QElement sysConsole0UARTRdQueueElements[SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0];
-static QElement sysConsole0UARTWrQueueElements[SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0];
 
 /* Declared in console device implementation (sys_console_uart.c) */
 extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
@@ -293,33 +222,16 @@ extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
 const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole0UARTPlibAPI =
 {
     .read = (SYS_CONSOLE_UART_PLIB_READ)SERCOM2_USART_Read,
+	.readCountGet = (SYS_CONSOLE_UART_PLIB_READ_COUNT_GET)SERCOM2_USART_ReadCountGet,
+	.readFreeBufferCountGet = (SYS_CONSOLE_UART_PLIB_READ_FREE_BUFFFER_COUNT_GET)SERCOM2_USART_ReadFreeBufferCountGet,
     .write = (SYS_CONSOLE_UART_PLIB_WRITE)SERCOM2_USART_Write,
-    .readCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_READ)SERCOM2_USART_ReadCallbackRegister,
-    .writeCallbackRegister = (SYS_CONSOLE_UART_PLIB_REGISTER_CALLBACK_WRITE)SERCOM2_USART_WriteCallbackRegister,
-    .errorGet = (SYS_CONSOLE_UART_PLIB_ERROR_GET)SERCOM2_USART_ErrorGet,
-};
-
-
-const SYS_CONSOLE_UART_INTERRUPT_SOURCES sysConsole0UARTInterruptSources =
-{
-    /* Peripheral has more than one interrupt vector */
-    .isSingleIntSrc                        = false,
-
-    /* Peripheral interrupt lines */
-    .intSources.multi.usartTxCompleteInt   = SERCOM2_1_IRQn,
-    .intSources.multi.usartTxReadyInt      = SERCOM2_0_IRQn,
-    .intSources.multi.usartRxCompleteInt   = SERCOM2_2_IRQn,
-    .intSources.multi.usartErrorInt        = SERCOM2_OTHER_IRQn,
+	.writeCountGet = (SYS_CONSOLE_UART_PLIB_WRITE_COUNT_GET)SERCOM2_USART_WriteCountGet,
+	.writeFreeBufferCountGet = (SYS_CONSOLE_UART_PLIB_WRITE_FREE_BUFFER_COUNT_GET)SERCOM2_USART_WriteFreeBufferCountGet,
 };
 
 const SYS_CONSOLE_UART_INIT_DATA sysConsole0UARTInitData =
 {
-    .uartPLIB = &sysConsole0UARTPlibAPI,
-    .readQueueElementsArr = sysConsole0UARTRdQueueElements,
-    .writeQueueElementsArr = sysConsole0UARTWrQueueElements,
-    .readQueueDepth = SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0,
-    .writeQueueDepth = SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0,
-    .interruptSources = &sysConsole0UARTInterruptSources,
+    .uartPLIB = &sysConsole0UARTPlibAPI,    
 };
 
 const SYS_CONSOLE_INIT sysConsole0Init =
@@ -329,8 +241,18 @@ const SYS_CONSOLE_INIT sysConsole0Init =
     .deviceIndex = 0,
 };
 
+
+
 // </editor-fold>
 
+
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Local initialization functions
+// *****************************************************************************
+// *****************************************************************************
 
 
 
@@ -354,6 +276,8 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
+
+
     SERCOM2_USART_Initialize();
 
     EVSYS_Initialize();
@@ -373,8 +297,6 @@ void SYS_Initialize ( void* data )
 
     /* Initialize SPI0 Driver Instance */
     sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
-    sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
-
 
     sysObj.sysDebug = SYS_DEBUG_Initialize(SYS_DEBUG_INDEX_0, (SYS_MODULE_INIT*)&debugInit);
 

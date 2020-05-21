@@ -82,7 +82,6 @@ extern "C" {
 
 #define SYS_DEBUG_ENABLE
 #define SYS_DEBUG_GLOBAL_ERROR_LEVEL       SYS_ERROR_DEBUG
-#define SYS_DEBUG_PRINT_BUFFER_SIZE        200
 #define SYS_DEBUG_BUFFER_DMA_READY
 #define SYS_DEBUG_USE_CONSOLE
 
@@ -92,21 +91,20 @@ extern "C" {
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
 #define SYS_TIME_HW_COUNTER_PERIOD           0xFFFFU
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         120000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
 
-/* Console System Service Configuration Options */
-#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   1
-#define SYS_CONSOLE_UART_MAX_INSTANCES     1
+#define SYS_CONSOLE_DEVICE_MAX_INSTANCES   			1
+#define SYS_CONSOLE_UART_MAX_INSTANCES 	   			1
+#define SYS_CONSOLE_USB_CDC_MAX_INSTANCES 	   		0
+#define SYS_CONSOLE_PRINT_BUFFER_SIZE        		200
 
 
-/* RX queue size has one additional element for the empty spot needed in circular queue */
-#define SYS_CONSOLE_UART_RD_QUEUE_DEPTH_IDX0    11
+#define SYS_CONSOLE_INDEX_0                       0
 
-/* TX queue size has one additional element for the empty spot needed in circular queue */
-#define SYS_CONSOLE_UART_WR_QUEUE_DEPTH_IDX0    65
-#define SYS_CONSOLE_BUFFER_DMA_READY
+
+
 
 
 
@@ -141,13 +139,6 @@ extern "C" {
 #define DRV_SPI_RCV_DMA_CH_IDX0               SYS_DMA_CHANNEL_0
 #define DRV_SPI_QUEUE_SIZE_IDX0               4
 
-/* USART Driver Instance 0 Configuration Options */
-#define DRV_USART_INDEX_0                  0
-#define DRV_USART_CLIENTS_NUMBER_IDX0      1
-#define DRV_USART_QUEUE_SIZE_IDX0          5
-
-/* USART Driver Global Configuration Options */
-#define DRV_USART_INSTANCES_NUMBER         1
 /* SPI Driver Common Configuration Options */
 #define DRV_SPI_INSTANCES_NUMBER              1
 

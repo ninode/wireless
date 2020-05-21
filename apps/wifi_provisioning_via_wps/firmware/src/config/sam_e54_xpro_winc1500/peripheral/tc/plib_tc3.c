@@ -140,6 +140,11 @@ uint16_t TC3_Timer16bitCounterGet( void )
         /* Wait for Write Synchronization */
     }
 
+    while((TC3_REGS->COUNT16.TC_CTRLBSET & TC_CTRLBSET_CMD_Msk) != 0)
+    {
+        /* Wait for CMD to become zero */
+    }
+
     /* Read current count value */
     return (uint16_t)TC3_REGS->COUNT16.TC_COUNT;
 }
@@ -195,7 +200,7 @@ void TC3_TimerInterruptHandler( void )
     if (TC3_REGS->COUNT16.TC_INTENSET != 0)
     {
         TC_TIMER_STATUS status;
-        status = TC3_REGS->COUNT16.TC_INTFLAG;
+        status = (TC_TIMER_STATUS) TC3_REGS->COUNT16.TC_INTFLAG;
         /* Clear interrupt flags */
         TC3_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
         if((status != TC_TIMER_STATUS_NONE) && TC3_CallbackObject.callback != NULL)
