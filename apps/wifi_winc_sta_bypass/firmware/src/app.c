@@ -50,6 +50,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include <stdarg.h>
 #include "app.h"
 #include "wdrv_winc_stack_drv.h"
 #include "wdrv_winc.h"
@@ -87,14 +88,54 @@
 
 APP_DATA appData;
 
+/* Settings for WINC debug logs */
+#define APP_PRINT_BUFFER_SIZ    2048
+
+static char printBuff[APP_PRINT_BUFFER_SIZ] __attribute__((aligned(4)));
+static int printBuffPtr;
+static OSAL_MUTEX_HANDLE_TYPE consoleMutex;
+SYS_CONSOLE_HANDLE consoleHandle;
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
 
-/* TODO:  Add any necessary callback functions.
-*/
+static void APP_DebugPrint(uint8_t *pBuf, size_t len)
+{
+    if ((len > 0) && (len < APP_PRINT_BUFFER_SIZ))
+    {
+        if (OSAL_RESULT_TRUE == OSAL_MUTEX_Lock(&consoleMutex, OSAL_WAIT_FOREVER))
+        {
+            if ((len + printBuffPtr) > APP_PRINT_BUFFER_SIZ)
+            {
+                printBuffPtr = 0;
+            }
+
+            memcpy(&printBuff[printBuffPtr], pBuf, len);
+            SYS_CONSOLE_Write(consoleHandle, &printBuff[printBuffPtr], len);
+
+            printBuffPtr = (printBuffPtr + len + 3) & ~3;
+
+            OSAL_MUTEX_Unlock(&consoleMutex);
+        }
+    }
+}
+
+void APP_DebugPrintf(const char* format, ...)
+{
+    char tmpBuf[APP_PRINT_BUFFER_SIZ];
+    size_t len = 0;
+    va_list args;
+    va_start( args, format );
+
+    len = vsnprintf(tmpBuf, APP_PRINT_BUFFER_SIZ, format, args);
+
+    va_end( args );
+
+    APP_DebugPrint((uint8_t*)tmpBuf, len);
+}
 
 // *****************************************************************************
 // *****************************************************************************
@@ -111,7 +152,7 @@ void _APP_WINCInit( void )
     TCPIP_NET_IF *pNetIf = TCPIP_STACK_MACIdToNet(TCPIP_MODULE_MAC_WINC);
     
     /* register a 'printf' style function to print colsole logs from wifi driver */
-    WDRV_WINC_DebugRegisterCallback(SYS_CMD_PRINT);
+    WDRV_WINC_DebugRegisterCallback(APP_DebugPrintf);
     
     /* This demo uses WINC1500 in station mode */
     WDRV_WINC_MACOperatingModeSet(pNetIf->hIfMac, WDRV_WINC_OP_MODE_STA);
@@ -175,7 +216,7 @@ void _APP_TrackIPAddr( void )
     {
         /* save the new IP address in appData */
         appData.netIpWiFi.Val = dwNewIP.Val;
-        SYS_CMD_PRINT("app[%d]: DHCP Client has received IP Address: %d.%d.%d.%d\r\n", 
+        SYS_CONSOLE_PRINT("app[%d]: DHCP Client has received IP Address: %d.%d.%d.%d\r\n", 
                 appData.state,dwNewIP.v[0], dwNewIP.v[1], dwNewIP.v[2], dwNewIP.v[3]);
     }
 }
@@ -189,7 +230,7 @@ void _APP_LinkMonitor( void )
     {
         if(appData.netHandleWiFi && TCPIP_STACK_NetIsLinked(appData.netHandleWiFi) == false)
         {
-            SYS_CMD_PRINT("APP[M]: Network Link is Down\r\n");
+            SYS_CONSOLE_PRINT("APP[M]: Network Link is Down\r\n");
             appData.state = APP_STATE_WAIT_FOR_LINK;	
         }
     }
@@ -216,6 +257,11 @@ void APP_Initialize ( void )
     appData.state = APP_STATE_INIT;
     appData.netIpWiFi.Val = 0;
     appData.netHandleWiFi = NULL;
+    
+    /* WINC debug logs related init */
+    printBuffPtr = 0;
+    OSAL_MUTEX_Create(&consoleMutex);
+    consoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
 
     /* Initialize WINC MAC */
     _APP_WINCInit();           
@@ -257,11 +303,11 @@ void APP_Tasks ( void )
                 //For this application only one interface is used - WINC
                 appData.netHandleWiFi = TCPIP_STACK_IndexToNet(0);
 
-                SYS_CMD_PRINT("app[%d]: TCPIP Stack is Ready on %s Interface\r\n", appData.state,
+                SYS_CONSOLE_PRINT("app[%d]: TCPIP Stack is Ready on %s Interface\r\n", appData.state,
                                   TCPIP_STACK_NetNameGet(appData.netHandleWiFi));
-                SYS_CMD_PRINT("app[%d]: Host name is %s\r\n", appData.state,
+                SYS_CONSOLE_PRINT("app[%d]: Host name is %s\r\n", appData.state,
                                   TCPIP_STACK_NetBIOSName(appData.netHandleWiFi));
-                SYS_CMD_PRINT("app[%d]: DHCP Client is enabled on %s interface\r\n", appData.state,
+                SYS_CONSOLE_PRINT("app[%d]: DHCP Client is enabled on %s interface\r\n", appData.state,
                                   TCPIP_STACK_NetNameGet(appData.netHandleWiFi));
 
                 appData.state = APP_STATE_WAIT_FOR_LINK;                
@@ -274,8 +320,8 @@ void APP_Tasks ( void )
             //Determine if the network interface is linked
             if (TCPIP_STACK_NetIsReady(appData.netHandleWiFi))
             {
-                SYS_CMD_PRINT("app[%d]: Network Link is Up\r\n", appData.state);					
-                SYS_CMD_PRINT("app[%d]: Waiting for IP address ...\r\n", appData.state);
+                SYS_CONSOLE_PRINT("app[%d]: Network Link is Up\r\n", appData.state);					
+                SYS_CONSOLE_PRINT("app[%d]: Waiting for IP address ...\r\n", appData.state);
 				appData.state = APP_STATE_WAIT_FOR_DHCP;
             }
             
@@ -288,7 +334,7 @@ void APP_Tasks ( void )
             if (TCPIP_DHCP_IsBound(appData.netHandleWiFi))
             {
                 _APP_TrackIPAddr();
-                SYS_CMD_PRINT("app[%d]: Demo complete\r\n", appData.state);                
+                SYS_CONSOLE_PRINT("app[%d]: Demo complete\r\n", appData.state);                
                 appData.state = APP_STATE_DONE;
             }
             

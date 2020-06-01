@@ -310,8 +310,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc1500/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">1F7E409A5ABA54C7507A7230E273520A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">1F7E409A5ABA54C7507A7230E273520A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FD06647D66DE73DEDEF115151695F4FD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FD06647D66DE73DEDEF115151695F4FD</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
@@ -625,8 +625,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc1500/driver/winc/dev/gpio/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/dev/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2A4003D09DDAA9C3FFD0C011589CBBF5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2A4003D09DDAA9C3FFD0C011589CBBF5</UserChecksum>
+          <GeneratedChecksum dnOrder="5">2308409367BFCF71D93D65F748729975</GeneratedChecksum>
+          <UserChecksum dnOrder="6">2308409367BFCF71D93D65F748729975</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">SOURCE</Type>
@@ -706,8 +706,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc1500/driver/winc/dev/spi/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/dev/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">029FC6E4A4C8D63344A712706834B34E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">029FC6E4A4C8D63344A712706834B34E</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FEC5E1BBB0941EC26BBBD70815F606BA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FEC5E1BBB0941EC26BBBD70815F606BA</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">SOURCE</Type>
@@ -967,8 +967,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc1500/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">0E6BA98EB0FFC34EFFA17AAEE77FFD67</GeneratedChecksum>
-          <UserChecksum dnOrder="6">0E6BA98EB0FFC34EFFA17AAEE77FFD67</UserChecksum>
+          <GeneratedChecksum dnOrder="5">CDB91110A0F285B5E5F9934187AAAD3F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CDB91110A0F285B5E5F9934187AAAD3F</UserChecksum>
         </File>
         <File dnOrder="107">
           <Type dnOrder="0">HEADER</Type>
@@ -3084,7 +3084,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;bt;core;csp;ethercat;wsg_dev;net;wireless;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;cryptoauthlib;csp;net;touch;wireless;"/>
     </Settings>
   </Configurator>
 </Configuration>
