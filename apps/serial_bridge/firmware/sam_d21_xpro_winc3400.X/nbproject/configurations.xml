@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
+      <logicalFolder name="f3" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="sam_d21_xpro_winc3400"
                        projectFiles="true">
@@ -148,12 +148,12 @@
           <itemPath>../src/config/sam_d21_xpro_winc3400/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      <logicalFolder name="f5" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+      <logicalFolder name="f4" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMD21J18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMD21J18A_DFP/component/ac.h</itemPath>
@@ -205,13 +205,20 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="platform" displayName="platform" projectFiles="true">
+      <logicalFolder name="f1" displayName="platform" projectFiles="true">
         <itemPath>../src/platform/platform.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="serial_bridge" projectFiles="true">
+      <logicalFolder name="f2" displayName="serial_bridge" projectFiles="true">
         <itemPath>../src/serial_bridge/serial_bridge.h</itemPath>
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_d21_xpro_winc3400/harmony.prj</itemPath>
+      <itemPath>../../../../../mhc/../../H3Release/wireless/apps/serial_bridge/firmware/src/config/sam_d21_xpro_winc3400/sam_d21_xpro_winc3400.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -220,7 +227,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
+      <logicalFolder name="f3" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="sam_d21_xpro_winc3400"
                        projectFiles="true">
@@ -344,7 +351,7 @@
           <itemPath>../src/config/sam_d21_xpro_winc3400/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="platform" displayName="platform" projectFiles="true">
+      <logicalFolder name="f1" displayName="platform" projectFiles="true">
         <itemPath>../src/platform/platform_sercom.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="serial_bridge" projectFiles="true">
@@ -352,12 +359,6 @@
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/sam_d21_xpro_winc3400/harmony.prj</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

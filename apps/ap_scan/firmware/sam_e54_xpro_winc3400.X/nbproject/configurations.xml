@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
+      <logicalFolder name="f2" displayName="config" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="sam_e54_xpro_winc3400"
                        projectFiles="true">
@@ -160,8 +160,8 @@
         <itemPath>../src/config/sam_e54_xpro_winc3400/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_e54_xpro_winc3400/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1" displayName="ATSAME54P20A_DFP" projectFiles="true">
+      <logicalFolder name="f1" displayName="packs" projectFiles="true">
+        <logicalFolder name="f2" displayName="ATSAME54P20A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/ac.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/adc.h</itemPath>
@@ -210,7 +210,7 @@
           <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a_compat.h</itemPath>
           <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
+        <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
@@ -237,6 +237,14 @@
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_e54_xpro_winc3400/harmony.prj</itemPath>
+      <itemPath>../src/config/sam_e54_xpro_winc3400/sam_e54_xpro_winc3400.xml</itemPath>
+      <itemPath>../../../../../mhc/../../H3Release/wireless/apps/ap_scan/firmware/src/config/sam_e54_xpro_winc3400/sam_e54_xpro_winc3400.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -389,13 +397,6 @@
       <itemPath>../src/example.c</itemPath>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/sam_e54_xpro_winc3400/harmony.prj</itemPath>
-      <itemPath>../src/config/sam_e54_xpro_winc3400/sam_e54_xpro_winc3400.xml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

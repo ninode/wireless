@@ -208,6 +208,13 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_d21_xpro_winc1500/harmony.prj</itemPath>
+      <itemPath>../../../../../mhc/../../H3Release/wireless/apps/wifi_provisioning_via_wps/firmware/src/config/sam_d21_xpro_winc1500/sam_d21_xpro_winc1500.xml</itemPath>
+    </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
@@ -350,12 +357,6 @@
       <itemPath>../src/example.c</itemPath>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/sam_d21_xpro_winc1500/harmony.prj</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

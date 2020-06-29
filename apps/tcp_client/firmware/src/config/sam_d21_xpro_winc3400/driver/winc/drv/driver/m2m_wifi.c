@@ -794,13 +794,13 @@ int8_t m2m_wifi_connect_psk(
                 }
                 else
                     ret = M2M_ERR_INVALID_ARG;
-                
                 if (ret == M2M_SUCCESS)
                 {
                     ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONN | M2M_REQ_DATA_PKT,
                                    (uint8_t*)&strConnHdr, sizeof(tstrM2mWifiConnHdr),
                                    (uint8_t*)pstrPsk, sizeof(tstrM2mWifiPsk), sizeof(tstrM2mWifiConnHdr));
                 }
+                free(pstrPsk);
             }
             if (ret != M2M_SUCCESS)
             {
@@ -816,7 +816,6 @@ int8_t m2m_wifi_connect_psk(
                                    NULL, 0, 0);
                 }
             }
-            free(pstrPsk);
         }
     }
     return ret;
