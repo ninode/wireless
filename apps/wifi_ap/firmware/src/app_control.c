@@ -102,7 +102,7 @@ static int nvmWriteConfig(WLAN_CONFIG_DATA *wlanConfig)
     while (NVM_IsBusy() == true);
 
     if (!NVM_PageErase(address)) {
-        SYS_PRINT("Failed NVM erase @ %x \r\n", address);
+        SYS_CONSOLE_PRINT("Failed NVM erase @ %x \r\n", address);
     }
     while (xferDone == false);
     xferDone = false;
@@ -111,7 +111,7 @@ static int nvmWriteConfig(WLAN_CONFIG_DATA *wlanConfig)
     for (i = 0; i < READ_WRITE_SIZE; i += NVM_FLASH_ROWSIZE) {
         /* Program a row of data */
         if (!NVM_RowWrite((uint32_t *) writePtr, address)) {
-            SYS_PRINT("Failed NVM ROW write @ %x \r\n", address);
+            SYS_CONSOLE_PRINT("Failed NVM ROW write @ %x \r\n", address);
         }
 
         while (xferDone == false);
@@ -156,18 +156,18 @@ void APP_CONTROL_Initialize ( void )
         if((app_controlData.wlanConfig.ssidLength > 0) && (app_controlData.wlanConfig.ssidLength < (SSID_LENGTH+1)))
         {
             app_controlData.wlanConfigValid = true;
-            SYS_MESSAGE("WLAN Config read from NVM\r\n");
+            SYS_CONSOLE_MESSAGE("WLAN Config read from NVM\r\n");
         }
         else
         {
             app_controlData.wlanConfigValid = false;
-            SYS_MESSAGE("No WLAN Config in NVM\r\n");
+            SYS_CONSOLE_MESSAGE("No WLAN Config in NVM\r\n");
         }
     } 
     else 
     {
         app_controlData.wlanConfigValid = false;
-        SYS_MESSAGE("NVM read fail\r\n");
+        SYS_CONSOLE_MESSAGE("NVM read fail\r\n");
     }
     
     if (!SYS_CMD_ADDGRP(WLANCmdTbl, sizeof(WLANCmdTbl)/sizeof(*WLANCmdTbl), "wlan", ": WLAN commands"))
@@ -216,7 +216,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
     {
         if(argc < 7)
         {
-            SYS_MESSAGE("usage: wlan set <ssid> <ssid_length> <ssid_visible> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
+            SYS_CONSOLE_MESSAGE("usage: wlan set <ssid> <ssid_length> <ssid_visible> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
             return;
         }
         else
@@ -230,7 +230,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
                         
             if(ssidLength > SSID_LENGTH)
             {
-                SYS_MESSAGE("SSID too long");
+                SYS_CONSOLE_MESSAGE("SSID too long");
                 return;
             }
             else
@@ -245,7 +245,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             
             if(channel > 13)
             {
-                SYS_MESSAGE("Invalid channel number");
+                SYS_CONSOLE_MESSAGE("Invalid channel number");
                 return;
             }
             else
@@ -279,7 +279,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             } 
             else 
             {
-                SYS_MESSAGE("Invalid Auth mode \r\n Supported auth modes: <open | wpa2 | wpam | wpa3 | wpa3m | wep> \r\n");
+                SYS_CONSOLE_MESSAGE("Invalid Auth mode \r\n Supported auth modes: <open | wpa2 | wpam | wpa3 | wpa3m | wep> \r\n");
                 return;
             }
 
@@ -287,7 +287,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             {
                 if(strlen(password) > PASSWORD_LENGTH)
                 {
-                    SYS_MESSAGE("Password too long\r\n");
+                    SYS_CONSOLE_MESSAGE("Password too long\r\n");
                     return;
                 }
                 memset(app_controlData.wlanConfig.password, 0, PASSWORD_LENGTH+1);
@@ -302,7 +302,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
 
                 if (NULL == WEPIdx)
                 {
-                    SYS_MESSAGE("Invalid WEP parameter\r\n");
+                    SYS_CONSOLE_MESSAGE("Invalid WEP parameter\r\n");
                     return;
                 }
 
@@ -310,7 +310,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
 
                 if (NULL == WEPKey)
                 {
-                    SYS_MESSAGE("Invalid WEP parameter\r\n");
+                    SYS_CONSOLE_MESSAGE("Invalid WEP parameter\r\n");
                     return;
                 }
 
@@ -337,7 +337,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             }
             else
             {
-                SYS_MESSAGE("Entered WLAN configuration is Invalid\r\n");
+                SYS_CONSOLE_MESSAGE("Entered WLAN configuration is Invalid\r\n");
             }
         }
         else if(!strcmp("stop", argv[2]))
@@ -353,11 +353,11 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             {
                 app_controlData.wlanConfigChanged = true;
                 nvmWriteConfig(&app_controlData.wlanConfig);
-                SYS_MESSAGE("Configuration stored in Flash\r\n");
+                SYS_CONSOLE_MESSAGE("Configuration stored in Flash\r\n");
             }
             else
             {
-                SYS_MESSAGE("Entered WLAN configuration is Invalid\r\n");
+                SYS_CONSOLE_MESSAGE("Entered WLAN configuration is Invalid\r\n");
             }
         }
     }

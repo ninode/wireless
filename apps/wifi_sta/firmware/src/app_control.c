@@ -101,7 +101,7 @@ static int nvmWriteConfig(WLAN_CONFIG_DATA *wlanConfig)
     while (NVM_IsBusy() == true);
 
     if (!NVM_PageErase(address)) {
-        SYS_PRINT("Failed NVM erase @ %x \r\n", address);
+        SYS_CONSOLE_PRINT("Failed NVM erase @ %x \r\n", address);
     }
     while (xferDone == false);
     xferDone = false;
@@ -110,7 +110,7 @@ static int nvmWriteConfig(WLAN_CONFIG_DATA *wlanConfig)
     for (i = 0; i < READ_WRITE_SIZE; i += NVM_FLASH_ROWSIZE) {
         /* Program a row of data */
         if (!NVM_RowWrite((uint32_t *) writePtr, address)) {
-            SYS_PRINT("Failed NVM ROW write @ %x \r\n", address);
+            SYS_CONSOLE_PRINT("Failed NVM ROW write @ %x \r\n", address);
         }
 
         while (xferDone == false);
@@ -155,18 +155,18 @@ void APP_CONTROL_Initialize ( void )
         if((app_controlData.wlanConfig.ssidLength > 0) && (app_controlData.wlanConfig.ssidLength < (SSID_LENGTH+1)))
         {
             app_controlData.wlanConfigValid = true;
-            SYS_MESSAGE("WLAN Config read from NVM\r\n");
+            SYS_CONSOLE_MESSAGE("WLAN Config read from NVM\r\n");
         }
         else
         {
             app_controlData.wlanConfigValid = false;
-            SYS_MESSAGE("No WLAN Config in NVM\r\n");
+            SYS_CONSOLE_MESSAGE("No WLAN Config in NVM\r\n");
         }
     } 
     else 
     {
         app_controlData.wlanConfigValid = false;
-        SYS_MESSAGE("NVM read fail\r\n");
+        SYS_CONSOLE_MESSAGE("NVM read fail\r\n");
     }
     
     if (!SYS_CMD_ADDGRP(WLANCmdTbl, sizeof(WLANCmdTbl)/sizeof(*WLANCmdTbl), "wlan", ": WLAN commands"))
@@ -219,7 +219,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
     {
         if(argc < 6)
         {
-            SYS_MESSAGE("usage: wlan set <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
+            SYS_CONSOLE_MESSAGE("usage: wlan set <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
             return;
         }
         else
@@ -240,13 +240,13 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             }
             else 
             {
-                SYS_MESSAGE("usage: wlan set <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
+                SYS_CONSOLE_MESSAGE("usage: wlan set <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
                 return;
             }
             
             if(ssidLength > SSID_LENGTH)
             {
-                SYS_MESSAGE("SSID too long");
+                SYS_CONSOLE_MESSAGE("SSID too long");
                 return;
             }
             else
@@ -257,7 +257,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             }
             
             if(channel > 13){
-                SYS_MESSAGE("Invalid channel number");
+                SYS_CONSOLE_MESSAGE("Invalid channel number");
                 return;
             }
             else
@@ -291,7 +291,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             } 
             else 
             {
-                SYS_MESSAGE("Invalid Auth mode \r\n Supported auth modes: <open | wpa2 | wpam | wpa3 | wpa3m | wep> \r\n");
+                SYS_CONSOLE_MESSAGE("Invalid Auth mode \r\n Supported auth modes: <open | wpa2 | wpam | wpa3 | wpa3m | wep> \r\n");
                 return;
             }
 
@@ -299,7 +299,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             {
                 if(strlen(password) > PASSWORD_LENGTH)
                 {
-                    SYS_MESSAGE("Password too long\r\n");
+                    SYS_CONSOLE_MESSAGE("Password too long\r\n");
                     return;
                 }
                 memset(app_controlData.wlanConfig.password, 0, PASSWORD_LENGTH+1);
@@ -314,7 +314,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
 
                 if (NULL == WEPIdx)
                 {
-                    SYS_MESSAGE("Invalid WEP parameter\r\n");
+                    SYS_CONSOLE_MESSAGE("Invalid WEP parameter\r\n");
                     return;
                 }
 
@@ -322,7 +322,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
 
                 if (NULL == WEPKey)
                 {
-                    SYS_MESSAGE("Invalid WEP parameter\r\n");
+                    SYS_CONSOLE_MESSAGE("Invalid WEP parameter\r\n");
                     return;
                 }
 
@@ -341,7 +341,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
         }
         else
         {
-            SYS_MESSAGE("Entered WLAN configuration is Invalid\r\n");
+            SYS_CONSOLE_MESSAGE("Entered WLAN configuration is Invalid\r\n");
         }
     }
     else if(!strcmp("config", argv[1]))
@@ -355,7 +355,7 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             }
             else
             {
-                SYS_MESSAGE("Entered WLAN configuration is Invalid\r\n");
+                SYS_CONSOLE_MESSAGE("Entered WLAN configuration is Invalid\r\n");
             }
         }
     }
@@ -363,10 +363,10 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
     {
         if(argc<5)
         {
-            SYS_MESSAGE("usage: wlan scan <active | passive> <channel> <scan time in ms>\r\n");
-            SYS_MESSAGE("EX: wlan scan active 1 200 - Runs active scan on channel 1 for 200ms\r\n");
-            SYS_MESSAGE("EX: wlan scan passive 6 120 - Runs passive scan on channel 6 for 120ms\r\n");
-            SYS_MESSAGE("Note: Setting channel to '0' scans all channels and scan time of 0 uses default values\r\n");
+            SYS_CONSOLE_MESSAGE("usage: wlan scan <active | passive> <channel> <scan time in ms>\r\n");
+            SYS_CONSOLE_MESSAGE("EX: wlan scan active 1 200 - Runs active scan on channel 1 for 200ms\r\n");
+            SYS_CONSOLE_MESSAGE("EX: wlan scan passive 6 120 - Runs passive scan on channel 6 for 120ms\r\n");
+            SYS_CONSOLE_MESSAGE("Note: Setting channel to '0' scans all channels and scan time of 0 uses default values\r\n");
             
             return;
         }
