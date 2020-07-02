@@ -227,19 +227,19 @@
           <itemPath>../src/config/pic32mz_w1_curiosity/config.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
+      <logicalFolder name="f4" displayName="osal" projectFiles="true">
         <itemPath>../src/config/pic32mz_w1_curiosity/osal/osal.h</itemPath>
         <itemPath>../src/config/pic32mz_w1_curiosity/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/pic32mz_w1_curiosity/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+      <logicalFolder name="f3" displayName="packs" projectFiles="true">
         <logicalFolder name="f1"
                        displayName="PIC32MZ1025W104132_DFP"
                        projectFiles="true">
           <itemPath>../src/packs/PIC32MZ1025W104132_DFP/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="wolfcrypt" projectFiles="true">
+      <logicalFolder name="f5" displayName="wolfcrypt" projectFiles="true">
         <logicalFolder name="f1" displayName="port" projectFiles="true">
           <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/port/pic32/pic32mz-crypt.h</itemPath>
           <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/port/pic32/CryptoLib_cf_pb.h</itemPath>
@@ -369,7 +369,20 @@
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/sha256.h</itemPath>
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/sha512.h</itemPath>
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/wc_port.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="wolfssl" projectFiles="true">
+        <itemPath>../src/third_party/wolfssl/wolfssl/callbacks.h</itemPath>
         <itemPath>../src/third_party/wolfssl/wolfssl/certs_test.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/crl.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/error-ssl.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/internal.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/ocsp.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/sniffer.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/sniffer_error.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/ssl.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/test.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/version.h</itemPath>
+        <itemPath>../src/third_party/wolfssl/wolfssl/wolfio.h</itemPath>
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app_control.h</itemPath>
@@ -385,8 +398,7 @@
       <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.xml</itemPath>
       <itemPath>../../../../../mhc/../wireless/apps/wifi_ap/firmware/src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.xml</itemPath>
       <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
+      <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -444,6 +456,7 @@
                 <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/tcpip_manager.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/tcpip_notify.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/tcpip_packet.c</itemPath>
+                <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/sntp.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/udp.c</itemPath>
               </logicalFolder>
             </logicalFolder>
@@ -503,7 +516,7 @@
           <itemPath>../src/config/pic32mz_w1_curiosity/system_pmu_mldo_trim.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="wolfcrypt" projectFiles="true">
+      <logicalFolder name="f3" displayName="wolfcrypt" projectFiles="true">
         <logicalFolder name="f1" displayName="port" projectFiles="true">
           <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/port/pic32/pic32mz-crypt.c</itemPath>
           <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/port/pic32/crypt_aes_sam6149.c</itemPath>
@@ -590,6 +603,17 @@
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/sha.c</itemPath>
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/sha256.c</itemPath>
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/sha512.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="wolfssl" projectFiles="true">
+        <itemPath>../src/third_party/wolfssl/src/crl.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/keys.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/ocsp.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/sniffer.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/ssl.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/tls.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/tls13.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/wolfio.c</itemPath>
+        <itemPath>../src/third_party/wolfssl/src/internal.c</itemPath>
       </logicalFolder>
       <itemPath>../src/app.c</itemPath>
       <itemPath>../src/app_control.c</itemPath>

@@ -132,10 +132,51 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
+
+/*** DNS Client Configuration ***/
+#define TCPIP_STACK_USE_DNS
+#define TCPIP_DNS_CLIENT_SERVER_TMO					60
+#define TCPIP_DNS_CLIENT_TASK_PROCESS_RATE			200
+#define TCPIP_DNS_CLIENT_CACHE_ENTRIES				5
+#define TCPIP_DNS_CLIENT_CACHE_ENTRY_TMO			0
+#define TCPIP_DNS_CLIENT_CACHE_PER_IPV4_ADDRESS		5
+#define TCPIP_DNS_CLIENT_CACHE_PER_IPV6_ADDRESS		1
+#define TCPIP_DNS_CLIENT_ADDRESS_TYPE			    IP_ADDRESS_TYPE_IPV4
+#define TCPIP_DNS_CLIENT_CACHE_DEFAULT_TTL_VAL		1200
+#define TCPIP_DNS_CLIENT_CACHE_UNSOLVED_ENTRY_TMO	10
+#define TCPIP_DNS_CLIENT_LOOKUP_RETRY_TMO			5
+#define TCPIP_DNS_CLIENT_MAX_HOSTNAME_LEN			64
+#define TCPIP_DNS_CLIENT_MAX_SELECT_INTERFACES		4
+#define TCPIP_DNS_CLIENT_DELETE_OLD_ENTRIES			true
+#define TCPIP_DNS_CLIENT_USER_NOTIFICATION   false
+
+
+
 /*** ICMPv4 Server Configuration ***/
 #define TCPIP_STACK_USE_ICMP_SERVER
 #define TCPIP_ICMP_ECHO_ALLOW_BROADCASTS    false
 
+
+/******************************************************************************/
+/*wolfSSL TLS Layer Configuration*/
+/******************************************************************************/
+
+#define WOLFSSL_ALT_NAMES
+#define WOLFSSL_DER_LOAD
+#define KEEP_OUR_CERT
+#define KEEP_PEER_CERT
+#define HAVE_CRL_IO
+#define HAVE_IO_TIMEOUT
+#define TFM_NO_ASM
+#define WOLFSSL_NO_ASM
+#define SIZEOF_LONG_LONG 8
+#define WOLFSSL_USER_IO
+#define NO_WRITEV
+#define MICROCHIP_TCPIP
+#define WOLFSSL_DTLS
+#define NO_ERROR_STRINGS
+#define WOLFSSL_SMALL_STACK
+#define NO_PWDBASED
 
 
 /*** TCP Configuration ***/
@@ -298,6 +339,24 @@ extern "C" {
 
 
 
+/*** SNTP Configuration ***/
+#define TCPIP_STACK_USE_SNTP_CLIENT
+#define TCPIP_NTP_DEFAULT_IF		        		"PIC32INT"
+#define TCPIP_NTP_VERSION             			    	4
+#define TCPIP_NTP_DEFAULT_CONNECTION_TYPE   			IP_ADDRESS_TYPE_IPV4
+#define TCPIP_NTP_EPOCH		                		2208988800ul
+#define TCPIP_NTP_REPLY_TIMEOUT		        		6
+#define TCPIP_NTP_MAX_STRATUM		        		15
+#define TCPIP_NTP_TIME_STAMP_TMO				660
+#define TCPIP_NTP_SERVER		        		"pool.ntp.org"
+#define TCPIP_NTP_SERVER_MAX_LENGTH				30
+#define TCPIP_NTP_QUERY_INTERVAL				600
+#define TCPIP_NTP_FAST_QUERY_INTERVAL	    			14
+#define TCPIP_NTP_TASK_TICK_RATE				1100
+#define TCPIP_NTP_RX_QUEUE_LIMIT				2
+
+
+
 /*** UDP Configuration ***/
 #define TCPIP_UDP_MAX_SOCKETS		                	10
 #define TCPIP_UDP_SOCKET_DEFAULT_TX_SIZE		    	512
@@ -324,7 +383,6 @@ extern "C" {
 #define NO_BIG_INT
 #define HAVE_MCAPI
 #define WOLF_CRYPTO_CB  // provide call-back support
-#define WOLFCRYPT_ONLY
 #define WOLFSSL_MICROCHIP_PIC32MZ
 #define WOLFSSL_HAVE_MCHP_HW_CRYPTO_ECC_HW_BA414E
 #define WOLFSSL_HAVE_MCHP_BA414E_CRYPTO
