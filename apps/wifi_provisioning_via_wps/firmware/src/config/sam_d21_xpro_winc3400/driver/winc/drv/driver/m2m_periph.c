@@ -60,9 +60,12 @@ STATIC FUNCTIONS
 static int8_t get_gpio_idx(uint8_t u8GpioNum)
 {
     if(u8GpioNum >= M2M_PERIPH_GPIO_MAX) return -1;
-    if(u8GpioNum == M2M_PERIPH_GPIO15) { return 15;
-    } else if(u8GpioNum == M2M_PERIPH_GPIO16) { return 16;
-    } else if(u8GpioNum == M2M_PERIPH_GPIO18) { return 18;
+    if(u8GpioNum == M2M_PERIPH_GPIO15) {
+        return 15;
+    } else if(u8GpioNum == M2M_PERIPH_GPIO16) {
+        return 16;
+    } else if(u8GpioNum == M2M_PERIPH_GPIO18) {
+        return 18;
     } else {
         return -2;
     }
@@ -70,7 +73,7 @@ static int8_t get_gpio_idx(uint8_t u8GpioNum)
 /*
  * GPIO read/write skeleton with wakeup/sleep capability.
  */
-static int8_t gpio_ioctl(uint8_t op, uint8_t u8GpioNum, uint8_t u8InVal, uint8_t * pu8OutVal)
+static int8_t gpio_ioctl(uint8_t op, uint8_t u8GpioNum, uint8_t u8InVal, uint8_t *pu8OutVal)
 {
     int8_t ret, gpio;
 
@@ -98,7 +101,7 @@ _EXIT:
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 FUNCTION IMPLEMENTATION
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*/
-int8_t m2m_periph_init(tstrPerphInitParam * param)
+int8_t m2m_periph_init(tstrPerphInitParam *param)
 {
     return M2M_SUCCESS;
 }
@@ -113,7 +116,7 @@ int8_t m2m_periph_gpio_set_val(uint8_t u8GpioNum, uint8_t u8GpioVal)
     return gpio_ioctl(GPIO_OP_SET, u8GpioNum, u8GpioVal, NULL);
 }
 
-int8_t m2m_periph_gpio_get_val(uint8_t u8GpioNum, uint8_t * pu8GpioVal)
+int8_t m2m_periph_gpio_get_val(uint8_t u8GpioNum, uint8_t *pu8GpioVal)
 {
     return gpio_ioctl(GPIO_OP_GET, u8GpioNum, 0, pu8GpioVal);
 }

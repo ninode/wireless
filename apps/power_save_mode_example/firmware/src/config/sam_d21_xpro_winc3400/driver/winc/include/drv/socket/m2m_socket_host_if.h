@@ -52,16 +52,29 @@ INCLUDES
 MACROS
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*/
 
-#define SSL_MAX_OPT_LEN                     HOSTNAME_MAX_SIZE
+#define SSL_MAX_OPT_LEN             HOSTNAME_MAX_SIZE
 
+#define ALPN_LIST_MIN_SIZE          4
+#define ALPN_LIST_MAX_SIZE          32
+/*!<
+    Maximum length of ALPN list that can be specified by the application.
+    The list is in the following format:
+    @verbatim
+    0       1       2       3 ... (bytes)
+    +-------+-------+-------+  ...        +-------+  ...        +-------+  ...
+    | Length L (BE) | len1  | name1...    | len2  | name2...    | len3  | name3...
+    +-------+-------+-------+  ...        +-------+  ...        +-------+  ...
+    Length fields do not include themselves.
+    @endverbatim
+*/
 
 #define SOCKET_CMD_INVALID                  0x00
 /*!<
-    Invlaid Socket command value.
+    Invalid Socket command value.
 */
 
 
-#define SOCKET_CMD_BIND                     0x41
+#define SOCKET_CMD_BIND                 0x41
 /*!<
     Socket Binding command value.
 */
@@ -79,21 +92,21 @@ MACROS
 */
 
 
-#define SOCKET_CMD_CONNECT                  0x44
+#define SOCKET_CMD_CONNECT              0x44
 /*!<
     Socket Connecting command value.
 */
 
 
-#define SOCKET_CMD_SEND                     0x45
+#define SOCKET_CMD_SEND                 0x45
 /*!<
     Socket send command value.
 */
 
 
-#define SOCKET_CMD_RECV                     0x46
+#define SOCKET_CMD_RECV                 0x46
 /*!<
-    Socket Recieve command value.
+    Socket Receive command value.
 */
 
 
@@ -103,9 +116,9 @@ MACROS
 */
 
 
-#define SOCKET_CMD_RECVFROM                 0x48
+#define SOCKET_CMD_RECVFROM             0x48
 /*!<
-    Socket RecieveFrom command value.
+    Socket ReceiveFrom command value.
 */
 
 
@@ -115,27 +128,27 @@ MACROS
 */
 
 
-#define SOCKET_CMD_DNS_RESOLVE              0x4A
+#define SOCKET_CMD_DNS_RESOLVE          0x4A
 /*!<
     Socket DNS Resolve command value.
 */
 
 
-#define SOCKET_CMD_SSL_CONNECT              0x4B
+#define SOCKET_CMD_SSL_CONNECT          0x4B
 /*!<
     SSL-Socket Connect command value.
 */
 
 
-#define SOCKET_CMD_SSL_SEND                 0x4C
+#define SOCKET_CMD_SSL_SEND             0x4C
 /*!<
     SSL-Socket Send command value.
 */
 
 
-#define SOCKET_CMD_SSL_RECV                 0x4D
+#define SOCKET_CMD_SSL_RECV             0x4D
 /*!<
-    SSL-Socket Recieve command value.
+    SSL-Socket Receive command value.
 */
 
 
@@ -157,16 +170,16 @@ MACROS
 
 
 #define SOCKET_CMD_SSL_SET_SOCK_OPT         0x51
-/*!<
-*/
 
 
 #define SOCKET_CMD_PING                     0x52
+
+#define SOCKET_CMD_SSL_CONNECT_ALPN         0x53
 /*!<
+    SSL-Socket Connect with ALPN command value.
 */
 
-
-
+#define SOCKET_CMD_RAW_SET_SOCK_OPT         0x54
 
 
 #define PING_ERR_SUCCESS                    0
@@ -181,14 +194,14 @@ DATA TYPES
 /*!
 *  @brief
 */
-typedef struct{
-    uint16_t    u16Family;
-    uint16_t    u16Port;
-    uint32_t    u32IPAddr;
-}tstrSockAddr;
+typedef struct {
+    uint16_t      u16Family;
+    uint16_t      u16Port;
+    uint32_t      u32IPAddr;
+} tstrSockAddr;
 
 
-typedef int8_t          SOCKET;
+typedef int8_t           SOCKET;
 typedef tstrSockAddr    tstrUIPSockAddr;
 
 
@@ -200,41 +213,41 @@ typedef tstrSockAddr    tstrUIPSockAddr;
 @brief
     DNS Reply, contains hostName and HostIP.
 */
-typedef struct{
+typedef struct {
     char        acHostName[HOSTNAME_MAX_SIZE];
-    uint32_t    u32HostIP;
-}tstrDnsReply;
+    uint32_t      u32HostIP;
+} tstrDnsReply;
 
 
 /*!
 @brief
 */
-typedef struct{
+typedef struct {
     tstrSockAddr    strAddr;
-    SOCKET          sock;
-    uint8_t         u8Void;
-    uint16_t        u16SessionID;
-}tstrBindCmd;
+    SOCKET      sock;
+    uint8_t       u8Void;
+    uint16_t      u16SessionID;
+} tstrBindCmd;
 
 
 /*!
 @brief
 */
-typedef struct{
+typedef struct {
     SOCKET      sock;
-    int8_t      s8Status;
-    uint16_t    u16SessionID;
-}tstrBindReply;
+    int8_t       s8Status;
+    uint16_t      u16SessionID;
+} tstrBindReply;
 
 
 /*!
 *  @brief
 */
-typedef struct{
-    SOCKET      sock;
-    uint8_t     u8BackLog;
-    uint16_t    u16SessionID;
-}tstrListenCmd;
+typedef struct {
+    SOCKET  sock;
+    uint8_t   u8BackLog;
+    uint16_t  u16SessionID;
+} tstrListenCmd;
 
 
 /*!
@@ -248,33 +261,33 @@ typedef struct{
     If the received data from the remote peer is larger than the USER Buffer size (given at recv call), the data is
     delivered to the user in a number of consecutive chunks according to the USER Buffer size.
 */
-typedef struct{
+typedef struct {
     SOCKET      sock;
-    int8_t      s8Status;
-    uint16_t    u16SessionID;
-}tstrListenReply;
+    int8_t           s8Status;
+    uint16_t      u16SessionID;
+} tstrListenReply;
 
 
 /*!
 *  @brief
 */
-typedef struct{
+typedef struct {
     tstrSockAddr    strAddr;
     SOCKET          sListenSock;
     SOCKET          sConnectedSock;
-    uint16_t        u16Void;
-}tstrAcceptReply;
+    uint16_t          u16Void;
+} tstrAcceptReply;
 
 
 /*!
 *  @brief
 */
-typedef struct{
+typedef struct {
     tstrSockAddr    strAddr;
     SOCKET          sock;
-    uint8_t         u8SslFlags;
-    uint16_t        u16SessionID;
-}tstrConnectCmd;
+    uint8_t           u8SslFlags;
+    uint16_t          u16SessionID;
+} tstrConnectCmd;
 
 
 /*!
@@ -284,15 +297,50 @@ typedef struct{
 @brief
     Connect Reply, contains sock number and error value
 */
-typedef struct{
+typedef struct {
     SOCKET      sock;
-    int8_t      s8Error;
-    uint16_t    u16AppDataOffset;
+    int8_t       s8Error;
     /*!<
-        In further packet send requests the host interface should put the user application
-        data at this offset in the allocated shared data packet.
+        0 for successful connection, in which case u16AppDataOffset is valid.
+        Negative for failed connection, in which case u8ErrorType and u8ErrorDetail may give more info.
     */
-}tstrConnectReply;
+    union {
+        uint16_t      u16AppDataOffset;
+        /*!<
+            In further packet send requests the host interface should put the user application
+            data at this offset in the allocated shared data packet.
+        */
+        struct {
+            uint8_t   u8ErrSource;
+            /*!<
+                0: No detail
+                1: TLS Alert received from peer
+                2: TLS Alert generated locally
+            */
+            uint8_t   u8ErrCode;
+            /*!<
+                For TLS Alerts, this is the Alert ID.
+            */
+        };
+    };
+} tstrConnectReply;
+
+
+/*!
+@struct \
+    tstrConnectAlpnReply
+
+@brief
+    Connect Reply, contains sock number, error value and index of negotiated application protocol.
+*/
+typedef struct{
+    tstrConnectReply    strConnReply;
+    uint8_t               u8AppProtocolIdx;
+    /*!<
+        1-based index of application-layer protocol negotiated during TLS handshake.
+    */
+    uint8_t       __PAD24__[3];
+}tstrConnectAlpnReply;
 
 
 /*!
@@ -300,12 +348,12 @@ typedef struct{
 */
 typedef struct{
     SOCKET          sock;
-    uint8_t         u8Void;
-    uint16_t        u16DataSize;
+    uint8_t           u8Void;
+    uint16_t          u16DataSize;
     tstrSockAddr    strAddr;
-    uint16_t        u16SessionID;
-    uint16_t        u16Void;
-}tstrSendCmd;
+    uint16_t      u16SessionID;
+    uint16_t          u16Void;
+} tstrSendCmd;
 
 
 /*!
@@ -315,25 +363,25 @@ typedef struct{
 @brief
     Send Reply, contains socket number and number of sent bytes.
 */
-typedef struct{
+typedef struct {
     SOCKET      sock;
-    uint8_t     u8Void;
-    int16_t     s16SentBytes;
-    uint16_t    u16SessionID;
-    uint16_t    u16Void;
-}tstrSendReply;
+    uint8_t       u8Void;
+    int16_t      s16SentBytes;
+    uint16_t      u16SessionID;
+    uint16_t      u16Void;
+} tstrSendReply;
 
 
 /*!
 *  @brief
 */
-typedef struct{
-    uint32_t    u32Timeoutmsec;
+typedef struct {
+    uint32_t      u32Timeoutmsec;
     SOCKET      sock;
-    uint8_t     u8Void;
-    uint16_t    u16SessionID;
-    uint16_t    u16BufLen;
-}tstrRecvCmd;
+    uint8_t       u8Void;
+    uint16_t      u16SessionID;
+    uint16_t      u16BufLen;
+} tstrRecvCmd;
 
 
 /*!
@@ -341,65 +389,65 @@ typedef struct{
   tstrRecvReply
 @brief
 */
-typedef struct{
+typedef struct {
     tstrSockAddr    strRemoteAddr;
     int16_t         s16RecvStatus;
     uint16_t        u16DataOffset;
     SOCKET          sock;
     uint8_t         u8Void;
     uint16_t        u16SessionID;
-}tstrRecvReply;
+} tstrRecvReply;
 
 
 /*!
 *  @brief
 */
-typedef struct{
-    uint32_t    u32OptionValue;
+typedef struct {
+    uint32_t      u32OptionValue;
     SOCKET      sock;
-    uint8_t     u8Option;
-    uint16_t    u16SessionID;
-}tstrSetSocketOptCmd;
+    uint8_t       u8Option;
+    uint16_t      u16SessionID;
+} tstrSetSocketOptCmd;
 
 
-typedef struct{
+typedef struct {
     SOCKET      sslSock;
-    uint8_t     __PAD24__[3];
-}tstrSSLSocketCreateCmd;
+    uint8_t       __PAD24__[3];
+} tstrSSLSocketCreateCmd;
 
 
 /*!
 *  @brief
 */
-typedef struct{
+typedef struct {
     SOCKET      sock;
-    uint8_t     u8Option;
-    uint16_t    u16SessionID;
-    uint32_t    u32OptLen;
-    uint8_t     au8OptVal[SSL_MAX_OPT_LEN];
-}tstrSSLSetSockOptCmd;
+    uint8_t       u8Option;
+    uint16_t      u16SessionID;
+    uint32_t      u32OptLen;
+    uint8_t       au8OptVal[SSL_MAX_OPT_LEN];
+} tstrSSLSetSockOptCmd;
 
 
 /*!
 */
-typedef struct{
-    uint32_t    u32DestIPAddr;
-    uint32_t    u32CmdPrivate;
-    uint16_t    u16PingCount;
-    uint8_t     u8TTL;
-    uint8_t     __PAD8__;
-}tstrPingCmd;
+typedef struct {
+    uint32_t  u32DestIPAddr;
+    uint32_t  u32CmdPrivate;
+    uint16_t  u16PingCount;
+    uint8_t   u8TTL;
+    uint8_t   __PAD8__;
+} tstrPingCmd;
 
 
-typedef struct{
-    uint32_t    u32IPAddr;
-    uint32_t    u32CmdPrivate;
-    uint32_t    u32RTT;
-    uint16_t    u16Success;
-    uint16_t    u16Fail;
-    uint8_t     u8ErrorCode;
-    uint8_t     __PAD24__[3];
-}tstrPingReply;
+typedef struct {
+    uint32_t  u32IPAddr;
+    uint32_t  u32CmdPrivate;
+    uint32_t  u32RTT;
+    uint16_t  u16Success;
+    uint16_t  u16Fail;
+    uint8_t   u8ErrorCode;
+    uint8_t   __PAD24__[3];
+} tstrPingReply;
 
 #ifdef  __cplusplus
 }

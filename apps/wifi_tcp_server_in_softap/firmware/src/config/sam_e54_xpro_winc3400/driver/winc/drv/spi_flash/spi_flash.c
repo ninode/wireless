@@ -40,6 +40,10 @@
 
 #define TIMEOUT (-1) /*MS*/
 
+#define MAX_PROG_CNT 2
+#define MAX_RETRY 4
+#define MAX_ATTEMPT_STATUS_READ     50000
+
 #define HOST_SHARE_MEM_BASE     (0xd0000UL)
 #define CORTUS_SHARE_MEM_BASE   (0x60000000UL)
 #define NMI_SPI_FLASH_ADDR      (0x111c)
@@ -71,7 +75,7 @@ SPI Flash DMA
 *   @return     Status of execution
 *   @note       Compatible with MX25L6465E
 */
-static int8_t spi_flash_read_status_reg(uint8_t * val)
+static int8_t spi_flash_read_status_reg(uint8_t *val)
 {
     int8_t ret = M2M_SUCCESS;
     uint8_t cmd[1];
@@ -110,9 +114,9 @@ static int8_t spi_flash_read_status_reg(uint8_t * val)
 */
 static int8_t spi_flash_load_to_cortus_mem(uint32_t u32MemAdr, uint32_t u32FlashAdr, uint32_t u32Sz)
 {
-    uint8_t   cmd[5];
+    uint8_t cmd[5];
     uint32_t  val = 0;
-    int8_t    ret = M2M_SUCCESS;
+    int8_t   ret = M2M_SUCCESS;
 
     cmd[0] = 0x0b;
     cmd[1] = (uint8_t)(u32FlashAdr >> 16);
@@ -146,9 +150,9 @@ static int8_t spi_flash_load_to_cortus_mem(uint32_t u32MemAdr, uint32_t u32Flash
 */
 static int8_t spi_flash_sector_erase(uint32_t u32FlashAdr)
 {
-    uint8_t   cmd[4];
+    uint8_t cmd[4];
     uint32_t  val = 0;
-    int8_t    ret = M2M_SUCCESS;
+    int8_t   ret = M2M_SUCCESS;
 
     cmd[0] = 0x20;
     cmd[1] = (uint8_t)(u32FlashAdr >> 16);
@@ -178,9 +182,9 @@ static int8_t spi_flash_sector_erase(uint32_t u32FlashAdr)
 */
 static int8_t spi_flash_write_enable(void)
 {
-    uint8_t   cmd[1];
+    uint8_t cmd[1];
     uint32_t  val = 0;
-    int8_t    ret = M2M_SUCCESS;
+    int8_t   ret = M2M_SUCCESS;
 
     cmd[0] = 0x06;
 
@@ -206,9 +210,9 @@ static int8_t spi_flash_write_enable(void)
 */
 static int8_t spi_flash_write_disable(void)
 {
-    uint8_t   cmd[1];
+    uint8_t cmd[1];
     uint32_t  val = 0;
-    int8_t    ret = M2M_SUCCESS;
+    int8_t   ret = M2M_SUCCESS;
     cmd[0] = 0x04;
 
     ret += nm_write_reg(SPI_FLASH_DATA_CNT, 0);
@@ -239,9 +243,9 @@ static int8_t spi_flash_write_disable(void)
 */
 static int8_t spi_flash_page_program(uint32_t u32MemAdr, uint32_t u32FlashAdr, uint32_t u32Sz)
 {
-    uint8_t   cmd[4];
+    uint8_t cmd[4];
     uint32_t  val = 0;
-    int8_t    ret = M2M_SUCCESS;
+    int8_t   ret = M2M_SUCCESS;
 
     cmd[0] = 0x02;
     cmd[1] = (uint8_t)(u32FlashAdr >> 16);
@@ -300,18 +304,40 @@ static int8_t spi_flash_pp(uint32_t u32Offset, uint8_t *pu8Buf, uint16_t u16Sz)
 {
     int8_t ret = M2M_SUCCESS;
     uint8_t tmp;
-    spi_flash_write_enable();
+    int i;
+    int p;
+    int x;
+
     /* use shared packet memory as temp mem */
     ret += nm_write_block(HOST_SHARE_MEM_BASE, pu8Buf, u16Sz);
-    ret += spi_flash_page_program(HOST_SHARE_MEM_BASE, u32Offset, u16Sz);
-    do
+
+    for(i = 0, p = 0; (i < MAX_RETRY) && (p < MAX_PROG_CNT); i++)
     {
-        if(ret != M2M_SUCCESS) goto ERR;
-        ret += spi_flash_read_status_reg(&tmp);
+        if((spi_flash_write_enable() == M2M_SUCCESS) &&
+           (spi_flash_page_program(HOST_SHARE_MEM_BASE, u32Offset, u16Sz) == M2M_SUCCESS))
+        {
+            x = 0;
+            while(++x < MAX_ATTEMPT_STATUS_READ)
+            {
+                if(spi_flash_read_status_reg(&tmp) != M2M_SUCCESS)
+                {
+                    break;
+                }
+                if(!(tmp & 0x01))
+                {
+                    p++;
+                    break;
+                }
+            }
+        }
     }
-    while(tmp & 0x01);
-    ret += spi_flash_write_disable();
-ERR:
+    ret = spi_flash_write_disable();
+
+    if(p < MAX_PROG_CNT)
+    {
+        ret = M2M_ERR_FAIL;
+    }
+
     return ret;
 }
 
@@ -346,9 +372,27 @@ static uint32_t spi_flash_rdid(void)
     }
     while(reg != 1);
     reg = (M2M_SUCCESS == ret)?(nm_read_reg(DUMMY_REGISTER)):(0);
-    M2M_PRINT("Flash ID %x\r\n",(unsigned int)reg);
+    M2M_PRINT("Flash ID %x \n", (unsigned int)reg);
     return reg;
 }
+
+/**
+*   @fn         spi_flash_unlock
+*   @brief      Unlock SPI Flash
+*/
+#if 0
+static void spi_flash_unlock(void)
+{
+    uint8_t tmp;
+    tmp = spi_flash_read_security_reg();
+    spi_flash_clear_security_flags();
+    if(tmp & 0x80)
+    {
+        spi_flash_write_enable();
+        spi_flash_gang_unblock();
+    }
+}
+#endif
 
 /*********************************************/
 /* GLOBAL FUNCTIONS                          */
@@ -389,7 +433,7 @@ ERR:
 
 /**
 *   @fn         spi_flash_write
-*   @brief      Proram SPI flash
+*   @brief      Program SPI flash
 *   @param[IN]  pu8Buf
 *                   Pointer to data buffer
 *   @param[IN]  u32Offset
@@ -398,22 +442,32 @@ ERR:
 *                   Data size
 *   @return     Status of execution
 */
-int8_t spi_flash_write(uint8_t* pu8Buf, uint32_t u32Offset, uint32_t u32Sz)
+int8_t spi_flash_write(uint8_t *pu8Buf, uint32_t u32Offset, uint32_t u32Sz)
 {
+#ifdef PROFILING
+    uint32_t t1 = 0;
+    uint32_t percent =0;
+    uint32_t tpercent =0;
+#endif
     int8_t ret = M2M_SUCCESS;
     uint32_t u32wsz;
     uint32_t u32off;
     uint32_t u32Blksz;
     u32Blksz = FLASH_PAGE_SZ;
     u32off = u32Offset % u32Blksz;
+#ifdef PROFILING
+    tpercent = (u32Sz/u32Blksz)+((u32Sz%u32Blksz)>0);
+    t1 = nm_bsp_get_tick();
+    M2M_PRINT(">Start programming...\r\n");
+#endif
     if(u32Sz<=0)
     {
-        M2M_ERR("Data size = %d\r\n",(int)u32Sz);
+        M2M_ERR("Data size = %d", (int)u32Sz);
         ret = M2M_ERR_FAIL;
         goto ERR;
     }
 
-    if (u32off)/*first part of data in the address page*/
+    if(u32off) /*first part of data in the address page*/
     {
         u32wsz = u32Blksz - u32off;
         if(spi_flash_pp(u32Offset, pu8Buf, (uint16_t)BSP_MIN(u32Sz, u32wsz))!=M2M_SUCCESS)
@@ -421,12 +475,12 @@ int8_t spi_flash_write(uint8_t* pu8Buf, uint32_t u32Offset, uint32_t u32Sz)
             ret = M2M_ERR_FAIL;
             goto ERR;
         }
-        if (u32Sz < u32wsz) goto EXIT;
+        if(u32Sz < u32wsz) goto EXIT;
         pu8Buf += u32wsz;
         u32Offset += u32wsz;
         u32Sz -= u32wsz;
     }
-    while (u32Sz > 0)
+    while(u32Sz > 0)
     {
         u32wsz = BSP_MIN(u32Sz, u32Blksz);
 
@@ -439,8 +493,16 @@ int8_t spi_flash_write(uint8_t* pu8Buf, uint32_t u32Offset, uint32_t u32Sz)
         pu8Buf += u32wsz;
         u32Offset += u32wsz;
         u32Sz -= u32wsz;
+#ifdef PROFILING
+        percent++;
+        printf("\r>Complete Percentage = %d%%.\r", ((percent*100)/tpercent));
+#endif
     }
 EXIT:
+#ifdef PROFILING
+    M2M_PRINT("\rDone\t\t\t\t\t\t");
+    M2M_PRINT("\n#Programming time = %f sec\n\r", (nm_bsp_get_tick() - t1)/1000.0);
+#endif
 ERR:
     return ret;
 }
@@ -458,25 +520,50 @@ ERR:
 int8_t spi_flash_erase(uint32_t u32Offset, uint32_t u32Sz)
 {
     uint32_t i = 0;
-    int8_t ret = M2M_SUCCESS;
     uint8_t  tmp = 0;
+    int p;
+    int j;
+    int x;
+
+#ifdef PROFILING
+    uint32_t t;
+    t = nm_bsp_get_tick();
+#endif
     M2M_DBG("\r\n>Start erasing...\r\n");
     for(i = u32Offset; i < (u32Sz +u32Offset); i += (16*FLASH_PAGE_SZ))
     {
-        ret += spi_flash_write_enable();
-        ret += spi_flash_read_status_reg(&tmp);
-        ret += spi_flash_sector_erase(i);
-        ret += spi_flash_read_status_reg(&tmp);
-        do
+        for(j = 0, p = 0; (j < MAX_RETRY) && (p < MAX_PROG_CNT); j++)
         {
-            if(ret != M2M_SUCCESS) goto ERR;
-            ret += spi_flash_read_status_reg(&tmp);
-        }while(tmp & 0x01);
-
+            if((spi_flash_write_enable() == M2M_SUCCESS) &&
+               (spi_flash_read_status_reg(&tmp) == M2M_SUCCESS) &&
+               (spi_flash_sector_erase(i) == M2M_SUCCESS) &&
+               (spi_flash_read_status_reg(&tmp) == M2M_SUCCESS))
+            {
+                x = 0;
+                while(++x < MAX_ATTEMPT_STATUS_READ)
+                {
+                    if(spi_flash_read_status_reg(&tmp) != M2M_SUCCESS)
+                    {
+                        break;
+                    }
+                    if(!(tmp & 0x01))
+                    {
+                        p++;
+                        break;
+                    }
+                }
+            }
+        }
+        if(p != MAX_PROG_CNT)
+        {
+            return M2M_ERR_FAIL;
+        }
     }
     M2M_DBG("Done\r\n");
-ERR:
-    return ret;
+#ifdef PROFILING
+    M2M_PRINT("#Erase time = %f sec\n", (nm_bsp_get_tick()-t)/1000.0);
+#endif
+    return M2M_SUCCESS;
 }
 
 /**
@@ -487,9 +574,9 @@ ERR:
 uint32_t spi_flash_get_size(void)
 {
     uint32_t u32FlashId = 0, u32FlashPwr = 0;
-    static uint32_t gu32InernalFlashSize= 0;
+    static uint32_t gu32InternalFlashSize= 0;
 
-    if(!gu32InernalFlashSize)
+    if(!gu32InternalFlashSize)
     {
         u32FlashId = spi_flash_rdid();//spi_flash_probe();
         if(u32FlashId != 0xffffffff)
@@ -497,14 +584,14 @@ uint32_t spi_flash_get_size(void)
             /*flash size is the third byte from the FLASH RDID*/
             u32FlashPwr = ((u32FlashId>>16)&0xff) - 0x11; /*2MBIT is the min*/
             /*That number power 2 to get the flash size*/
-            gu32InernalFlashSize = 1<<u32FlashPwr;
-            M2M_INFO("Flash Size %lu Mb\r\n",gu32InernalFlashSize);
+            gu32InternalFlashSize = 1<<u32FlashPwr;
+            M2M_INFO("Flash Size %lu Mb\r\n", gu32InternalFlashSize);
         }
         else
         {
-            M2M_ERR("Can't Detect Flash size\r\n");
+            M2M_ERR("Can't detect Flash size\r\n");
         }
     }
 
-    return gu32InernalFlashSize;
+    return gu32InternalFlashSize;
 }

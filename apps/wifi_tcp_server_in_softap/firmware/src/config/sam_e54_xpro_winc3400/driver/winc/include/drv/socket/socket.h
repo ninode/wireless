@@ -34,15 +34,19 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-/**@defgroup SOCKETAPI SOCKET
- */
-
 #ifndef __SOCKET_H__
 #define __SOCKET_H__
 
 #ifdef  __cplusplus
 extern "C" {
 #endif
+
+/** @defgroup SOCKETAPI Socket
+ *          BSD compatible socket interface between the host layer and the network
+ *          protocol stacks in the firmware.
+ *          These functions are used by the host application to send or receive
+ *          packets and to do other socket operations.
+ */
 
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 INCLUDES
@@ -54,16 +58,24 @@ INCLUDES
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 MACROS
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*/
-/**@defgroup  SOCKETDEF  Defines
- * @ingroup SOCKETAPI
+/**@defgroup SOCKETDEF Defines
+ * @ingroup  SOCKETAPI
  * The following list of macros are used to define constants used throughout the socket layer, and SSL Socket options.
- * @{ */
+ */
 
+/**@defgroup IPDefines TCP/IP Defines
+ * @ingroup  SOCKETDEF
+ * The following list of macros are used to define constants used throughout the socket layer.
+ * @{
+ */
+/*
+ *  HOSTNAME_MAX_SIZE is defined here and also in host_drv/socket/include/m2m_socket_host_if.h
+ *  The two definitions must match.
+*/
 #define HOSTNAME_MAX_SIZE                                   100
 /*!<
-    Maximum allowed size for a host domain name passed to the function gethostbyname @ref gethostbyname.
-    command value. Used with the setsocketopt function.
-
+    Maximum allowed size for a host domain name passed to the function @ref gethostbyname.
+    command value. Used with the @ref setsockopt function.
 */
 
 #define SOCKET_BUFFER_MAX_LENGTH                            1400
@@ -90,9 +102,33 @@ MACROS
      Passed to the @ref socket function for the socket creation operation.
 */
 
+#define  SOCK_RAW                                           3
+/*!<
+     Socket type used for sending and receiving raw frames.
+     Raw socket expects and returns IP header.
+     Please note that SO_BROADCAST socket option is not currently supported when using RAW socket.
+     Similarly to SOCK_DGRAM it is oriented towards unreliable connectionless communication.
+     Passed to the @ref socket function for the socket creation operation.
+*/
+
 #define SOCKET_FLAGS_SSL                                    0x01
 /*!<
     This flag shall be passed to the socket API for SSL session.
+*/
+
+#define SOCKET_FLAGS_IPPROTO_RAW                            0x02
+/*!<
+    This flag shall be passed to the @ref socket API when requesting for @ref SOCK_RAW.
+    Passing this flag allows the Application to use a socket of type raw to send/receive frames.
+    This assumes that the application will fill the IP and protocol (UDP, TCP, ICMP) headers.
+    Typically, when sending ICMP frames via RAW socket, there are two options that can be used:
+        - IPPROTO_RAW  - Raw IP packets, implies that IP_HDRINCL is enabled and therefore
+                         the host application should fill in the corresponding protocol header checksum.
+        - IPPROTO_ICMP - ICMP packets, the WINC would fill in the ICMP header checksum (not supported).
+    @warning
+        Please note that only SOCKET_FLAGS_IPPROTO_RAW is currently supported.
+        Raw sockets can be used to send TCP/UDP/ICMP packets, however, the current implementation only
+        supports receiving Raw ICMP frames, which also requires @ref SO_ICMP_FILTER to be set appropriately.
 */
 
 #define TCP_SOCK_MAX                                        (7)
@@ -105,7 +141,12 @@ MACROS
     Maximum number of simultaneous UDP sockets.
 */
 
-#define MAX_SOCKET                                          (TCP_SOCK_MAX + UDP_SOCK_MAX)
+#define RAW_SOCK_MAX                                        1
+/*!<
+    Maximum number of simultaneous RAW sockets.
+*/
+
+#define MAX_SOCKET                                          (TCP_SOCK_MAX + UDP_SOCK_MAX + RAW_SOCK_MAX)
 /*!<
     Maximum number of simultaneous sockets.
 */
@@ -116,11 +157,31 @@ MACROS
     Used with the @ref setsockopt function
 */
 
+#define SOL_SSL_SOCKET                                      2
+/*!<
+    SSL Socket option level.
+    Used with the @ref setsockopt function
+*/
+
+#define SOL_RAW                                             255
+/*!<
+    Raw Socket option level.
+    Used with the @ref setsockopt function
+*/
+
 #define SO_SET_UDP_SEND_CALLBACK                            0x00
 /*!<
     Socket option used by the application to enable/disable
-    the use of UDP send callbacks.
-    Used with the @ref setsockopt function.
+    the use of UDP send callbacks.\n
+    Used with the @ref setsockopt function.\n
+    The option value should be cast to int type.\n
+    0: disable UDP send callbacks.\n
+    1: enable UDP send callbacks.\n
+    Default setting is enable.
+
+    @warning @ref connect and @ref bind cause this setting to
+        be lost, so the application should only set this option
+        after calling @ref connect or @ref bind.
 */
 
 #define IP_ADD_MEMBERSHIP                                   0x01
@@ -129,22 +190,109 @@ MACROS
     Used with the @ref setsockopt function.
 */
 
-
 #define IP_DROP_MEMBERSHIP                                  0x02
 /*!<
     Set Socket Option Drop Membership command value.
     Used with the @ref setsockopt function.
 */
 
-
-// SSL Socket options
-
-#define SOL_SSL_SOCKET                                      2
+#define SO_TCP_KEEPALIVE                                    0x04
 /*!<
-    SSL Socket option level.
-    Used with the @ref setsockopt function
+    Socket option to enable or disable TCP keep-alive.\n
+    Used with the @ref setsockopt function.\n
+    The option value should be cast to int type.\n
+    0: disable TCP keep-alive.\n
+    1: enable TCP keep-alive.\n
+    Default setting is disable.
+
+    @warning @ref connect and @ref bind cause this setting to
+    be lost, so the application should only set this option
+    after calling @ref connect or @ref bind.
 */
 
+#define SO_TCP_KEEPIDLE                                     0x05
+/*!<
+    Socket option to set the time period after which the socket will trigger keep-alive transmissions.\n
+    Used with the @ref setsockopt function.\n
+    The option value should be cast to int type.\n
+    Option value is the time period in units of 500ms. Maximum 2^32 - 1.
+    Default setting is 120 (60 seconds).
+
+    @warning @ref connect and @ref bind cause this setting to
+    be lost, so the application should only set this option
+    after calling @ref connect or @ref bind.
+*/
+
+#define SO_TCP_KEEPINTVL                                    0x06
+/*!<
+    Socket option to set the time period between keep-alive retransmissions.\n
+    Used with the @ref setsockopt function.\n
+    The option value should be cast to int type.\n
+    Option value is the time period in units of 500ms. Maximum 255.
+    Default setting is 1 (0.5 seconds).
+
+    @warning @ref connect and @ref bind cause this setting to
+    be lost, so the application should only set this option
+    after calling @ref connect or @ref bind.
+*/
+
+#define SO_TCP_KEEPCNT                                      0x07
+/*!<
+    Socket option to set the number of keep-alive retransmissions to be carried out before declaring that the remote end is not available.\n
+    Used with the @ref setsockopt function.\n
+    The option value should be cast to int type.\n
+    Maximum 255.
+    Default setting is 20.
+
+    @warning @ref connect and @ref bind cause this setting to
+    be lost, so the application should only set this option
+    after calling @ref connect or @ref bind.
+*/
+
+#define SO_ICMP_FILTER                                      0x01
+/*!<
+    Socket option to set the ICMP filter for raw sockets when receiving.\n
+    Current implementation allows for a filter none (0) or filter all (anything else).
+    Filter none means that all ICMP frames will be delivered to the host via raw socket.
+    Filter all means that all ICMP frames will NOT be delivered to host and handled internally by the WINC (please note that fragmentation is not supported by the WINC).
+    Used with the @ref setsockopt function.\n
+    The option value should be cast to int type.\n
+    Default setting is 0 (filter none).
+
+    @warning @ref bind and @ref shutdown will cause this setting to be lost,
+    so the application should only set this option after @ref bind.
+*/
+
+#define RAW_SOCK_ID                                         (TCP_SOCK_MAX + UDP_SOCK_MAX)
+/*!<
+    Socket number to be used for RAW socket.
+*/
+
+/**@}*/     //IPDefines
+
+
+/**@addtogroup TLSDefines
+ * @{
+ */
+#define ALPN_LIST_MAX_APP_LENGTH                            30
+/*!<
+    Maximum length of ALPN list that can be specified by the application.
+    This length includes separators (spaces) and terminator (NUL).
+*/
+/**@}*/     // TLSDefines
+
+/**
+ * @defgroup TLSDefines TLS Defines
+ * @ingroup  SOCKETDEF
+ * @ingroup  SSLAPI
+*/
+
+/**@defgroup SSLSocketOptions TLS Socket Options
+ * @ingroup  TLSDefines
+ * The following list of macros are used to define SSL Socket options.
+ * @{
+ * @sa setsockopt
+ */
 
 #define SO_SSL_BYPASS_X509_VERIF                            0x01
 /*!<
@@ -153,7 +301,7 @@ MACROS
     It is highly recommended NOT to use this socket option in production
     software applications. It is intended for debugging and testing
     purposes only.\n
-    The option value should be cast to int32_t type and it is handled
+    The option value should be cast to int type and it is handled
     as a boolean flag.
 */
 
@@ -162,8 +310,8 @@ MACROS
     Set the Server Name Indicator (SNI) for an SSL socket. The
     SNI is a NULL terminated string containing the server name
     associated with the connection. It must not exceed the size
-    of HOSTNAME_MAX_SIZE. If the SNI is not a null string, then
-    TLS Client Hello messages will include the SNI extension.
+    of @ref HOSTNAME_MAX_SIZE. If the SNI is not a null string,
+    then TLS Client Hello messages will include the SNI extension.
 */
 
 #define SO_SSL_ENABLE_SESSION_CACHING                       0x03
@@ -171,23 +319,39 @@ MACROS
     Allow the TLS to cache the session information for fast
     TLS session establishment in future connections using the
     TLS Protocol session resume features.\n
-    The option value should be cast to int32_t type and it is handled
+    The option value should be cast to int type and it is handled
     as a boolean flag.
+
 */
 
 #define SO_SSL_ENABLE_CERTNAME_VALIDATION                   0x04
 /*!<
     Enable internal validation of server name against the server's
     certificate subject common name. If there is no server name
-    provided (via the SO_SSL_SNI option), setting this option does
-    nothing.\n
-    The option value should be cast to int32_t type and it is handled
+    provided (via the @ref SO_SSL_SNI option), setting this option
+    does nothing.\n
+    The option value should be cast to int type and it is handled
     as a boolean flag.
 */
 
- //@}
+#define SO_SSL_ENABLE_SNI_VALIDATION                        0x04
+/*!<
+    Legacy name for @ref SO_SSL_ENABLE_CERTNAME_VALIDATION.\n
+    The option value should be cast to int type and it is handled
+    as a boolean flag.
+*/
 
-/** @defgroup  SSLCipherSuiteID TLS Cipher Suite IDs
+#define SO_SSL_ALPN                                         0x05
+/*!<
+    Set the list to use for Application-Layer Protocol Negotiation
+    for an SSL socket. \n
+    This option is intended for internal use and should not be
+    used by the application. Applications should use the API
+    set_alpn_list.
+*/
+/**@}*/     //SSLSocketOptions
+
+/**@defgroup  SSLCipherSuiteID TLS Cipher Suite IDs
  * @ingroup TLSDefines
  * The following list of macros defined the list of supported TLS Cipher suites.
  * Each MACRO defines a single Cipher suite.
@@ -218,10 +382,8 @@ MACROS
     SSL_CIPHER_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256      \
 )
 /*!<
-    All supported ECC Ciphers. These ciphers are turned off by default at startup.
-    The application may enable them if it has an ECC math engine (like ATECC508).
+    All supported ciphers which use ECDSA.
 */
-
 
 #define SSL_DEFAULT_CIPHERS \
 (\
@@ -240,12 +402,14 @@ MACROS
     All supported Non-ECC Ciphers. This is the default active group after startup.
     Note that firmware may support only a subset of these.
 */
- //@}
+/**@}*/     // SSLCipherSuiteID
 
 /**@defgroup  SOCKETBYTEORDER  Byte Order
  * @ingroup SOCKETAPI
  * The following list of macros are used to convert between host representation and network byte order.
- * @{ */
+ * @{
+ */
+
 #ifdef _NM_BSP_BIG_END
 #define _htonl(m)               (m)
 /*!<
@@ -279,7 +443,7 @@ MACROS
 /*!<
     Convert a 2-byte integer from Network byte order to Host representation.
 */
- //@}
+/**@}*/     // SOCKETBYTEORDER
 
 /**************
 Socket Errors
@@ -357,8 +521,7 @@ Socket Errors
 /*!<
     No buffer space available to be used for the requested socket operation.
 */
-
- //@}
+/**@}*/     // SocketErrorCode
 
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 DATA TYPES
@@ -367,7 +530,8 @@ DATA TYPES
 /** @defgroup  SocketEnums Enumeration/Typedefs
  * @ingroup SOCKETAPI
  * Specific Enumeration-typedefs used for socket operations
- * @{ */
+ * @{
+ */
 /*!
 @typedef    \
     SOCKET
@@ -378,7 +542,31 @@ DATA TYPES
     The ID is uniquely assigned at socket creation when calling @ref socket operation.
 */
 typedef int8_t  SOCKET;
- //@}
+
+/*!
+@enum   \
+    tenuSockErrSource
+
+@brief
+    Source of socket error (local, remote or unknown).
+
+@see    tstrSockErr
+*/
+
+typedef enum {
+    SOCKET_ERR_UNKNOWN = 0,
+    /*!<
+        No detail available (also used when there is no error).
+    */
+    SOCKET_ERR_TLS_REMOTE,
+    /*!<
+        TLS Error Alert received from peer.
+    */
+    SOCKET_ERR_TLS_LOCAL
+    /*!<
+        TLS Error Alert generated locally.
+    */
+} tenuSockErrSource;
 
 /*!
 @struct \
@@ -387,21 +575,43 @@ typedef int8_t  SOCKET;
 @brief
     Generic socket address structure.
 
-@see \
+@see
       sockaddr_in
 */
-struct sockaddr{
-    uint16_t    sa_family;
+struct sockaddr {
+    uint16_t      sa_family;
     /*!<
-Socket address family.
+    Socket address family.
     */
-    uint8_t     sa_data[14];
+    uint8_t       sa_data[14];
     /*!<
             Maximum size of all the different socket address structures.
     */
 };
 
-/**@addtogroup  SocketEnums
+/*!
+@struct \
+    tstrSockErr
+
+@brief
+    Detail about socket failures. Used with @ref get_error_detail.
+*/
+typedef struct {
+    tenuSockErrSource   enuErrSource;
+    /*!<
+        Source of socket error (local, remote or unknown).
+    */
+    uint8_t               u8ErrCode;
+    /*!<
+        TLS Alert code as defined in
+        https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-6.
+    */
+} tstrSockErr;
+/**@}*/     //SocketEnums
+
+/**@defgroup  AsyncCallback Asynchronous Events
+ * @ingroup SocketEnums
+ * Specific Enumeration used for asynchronous operations
  * @{ */
 /*!
 @enum   \
@@ -423,9 +633,9 @@ Socket address family.
 @see    connect
 @see    send
 @see    recv
-
 */
-typedef enum{
+
+typedef enum {
     SOCKET_MSG_BIND = 1,
     /*!<
         Bind socket event.
@@ -462,9 +672,7 @@ typedef enum{
     /*!<
         Recvfrom socket event.
     */
-}tenuSocketCallbackMsgType;
-// @}
-
+} tenuSocketCallbackMsgType;
 
 /*!
 @struct \
@@ -476,17 +684,15 @@ typedef enum{
     This structure together with the event @ref SOCKET_MSG_BIND are passed in parameters to the callback function.
 @see
      bind
-
 */
-typedef struct{
-    int8_t      status;
+typedef struct {
+    int8_t       status;
     /*!<
         The result of the bind operation.
         Holding a value of ZERO for a successful bind or otherwise a negative
         error code corresponding to @ref SocketErrorCode.
     */
-}tstrSocketBindMsg;
-
+} tstrSocketBindMsg;
 
 /*!
 @struct \
@@ -499,15 +705,13 @@ typedef struct{
 @see
       listen
 */
-typedef struct{
-    int8_t      status;
+typedef struct {
+    int8_t       status;
     /*!<
         Holding a value of ZERO for a successful listen or otherwise a negative
         error code corresponding to @ref SocketErrorCode.
     */
-}tstrSocketListenMsg;
-
-
+} tstrSocketListenMsg;
 
 /*!
 @struct \
@@ -518,7 +722,7 @@ typedef struct{
     Socket accept information is returned through this structure in response to the asynchronous call to the @ref accept function.
     This structure together with the event @ref SOCKET_MSG_ACCEPT are passed-in parameters to the callback function.
 */
-typedef struct{
+typedef struct {
     SOCKET      sock;
     /*!<
         On a successful @ref accept operation, the return information is the socket ID for the accepted connection with the remote peer.
@@ -528,8 +732,7 @@ typedef struct{
     /*!<
         Socket address structure for the remote peer.
     */
-}tstrSocketAcceptMsg;
-
+} tstrSocketAcceptMsg;
 
 /*!
 @struct \
@@ -541,19 +744,18 @@ typedef struct{
     This structure together with the event @ref SOCKET_MSG_CONNECT are passed-in parameters to the callback function.
     If the application receives this structure with a negative value in s8Error, the application should call @ref shutdown().
 */
-typedef struct{
+typedef struct {
     SOCKET  sock;
     /*!<
         Socket ID referring to the socket passed to the connect function call.
     */
-    int8_t  s8Error;
+    int8_t       s8Error;
     /*!<
         Connect error code.
         Holding a value of ZERO for a successful connect or otherwise a negative
         error code corresponding to the type of error.
     */
-}tstrSocketConnectMsg;
-
+} tstrSocketConnectMsg;
 
 /*!
 @struct \
@@ -565,23 +767,23 @@ typedef struct{
     This structure together with the events @ref SOCKET_MSG_RECV or @ref SOCKET_MSG_RECVFROM are passed-in parameters to the callback function.
 @remark
     In case the received data from the remote peer is larger than the USER buffer size defined during the asynchronous call to the @ref recv function,
-    only data up to the buffer size is delivered to the user. The user must call @ref recv again in order to receive the remaining data.
+    only data up to the USER buffer size is delivered to the user. The user must call @ref recv again in order to receive the remaining data.
     A negative or zero buffer size indicates an error with the following code:
     @ref SOCK_ERR_NO_ERROR          : Socket connection closed. The application should now call @ref shutdown().
     @ref SOCK_ERR_CONN_ABORTED      : Socket connection aborted. The application should now call @ref shutdown().
     @ref SOCK_ERR_TIMEOUT           : Socket receive timed out. The socket connection remains open.
 */
-typedef struct{
-    uint8_t                 *pu8Buffer;
+typedef struct {
+    uint8_t                   *pu8Buffer;
     /*!<
         Pointer to the USER buffer (passed to @ref recv and @ref recvfrom function) containing the received data chunk.
     */
-    int16_t                 s16BufferSize;
+    int16_t                  s16BufferSize;
     /*!<
         The received data chunk size.
         Holds a negative value if there is a receive error or ZERO on success upon reception of close socket message.
     */
-    uint16_t                u16RemainingSize;
+    uint16_t                  u16RemainingSize;
     /*!<
         The number of bytes remaining in the current @ref recv operation.
     */
@@ -589,10 +791,13 @@ typedef struct{
     /*!<
         Socket address structure for the remote peer. It is valid for @ref SOCKET_MSG_RECVFROM event.
     */
-}tstrSocketRecvMsg;
+} tstrSocketRecvMsg;
+/**@}*/     // AsyncCallback
 
-/**@addtogroup  SocketEnums
- * @{ */
+/**@defgroup SocketCallbacks Callbacks
+ * @ingroup SOCKETAPI
+ * @{
+ */
 /*!
 @typedef \
     tpfAppSocketCb
@@ -634,8 +839,7 @@ typedef struct{
     tstrSocketListenMsg
     tstrSocketBindMsg
 */
-typedef void (*tpfAppSocketCb) (SOCKET sock, uint8_t u8Msg, void * pvMsg);
-
+typedef void (*tpfAppSocketCb)(SOCKET sock, uint8_t u8Msg, void *pvMsg);
 
 /*!
 @typedef    \
@@ -650,9 +854,9 @@ typedef void (*tpfAppSocketCb) (SOCKET sock, uint8_t u8Msg, void * pvMsg);
                 Domain name of the host.
 
 @param [in] u32ServerIP
-                Server IPv4 address encoded in network byte order format. If it is Zero, then the DNS resolution failed.
+                Server IPv4 address encoded in Network byte order format. If it is Zero, then the DNS resolution failed.
 */
-typedef void (*tpfAppResolveCb) (uint8_t* pu8DomainName, uint32_t u32ServerIP);
+typedef void (*tpfAppResolveCb)(uint8_t *pu8DomainName, uint32_t u32ServerIP);
 
 /*!
 @typedef \
@@ -676,22 +880,26 @@ typedef void (*tpfAppResolveCb) (uint8_t* pu8DomainName, uint32_t u32ServerIP);
                 - PING_ERR_TIMEOUT
 */
 typedef void (*tpfPingCb)(uint32_t u32IPAddr, uint32_t u32RTT, uint8_t u8ErrorCode);
+/**@}*/     //SocketCallbacks
 
- /**@}*/
 /*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 FUNCTION PROTOTYPES
 *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*/
-/** \defgroup SocketAPI Functions
- *   @ingroup SOCKETAPI
+/**@defgroup   SocketAPI Functions
+ * @ingroup    SOCKETAPI
+ *              The function performs the necessary initializations for the socket library through the following steps:
+ *              - A check made by the global variable gbSocketInit, ensuring that initialization for sockets is performed only once,
+ *              in-order to prevent resetting the socket instances already created in the global socket array (gastrSockets).
+ *              - Zero initializations to the global socket array (gastrSockets), which holds the list of TCP sockets.
+ *              - Registers the socket (Host Interface)hif callback function through the call to the hif_register_cb function.
+ *              This facilitates handling  all of the socket related functions received through interrupts from the firmware.
+ * @{
  */
-
- /**@{*/
 /*!
-@fn \
-    void socketInit(void);
+ * @fn      void socketInit(void);
     The function performs the necessary initialization for the socket library through the following steps:
     - A check made by the global variable gbSocketInit, ensuring that initialization for sockets is performed only once,
-     in-order to prevent reseting the socket instances already created in the global socket array (gastrSockets).
+     in-order to prevent resetting the socket instances already created in the global socket array (gastrSockets).
     - Zero initializations to the global socket array (gastrSockets), which holds the list of TCP sockets.
     - Registers the socket (Host Interface)hif callback function through the call to the hif_register_cb function.
        This facilitates handling all of the socket related functions received through interrupts from the firmware.
@@ -705,7 +913,9 @@ FUNCTION PROTOTYPES
 \section SocketExample1 Example
 This example demonstrates the use of the socketInit for socket initialization for an mqtt chat application.
  \code
-    tstrWifiInitParam param;
+    tstrWifiInitParam   param;
+    tstrNetworkId       strNetworkId;
+    tstrAuthPsk         strAuthPsk;
     int8_t ret;
     char topic[strlen(MAIN_CHAT_TOPIC) + MAIN_CHAT_USER_NAME_SIZE + 1];
 
@@ -725,9 +935,16 @@ This example demonstrates the use of the socketInit for socket initialization fo
     registerSocketCallback(socket_event_handler, socket_resolve_handler);
 
     // Connect to router.
-    m2m_wifi_connect((char *)DEFAULT_SSID, sizeof(DEFAULT_SSID),
-            DEFAULT_AUTH, (char *)DEFAULT_KEY, M2M_WIFI_CH_ALL);
+    strNetworkId.pu8Bssid = NULL;
+    strNetworkId.pu8Ssid = MAIN_WLAN_SSID;
+    strNetworkId.u8SsidLen = sizeof(MAIN_WLAN_SSID);
+    strNetworkId.u8Channel = M2M_WIFI_CH_ALL;
 
+    strAuthPsk.pu8Psk = NULL;
+    strAuthPsk.pu8Passphrase = MAIN_WLAN_PSK;
+    strAuthPsk.u8PassphraseLen = (uint8_t)strlen((char*)MAIN_WLAN_PSK);
+
+    m2m_wifi_connect_psk(WIFI_CRED_SAVE_ENCRYPTED, &strNetworkId, &strAuthPsk);
 \endcode
 */
 void socketInit(void);
@@ -742,6 +959,18 @@ void socketInit(void);
     It must be invoked only after all desired socket operations have been performed on any active sockets.
 */
 void socketDeinit(void);
+
+/*!
+@fn \
+    uint8_t IsSocketReady(void);
+
+@see            socketInit
+                socketDeinit
+@return         If the socket has been initialized and is ready.
+                Should return 1 after @ref socketInit and 0 after @ref socketDeinit
+*/
+uint8_t IsSocketReady(void);
+
 /*!
 @fn \
     void registerSocketCallback(tpfAppSocketCb socket_cb, tpfAppResolveCb resolve_cb);
@@ -767,7 +996,9 @@ void socketDeinit(void);
     This example demonstrates the use of the registerSocketCallback to register a socket callback function with DNS resolution CB set to null
     for a simple UDP server example.
  \code
-        tstrWifiInitParam param;
+    tstrWifiInitParam   param;
+    tstrNetworkId       strNetworkId;
+    tstrAuthPsk         strAuthPsk;
     int8_t ret;
     struct sockaddr_in addr;
 
@@ -802,8 +1033,17 @@ void socketDeinit(void);
     registerSocketCallback(socket_cb, NULL);
 
     // Connect to router.
-    m2m_wifi_connect((char *)DEFAULT_SSID, sizeof(DEFAULT_SSID), DEFAULT_AUTH, (char *)DEFAULT_KEY, M2M_WIFI_CH_ALL);
-    \endcode
+    strNetworkId.pu8Bssid = NULL;
+    strNetworkId.pu8Ssid = MAIN_WLAN_SSID;
+    strNetworkId.u8SsidLen = sizeof(MAIN_WLAN_SSID);
+    strNetworkId.u8Channel = M2M_WIFI_CH_ALL;
+
+    strAuthPsk.pu8Psk = NULL;
+    strAuthPsk.pu8Passphrase = MAIN_WLAN_PSK;
+    strAuthPsk.u8PassphraseLen = (uint8_t)strlen((char*)MAIN_WLAN_PSK);
+
+    m2m_wifi_connect_psk(WIFI_CRED_SAVE_ENCRYPTED, &strNetworkId, &strAuthPsk);
+\endcode
 */
 void registerSocketCallback(tpfAppSocketCb socket_cb, tpfAppResolveCb resolve_cb);
 void registerSocketEventCallback(tpfAppSocketCb socket_cb);
@@ -822,11 +1062,12 @@ void registerSocketResolveCallback(tpfAppResolveCb resolve_cb);
                 Socket type. Allowed values are:
                 - [SOCK_STREAM](@ref SOCK_STREAM)
                 - [SOCK_DGRAM](@ref SOCK_DGRAM)
+                - [SOCK_RAW](@ref SOCK_RAW)
 
 @param [in] u8Flags
                 Used to specify the socket creation flags. It shall be set to zero for normal TCP/UDP sockets,
-                or [SOCKET_FLAGS_SSL](@ref SOCKET_FLAGS_SSL) if the socket is used for SSL session. The use of the flag
-                [SOCKET_FLAGS_SSL](@ref SOCKET_FLAGS_SSL) has no meaning in case of UDP sockets.
+                or [SOCKET_FLAGS_SSL](@ref SOCKET_FLAGS_SSL) if the socket is used for SSL session or [SOCKET_FLAGS_IPPROTO_RAW](@ref SOCKET_FLAGS_IPPROTO_RAW) if the socket is used for raw ICMP frames. The use of the flag
+                [SOCKET_FLAGS_SSL](@ref SOCKET_FLAGS_SSL) or [SOCKET_FLAGS_IPPROTO_RAW](@ref SOCKET_FLAGS_IPPROTO_RAW) has no meaning in case of UDP sockets.
 
 @pre
     The @ref socketInit function must be called once at the beginning of the application to initialize the socket handler.
@@ -924,7 +1165,7 @@ SOCKET socket(uint16_t u16Domain, uint8_t u8Type, uint8_t u8Flags);
         udpServerSocket = socket(AF_INET,SOCK_DGRAM,0);
         if(udpServerSocket >= 0)
         {
-            addr.sin_family         = AF_INET;
+            addr.sin_family     = AF_INET;
             addr.sin_port           = _htons(UDP_SERVER_PORT);
             addr.sin_addr.s_addr    = 0;
             ret = bind(udpServerSocket,(struct sockaddr*)&addr,sizeof(addr));
@@ -1064,7 +1305,7 @@ int8_t listen(SOCKET sock, uint8_t backlog);
 /*!
 @fn \
     int8_t accept(SOCKET sock, struct sockaddr *addr, uint8_t *addrlen);
-    The function has no current implementation. An empty deceleration is used to prevent errors when legacy application code is used.
+    The function has no current implementation. An empty declaration is used to prevent errors when legacy application code is used.
     As it has no effect, it can be safely removed from any application using it.
 @param [in] sock
                 Socket ID, must hold a non negative value.
@@ -1260,6 +1501,7 @@ int8_t connect(SOCKET sock, struct sockaddr *pstrAddr, uint8_t u8AddrLen);
         }
         break;
 
+
     case SOCKET_MSG_RECV:
         {
             tstrSocketRecvMsg   *pstrRx = (tstrSocketRecvMsg*)pvMsg;
@@ -1271,7 +1513,7 @@ int8_t connect(SOCKET sock, struct sockaddr *pstrAddr, uint8_t u8AddrLen);
             }
             else
             {
-                printf("Socet recv Error: %d\n",pstrRx->s16BufferSize);
+                printf("Socket recv Error: %d\n",pstrRx->s16BufferSize);
                 shutdown(sock);
             }
         }
@@ -1286,7 +1528,7 @@ int16_t recv(SOCKET sock, void *pvRecvBuf, uint16_t u16BufLen, uint32_t u32Timeo
 /*!
 @fn \
     int16_t recvfrom(SOCKET sock, void *pvRecvBuf, uint16_t u16BufLen, uint32_t u32TimeoutSeconds);
-    Receives data from a UDP Scoket.
+    Receives data from a UDP Socket.
 
     The asynchronous recvfrom function is used to retrieve data from a UDP socket. The socket must already be bound to
     a local port before a call to the recvfrom function is made (i.e message @ref SOCKET_MSG_BIND is received
@@ -1317,7 +1559,7 @@ int16_t recv(SOCKET sock, void *pvRecvBuf, uint16_t u16BufLen, uint32_t u32Timeo
                 will be set to infinite (the recv function waits forever).
 
 @pre
-    - The socket function must be called to allocate a UDP socket before passing the socket ID to the recvfrom function.
+    - The socket function must be called to allocate a TCP socket before passing the socket ID to the recv function.
     - The socket corresponding to the socket ID must be successfully bound to a local port through the call to a @ref bind function.
 
 @see
@@ -1332,7 +1574,7 @@ int16_t recv(SOCKET sock, void *pvRecvBuf, uint16_t u16BufLen, uint32_t u32Timeo
         Indicating that the operation was successful.
 
     - [SOCK_ERR_INVALID_ARG](@ref SOCK_ERR_INVALID_ARG)
-        Indicating passing invalid arguments such as negative socket ID or NULL receive buffer.
+        Indicating passing invalid arguments such as negative socket ID or NULL Receive buffer.
 
     - [SOCK_ERR_BUFFER_FULL](@ref SOCK_ERR_BUFFER_FULL)
         Indicate socket receive failure.
@@ -1360,6 +1602,7 @@ int16_t recv(SOCKET sock, void *pvRecvBuf, uint16_t u16BufLen, uint32_t u32Timeo
             }
         }
         break;
+
 
     case SOCKET_MSG_RECVFROM:
         {
@@ -1436,117 +1679,88 @@ int16_t recvfrom(SOCKET sock, void *pvRecvBuf, uint16_t u16BufLen, uint32_t u32T
 
 @warning
     u16SendLength must not exceed @ref SOCKET_BUFFER_MAX_LENGTH. \n
-    Use a valid socket identifier through a prior call to the @ref socket function.
+    Use a valid socket identifier through the prior call to the @ref socket function.
     Must use a valid buffer pointer.
     Successful  completion of a call to send() does not guarantee delivery of the message,
     A negative return value indicates only locally-detected errors
-
-@return
-    The function shall return @ref SOCK_ERR_NO_ERROR for successful operation and a negative value (indicating the error) otherwise.
-*/
+ * @return      The function shall return @ref SOCK_ERR_NO_ERROR for successful operation and a negative value otherwise.
+ */
 int16_t send(SOCKET sock, void *pvSendBuffer, uint16_t u16SendLength, uint16_t u16Flags);
+
 /*!
-@fn \
-    int16_t sendto(SOCKET sock, void *pvSendBuffer, uint16_t u16SendLength, uint16_t flags, struct sockaddr *pstrDestAddr, uint8_t u8AddrLen);
-
-    Asynchronous sending function, used to send data on a UDP socket.
-    Called by the application code when there is data required to be sent on a UDP socket.
-    The application code is expected to receive data from a successfully bound socket node.
-    The only difference between this function and the similar @ref send function, is the type of socket the data is received on. This function works
-    only with UDP sockets.
-    After the data is sent, the socket callback function registered using @ref registerSocketCallback(), is expected to receive an event of type
-    @ref SOCKET_MSG_SENDTO.
-
-@param [in] sock
-                Socket ID, must hold a non negative value.
-                A negative value will return a socket error @ref SOCK_ERR_INVALID_ARG. Indicating that an invalid argument is passed in.
-
-@param [in] pvSendBuffer
-                Pointer to a buffer holding data to be transmitted.
-                A NULL value will return a socket error @ref SOCK_ERR_INVALID_ARG. Indicating that an invalid argument is passed in.
-
-@param [in] u16SendLength
-                The buffer size in bytes. It must not exceed @ref SOCKET_BUFFER_MAX_LENGTH.
-
-@param [in] flags
-                Not used in the current implementation
-
-@param [in] pstrDestAddr
-                The destination address.
-
-@param [in] u8AddrLen
-                Destination address length in bytes.
-                Not used in the current implementation, only included for BSD compatibility.
-@pre
-        Sockets must be initialized using socketInit.
-
-@see
-    socketInit
-    recvfrom
-    sendto
-    socket
-    connect
-    accept
-    send
-
-@warning
-    u16SendLength must not exceed @ref SOCKET_BUFFER_MAX_LENGTH. \n
-    Use a valid socket (returned from socket ).
-    A valid buffer pointer must be used (not NULL). \n
-    Successful  completion of a call to sendto() does not guarantee delivery of the message,
-    A negative return value indicates only locally-detected errors
-
-@return
-    The function  returns @ref SOCK_ERR_NO_ERROR for successful operation and a negative value (indicating the error) otherwise.
+ * @fn          int16_t sendto(SOCKET sock, void *pvSendBuffer, uint16_t u16SendLength, uint16_t flags, struct sockaddr *pstrDestAddr, uint8_t u8AddrLen);
+ * @brief       Asynchronous sending function, used to send data on a UDP socket.
+ *              Called by the application code when there is data required to be sent on a UDP socket.
+ * @details     The application code is expected to receive data from a successfully bound socket node.
+ *              The only difference between this function and the similar @ref send function, is the type of socket the data is received on.
+ *              This function works only with UDP sockets.
+ *              After the data is sent, the socket callback function registered using @ref registerSocketCallback(), is expected to receive an
+ *              event of type @ref SOCKET_MSG_SENDTO.
+ * @param[in]   sock
+ *                  Socket ID, must hold a non negative value.
+ *                  A negative value will return a socket error @ref SOCK_ERR_INVALID_ARG. Indicating that an invalid argument is passed in.
+ * @param[in]   pvSendBuffer
+ *                  Pointer to a buffer holding data to be transmitted.
+ *                  A NULL value will return a socket error @ref SOCK_ERR_INVALID_ARG. Indicating that an invalid argument is passed in.
+ * @param[in]   u16SendLength
+ *                  The buffer size in bytes. It must not exceed @ref SOCKET_BUFFER_MAX_LENGTH.
+ * @param[in]   flags
+ *                  Not used in the current implementation
+ * @param[in]   pstrDestAddr
+ *                  The destination address.
+ * @param[in]   u8AddrLen
+ *                  Destination address length in bytes.
+ *                  Not used in the current implementation, only included for BSD compatibility.
+ * @pre         Sockets must be initialized using @ref socketInit.
+ * @see
+ *              socketInit
+ *              recvfrom
+ *              sendto
+ *              socket
+ *              connect
+ *              accept
+ *              send
+ * @warning
+ *              u16SendLength must not exceed @ref SOCKET_BUFFER_MAX_LENGTH.\n
+ *              Use a valid socket (returned from socket).
+ *              A valid buffer pointer must be used (not NULL).\n
+ *              Successful  completion of a call to sendto does not guarantee delivery of the message,
+ *              A negative return value indicates only locally-detected errors.
+ * @return      The function  returns @ref SOCK_ERR_NO_ERROR for successful operation and a negative value (indicating the error) otherwise.
 */
 int16_t sendto(SOCKET sock, void *pvSendBuffer, uint16_t u16SendLength, uint16_t flags, struct sockaddr *pstrDestAddr, uint8_t u8AddrLen);
+
 /*!
-@fn \
-    int8_t shutdown(SOCKET sock);
-
-    Synchronous close function, releases all the socket assigned resources.
-
-@param [in] sock
-                Socket ID, must hold a non negative value.
-                A negative value will return a socket error @ref SOCK_ERR_INVALID_ARG. Indicating that an invalid argument is passed in.
-
-@pre
-        Sockets must be initialized through the call of the socketInit function.
-        @ref shutdown is called only for valid socket identifiers created through the @ref socket function.
-
-@warning
-    If @ref shutdown is called while there are still pending messages (sent or received ) they will be discarded.
-
-@see
-    socketInit
-    socket
-
-@return
-    The function returned @ref SOCK_ERR_NO_ERROR for successful operation and a negative value (indicating the error) otherwise.
-*/
+ * @fn          int8_t shutdown(SOCKET sock);
+ * @brief       Synchronous shutdown function, releases all the socket assigned resources.
+ * @param[in]   sock
+ *                  Socket ID, must hold a non negative value.
+ *                  A negative value will return a socket error @ref SOCK_ERR_INVALID_ARG. Indicating that an invalid argument is passed in.
+ * @pre
+ *              Sockets must be initialized through the call of the socketInit function.
+ *              @ref shutdown is called only for valid socket identifiers created through the @ref socket function.
+ * @warning     If @ref shutdown is called while there are still pending messages (sent or received ) they will be discarded.
+ * @see         socketInit, socket
+ * @return      The function returned @ref SOCK_ERR_NO_ERROR for successful operation and a negative value (indicating the error) otherwise.
+ */
 int8_t shutdown(SOCKET sock);
 
 /*!
-@fn \
-    int8_t gethostbyname(const char *pcHostName);
-    Asynchronous DNS resolving function. This function uses DNS to resolve a domain name to the corresponding IP address.
-    A call to this function will cause a DNS request to be sent and the response will be delivered to the DNS callback function registered using registerSocketCallback()
-
-@param [in] pcHostName
-                NULL terminated string containing the domain name for the remote host.
-                Its size must not exceed [HOSTNAME_MAX_SIZE](@ref HOSTNAME_MAX_SIZE).
-
-@see
-    registerSocketCallback
-
-@warning
-    Successful completion of a call to gethostbyname() does not guarantee success of the DNS request,
-    a negative return value indicates only locally-detected errors
-
-@return
-    - [SOCK_ERR_NO_ERROR](@ref SOCK_ERR_NO_ERROR)
-    - [SOCK_ERR_INVALID_ARG](@ref SOCK_ERR_INVALID_ARG)
-*/
+ * @fn          int8_t gethostbyname(const char *pcHostName);
+ *              Asynchronous DNS resolving function. This function uses DNS to resolve a domain name to the corresponding IP address.
+ *              A call to this function will cause a DNS request to be sent and the response will be delivered to the DNS callback
+ *              function registered using registerSocketCallback.
+ * @param[in]   pcHostName
+ *                  NULL terminated string containing the domain name for the remote host.
+ *                  Its size must not exceed [HOSTNAME_MAX_SIZE](@ref HOSTNAME_MAX_SIZE).
+ * @see         registerSocketCallback
+ * @warning
+ *              Successful completion of a call to gethostbyname() does not guarantee success of the DNS request,
+ *              a negative return value indicates only locally-detected errors
+ * @return
+ *              - @ref SOCK_ERR_NO_ERROR
+ *              - @ref SOCK_ERR_INVALID_ARG
+ */
 int8_t gethostbyname(const char *pcHostName);
 
 /*!
@@ -1556,89 +1770,190 @@ int8_t gethostbyname(const char *pcHostName);
 
     The setsockopt() function shall set the option specified by the option_name
     argument, at the protocol level specified by the level argument, to the value
-    pointed to by the option_value argument for the socke specified by the socket argument.
+    pointed to by the option_value argument for the socket specified by the socket argument.
 
-    Possible Options:
-    SO_SET_UDP_SEND_CALLBACK:
-        Enable/Disable callback messages for sendto().Since UDP is unreliable by default the user maybe interested (or not)
-        in receiving a message of /ref SOCKET_MSG_SENDTO for each call of sendto().
-        Enabled if option_value equals /ref BTRUE Disabled otherwise.
-    IP_ADD_MEMBERSHIP:
-        valid for UDP sockets,this option is used to receive frames sent to a multicast group.
-        option_value shall be a pointer to Unsigned 32 bit integer containing the Multicast ipv4 address.
-    IP_DROP_MEMBERSHIP:
-        valid for UDP sockets,this option is used to Stop receiving frames sent to a multicast group.
-        option_value shall be a pointer to Unsigned 32 bit integer containing the Multicast ipv4 address.
-
-    Possible values for s32Level:
-    This argument is ignored.
-
-@param [in] socket
+@param[in]  socket
                 Socket handler.
 
-@param [in] u8Level
-                protocol level. always SOL_SOCKET for now.
+@param[in]  u8Level
+                Protocol level.\n
+                Supported protocol levels are @ref SOL_SOCKET, @ref SOL_SSL_SOCKET and @ref SOL_RAW.
 
-@param [in] option_name
-                option to be set.
+@param[in]  option_name
+                Option to be set.\n
+                For protocol level @ref SOL_SOCKET, the supported option names are:\n
+                    @ref SO_SET_UDP_SEND_CALLBACK\n
+                    @ref SO_TCP_KEEPALIVE\n
+                    @ref SO_TCP_KEEPIDLE\n
+                    @ref SO_TCP_KEEPINTVL\n
+                    @ref SO_TCP_KEEPCNT\n
+                For protocol level @ref SOL_SSL_SOCKET, the supported option names are:\n
+                    @ref SO_SSL_BYPASS_X509_VERIF\n
+                    @ref SO_SSL_SNI\n
+                    @ref SO_SSL_ENABLE_SESSION_CACHING\n
+                    @ref SO_SSL_ENABLE_CERTNAME_VALIDATION\n
+                    @ref SO_SSL_ALPN\n
+                For protocol level @ref SOL_RAW, the supported option names are:\n
+                    @ref SO_ICMP_FILTER\n
 
-@param [in] option_value
-                pointer to user provided value.
+@param[in]  option_value
+                Pointer to user provided value.
 
-@param [in] u16OptionLen
-                 length of the option value.
-@warning
-        -Note that  sending IGMP packets to Join/Leave multicast  groups is not currently implemented. \n
-         Calling this function will Pass/Filter packets sent to the Multicast address provided in the option_value
+@param[in]  u16OptionLen
+                Length of the option value in bytes. Refer to each option documentation for the required length.
+
 @return
     The function shall return \ref SOCK_ERR_NO_ERROR for successful operation
     and a negative value (indicating the error) otherwise.
 */
 int8_t setsockopt(SOCKET socket, uint8_t u8Level, uint8_t option_name,
-       const void *option_value, uint16_t u16OptionLen);
-/*!
-@fn \
-    int8_t getsockopt(SOCKET sock, uint8_t u8Level, uint8_t u8OptName, const void *pvOptValue, uint8_t * pu8OptLen);
-    Get socket options retrieves
-    This Function isn't implemented yet but this is the form that will be released later.
-@brief
+                         const void *option_value, uint16_t u16OptionLen);
 
-@param [in] sock
-                Socket Identifie.
-@param [in] u8Level
-                The protocol level of the option.
-@param [in] u8OptName
-                The u8OptName argument specifies a single option to get.
-@param [out] pvOptValue
-                The pvOptValue argument contains pointer to a buffer containing the option value.
-@param [out] pu8OptLen
-                Option value buffer length.
-@return
-    The function shall return ZERO for successful operation and a negative value otherwise.
-*/
-int8_t getsockopt(SOCKET sock, uint8_t u8Level, uint8_t u8OptName, const void *pvOptValue, uint8_t* pu8OptLen);
 /*!
- * @fn             int8_t m2m_ping_req(uint32_t u32DstIP, uint8_t u8TTL, tpfPingCb fpPingCb);
- *                 The function request to send ping request to the given IP Address.
- *
- * @param [in]  u32DstIP
- *                  Target Destination IP Address for the ping request. It must be represented in Network
- *                  byte order.
- *                  The function inet_addr could be used to translate the dotted decimal notation IP
- *                  to its Network bytes order integer represntative.
- *
- * @param [in]  u8TTL
+ * @fn          int8_t getsockopt(SOCKET sock, uint8_t u8Level, uint8_t u8OptName, const void *pvOptValue, uint8_t *pu8OptLen);
+ * @brief       Get socket options retrieves.
+ *              This Function isn't implemented yet but this is the form that will be released later.
+ * @param[in]   sock
+ *                  Socket Identifier.
+ * @param[in]   u8Level
+ *                  The protocol level of the option.
+ * @param[in]   u8OptName
+ *                  The u8OptName argument specifies a single option to get.
+ * @param[out]  pvOptValue
+ *                  The pvOptValue argument contains pointer to a buffer containing the option value.
+ * @param[out]  pu8OptLen
+ *                  Option value buffer length.
+ * @return      The function shall return ZERO for successful operation and a negative value otherwise.
+ */
+int8_t getsockopt(SOCKET sock, uint8_t u8Level, uint8_t u8OptName, const void *pvOptValue, uint8_t *pu8OptLen);
+
+/*!
+ * @fn          int8_t m2m_ping_req(uint32_t u32DstIP, uint8_t u8TTL, tpfPingCb fpPingCb);
+ * @brief       The function request to send ping request to the given IP Address.
+ * @param[in]   u32DstIP
+ *                  Target Destination IP Address for the ping request. It must be represented in Network byte order.
+ *                  The function @ref nmi_inet_addr could be used to translate the dotted decimal notation IP
+ *                  to its Network bytes order integer representative.
+ * @param[in]   u8TTL
  *                  IP TTL value for the ping request. If set to ZERO, the default value SHALL be used.
- *
- * @param [in]  fpPingCb
+ * @param[in]   fpPingCb
  *                  Callback will be called to deliver the ping statistics.
- *
- * @see           inet_addr
+
+ * @warning    This API should only be used to request one ping at a time; calling this API invalidates callbacks
+ *             for previous ping requests.
+ * @see         nmi_inet_addr
  * @return        The function returns @ref M2M_SUCCESS for successful operations and a negative value otherwise.
  */
 int8_t m2m_ping_req(uint32_t u32DstIP, uint8_t u8TTL, tpfPingCb fpPingCb);
 
-/**@}*/
+/*!
+ * @fn  int8_t set_alpn_list(SOCKET sock, const char *pcProtocolList);
+ *
+ *  This function sets the protocol list used for application-layer protocol negotiation (ALPN).
+ *  If used, it must be called after creating a SSL socket (using @ref socket) and before
+ *  connecting/binding (using @ref connect or @ref bind).
+ *
+ * @param[in]   sock
+ *                  Socket ID obtained by a call to @ref socket. This is the SSL socket to which
+ *                  the ALPN list applies.
+ *
+ * @param[in]   pcProtocolList
+ *                  Pointer to the list of protocols available in the application. \n
+ *                  The entries in the list must: \n
+ *                  - be separated with ' ' (space). \n
+ *                  - not contain ' ' (space) or '\0' (NUL). \n
+ *                  - be non-zero length. \n
+ *                  .
+ *                  The list itself must: \n
+ *                  - be terminated with '\0' (NUL). \n
+ *                  - be no longer than @ref ALPN_LIST_MAX_APP_LENGTH, including separators (spaces) and terminator (NUL). \n
+ *                  - contain at least one entry.
+ *
+ * @return  The function returns @ref M2M_SUCCESS for successful operations and a negative value otherwise.
+ *
+ * \section SocketExample9 Example
+ *  The example demonstrates an application using @ref set_alpn_list and @ref get_alpn_index to negotiate secure HTTP/2
+ *  (with fallback option of HTTP/1.1).
+
+ * \subsection sub5 Main Function
+ * @code
+ *  SOCKET TcpClientSocket = socket(AF_INET, SOCK_STREAM, SOCKET_FLAGS_SSL);
+ *  if (TcpClientSocket >= 0)
+ *  {
+ *      struct sockaddr_in Serv_Addr = {
+ *          .sin_family = AF_INET,
+ *          .sin_port = _htons(1234),
+ *          .sin_addr.s_addr = inet_addr(SERVER)
+ *      };
+ *      set_alpn_list(TcpClientSocket, "h2 http/1.1");
+ *      connect(TcpClientSocket, &Serv_Addr, sizeof(Serv_Addr));
+ *  }
+ * @endcode
+ * \subsection sub6 Socket Callback
+ * @code
+ *  if(u8Msg == SOCKET_MSG_CONNECT)
+ *  {
+ *      tstrSocketConnectMsg    *pstrConnect = (tstrSocketConnectMsg*)pvMsg;
+ *      if(pstrConnect->s8Error == 0)
+ *      {
+ *          uint8_t   alpn_index = get_alpn_index(pstrConnect->sock);
+ *          switch (alpn_index)
+ *          {
+ *              case 1:
+ *                  printf("Negotiated HTTP/2\n");
+ *              break;
+ *              case 2:
+ *                  printf("Negotiated HTTP/1.1\n");
+ *              break;
+ *              case 0:
+ *                  printf("Protocol negotiation did not occur\n");
+ *              break;
+ *          }
+ *      }
+ *  }
+ * @endcode
+*/
+int8_t set_alpn_list(SOCKET sock, const char *pcProtocolList);
+/*!
+ * @fn  int8_t get_alpn_index(SOCKET sock);
+ *
+ *  This function gets the index of the protocol negotiated via ALPN.
+ *  It should be called when a SSL socket connection succeeds, in order to determine which
+ *  application-layer protocol must be used.
+ *
+ * @param[in]   sock
+ *                  Socket ID obtained by a call to @ref socket. This is the SSL socket to which
+ *                  the ALPN applies.
+ *
+ * @return  The function returns:\n
+ *  - >0: 1-based index of negotiated protocol with respect to the list previously provided to @ref set_alpn_list.\n
+ *  - 0: No negotiation occurred (eg TLS peer did not support ALPN).\n
+ *  - <0: Invalid parameters (socket is not in use, or not an SSL socket).\n
+ *
+ * @see @ref SocketExample9
+*/
+int8_t get_alpn_index(SOCKET sock);
+
+/*!
+ *@fn   int8_t get_error_detail(SOCKET sock, tstrSockErr *pstrErr);
+ *
+ *  This function gets detail about a socket failure. The application can call this when notified
+ *  of a socket failure via @ref SOCKET_MSG_CONNECT or @ref SOCKET_MSG_RECV.
+ *  If used, it must be called before @ref shutdown.
+
+ * @param[in]   sock
+ *                  Socket ID obtained by a call to @ref socket.
+ *
+ * @param[out]  pstrErr
+ *                  Pointer to structure to be populated with the details of the socket failure.
+ *
+ * @return  The function returns @ref SOCK_ERR_NO_ERROR if the request is successful. In this case pstrErr
+ *  has been populated.
+ *  The function returns a negative value if the request is not successful. In this case pstrErr
+ *  has not been populated.
+*/
+int8_t get_error_detail(SOCKET sock, tstrSockErr *pstrErr);
+/**@}*/     // SocketAPI
 
 #ifdef  __cplusplus
 }

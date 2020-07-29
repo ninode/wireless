@@ -34,8 +34,12 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-/**@defgroup COMMON COMMON
-*/
+/** @defgroup COMMON Common
+    @{
+        @defgroup COMMONDEF Defines
+        @defgroup COMMONAPI Functions
+    @}
+ */
 
 #ifndef _NM_COMMON_H_
 #define _NM_COMMON_H_
@@ -43,11 +47,9 @@
 #include "nm_bsp.h"
 #include "nm_debug.h"
 
-
-/**@defgroup  COMMONDEF Defines
- * @ingroup COMMON
+/**@addtogroup COMMONDEF
+ * @{
  */
-/**@{*/
 
 /*states*/
 #define M2M_SUCCESS                 ((int8_t)0)
@@ -102,9 +104,9 @@
 
 #ifndef BIG_ENDIAN
 /*! Most significant byte of 32bit word (LE) */
-#define BYTE_0(word)                ((uint8_t)(((word) >> 0 ) & 0x000000FFUL))
+#define BYTE_0(word)                ((uint8_t)(((word) >> 0)  & 0x000000FFUL))
 /*! Second most significant byte of 32bit word (LE) */
-#define BYTE_1(word)                ((uint8_t)(((word) >> 8 ) & 0x000000FFUL))
+#define BYTE_1(word)                ((uint8_t)(((word) >> 8)  & 0x000000FFUL))
 /*! Third most significant byte of 32bit word (LE) */
 #define BYTE_2(word)                ((uint8_t)(((word) >> 16) & 0x000000FFUL))
 /*! Least significant byte of 32bit word (LE) */
@@ -115,37 +117,50 @@
 /*! Second most significant byte of 32bit word (BE) */
 #define BYTE_1(word)                ((uint8_t)(((word) >> 16) & 0x000000FFUL))
 /*! Third most significant byte of 32bit word (BE) */
-#define BYTE_2(word)                ((uint8_t)(((word) >> 8 ) & 0x000000FFUL))
+#define BYTE_2(word)                ((uint8_t)(((word) >> 8)  & 0x000000FFUL))
 /*! Least significant byte of 32bit word (BE) */
-#define BYTE_3(word)                ((uint8_t)(((word) >> 0 ) & 0x000000FFUL))
+#define BYTE_3(word)                ((uint8_t)(((word) >> 0)  & 0x000000FFUL))
 #endif
 /**@}*/
 
 #ifdef __cplusplus
-     extern "C" {
- #endif
-/**@defgroup  COMMONAPI Functions
- * @ingroup COMMON
- */
-/**@{*/
+extern "C" {
+#endif
 
 /*!
- *  @fn         void nm_sleep(uint32_t);
- *  @brief
- *  @param[in]  u32TimeMsec
- *              Time unit in milliseconds
- *  @pre
- *  @warning    Maximum value must nor exceed 4294967295 milliseconds which is equal to 4294967.295 seconds.\n
- *  @note       Implementation of this function is host dependent.
- *  @see
- *  @return     None
+ * @ingroup     COMMONAPI
+ * @fn          int8_t hexstr_2_bytes(uint8_t *pu8Out, uint8_t *pu8In, uint8_t u8SizeOut);
+ * @brief       Converts a string of hex characters to bytes.
+ * @param[out]  pu8Out
+ *                  Output buffer (eg {0x11, 0x12, 0x13,...})
+ * @param[in]   pu8In
+ *                  Input buffer (eg {0x31, 0x31, 0x31, 0x32, 0x31, 0x33, ...})
+ * @param[in]   u8SizeOut
+ *                  Length of output buffer (should be half of the length of the input buffer).
+ * @return      @ref M2M_SUCCESS if successful, M2M_ERR_INVALID_ARG otherwise (eg unrecognised hexchar in input).
+ */
+int8_t hexstr_2_bytes(uint8_t *pu8Out, uint8_t *pu8In, uint8_t u8SizeOut);
+
+/*!
+ * @fn          void nm_sleep(uint32_t u32TimeMsec);
+ * @brief       Used to put the host to sleep for the specified duration (in milliseconds).
+ *              Forcing the host to sleep for extended period may lead to host not being able to respond
+ *              to WINC board events. It is important to be considerate while choosing the sleep period.
+ * @param [in]  u32TimeMsec
+ *                  Time unit in milliseconds.
+ * @pre         Initialize @ref nm_bsp_init first.
+ * @note        Implementation of this function is host dependent.
+ * @warning     Maximum value must nor exceed 4294967295 milliseconds which is equal to 4294967.295 seconds.
+ * @see         nm_bsp_init
+ * @return      None
  */
 void nm_sleep(uint32_t u32TimeMsec);
 
 /*!
- *  @fn     nm_reset
- *  @brief  Reset NMC3400 SoC by setting CHIP_EN and RESET_N signals low,
- *           CHIP_EN high then RESET_N high
+ * @ingroup     COMMONAPI
+ * @fn          nm_reset
+ * @brief       Reset NMC3400 SoC by setting CHIP_EN and RESET_N signals low,
+ *                  CHIP_EN high then RESET_N high
  */
 void nm_reset(void);
 /**@}*/

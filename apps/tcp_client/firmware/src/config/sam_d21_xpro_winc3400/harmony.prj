@@ -544,8 +544,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/driver/winc/dev/spi/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/dev/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FEC5E1BBB0941EC26BBBD70815F606BA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FEC5E1BBB0941EC26BBBD70815F606BA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DE3D5EC4924CF7C21A0035E663D7EDA4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DE3D5EC4924CF7C21A0035E663D7EDA4</UserChecksum>
         </File>
         <File dnOrder="60">
           <Type dnOrder="0">SOURCE</Type>
@@ -706,8 +706,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">79454949DD168683F7037F23CA807788</GeneratedChecksum>
-          <UserChecksum dnOrder="6">79454949DD168683F7037F23CA807788</UserChecksum>
+          <GeneratedChecksum dnOrder="5">824E1A4758A3DD0DC5046134863A5CDF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">824E1A4758A3DD0DC5046134863A5CDF</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>

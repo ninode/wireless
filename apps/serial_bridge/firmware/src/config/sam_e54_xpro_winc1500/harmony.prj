@@ -526,8 +526,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc1500/driver/winc/dev/spi/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/dev/spi/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FEC5E1BBB0941EC26BBBD70815F606BA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FEC5E1BBB0941EC26BBBD70815F606BA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DE3D5EC4924CF7C21A0035E663D7EDA4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DE3D5EC4924CF7C21A0035E663D7EDA4</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">SOURCE</Type>

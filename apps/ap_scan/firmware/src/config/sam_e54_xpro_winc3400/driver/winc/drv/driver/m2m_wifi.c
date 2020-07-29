@@ -37,11 +37,27 @@
 #include "m2m_hif.h"
 #include "nmasic.h"
 
+#define WIFI_1X_TLS_HS_FLAGS_PEER_AUTH          NBIT1
+#define WIFI_1X_TLS_HS_FLAGS_PEER_CERTTIMECHECK NBIT2
+#define WIFI_1X_TLS_HS_FLAGS_REQUIRE_TIME       NBIT3
+#define WIFI_1X_TLS_HS_FLAGS_SESSION_CACHING    NBIT4
+#define WIFI_1X_TLS_HS_FLAGS_SPECIFY_ROOTCERT   NBIT6
+
+#define WIFI_1X_TLS_HS_FLAGS_DEFAULT    (           \
+            WIFI_1X_TLS_HS_FLAGS_PEER_AUTH          \
+        |   WIFI_1X_TLS_HS_FLAGS_PEER_CERTTIMECHECK \
+        |   WIFI_1X_TLS_HS_FLAGS_SESSION_CACHING    \
+)
+
 static volatile uint8_t gu8ChNum;
 static tpfAppWifiCb gpfAppWifiCb = NULL;
-static tpfAppEthCb  gpfAppEthCb  = NULL;
-static uint8_t*     gau8ethRcvBuf=NULL;
-static uint16_t     gu16ethRcvBufSize ;
+
+static uint32_t   gu321xTlsHsFlags      = WIFI_1X_TLS_HS_FLAGS_DEFAULT;
+static uint8_t    gau81xRootSha1[20]    = {0};
+
+static tpfAppEthCb  gpfAppEthCb     = NULL;
+static uint8_t      *gau8ethRcvBuf  = NULL;
+static uint16_t     gu16ethRcvBufSize;
 
 /**
 *   @fn         m2m_wifi_cb(uint8_t u8OpCode, uint16_t u16DataSize, uint32_t u32Addr, uint8_t grp)
@@ -171,6 +187,15 @@ static void m2m_wifi_cb(uint8_t u8OpCode, uint16_t u16DataSize, uint32_t u32Addr
                 gpfAppWifiCb(M2M_WIFI_RESP_DEFAULT_CONNECT, &strResp);
         }
     }
+    else if (u8OpCode == M2M_WIFI_REQRSP_DELETE_APID)
+    {
+        tstrM2MGenericResp strResp;
+        if (hif_receive(u32Addr, (uint8_t*)&strResp, sizeof(tstrM2MGenericResp), 0) == M2M_SUCCESS)
+        {
+            if (gpfAppWifiCb)
+                gpfAppWifiCb(M2M_WIFI_REQRSP_DELETE_APID, &strResp);
+        }
+    }
     else if (u8OpCode == M2M_WIFI_RESP_BLE_API_RECV)
     {
         //Read the length
@@ -217,18 +242,18 @@ static void m2m_wifi_cb(uint8_t u8OpCode, uint16_t u16DataSize, uint32_t u32Addr
     }
     else if (u8OpCode == M2M_WIFI_RESP_ETHERNET_RX_PACKET)
     {
-        if (hif_receive(u32Addr, rx_buf, sizeof(tstrM2mIpRsvdPkt), 0) == M2M_SUCCESS)
+        tstrM2mIpRsvdPkt strM2mRsvd;
+        if (hif_receive(u32Addr, (uint8_t*)&strM2mRsvd, sizeof(tstrM2mIpRsvdPkt), 0) == M2M_SUCCESS)
         {
-            tstrM2mIpRsvdPkt *pstrM2MIpRxPkt = (tstrM2mIpRsvdPkt*)rx_buf;
             tstrM2mIpCtrlBuf  strM2mIpCtrlBuf;
-            uint16_t u16Offset = pstrM2MIpRxPkt->u16PktOffset;
+            uint16_t u16Offset = strM2mRsvd.u16PktOffset;
 
-            strM2mIpCtrlBuf.u16RemainingDataSize = pstrM2MIpRxPkt->u16PktSz;
+            strM2mIpCtrlBuf.u16RemainingDataSize = strM2mRsvd.u16PktSz;
             if ((gpfAppEthCb) &&(gau8ethRcvBuf)&& (gu16ethRcvBufSize > 0))
             {
                 while (strM2mIpCtrlBuf.u16RemainingDataSize > 0)
                 {
-                    if(strM2mIpCtrlBuf.u16RemainingDataSize > gu16ethRcvBufSize)
+                    if (strM2mIpCtrlBuf.u16RemainingDataSize > gu16ethRcvBufSize)
                     {
                         strM2mIpCtrlBuf.u16DataSize = gu16ethRcvBufSize ;
                     }
@@ -253,7 +278,7 @@ static void m2m_wifi_cb(uint8_t u8OpCode, uint16_t u16DataSize, uint32_t u32Addr
     }
     else
     {
-        M2M_ERR("REQ Not defined %d\r\n",u8OpCode);
+        M2M_ERR("REQ Not defined %d\r\n", u8OpCode);
     }
 }
 
@@ -271,34 +296,34 @@ _EXIT0:
     return ret;
 }
 
-static int8_t m2m_validate_ap_parameters(const tstrM2MAPConfig* pstrM2MAPConfig)
+static int8_t m2m_validate_ap_parameters(const tstrM2MAPModeConfig *pstrM2MAPModeConfig)
 {
     int8_t s8Ret = M2M_SUCCESS;
     /* Check for incoming pointer */
-    if (pstrM2MAPConfig == NULL)
+    if (pstrM2MAPModeConfig == NULL)
     {
         M2M_ERR("INVALID POINTER\r\n");
         s8Ret = M2M_ERR_FAIL;
         goto ERR1;
     }
     /* Check for SSID */
-    if ((strlen((const char*)pstrM2MAPConfig->au8SSID) <= 0) || (strlen((const char*)pstrM2MAPConfig->au8SSID) >= M2M_MAX_SSID_LEN))
+    if ((strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8SSID) <= 0) || (strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8SSID) >= M2M_MAX_SSID_LEN))
     {
         M2M_ERR("INVALID SSID\r\n");
         s8Ret = M2M_ERR_FAIL;
         goto ERR1;
     }
     /* Check for Channel */
-    if (pstrM2MAPConfig->u8ListenChannel > M2M_WIFI_CH_14 || pstrM2MAPConfig->u8ListenChannel < M2M_WIFI_CH_1)
+    if (pstrM2MAPModeConfig->strApConfig.u8ListenChannel > M2M_WIFI_CH_14 || pstrM2MAPModeConfig->strApConfig.u8ListenChannel < M2M_WIFI_CH_1)
     {
         M2M_ERR("INVALID CH\r\n");
         s8Ret = M2M_ERR_FAIL;
         goto ERR1;
     }
     /* Check for DHCP Server IP address */
-    if (!(pstrM2MAPConfig->au8DHCPServerIP[0] || pstrM2MAPConfig->au8DHCPServerIP[1]))
+    if (!(pstrM2MAPModeConfig->strApConfig.au8DHCPServerIP[0] || pstrM2MAPModeConfig->strApConfig.au8DHCPServerIP[1]))
     {
-        if (!(pstrM2MAPConfig->au8DHCPServerIP[2]))
+        if (!(pstrM2MAPModeConfig->strApConfig.au8DHCPServerIP[2]))
         {
             M2M_ERR("INVALID DHCP SERVER IP\r\n");
             s8Ret = M2M_ERR_FAIL;
@@ -306,30 +331,29 @@ static int8_t m2m_validate_ap_parameters(const tstrM2MAPConfig* pstrM2MAPConfig)
         }
     }
     /* Check for Security */
-    if (pstrM2MAPConfig->u8SecType == M2M_WIFI_SEC_OPEN)
+    if (pstrM2MAPModeConfig->strApConfig.u8SecType == M2M_WIFI_SEC_OPEN)
     {
         goto ERR1;
     }
-    else if (pstrM2MAPConfig->u8SecType == M2M_WIFI_SEC_WEP)
+    else if (pstrM2MAPModeConfig->strApConfig.u8SecType == M2M_WIFI_SEC_WEP)
     {
         /* Check for WEP Key index */
-        if ((pstrM2MAPConfig->u8KeyIndx <= 0) || (pstrM2MAPConfig->u8KeyIndx > WEP_KEY_MAX_INDEX))
+        if ((pstrM2MAPModeConfig->strApConfig.u8KeyIndx == 0) || (pstrM2MAPModeConfig->strApConfig.u8KeyIndx > WEP_KEY_MAX_INDEX))
         {
             M2M_ERR("INVALID KEY INDEX\r\n");
             s8Ret = M2M_ERR_FAIL;
             goto ERR1;
         }
         /* Check for WEP Key size */
-        if ( (pstrM2MAPConfig->u8KeySz != WEP_40_KEY_STRING_SIZE) &&
-            (pstrM2MAPConfig->u8KeySz != WEP_104_KEY_STRING_SIZE)
-        )
+        if ((pstrM2MAPModeConfig->strApConfig.u8KeySz != WEP_40_KEY_STRING_SIZE) &&
+                (pstrM2MAPModeConfig->strApConfig.u8KeySz != WEP_104_KEY_STRING_SIZE))
         {
             M2M_ERR("INVALID KEY SIZE\r\n");
             s8Ret = M2M_ERR_FAIL;
             goto ERR1;
         }
         /* Check for WEP Key */
-        if ((pstrM2MAPConfig->au8WepKey == NULL) || (strlen((const char*)pstrM2MAPConfig->au8WepKey) <= 0) || (strlen((const char*)pstrM2MAPConfig->au8WepKey) > WEP_104_KEY_STRING_SIZE))
+        if ((pstrM2MAPModeConfig->strApConfig.au8WepKey == NULL) || (strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8WepKey) <= 0) || (strlen((const char*)pstrM2MAPModeConfig->strApConfig.au8WepKey) > WEP_104_KEY_STRING_SIZE))
         {
             M2M_ERR("INVALID WEP KEY\r\n");
             s8Ret = M2M_ERR_FAIL;
@@ -407,30 +431,38 @@ int8_t m2m_wifi_init_hold(void)
     return ret;
 }
 
-int8_t m2m_wifi_init_start(tstrWifiInitParam *param)
+int8_t m2m_wifi_init_start(tstrWifiInitParam *pWifiInitParam)
 {
     tstrM2mRev strtmp;
     int8_t ret = M2M_SUCCESS;
+    uint8_t u8WifiMode = M2M_WIFI_MODE_NORMAL;
 
-    if (param == NULL) {
+    if (pWifiInitParam == NULL) {
         ret = M2M_ERR_FAIL;
         goto _EXIT0;
     }
 
-    gpfAppWifiCb = param->pfAppWifiCb;
+    gpfAppWifiCb = pWifiInitParam->pfAppWifiCb;
 
-    gpfAppEthCb         = param->strEthInitParam.pfAppEthCb;
-    gau8ethRcvBuf       = param->strEthInitParam.au8ethRcvBuf;
-    gu16ethRcvBufSize   = param->strEthInitParam.u16ethRcvBufSize;
+    gpfAppEthCb         = pWifiInitParam->strEthInitParam.pfAppEthCb;
+    gau8ethRcvBuf       = pWifiInitParam->strEthInitParam.au8ethRcvBuf;
+    gu16ethRcvBufSize   = pWifiInitParam->strEthInitParam.u16ethRcvBufSize;
+    u8WifiMode          = pWifiInitParam->strEthInitParam.u8EthernetEnable;
 
-    /* Apply device specific initialization. */
-    ret = nm_drv_init_start(NULL);
-    if (ret != M2M_SUCCESS)  goto _EXIT0;
+    if (pWifiInitParam->strEthInitParam.u8EthernetEnable)
+        u8WifiMode = M2M_WIFI_MODE_ETHERNET;
+    
+
     /* Initialize host interface module */
+    /* Do this before bringing up the WINC as it can send HIF messages very quickly from bootup and we need to be ready */
     ret = hif_init(NULL);
     if (ret != M2M_SUCCESS)  goto _EXIT1;
 
     hif_register_cb(M2M_REQ_GROUP_WIFI, m2m_wifi_cb);
+
+    /* Apply device specific initialization. */
+    ret = nm_drv_init_start(&u8WifiMode);
+    if (ret != M2M_SUCCESS)  goto _EXIT0;
 
     M2M_INFO("Curr driver ver: %u.%u.%u\r\n", M2M_DRIVER_VERSION_MAJOR_NO, M2M_DRIVER_VERSION_MINOR_NO, M2M_DRIVER_VERSION_PATCH_NO);
     M2M_INFO("Curr driver HIF Level: (%u) %u.%u\r\n", M2M_HIF_BLOCK_VALUE, M2M_HIF_MAJOR_VALUE, M2M_HIF_MINOR_VALUE);
@@ -442,25 +474,26 @@ int8_t m2m_wifi_init_start(tstrWifiInitParam *param)
         ret = hif_enable_access();
         if (ret == M2M_SUCCESS)
         {
-            m2m_wifi_ble_set_gain_table(param->GainTableIndex);
+            m2m_wifi_ble_set_gain_table(pWifiInitParam->GainTableIndex);
         }
     }
     goto _EXIT0;
 
 _EXIT1:
     nm_drv_deinit(NULL);
+
 _EXIT0:
     return ret;
 }
 
-int8_t m2m_wifi_init(tstrWifiInitParam *param)
+int8_t m2m_wifi_init(tstrWifiInitParam *pWifiInitParam)
 {
     int8_t ret = M2M_SUCCESS;
 
     ret = m2m_wifi_init_hold();
     if (ret == M2M_SUCCESS)
     {
-        ret = m2m_wifi_init_start(param);
+        ret = m2m_wifi_init_start(pWifiInitParam);
     }
     return ret;
 }
@@ -468,7 +501,6 @@ int8_t m2m_wifi_init(tstrWifiInitParam *param)
 int8_t  m2m_wifi_deinit(void *arg)
 {
     hif_deinit(NULL);
-
     nm_drv_deinit(NULL);
 
     return M2M_SUCCESS;
@@ -480,29 +512,612 @@ int8_t m2m_wifi_reinit_hold(void)
     return m2m_wifi_init_hold();
 }
 
-int8_t m2m_wifi_reinit_start(tstrWifiInitParam *param)
+int8_t m2m_wifi_reinit_start(tstrWifiInitParam *pWifiInitParam)
 {
-    return m2m_wifi_init_start(param);
+    return m2m_wifi_init_start(pWifiInitParam);
 }
 
-int8_t m2m_wifi_reinit(tstrWifiInitParam *param)
+int8_t m2m_wifi_reinit(tstrWifiInitParam *pWifiInitParam)
 {
     int8_t ret = M2M_ERR_FAIL;
     ret = m2m_wifi_reinit_hold();
     if (ret == M2M_SUCCESS) {
-        ret = m2m_wifi_reinit_start(param);
+        ret = m2m_wifi_reinit_start(pWifiInitParam);
     }
     return ret;
 }
 
+uint8_t m2m_wifi_get_state(void)
+{
+    switch(nm_get_state())
+    {
+    case NM_STATE_DEINIT:
+        return WIFI_STATE_DEINIT;
+    case NM_STATE_INIT:
+        return WIFI_STATE_INIT;
+    case NM_STATE_START:
+        return WIFI_STATE_START;
+    }
+    return WIFI_STATE_DEINIT;
+}
+
 int8_t m2m_wifi_handle_events(void)
 {
-    return hif_handle_isr();
+    if(WIFI_STATE_START == m2m_wifi_get_state())
+        return hif_handle_isr();
+
+    return M2M_SUCCESS;
+}
+
+int8_t m2m_wifi_delete_sc(char *pcSsid, uint8_t u8SsidLen)
+{
+    tstrM2mWifiApId strApId;
+    memset((uint8_t*)&strApId, 0, sizeof(strApId));
+    strApId.au8SSID[0] = 0xFF;  // Special value used to cause fw to delete all entries.
+    return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQRSP_DELETE_APID, (uint8_t*)&strApId, sizeof(tstrM2mWifiApId), NULL, 0, 0);
 }
 
 int8_t m2m_wifi_default_connect(void)
 {
     return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_DEFAULT_CONNECT, NULL, 0, NULL, 0, 0);
+}
+
+/*************************************************************************************************/
+/*                                WIFI CONNECT INTERNAL FUNCTIONS                                */
+/*************************************************************************************************/
+static int8_t m2m_wifi_connect_prepare_msg(
+    tenuCredStoreOption enuCredStoreOption,
+    tenuM2mSecType      enuAuthType,
+    uint16_t              u16AuthSize,
+    tstrNetworkId       *pstrNetworkId,
+    tstrM2mWifiConnHdr  *pstrWifiConn
+)
+{
+    int8_t   ret = M2M_ERR_FAIL;
+    uint16_t  u16CredSize = sizeof(tstrM2mConnCredCmn) + u16AuthSize;
+    /* Check application params. */
+    if (
+        (pstrNetworkId == NULL)
+        || (pstrNetworkId->pu8Ssid == NULL)
+        || (pstrNetworkId->u8SsidLen >= M2M_MAX_SSID_LEN)
+    )
+        goto INVALID_ARG;
+
+    if (pstrWifiConn != NULL)
+    {
+        tstrM2mConnCredHdr  *pstrHdr = &pstrWifiConn->strConnCredHdr;
+        tstrM2mConnCredCmn  *pstrCmn = &pstrWifiConn->strConnCredCmn;
+
+        memset((uint8_t*)pstrWifiConn, 0, sizeof(tstrM2mWifiConnHdr));
+
+        pstrHdr->u16CredSize = u16CredSize;
+        switch(enuCredStoreOption)
+        {
+        case WIFI_CRED_SAVE_ENCRYPTED:
+            pstrHdr->u8CredStoreFlags |= M2M_CRED_ENCRYPT_FLAG;
+        // intentional fall through...
+        case WIFI_CRED_SAVE_UNENCRYPTED:
+            pstrHdr->u8CredStoreFlags |= M2M_CRED_STORE_FLAG;
+        // intentional fall through...
+        case WIFI_CRED_DONTSAVE:
+            break;
+        default:
+            goto INVALID_ARG;
+        }
+
+        if (pstrNetworkId->enuChannel == M2M_WIFI_CH_ALL)
+            pstrHdr->u8Channel = (uint8_t)(pstrNetworkId->enuChannel);
+        else if ((pstrNetworkId->enuChannel <= M2M_WIFI_CH_14) && (pstrNetworkId->enuChannel >= M2M_WIFI_CH_1))
+            pstrHdr->u8Channel = (uint8_t)(pstrNetworkId->enuChannel) - 1;
+        else
+            goto INVALID_ARG;
+
+        if ((enuAuthType == M2M_WIFI_SEC_INVALID) || (enuAuthType >= M2M_WIFI_NUM_AUTH_TYPES))
+            goto INVALID_ARG;
+        pstrCmn->u8AuthType = (uint8_t)enuAuthType;
+
+        pstrCmn->u8SsidLen = pstrNetworkId->u8SsidLen;
+        memcpy(pstrCmn->au8Ssid, pstrNetworkId->pu8Ssid, pstrNetworkId->u8SsidLen);
+        if (pstrNetworkId->pu8Bssid != NULL)
+        {
+            pstrCmn->u8Options = M2M_WIFI_CONN_BSSID_FLAG;
+            memcpy(pstrCmn->au8Bssid, pstrNetworkId->pu8Bssid, M2M_MAC_ADDRES_LEN);
+        }
+        /* Everything is ok, set return value. */
+        ret = M2M_SUCCESS;
+    }
+    return ret;
+INVALID_ARG:
+    return M2M_ERR_INVALID_ARG;
+}
+
+static int8_t legacy_connect_prepare_msg(tstrM2mWifiConnHdr *pstrConnHdr, tstrM2mWifiConnectLegacy_1_2 *pstrConnect)
+{
+    int8_t s8Ret = M2M_ERR_FAIL;
+
+    if (
+        !(pstrConnHdr->strConnCredHdr.u8CredStoreFlags & M2M_CRED_ENCRYPT_FLAG)
+        &&  !(pstrConnHdr->strConnCredCmn.u8Options & M2M_WIFI_CONN_BSSID_FLAG)
+    )
+    {
+        memset((uint8_t*)pstrConnect, 0, sizeof(tstrM2mWifiConnectLegacy_1_2));
+        memcpy(pstrConnect->au8SSID, pstrConnHdr->strConnCredCmn.au8Ssid, pstrConnHdr->strConnCredCmn.u8SsidLen);
+        pstrConnect->au8SSID[pstrConnHdr->strConnCredCmn.u8SsidLen] = 0;
+        pstrConnect->u16Ch = pstrConnHdr->strConnCredHdr.u8Channel;
+        pstrConnect->u8NoSaveCred = !(pstrConnHdr->strConnCredHdr.u8CredStoreFlags & M2M_CRED_STORE_FLAG);
+        pstrConnect->strSec.u8SecType = pstrConnHdr->strConnCredCmn.u8AuthType;
+        s8Ret = M2M_SUCCESS;
+    }
+    return s8Ret;
+}
+
+/*************************************************************************************************/
+/*                                        WIFI CONNECT APIS                                      */
+/*************************************************************************************************/
+int8_t m2m_wifi_connect_open(
+    tenuCredStoreOption enuCredStoreOption,
+    tstrNetworkId       *pstrNetworkId
+)
+{
+    int8_t              ret = M2M_ERR_INVALID_ARG;
+    tstrM2mWifiConnHdr  strConnHdr;
+
+    ret = m2m_wifi_connect_prepare_msg(enuCredStoreOption, M2M_WIFI_SEC_OPEN, 0, pstrNetworkId, &strConnHdr);
+    if (ret == M2M_SUCCESS)
+    {
+        ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONN,
+                       (uint8_t*)&strConnHdr, sizeof(strConnHdr),
+                       NULL, 0, 0);
+        if (ret != M2M_SUCCESS)
+        {
+            /* Might just be that we are talking to legacy firmware - try the legacy connect message instead. */
+            tstrM2mWifiConnectLegacy_1_2    strConnectLegacy;
+            ret = legacy_connect_prepare_msg(&strConnHdr, &strConnectLegacy);
+            if (ret ==  M2M_SUCCESS)
+            {
+                ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONNECT,
+                               (uint8_t*)&strConnectLegacy, sizeof(tstrM2mWifiConnectLegacy_1_2),
+                               NULL, 0, 0);
+            }
+        }
+    }
+    return ret;
+}
+
+int8_t m2m_wifi_connect_wep(
+    tenuCredStoreOption enuCredStoreOption,
+    tstrNetworkId       *pstrNetworkId,
+    tstrAuthWep         *pstrAuthWep
+)
+{
+    int8_t   ret = M2M_ERR_INVALID_ARG;
+
+    if (
+        (pstrAuthWep != NULL) && (pstrAuthWep->pu8WepKey != NULL)
+        && (pstrAuthWep->u8KeyIndx > 0) && (pstrAuthWep->u8KeyIndx <= WEP_KEY_MAX_INDEX)
+        && ((pstrAuthWep->u8KeySz == WEP_104_KEY_STRING_SIZE) || (pstrAuthWep->u8KeySz == WEP_40_KEY_STRING_SIZE))
+    )
+    {
+        tstrM2mWifiConnHdr  strConnHdr;
+
+        ret = m2m_wifi_connect_prepare_msg(enuCredStoreOption,
+                                           M2M_WIFI_SEC_WEP,
+                                           sizeof(tstrM2mWifiWep),
+                                           pstrNetworkId,
+                                           &strConnHdr);
+
+        if (ret == M2M_SUCCESS)
+        {
+            tstrM2mWifiWep  *pstrWep = (tstrM2mWifiWep *)malloc(sizeof(tstrM2mWifiWep));
+            if (pstrWep == NULL)
+                ret = M2M_ERR_FAIL;
+            else
+            {
+                pstrWep->u8KeyIndex = pstrAuthWep->u8KeyIndx - 1;
+                pstrWep->u8KeyLen = pstrAuthWep->u8KeySz/2;
+                hexstr_2_bytes(pstrWep->au8WepKey, (pstrAuthWep->pu8WepKey), pstrWep->u8KeyLen);
+
+                ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONN | M2M_REQ_DATA_PKT,
+                               (uint8_t*)&strConnHdr, sizeof(tstrM2mWifiConnHdr),
+                               (uint8_t*)pstrWep, sizeof(tstrM2mWifiWep), sizeof(tstrM2mWifiConnHdr));
+                free(pstrWep);
+            }
+            if (ret != M2M_SUCCESS)
+            {
+                /* Might just be that we are talking to legacy firmware - try the legacy connect message instead. */
+                tstrM2mWifiConnectLegacy_1_2    strConnectLegacy;
+                ret = legacy_connect_prepare_msg(&strConnHdr, &strConnectLegacy);
+                if (ret ==  M2M_SUCCESS)
+                {
+                    tstrM2mWifiWepParamsLegacy_1_2  *pstrWepLegacy = &strConnectLegacy.strSec.uniAuth.strWepInfo;
+                    pstrWepLegacy->u8KeyIndx = pstrAuthWep->u8KeyIndx - 1;
+                    pstrWepLegacy->u8KeySz = pstrAuthWep->u8KeySz;
+                    memcpy(pstrWepLegacy->au8WepKey, pstrAuthWep->pu8WepKey, pstrAuthWep->u8KeySz);
+                    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONNECT,
+                                   (uint8_t*)&strConnectLegacy, sizeof(tstrM2mWifiConnectLegacy_1_2),
+                                   NULL, 0, 0);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+int8_t m2m_wifi_connect_psk(
+    tenuCredStoreOption enuCredStoreOption,
+    tstrNetworkId       *pstrNetworkId,
+    tstrAuthPsk         *pstrAuthPsk
+)
+{
+    int8_t   ret = M2M_ERR_INVALID_ARG;
+
+    if (pstrAuthPsk != NULL)
+    {
+        tstrM2mWifiConnHdr  strConnHdr;
+
+        ret = m2m_wifi_connect_prepare_msg(enuCredStoreOption,
+                                           M2M_WIFI_SEC_WPA_PSK,
+                                           sizeof(tstrM2mWifiPsk),
+                                           pstrNetworkId,
+                                           &strConnHdr);
+
+        if (ret == M2M_SUCCESS)
+        {
+            tstrM2mWifiPsk  *pstrPsk = (tstrM2mWifiPsk *)malloc(sizeof(tstrM2mWifiPsk));
+            if (pstrPsk == NULL)
+                ret = M2M_ERR_FAIL;
+            else
+            {
+                memset((uint8_t*)pstrPsk, 0, sizeof(tstrM2mWifiPsk));
+                if (pstrAuthPsk->pu8Psk != NULL)
+                {
+                    if (pstrAuthPsk->pu8Passphrase != NULL)
+                        ret = M2M_ERR_INVALID_ARG;
+                    else
+                    {
+                        pstrPsk->u8PassphraseLen = M2M_MAX_PSK_LEN-1;
+                        /* Use hexstr_2_bytes to verify pu8Psk input. */
+                        if (M2M_SUCCESS != hexstr_2_bytes(pstrPsk->au8Passphrase, pstrAuthPsk->pu8Psk, pstrPsk->u8PassphraseLen/2))
+                            ret = M2M_ERR_INVALID_ARG;
+                        memcpy(pstrPsk->au8Passphrase, pstrAuthPsk->pu8Psk, pstrPsk->u8PassphraseLen);
+                    }
+                }
+                else if (pstrAuthPsk->pu8Passphrase != NULL)
+                {
+                    if (pstrAuthPsk->u8PassphraseLen > M2M_MAX_PSK_LEN-1)
+                        ret = M2M_ERR_INVALID_ARG;
+                    else
+                    {
+                        pstrPsk->u8PassphraseLen = pstrAuthPsk->u8PassphraseLen;
+                        memcpy(pstrPsk->au8Passphrase, pstrAuthPsk->pu8Passphrase, pstrPsk->u8PassphraseLen);
+                    }
+                }
+                else
+                    ret = M2M_ERR_INVALID_ARG;
+                if (ret == M2M_SUCCESS)
+                {
+                    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONN | M2M_REQ_DATA_PKT,
+                                   (uint8_t*)&strConnHdr, sizeof(tstrM2mWifiConnHdr),
+                                   (uint8_t*)pstrPsk, sizeof(tstrM2mWifiPsk), sizeof(tstrM2mWifiConnHdr));
+                }
+                free(pstrPsk);
+            }
+            if (ret != M2M_SUCCESS)
+            {
+                /* Might just be that we are talking to legacy firmware - try the legacy connect message instead. */
+                tstrM2mWifiConnectLegacy_1_2    strConnectLegacy;
+                ret = legacy_connect_prepare_msg(&strConnHdr, &strConnectLegacy);
+                if (ret ==  M2M_SUCCESS)
+                {
+                    uint8_t   *pu8PskLegacy = strConnectLegacy.strSec.uniAuth.au8PSK;
+                    memcpy(pu8PskLegacy, pstrPsk->au8Passphrase, pstrPsk->u8PassphraseLen);
+                    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONNECT,
+                                   (uint8_t*)&strConnectLegacy, sizeof(tstrM2mWifiConnectLegacy_1_2),
+                                   NULL, 0, 0);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+int8_t m2m_wifi_1x_set_option(tenu1xOption enuOptionName, const void *pOptionValue, size_t OptionLen)
+{
+    if((pOptionValue == NULL) && (OptionLen > 0))
+        return M2M_ERR_INVALID_ARG;
+    switch(enuOptionName)
+    {
+    case WIFI_1X_BYPASS_SERVER_AUTH:
+        if(OptionLen != sizeof(int))
+            return M2M_ERR_INVALID_ARG;
+        switch(*(int*)pOptionValue)
+        {
+        case 1:
+            gu321xTlsHsFlags &= ~WIFI_1X_TLS_HS_FLAGS_PEER_AUTH;
+            break;
+        case 0:
+            gu321xTlsHsFlags |= WIFI_1X_TLS_HS_FLAGS_PEER_AUTH;
+            break;
+        default:
+            return M2M_ERR_INVALID_ARG;
+        }
+        break;
+    case WIFI_1X_TIME_VERIF_MODE:
+        if(OptionLen != sizeof(tenuTlsCertExpSettings))
+            return M2M_ERR_INVALID_ARG;
+        switch(*(tenuTlsCertExpSettings*)pOptionValue)
+        {
+        case TLS_CERT_EXP_CHECK_DISABLE:
+            gu321xTlsHsFlags &= ~WIFI_1X_TLS_HS_FLAGS_PEER_CERTTIMECHECK;
+            gu321xTlsHsFlags &= ~WIFI_1X_TLS_HS_FLAGS_REQUIRE_TIME;
+            break;
+        case TLS_CERT_EXP_CHECK_ENABLE:
+            gu321xTlsHsFlags |= WIFI_1X_TLS_HS_FLAGS_PEER_CERTTIMECHECK;
+            gu321xTlsHsFlags |= WIFI_1X_TLS_HS_FLAGS_REQUIRE_TIME;
+            break;
+        case TLS_CERT_EXP_CHECK_EN_IF_SYS_TIME:
+            gu321xTlsHsFlags |= WIFI_1X_TLS_HS_FLAGS_PEER_CERTTIMECHECK;
+            gu321xTlsHsFlags &= ~WIFI_1X_TLS_HS_FLAGS_REQUIRE_TIME;
+            break;
+        default:
+            return M2M_ERR_INVALID_ARG;
+        }
+        break;
+    case WIFI_1X_SESSION_CACHING:
+        if(OptionLen != sizeof(int))
+            return M2M_ERR_INVALID_ARG;
+        switch(*(int*)pOptionValue)
+        {
+        case 1:
+            gu321xTlsHsFlags |= WIFI_1X_TLS_HS_FLAGS_SESSION_CACHING;
+            break;
+        case 0:
+            gu321xTlsHsFlags &= ~WIFI_1X_TLS_HS_FLAGS_SESSION_CACHING;
+            break;
+        default:
+            return M2M_ERR_INVALID_ARG;
+        }
+        break;
+    case WIFI_1X_SPECIFIC_ROOTCERT:
+        switch(OptionLen)
+        {
+        case 20:
+            gu321xTlsHsFlags |= WIFI_1X_TLS_HS_FLAGS_SPECIFY_ROOTCERT;
+            memcpy(gau81xRootSha1, (uint8_t*)pOptionValue, sizeof(gau81xRootSha1));
+            break;
+        case 0:
+            gu321xTlsHsFlags &= ~WIFI_1X_TLS_HS_FLAGS_SPECIFY_ROOTCERT;
+            memset(gau81xRootSha1, 0, sizeof(gau81xRootSha1));
+        default:
+            return M2M_ERR_INVALID_ARG;
+        }
+        break;
+    default:
+        return M2M_ERR_INVALID_ARG;
+    }
+    return M2M_SUCCESS;
+}
+
+int8_t m2m_wifi_1x_get_option(tenu1xOption enuOptionName, void *pOptionValue, size_t *pOptionLen)
+{
+    if(pOptionValue == NULL)
+        return M2M_ERR_INVALID_ARG;
+    switch(enuOptionName)
+    {
+    case WIFI_1X_BYPASS_SERVER_AUTH:
+        if(*pOptionLen < sizeof(int))
+            return M2M_ERR_INVALID_ARG;
+        *pOptionLen = sizeof(int);
+        *(int*)pOptionValue = (gu321xTlsHsFlags & WIFI_1X_TLS_HS_FLAGS_PEER_AUTH) ? 0 : 1;
+        break;
+    case WIFI_1X_TIME_VERIF_MODE:
+        if(*pOptionLen < sizeof(tenuTlsCertExpSettings))
+            return M2M_ERR_INVALID_ARG;
+        *pOptionLen = sizeof(tenuTlsCertExpSettings);
+        if(!(gu321xTlsHsFlags & WIFI_1X_TLS_HS_FLAGS_PEER_CERTTIMECHECK))
+            *(tenuTlsCertExpSettings*)pOptionValue = TLS_CERT_EXP_CHECK_DISABLE;
+        else if(gu321xTlsHsFlags & WIFI_1X_TLS_HS_FLAGS_REQUIRE_TIME)
+            *(tenuTlsCertExpSettings*)pOptionValue = TLS_CERT_EXP_CHECK_ENABLE;
+        else
+            *(tenuTlsCertExpSettings*)pOptionValue = TLS_CERT_EXP_CHECK_EN_IF_SYS_TIME;
+        break;
+    case WIFI_1X_SESSION_CACHING:
+        if(*pOptionLen < sizeof(int))
+            return M2M_ERR_INVALID_ARG;
+        *pOptionLen = sizeof(int);
+        *(int*)pOptionValue = (gu321xTlsHsFlags & WIFI_1X_TLS_HS_FLAGS_SESSION_CACHING) ? 1 : 0;
+        break;
+    case WIFI_1X_SPECIFIC_ROOTCERT:
+        if (gu321xTlsHsFlags & WIFI_1X_TLS_HS_FLAGS_SPECIFY_ROOTCERT)
+        {
+            if (*pOptionLen < sizeof(gau81xRootSha1))
+                return M2M_ERR_INVALID_ARG;
+            *pOptionLen = sizeof(gau81xRootSha1);
+            memcpy((uint8_t*)pOptionValue, gau81xRootSha1, sizeof(gau81xRootSha1));
+        }
+        else
+            *pOptionLen = 0;
+        break;
+    default:
+        return M2M_ERR_INVALID_ARG;
+    }
+    return M2M_SUCCESS;
+}
+
+int8_t m2m_wifi_connect_1x_mschap2(
+    tenuCredStoreOption enuCredStoreOption,
+    tstrNetworkId       *pstrNetworkId,
+    tstrAuth1xMschap2   *pstrAuth1xMschap2
+)
+{
+    int8_t ret = M2M_ERR_INVALID_ARG;
+    if (pstrAuth1xMschap2 != NULL)
+    {
+        if (pstrAuth1xMschap2->pu8Domain == NULL)
+            pstrAuth1xMschap2->u16DomainLen = 0;
+        if (
+            (pstrAuth1xMschap2->pu8UserName != NULL)
+            && (pstrAuth1xMschap2->pu8Password != NULL)
+            && ((uint32_t)(pstrAuth1xMschap2->u16DomainLen) + pstrAuth1xMschap2->u16UserNameLen <= M2M_AUTH_1X_USER_LEN_MAX)
+            && (pstrAuth1xMschap2->u16PasswordLen <= M2M_AUTH_1X_PASSWORD_LEN_MAX)
+        )
+        {
+            tstrM2mWifiConnHdr  strConnHdr;
+            uint16_t              u16AuthSize =   sizeof(tstrM2mWifi1xHdr) +
+                                                pstrAuth1xMschap2->u16DomainLen +
+                                                pstrAuth1xMschap2->u16UserNameLen +
+                                                pstrAuth1xMschap2->u16PasswordLen;
+
+            ret = m2m_wifi_connect_prepare_msg(enuCredStoreOption,
+                                               M2M_WIFI_SEC_802_1X,
+                                               u16AuthSize,
+                                               pstrNetworkId,
+                                               &strConnHdr);
+
+            if (ret == M2M_SUCCESS)
+            {
+                tstrM2mWifi1xHdr    *pstr1xHdr = (tstrM2mWifi1xHdr *)malloc(u16AuthSize);
+                if (pstr1xHdr != NULL)
+                {
+                    uint8_t   *pu8AuthPtr = pstr1xHdr->au81xAuthDetails;
+                    memset((uint8_t*)pstr1xHdr, 0, u16AuthSize);
+
+                    pstr1xHdr->u8Flags = M2M_802_1X_MSCHAP2_FLAG;
+                    if (pstrAuth1xMschap2->bUnencryptedUserName == true)
+                        pstr1xHdr->u8Flags |= M2M_802_1X_UNENCRYPTED_USERNAME_FLAG;
+                    if (pstrAuth1xMschap2->bPrependDomain == true)
+                        pstr1xHdr->u8Flags |= M2M_802_1X_PREPEND_DOMAIN_FLAG;
+
+                    pstr1xHdr->u8HdrLength = sizeof(tstrM2mWifi1xHdr);
+                    pstr1xHdr->u32TlsHsFlags = gu321xTlsHsFlags;
+                    memcpy(pstr1xHdr->au8TlsSpecificRootNameSha1, gau81xRootSha1, sizeof(gau81xRootSha1));
+
+                    pstr1xHdr->u8DomainLength = 0;
+                    if (pstrAuth1xMschap2->pu8Domain != NULL)
+                    {
+                        pstr1xHdr->u8DomainLength = (uint8_t)(pstrAuth1xMschap2->u16DomainLen);
+                        memcpy(pu8AuthPtr, pstrAuth1xMschap2->pu8Domain, pstr1xHdr->u8DomainLength);
+                        pu8AuthPtr += pstr1xHdr->u8DomainLength;
+                    }
+
+                    pstr1xHdr->u8UserNameLength = (pstrAuth1xMschap2->u16UserNameLen);
+                    memcpy(pu8AuthPtr, pstrAuth1xMschap2->pu8UserName, pstr1xHdr->u8UserNameLength);
+                    pu8AuthPtr += pstr1xHdr->u8UserNameLength;
+
+                    pstr1xHdr->u16PrivateKeyOffset = pu8AuthPtr - pstr1xHdr->au81xAuthDetails;
+                    pstr1xHdr->u16PrivateKeyLength = pstrAuth1xMschap2->u16PasswordLen;
+                    memcpy(pu8AuthPtr, pstrAuth1xMschap2->pu8Password, pstr1xHdr->u16PrivateKeyLength);
+
+                    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONN | M2M_REQ_DATA_PKT,
+                                   (uint8_t*)&strConnHdr, sizeof(tstrM2mWifiConnHdr),
+                                   (uint8_t*)pstr1xHdr, u16AuthSize,
+                                   sizeof(tstrM2mWifiConnHdr));
+                    free(pstr1xHdr);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+int8_t m2m_wifi_connect_1x_tls(
+    tenuCredStoreOption enuCredStoreOption,
+    tstrNetworkId       *pstrNetworkId,
+    tstrAuth1xTls       *pstrAuth1xTls
+)
+{
+    int8_t ret = M2M_ERR_INVALID_ARG;
+    if (pstrAuth1xTls != NULL)
+    {
+        if (pstrAuth1xTls->pu8Domain == NULL)
+            pstrAuth1xTls->u16DomainLen = 0;
+        if (
+            (pstrAuth1xTls->pu8UserName != NULL)
+            && (pstrAuth1xTls->pu8PrivateKey_Mod != NULL)
+            && (pstrAuth1xTls->pu8PrivateKey_Exp != NULL)
+            && (pstrAuth1xTls->pu8Certificate != NULL)
+            && ((uint32_t)(pstrAuth1xTls->u16DomainLen) + pstrAuth1xTls->u16UserNameLen <= M2M_AUTH_1X_USER_LEN_MAX)
+            && (pstrAuth1xTls->u16PrivateKeyLen <= M2M_AUTH_1X_PRIVATEKEY_LEN_MAX)
+            && (pstrAuth1xTls->u16CertificateLen <= M2M_AUTH_1X_CERT_LEN_MAX)
+        )
+        {
+            tstrM2mWifiConnHdr  strConnHdr;
+            uint16_t              u16AuthSize =   sizeof(tstrM2mWifi1xHdr) +
+                                                pstrAuth1xTls->u16DomainLen +
+                                                pstrAuth1xTls->u16UserNameLen +
+                                                (2 * pstrAuth1xTls->u16PrivateKeyLen) +
+                                                pstrAuth1xTls->u16CertificateLen;
+
+            ret = m2m_wifi_connect_prepare_msg(enuCredStoreOption,
+                                               M2M_WIFI_SEC_802_1X,
+                                               u16AuthSize,
+                                               pstrNetworkId,
+                                               &strConnHdr);
+
+            if (ret == M2M_SUCCESS)
+            {
+                uint16_t              u16Payload1Size = u16AuthSize - pstrAuth1xTls->u16CertificateLen;
+                tstrM2mWifi1xHdr    *pstr1xHdr = (tstrM2mWifi1xHdr *)malloc(u16Payload1Size);
+                if (pstr1xHdr != NULL)
+                {
+                    tstrM2mWifiAuthInfoHdr strInfoHdr = {0};
+
+                    uint8_t   *pu8AuthPtr = pstr1xHdr->au81xAuthDetails;
+                    memset((uint8_t*)pstr1xHdr, 0, u16Payload1Size);
+
+                    pstr1xHdr->u8Flags = M2M_802_1X_TLS_FLAG;
+                    if (pstrAuth1xTls->bUnencryptedUserName == true)
+                        pstr1xHdr->u8Flags |= M2M_802_1X_UNENCRYPTED_USERNAME_FLAG;
+                    if (pstrAuth1xTls->bPrependDomain == true)
+                        pstr1xHdr->u8Flags |= M2M_802_1X_PREPEND_DOMAIN_FLAG;
+
+                    pstr1xHdr->u8HdrLength = sizeof(tstrM2mWifi1xHdr);
+                    pstr1xHdr->u32TlsHsFlags = gu321xTlsHsFlags;
+                    memcpy(pstr1xHdr->au8TlsSpecificRootNameSha1, gau81xRootSha1, sizeof(gau81xRootSha1));
+
+                    pstr1xHdr->u8DomainLength = 0;
+                    if (pstrAuth1xTls->pu8Domain != NULL)
+                    {
+                        pstr1xHdr->u8DomainLength = (uint8_t)(pstrAuth1xTls->u16DomainLen);
+                        memcpy(pu8AuthPtr, pstrAuth1xTls->pu8Domain, pstr1xHdr->u8DomainLength);
+                        pu8AuthPtr += pstr1xHdr->u8DomainLength;
+                    }
+
+                    pstr1xHdr->u8UserNameLength = (pstrAuth1xTls->u16UserNameLen);
+                    memcpy(pu8AuthPtr, pstrAuth1xTls->pu8UserName, pstr1xHdr->u8UserNameLength);
+                    pu8AuthPtr += pstr1xHdr->u8UserNameLength;
+
+                    pstr1xHdr->u16PrivateKeyOffset = pu8AuthPtr - pstr1xHdr->au81xAuthDetails;
+                    pstr1xHdr->u16PrivateKeyLength = pstrAuth1xTls->u16PrivateKeyLen;
+                    memcpy(pu8AuthPtr, pstrAuth1xTls->pu8PrivateKey_Mod, pstr1xHdr->u16PrivateKeyLength);
+                    pu8AuthPtr += pstr1xHdr->u16PrivateKeyLength;
+                    memcpy(pu8AuthPtr, pstrAuth1xTls->pu8PrivateKey_Exp, pstr1xHdr->u16PrivateKeyLength);
+                    pu8AuthPtr += pstr1xHdr->u16PrivateKeyLength;
+
+                    pstr1xHdr->u16CertificateOffset = pu8AuthPtr - pstr1xHdr->au81xAuthDetails;
+                    pstr1xHdr->u16CertificateLength = pstrAuth1xTls->u16CertificateLen;
+
+                    strInfoHdr.u8Type = M2M_802_1X_TLS_CLIENT_CERTIFICATE;
+                    strInfoHdr.u16InfoPos = pstr1xHdr->u16CertificateOffset;
+                    strInfoHdr.u16InfoLen = pstr1xHdr->u16CertificateLength;
+                    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_IND_CONN_PARAM | M2M_REQ_DATA_PKT,
+                                   (uint8_t*)&strInfoHdr, sizeof(tstrM2mWifiAuthInfoHdr),
+                                   pstrAuth1xTls->pu8Certificate, pstrAuth1xTls->u16CertificateLen,
+                                   sizeof(tstrM2mWifiAuthInfoHdr));
+
+                    if (ret == M2M_SUCCESS)
+                    {
+                        ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONN | M2M_REQ_DATA_PKT,
+                                       (uint8_t*)&strConnHdr, sizeof(tstrM2mWifiConnHdr),
+                                       (uint8_t*)pstr1xHdr, u16Payload1Size,
+                                       sizeof(tstrM2mWifiConnHdr));
+                    }
+                    free(pstr1xHdr);
+                }
+            }
+        }
+    }
+    return ret;
 }
 
 int8_t m2m_wifi_connect(char *pcSsid, uint8_t u8SsidLen, uint8_t u8SecType, void *pvAuthInfo, uint16_t u16Ch)
@@ -512,112 +1127,55 @@ int8_t m2m_wifi_connect(char *pcSsid, uint8_t u8SsidLen, uint8_t u8SecType, void
 
 int8_t m2m_wifi_connect_sc(char *pcSsid, uint8_t u8SsidLen, uint8_t u8SecType, void *pvAuthInfo, uint16_t u16Ch, uint8_t u8NoSaveCred)
 {
-    int8_t              ret = M2M_SUCCESS;
-    tstrM2mWifiConnect  strConnect;
-    tstrM2MWifiSecInfo  *pstrAuthInfo;
+    int8_t               s8Ret              = M2M_ERR_INVALID_ARG;
+    tstrNetworkId       strNetworkId       = {NULL, (uint8_t*)pcSsid, u8SsidLen, (tenuM2mScanCh)u16Ch};
+    tenuCredStoreOption enuCredStoreOption = u8NoSaveCred ? WIFI_CRED_DONTSAVE : WIFI_CRED_SAVE_ENCRYPTED;
 
-    if (u8SecType != M2M_WIFI_SEC_OPEN)
+    /* This API does not support SSIDs which contain '\0'. If there is a '\0' character within the
+     * first u8SsidLen characters, then assume that the input u8SsidLen was incorrect - set length
+     * to strlen(pcSsid) and continue. This is to avoid a change from the behaviour of previously
+     * released drivers. */
+    if (u8SsidLen < M2M_MAX_SSID_LEN)
+        while(u8SsidLen--)
+            if (strNetworkId.pu8Ssid[u8SsidLen] == 0)
+                strNetworkId.u8SsidLen = u8SsidLen;
+
+    switch((tenuM2mSecType)u8SecType)
     {
-        if (pvAuthInfo == NULL)
+    case M2M_WIFI_SEC_OPEN:
+        s8Ret = m2m_wifi_connect_open(enuCredStoreOption, &strNetworkId);
+        break;
+    case M2M_WIFI_SEC_WPA_PSK:
+        if (pvAuthInfo != NULL)
         {
-            M2M_ERR("Key is not valid\r\n");
-            ret = M2M_ERR_FAIL;
-            goto ERR1;
-        }
-        if ((u8SecType == M2M_WIFI_SEC_WPA_PSK) && (strlen(pvAuthInfo) == (M2M_MAX_PSK_LEN-1)))
-        {
-            uint8_t i = 0;
-            uint8_t* pu8Psk = (uint8_t*)pvAuthInfo;
-            while(i < (M2M_MAX_PSK_LEN-1))
+            tstrAuthPsk strAuthPsk = {NULL, NULL, 0};
+            uint16_t      len        = strlen((const char*)pvAuthInfo);
+
+            if (len == M2M_MAX_PSK_LEN-1)
             {
-                if (pu8Psk[i]<'0' || (pu8Psk[i]>'9' && pu8Psk[i] < 'A')|| (pu8Psk[i]>'F' && pu8Psk[i] < 'a') || pu8Psk[i] > 'f')
-                {
-                    M2M_ERR("Invalid Key\r\n");
-                    ret = M2M_ERR_FAIL;
-                    goto ERR1;
-                }
-                i++;
+                strAuthPsk.pu8Psk = (uint8_t*)pvAuthInfo;
             }
+            else
+            {
+                strAuthPsk.pu8Passphrase   = (uint8_t*)pvAuthInfo;
+                strAuthPsk.u8PassphraseLen = len;
+            }
+            s8Ret = m2m_wifi_connect_psk(enuCredStoreOption, &strNetworkId, &strAuthPsk);
         }
-    }
-    if ((u8SsidLen<=0)||(u8SsidLen>=M2M_MAX_SSID_LEN))
-    {
-        M2M_ERR("SSID LEN INVALID\r\n");
-        ret = M2M_ERR_FAIL;
-        goto ERR1;
-    }
-
-    if (u16Ch < M2M_WIFI_CH_1 || u16Ch > M2M_WIFI_CH_14)
-    {
-        if (u16Ch!=M2M_WIFI_CH_ALL)
+        break;
+    case M2M_WIFI_SEC_WEP:
+        if (pvAuthInfo != NULL)
         {
-            M2M_ERR("CH INVALID\r\n");
-            ret = M2M_ERR_FAIL;
-            goto ERR1;
+            tstrM2mWifiWepParams    *pstrWepParams = (tstrM2mWifiWepParams *)pvAuthInfo;
+            tstrAuthWep             strAuthWep     = {pstrWepParams->au8WepKey, pstrWepParams->u8KeySz-1, pstrWepParams->u8KeyIndx};
+
+            s8Ret = m2m_wifi_connect_wep(enuCredStoreOption, &strNetworkId, &strAuthWep);
         }
+        break;
+    default:
+        break;
     }
-
-    memcpy(strConnect.au8SSID, (uint8_t*)pcSsid, u8SsidLen);
-    strConnect.au8SSID[u8SsidLen]   = 0;
-    strConnect.u16Ch                = NM_BSP_B_L_16(u16Ch);
-    /* Credentials will be Not be saved if u8NoSaveCred is set */
-    strConnect.u8NoSaveCred             = u8NoSaveCred ? 1:0;
-    pstrAuthInfo = &strConnect.strSec;
-    pstrAuthInfo->u8SecType     = u8SecType;
-
-    if (u8SecType == M2M_WIFI_SEC_WEP)
-    {
-        tstrM2mWifiWepParams    *pstrWepParams = (tstrM2mWifiWepParams*)pvAuthInfo;
-        tstrM2mWifiWepParams    *pstrWep = &pstrAuthInfo->uniAuth.strWepInfo;
-        pstrWep->u8KeyIndx =pstrWepParams->u8KeyIndx-1;
-
-        if (pstrWep->u8KeyIndx >= WEP_KEY_MAX_INDEX)
-        {
-            M2M_ERR("Invalid WEP key index %d\r\n", pstrWep->u8KeyIndx);
-            ret = M2M_ERR_FAIL;
-            goto ERR1;
-        }
-        pstrWep->u8KeySz = pstrWepParams->u8KeySz-1;
-        if ((pstrWep->u8KeySz != WEP_40_KEY_STRING_SIZE)&& (pstrWep->u8KeySz != WEP_104_KEY_STRING_SIZE))
-        {
-            M2M_ERR("Invalid WEP key length %d\r\n", pstrWep->u8KeySz);
-            ret = M2M_ERR_FAIL;
-            goto ERR1;
-        }
-        memcpy((uint8_t*)pstrWep->au8WepKey,(uint8_t*)pstrWepParams->au8WepKey, pstrWepParams->u8KeySz);
-        pstrWep->au8WepKey[pstrWepParams->u8KeySz] = 0;
-
-    }
-    else if (u8SecType == M2M_WIFI_SEC_WPA_PSK)
-    {
-        uint16_t u16KeyLen = strlen((const char*)pvAuthInfo);
-        if ((u16KeyLen <= 0)||(u16KeyLen >= M2M_MAX_PSK_LEN))
-        {
-            M2M_ERR("Incorrect PSK key length\r\n");
-            ret = M2M_ERR_FAIL;
-            goto ERR1;
-        }
-        memcpy(pstrAuthInfo->uniAuth.au8PSK, (uint8_t*)pvAuthInfo, u16KeyLen + 1);
-    }
-    else if (u8SecType == M2M_WIFI_SEC_802_1X)
-    {
-        memcpy((uint8_t*)&pstrAuthInfo->uniAuth.strCred1x, (uint8_t*)pvAuthInfo, sizeof(tstr1xAuthCredentials));
-    }
-    else if (u8SecType == M2M_WIFI_SEC_OPEN)
-    {
-
-    }
-    else
-    {
-        M2M_ERR("undefined sec type\r\n");
-        ret = M2M_ERR_FAIL;
-        goto ERR1;
-    }
-
-    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONNECT, (uint8_t*)&strConnect, sizeof(tstrM2mWifiConnect),NULL, 0,0);
-
-ERR1:
-    return ret;
+    return s8Ret;
 }
 
 int8_t m2m_wifi_disconnect(void)
@@ -628,9 +1186,9 @@ int8_t m2m_wifi_disconnect(void)
 int8_t m2m_wifi_set_mac_address(uint8_t au8MacAddress[6])
 {
     tstrM2mSetMacAddress strTmp;
-    memcpy((uint8_t*) strTmp.au8Mac, (uint8_t*) au8MacAddress, 6);
+    memcpy((uint8_t*)strTmp.au8Mac, (uint8_t*)au8MacAddress, 6);
     return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SET_MAC_ADDRESS,
-        (uint8_t*)&strTmp, sizeof(tstrM2mSetMacAddress), NULL, 0, 0);
+                    (uint8_t*)&strTmp, sizeof(tstrM2mSetMacAddress), NULL, 0, 0);
 }
 
 int8_t m2m_wifi_set_static_ip(tstrM2MIPConfig *pstrStaticIPConf)
@@ -638,27 +1196,15 @@ int8_t m2m_wifi_set_static_ip(tstrM2MIPConfig *pstrStaticIPConf)
     pstrStaticIPConf->u32DNS = NM_BSP_B_L_32(pstrStaticIPConf->u32DNS);
     pstrStaticIPConf->u32Gateway = NM_BSP_B_L_32(pstrStaticIPConf->u32Gateway);
     pstrStaticIPConf->u32StaticIP = NM_BSP_B_L_32(
-        pstrStaticIPConf->u32StaticIP);
+                                        pstrStaticIPConf->u32StaticIP);
     pstrStaticIPConf->u32SubnetMask = NM_BSP_B_L_32(
-        pstrStaticIPConf->u32SubnetMask);
+                                          pstrStaticIPConf->u32SubnetMask);
     return hif_send(M2M_REQ_GROUP_IP, M2M_IP_REQ_STATIC_IP_CONF,
-        (uint8_t*)pstrStaticIPConf, sizeof(tstrM2MIPConfig), NULL, 0, 0);
+                    (uint8_t*)pstrStaticIPConf, sizeof(tstrM2MIPConfig), NULL, 0, 0);
 }
 
-/*!
-@fn         int8_t m2m_wifi_set_lsn_int(tstrM2mLsnInt * pstrM2mLsnInt);
-@brief      Set the Wi-Fi listen interval for power save operation. It is represented in units
-            of AP Beacon periods.
-@param [in] pstrM2mLsnInt
-            Structure holding the listen interval configurations.
-@return     The function SHALL return 0 for success and a negative value otherwise.
-@sa         tstrM2mLsnInt , m2m_wifi_set_sleep_mode
-@pre        m2m_wifi_set_sleep_mode shall be called first
-@warning    The Function called once after initialization.
-*/
 int8_t m2m_wifi_enable_dhcp(uint8_t u8DhcpEn)
 {
-
     uint8_t u8Req;
     u8Req = u8DhcpEn ? M2M_IP_REQ_ENABLE_DHCP : M2M_IP_REQ_DISABLE_DHCP;
     return hif_send(M2M_REQ_GROUP_IP, u8Req, NULL, 0, NULL, 0, 0);
@@ -762,6 +1308,7 @@ int8_t m2m_wifi_p2p(uint8_t u8Channel)
     }
     return ret;
 }
+
 int8_t m2m_wifi_p2p_disconnect(void)
 {
     int8_t ret = M2M_SUCCESS;
@@ -770,13 +1317,41 @@ int8_t m2m_wifi_p2p_disconnect(void)
 }
 int8_t m2m_wifi_enable_ap(const tstrM2MAPConfig *pstrM2MAPConfig)
 {
+    tstrM2MAPModeConfig strM2MAPModeConfig;
+
+    memcpy((uint8_t*)&strM2MAPModeConfig.strApConfig, (uint8_t*)pstrM2MAPConfig, sizeof(tstrM2MAPConfig));
+
+    memcpy(strM2MAPModeConfig.strApConfigExt.au8DefRouterIP, (uint8_t*)pstrM2MAPConfig->au8DHCPServerIP, 4);
+    memcpy(strM2MAPModeConfig.strApConfigExt.au8DNSServerIP, (uint8_t*)pstrM2MAPConfig->au8DHCPServerIP, 4);
+    strM2MAPModeConfig.strApConfigExt.au8SubnetMask[0] = 0;
+
+    return m2m_wifi_enable_ap_ext(&strM2MAPModeConfig);
+}
+
+int8_t m2m_wifi_enable_ap_ext(const tstrM2MAPModeConfig *pstrM2MAPModeConfig)
+{
     int8_t ret = M2M_ERR_FAIL;
-    if (M2M_SUCCESS == m2m_validate_ap_parameters(pstrM2MAPConfig))
+    if (M2M_SUCCESS == m2m_validate_ap_parameters(pstrM2MAPModeConfig))
     {
-        ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_ENABLE_AP, (uint8_t*)pstrM2MAPConfig, sizeof(tstrM2MAPConfig), NULL, 0, 0);
+        ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_ENABLE_AP, (uint8_t*)pstrM2MAPModeConfig, sizeof(tstrM2MAPModeConfig), NULL, 0, 0);
+
+        if (ret == M2M_ERR_SEND)
+        {
+            // Send again using legacy HIF message.
+            ret = hif_send(
+                      M2M_REQ_GROUP_WIFI,
+                      M2M_WIFI_REQ_ENABLE_AP_LEGACY,
+                      (uint8_t*)&pstrM2MAPModeConfig->strApConfig,
+                      sizeof(tstrM2MAPConfig),
+                      NULL,
+                      0,
+                      0
+                  );
+        }
     }
     return ret;
 }
+
 int8_t m2m_wifi_disable_ap(void)
 {
     int8_t ret = M2M_SUCCESS;
@@ -821,10 +1396,11 @@ int8_t m2m_wifi_send_ethernet_pkt(uint8_t *pu8Packet, uint16_t u16PacketSize)
         strTxPkt.u16PacketSize      = u16PacketSize;
         strTxPkt.u16HeaderLength    = M2M_ETHERNET_HDR_LEN;
         s8Ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SEND_ETHERNET_PACKET | M2M_REQ_DATA_PKT,
-            (uint8_t*)&strTxPkt, sizeof(tstrM2MWifiTxPacketInfo), pu8Packet, u16PacketSize,  M2M_ETHERNET_HDR_OFFSET - M2M_HIF_HDR_OFFSET);
+                         (uint8_t*)&strTxPkt, sizeof(tstrM2MWifiTxPacketInfo), pu8Packet, u16PacketSize,  M2M_ETHERNET_HDR_OFFSET - M2M_HIF_HDR_OFFSET);
     }
     return s8Ret;
 }
+
 /*!
 @fn          int8_t m2m_wifi_get_otp_mac_address(uint8_t *pu8MacAddr, uint8_t * pu8IsValid);
 @brief       Request the MAC address stored on the OTP (one time programmable) memory of the device.
@@ -845,13 +1421,11 @@ int8_t m2m_wifi_get_otp_mac_address(uint8_t *pu8MacAddr, uint8_t *pu8IsValid)
     if (ret == M2M_SUCCESS)
     {
         ret = nmi_get_otp_mac_address(pu8MacAddr, pu8IsValid);
-        if (ret == M2M_SUCCESS)
-        {
-            ret = hif_chip_sleep();
-        }
+        hif_chip_sleep();
     }
     return ret;
 }
+
 /*!
 @fn          int8_t m2m_wifi_get_mac_address(uint8_t *pu8MacAddr)
 @brief       Request the current MAC address of the device (the working mac address).
@@ -869,14 +1443,12 @@ int8_t m2m_wifi_get_mac_address(uint8_t *pu8MacAddr)
     if (ret == M2M_SUCCESS)
     {
         ret = nmi_get_mac_address(pu8MacAddr);
-        if (ret == M2M_SUCCESS)
-        {
-            ret = hif_chip_sleep();
-        }
+        hif_chip_sleep();
     }
 
     return ret;
 }
+
 /*!
 @fn          int8_t m2m_wifi_req_scan_result(uint8_t index);
 @brief       Reads the AP information from the Scan Result list with the given index,
@@ -899,9 +1471,10 @@ int8_t m2m_wifi_req_scan_result(uint8_t index)
     int8_t ret = M2M_SUCCESS;
     tstrM2mReqScanResult strReqScanRlt;
     strReqScanRlt.u8Index = index;
-    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SCAN_RESULT, (uint8_t*) &strReqScanRlt, sizeof(tstrM2mReqScanResult), NULL, 0, 0);
+    ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SCAN_RESULT, (uint8_t*)&strReqScanRlt, sizeof(tstrM2mReqScanResult), NULL, 0, 0);
     return ret;
 }
+
 /*!
 @fn          uint8_t m2m_wifi_get_num_ap_found(void);
 @brief       Reads the number of AP's found in the last Scan Request,
@@ -918,6 +1491,7 @@ uint8_t m2m_wifi_get_num_ap_found(void)
 {
     return gu8ChNum;
 }
+
 /*!
 @fn         uint8_t m2m_wifi_get_sleep_mode(void);
 @brief      Get the current Power save mode.
@@ -928,6 +1502,7 @@ uint8_t m2m_wifi_get_sleep_mode(void)
 {
     return hif_get_sleep_mode();
 }
+
 /*!
 @fn         int8_t m2m_wifi_set_sleep_mode(uint8_t PsTyp, uint8_t BcastEn);
 @brief      Set the power saving mode for the WINC3400.
@@ -949,10 +1524,34 @@ int8_t m2m_wifi_set_sleep_mode(uint8_t PsTyp, uint8_t BcastEn)
     strPs.u8PsType = PsTyp;
     strPs.u8BcastEn = BcastEn;
     ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SLEEP, (uint8_t*)&strPs, sizeof(tstrM2mPsType), NULL, 0, 0);
-    M2M_INFO("POWER SAVE %d\r\n",PsTyp);
+    M2M_INFO("POWER SAVE %d\r\n", PsTyp);
     hif_set_sleep_mode(PsTyp);
     return ret;
 }
+
+/*!
+@fn         int8_t m2m_wifi_request_sleep(void)
+@brief      Request from WINC3400 device to Sleep for specific time in the M2M_PS_MANUAL Power save mode (only).
+@param [in] u32SlpReqTime
+            Request Sleep in ms
+@return     The function SHALL return M2M_SUCCESS for success and a negative value otherwise.
+@sa         tenuPowerSaveModes , m2m_wifi_set_sleep_mode
+@warning    This API is currently unsupported on the WINC3400
+*/
+int8_t m2m_wifi_request_sleep(uint32_t u32SlpReqTime)
+{
+    int8_t ret = M2M_SUCCESS;
+    uint8_t psType;
+    psType = hif_get_sleep_mode();
+    if (psType == M2M_PS_MANUAL)
+    {
+        tstrM2mSlpReqTime strPs;
+        strPs.u32SleepTime = u32SlpReqTime;
+        ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_DOZE, (uint8_t*)&strPs, sizeof(tstrM2mSlpReqTime), NULL, 0, 0);
+    }
+    return ret;
+}
+
 /*!
 @fn         int8_t m2m_wifi_set_device_name(uint8_t *pu8DeviceName, uint8_t u8DeviceNameLength);
 @brief      Set the WINC3400 device name which is used as P2P device name.
@@ -974,8 +1573,36 @@ int8_t m2m_wifi_set_device_name(uint8_t *pu8DeviceName, uint8_t u8DeviceNameLeng
     u8DeviceNameLength ++;
     memcpy(strDeviceName.au8DeviceName, pu8DeviceName, u8DeviceNameLength);
     return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SET_DEVICE_NAME,
-        (uint8_t*)&strDeviceName, sizeof(tstrM2MDeviceNameConfig), NULL, 0,0);
+                    (uint8_t*)&strDeviceName, sizeof(tstrM2MDeviceNameConfig), NULL, 0, 0);
 }
+
+/*!
+@fn         int8_t m2m_wifi_configure_sntp(uint8_t *pu8NTPServerName, uint8_t u8NTPServerNameLength, tenuSNTPUseDHCP useDHCP);
+@brief      Configures what NTP server the SNTP client should use.
+@param [in] pu8NTPServerName
+            Buffer holding the NTP server name. If the first character is an asterisk (*) then it will be treated as a server pool, where the asterisk will
+            be replaced with an incrementing value from 0 to 3 each time a server fails (example: *.pool.ntp.org).
+@param [in] u8NTPServerNameLength
+            Length of the NTP server name. Should not exceed the maximum NTP server name length of @ref M2M_NTP_MAX_SERVER_NAME_LENGTH
+@param [in] useDHCP
+            Should the NTP server provided by the DHCP server be used.
+@return     The function SHALL return M2M_SUCCESS for success and a negative value otherwise.
+*/
+int8_t m2m_wifi_configure_sntp(uint8_t *pu8NTPServerName, uint8_t u8NTPServerNameLength, tenuSNTPUseDHCP useDHCP)
+{
+    tstrM2MSNTPConfig strSNTPConfig;
+    if (u8NTPServerNameLength > M2M_NTP_MAX_SERVER_NAME_LENGTH)
+        return M2M_ERR_FAIL;
+
+    memcpy((uint8_t*)strSNTPConfig.acNTPServer, pu8NTPServerName, u8NTPServerNameLength);
+    strSNTPConfig.acNTPServer[u8NTPServerNameLength] = '\0';
+
+    strSNTPConfig.enuUseDHCP = useDHCP;
+
+    return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_CONFIG_SNTP,
+                    (uint8_t*)&strSNTPConfig, sizeof(tstrM2MSNTPConfig), NULL, 0, 0);
+}
+
 /*!
 @fn \
     uint32_t m2m_wifi_get_chipId(void)
@@ -990,6 +1617,7 @@ uint32_t m2m_wifi_get_chipId(void)
 {
     return nmi_get_chipid();
 }
+
 /*!
 @fn     int8_t m2m_wifi_get_firmware_version(tstrM2mRev* pstrRev)
 
@@ -1013,6 +1641,7 @@ int8_t m2m_wifi_get_firmware_version(tstrM2mRev *pstrRev)
     }
     return ret;
 }
+
 /*!
 @fn     int8_t m2m_wifi_check_ota_rb(void);
 
@@ -1036,6 +1665,7 @@ int8_t m2m_wifi_check_ota_rb(void)
     }
     return ret;
 }
+
 /*!
 @fn \
     int8_t m2m_ota_get_firmware_version(tstrM2mRev *pstrRev);
@@ -1063,16 +1693,30 @@ int8_t m2m_ota_get_firmware_version(tstrM2mRev *pstrRev)
     return ret;
 }
 
-int8_t m2m_wifi_start_provision_mode(tstrM2MAPConfig *pstrAPConfig, char *pcHttpServerDomainName, uint8_t bEnableHttpRedirect)
+int8_t m2m_wifi_start_provision_mode(tstrM2MAPConfig *pstrM2MAPConfig, char *pcHttpServerDomainName, uint8_t bEnableHttpRedirect)
 {
-    int8_t  s8Ret = M2M_ERR_FAIL;
+    tstrM2MAPModeConfig strM2MAPModeConfig;
 
-    if ((pstrAPConfig != NULL))
+    memcpy((uint8_t*)&strM2MAPModeConfig.strApConfig, (uint8_t*)pstrM2MAPConfig, sizeof(tstrM2MAPConfig));
+
+    memcpy(strM2MAPModeConfig.strApConfigExt.au8DefRouterIP, pstrM2MAPConfig->au8DHCPServerIP, 4);
+    memcpy(strM2MAPModeConfig.strApConfigExt.au8DNSServerIP, pstrM2MAPConfig->au8DHCPServerIP, 4);
+    strM2MAPModeConfig.strApConfigExt.au8SubnetMask[0] = 0;
+
+    return m2m_wifi_start_provision_mode_ext(&strM2MAPModeConfig, pcHttpServerDomainName, bEnableHttpRedirect);
+}
+
+int8_t m2m_wifi_start_provision_mode_ext(tstrM2MAPModeConfig *pstrAPModeConfig, char *pcHttpServerDomainName, uint8_t bEnableHttpRedirect)
+{
+    int8_t   s8Ret = M2M_ERR_FAIL;
+
+    if ((pstrAPModeConfig != NULL))
     {
         tstrM2MProvisionModeConfig  strProvConfig;
-        if (M2M_SUCCESS == m2m_validate_ap_parameters(pstrAPConfig))
+        if (M2M_SUCCESS == m2m_validate_ap_parameters(pstrAPModeConfig))
         {
-            memcpy((uint8_t*)&strProvConfig.strApConfig, (uint8_t*)pstrAPConfig, sizeof(tstrM2MAPConfig));
+            memcpy((uint8_t*)&strProvConfig.strApConfig, (uint8_t*)&pstrAPModeConfig->strApConfig, sizeof(tstrM2MAPConfig));
+            memcpy((uint8_t*)&strProvConfig.strApConfigExt, (uint8_t*)&pstrAPModeConfig->strApConfigExt, sizeof(tstrM2MAPConfigExt));
             if ((strlen((const char*)pcHttpServerDomainName) <= 0) || (NULL == pcHttpServerDomainName))
             {
                 M2M_ERR("INVALID DOMAIN NAME\r\n");
@@ -1082,7 +1726,23 @@ int8_t m2m_wifi_start_provision_mode(tstrM2MAPConfig *pstrAPConfig, char *pcHttp
             strProvConfig.u8EnableRedirect = bEnableHttpRedirect;
 
             s8Ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_START_PROVISION_MODE | M2M_REQ_DATA_PKT,
-                        (uint8_t*)&strProvConfig, sizeof(tstrM2MProvisionModeConfig), NULL, 0, 0);
+                             (uint8_t*)&strProvConfig, sizeof(tstrM2MProvisionModeConfig), NULL, 0, 0);
+
+            if (s8Ret == M2M_ERR_SEND)
+            {
+                // Send again using legacy HIF message. We can use the same structure here as
+                // the firmware only uses to the HIF message to determine whether or not the
+                // structure contains a tstrM2MAPConfigExt structure.
+                s8Ret = hif_send(
+                            M2M_REQ_GROUP_WIFI,
+                            M2M_WIFI_REQ_START_PROVISION_MODE_LEGACY | M2M_REQ_DATA_PKT,
+                            (uint8_t*)&strProvConfig,
+                            sizeof(tstrM2MProvisionModeConfig),
+                            NULL,
+                            0,
+                            0
+                        );
+            }
         }
         else
         {
@@ -1107,6 +1767,7 @@ int8_t m2m_wifi_set_system_time(uint32_t u32UTCSeconds)
 {
     return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SET_SYS_TIME, (uint8_t*)&u32UTCSeconds, sizeof(tstrSystemTime), NULL, 0, 0);
 }
+
 /*!
  * @fn             int8_t m2m_wifi_get_system_time(void);
  * @see            m2m_wifi_enable_sntp
@@ -1127,6 +1788,7 @@ int8_t m2m_wifi_enable_sntp(uint8_t bEnable)
     u8Req = bEnable ? M2M_WIFI_REQ_ENABLE_SNTP_CLIENT : M2M_WIFI_REQ_DISABLE_SNTP_CLIENT;
     return hif_send(M2M_REQ_GROUP_WIFI, u8Req, NULL, 0, NULL, 0, 0);
 }
+
 /*!
 @fn         int8_t m2m_wifi_set_power_profile(uint8_t u8PwrMode);
 @brief      Change the power profile mode
@@ -1146,6 +1808,7 @@ int8_t m2m_wifi_set_power_profile(uint8_t u8PwrMode)
     ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SET_POWER_PROFILE, (uint8_t*)&strM2mPwrMode, sizeof(tstrM2mPwrMode), NULL, 0, 0);
     return ret;
 }
+
 /*!
 @fn         int8_t m2m_wifi_set_tx_power(uint8_t u8TxPwrLevel);
 @brief      set the TX power tenuM2mTxPwrLevel
@@ -1187,14 +1850,12 @@ int8_t m2m_wifi_enable_firmware_logs(uint8_t u8Enable)
 
 /*!
 @fn         int8_t m2m_wifi_set_battery_voltage(uint16_t u16BattVoltx100);
-@brief      Enable or Disable logs in run time (Disable Firmware logs will
-            enhance the firmware start-up time and performance)
+@brief      Set the battery voltage to update the firmware calculations.
 @param [in] u16BattVoltx100
-            battery voltage multiplied by 100
-@return     The function SHALL return @ref M2M_SUCCESS for success and a negative value otherwise.
-@sa         __DISABLE_FIRMWARE_LOGS__ (build option to disable logs from initializations)
+            Battery voltage as double (multiplied by 100).
+@return     The function returns @ref M2M_SUCCESS for success and a negative value otherwise.
 @pre        m2m_wifi_init
-@warning
+@warning    This is not supported in the current release.
 */
 int8_t m2m_wifi_set_battery_voltage(uint16_t u16BattVoltx100)
 {
@@ -1204,6 +1865,7 @@ int8_t m2m_wifi_set_battery_voltage(uint16_t u16BattVoltx100)
     ret = hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_SET_BATTERY_VOLTAGE, (uint8_t*)&strM2mBattVol, sizeof(tstrM2mBatteryVoltage), NULL, 0, 0);
     return ret;
 }
+
 /*!
 @fn              int8_t m2m_wifi_prng_get_random_bytes(uint8_t * pu8PrngBuff,uint16_t u16PrngSize)
 @brief       Get random bytes using the PRNG bytes.
@@ -1225,7 +1887,7 @@ int8_t m2m_wifi_prng_get_random_bytes(uint8_t *pu8PrngBuff, uint16_t u16PrngSize
     }
     else
     {
-        M2M_ERR("PRNG Buffer exceeded maximum size %d or NULL Buffer\r\n",u16PrngSize);
+        M2M_ERR("PRNG Buffer exceeded maximum size %d or NULL Buffer\r\n", u16PrngSize);
     }
     return ret;
 }
@@ -1244,7 +1906,6 @@ int8_t m2m_wifi_prng_get_random_bytes(uint8_t *pu8PrngBuff, uint16_t u16PrngSize
 @return
     The function SHALL return 0 for success and a negative value otherwise.
 */
-
 int8_t m2m_wifi_enable_mac_mcast(uint8_t *pu8MulticastMacAddress, uint8_t u8AddRemove)
 {
     int8_t s8ret = M2M_ERR_FAIL;
@@ -1259,7 +1920,6 @@ int8_t m2m_wifi_enable_mac_mcast(uint8_t *pu8MulticastMacAddress, uint8_t u8AddR
     }
 
     return s8ret;
-
 }
 
 /*!
@@ -1293,6 +1953,29 @@ int8_t m2m_wifi_set_receive_buffer(void *pvBuffer, uint16_t u16BufferLen)
     return s8ret;
 }
 
+int8_t m2m_wifi_enable_roaming(uint8_t bEnableDhcp)
+{
+    tstrM2mWiFiRoaming  strWiFiRoaming;
+    strWiFiRoaming.u8EnableRoaming = 1;
+    if (0 == bEnableDhcp || 1 == bEnableDhcp)
+    {
+        strWiFiRoaming.u8EnableDhcp = bEnableDhcp;
+        return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_ROAMING,
+                        (uint8_t*)&strWiFiRoaming, sizeof(tstrM2mWiFiRoaming), NULL, 0, 0);
+    }
+    else
+    {
+        return M2M_ERR_INVALID_ARG;
+    }
+}
+
+int8_t m2m_wifi_disable_roaming(void)
+{
+    tstrM2mWiFiRoaming  strWiFiRoaming;
+    strWiFiRoaming.u8EnableRoaming = 0;
+    return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_ROAMING, (uint8_t*)&strWiFiRoaming, sizeof(tstrM2mWiFiRoaming), NULL, 0, 0);
+}
+
 /*!
 @fn \
     int8_t  m2m_wifi_ble_api_send(const uint8_t* const msg, const uint32_t len);
@@ -1313,7 +1996,7 @@ int8_t m2m_wifi_ble_api_send(uint8_t *msg, uint32_t len)
     tstrM2mBleApiMsg bleTx;
     bleTx.u16Len = len;
     return hif_send(M2M_REQ_GROUP_WIFI, M2M_WIFI_REQ_BLE_API_SEND | M2M_REQ_DATA_PKT,
-        (uint8_t*)&bleTx, sizeof(tstrM2mBleApiMsg), msg, len, sizeof(tstrM2mBleApiMsg));
+                    (uint8_t*)&bleTx, sizeof(tstrM2mBleApiMsg), msg, len, sizeof(tstrM2mBleApiMsg));
 }
 
 //DOM-IGNORE-END
