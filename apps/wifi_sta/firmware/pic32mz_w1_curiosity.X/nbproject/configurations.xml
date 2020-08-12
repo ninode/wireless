@@ -394,7 +394,6 @@
       <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
       <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.xml</itemPath>
       <itemPath>../../../../../mhc/../wireless/apps/wifi_sta/firmware/src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.xml</itemPath>
-      <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -623,9 +622,9 @@
         <targetDevice>PIC32MZ1025W104132</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD3PlatformTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -669,7 +668,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
-        <property key="make-warnings-into-errors" value="true"/>
+        <property key="make-warnings-into-errors" value="false"/>
         <property key="optimization-level" value="-O1"/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
@@ -834,7 +833,6 @@
         <property key="UART2" value="true"/>
         <property key="UART3" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
