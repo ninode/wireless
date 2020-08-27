@@ -1885,12 +1885,7 @@
           </Values>
         </Combo>
         <Combo dnOrder="3" id="DRV_WIFI_WINC_DRIVER_MODE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <User dnOrder="0" value="Socket Mode"/>
           </Values>
         </Combo>
@@ -1984,818 +1979,554 @@
             <Dynamic dnOrder="0" id="drvWifiWinc" value="7"/>
           </Values>
         </Integer>
-        <Combo dnOrder="21" id="DRV_WIFI_WINC_LOG_LEVEL">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="Verbose"/>
-          </Values>
-        </Combo>
-        <String dnOrder="22" id="DRV_WIFI_WINC_SPI_INST">
+        <String dnOrder="21" id="DRV_WIFI_WINC_SPI_INST">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drvWifiWinc" value="drv_spi_0"/>
           </Values>
         </String>
-        <Integer dnOrder="23" id="DRV_WIFI_WINC_SPI_INST_IDX">
+        <Integer dnOrder="22" id="DRV_WIFI_WINC_SPI_INST_IDX">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drvWifiWinc" value="0"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="24" id="DRV_WIFI_WINC_USE_BLUETOOTH_WINC3400">
+        <Boolean dnOrder="23" id="DRV_WIFI_WINC_USE_BLUETOOTH_WINC3400">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Boolean>
-        <Boolean dnOrder="25" id="DRV_WIFI_WINC_USE_TCPIP_STACK">
+        <Boolean dnOrder="24" id="DRV_WIFI_WINC_USE_TCPIP_STACK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drvWifiWinc" value="false"/>
           </Values>
         </Boolean>
-        <File dnOrder="26" id="WDRV_WINC_HOST_FILE_C">
+        <File dnOrder="25" id="WDRV_WINC_HOST_FILE_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="27" id="WDRV_WINC_HOST_FILE_H">
+        <File dnOrder="26" id="WDRV_WINC_HOST_FILE_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="28" id="WIFI_WINC1500_19_6_1_ECC_TYPES_H">
+        <File dnOrder="27" id="WIFI_WINC1500_19_6_1_ECC_TYPES_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="29" id="WIFI_WINC1500_19_6_1_FLEXIBLE_FLASH_C">
+        <File dnOrder="28" id="WIFI_WINC1500_19_6_1_FLEXIBLE_FLASH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="30" id="WIFI_WINC1500_19_6_1_FLEXIBLE_FLASH_H">
+        <File dnOrder="29" id="WIFI_WINC1500_19_6_1_FLEXIBLE_FLASH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="31" id="WIFI_WINC1500_19_6_1_INET_ADDR_C">
+        <File dnOrder="30" id="WIFI_WINC1500_19_6_1_INET_ADDR_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="32" id="WIFI_WINC1500_19_6_1_INET_NTOP_C">
+        <File dnOrder="31" id="WIFI_WINC1500_19_6_1_INET_NTOP_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="33" id="WIFI_WINC1500_19_6_1_M2M_HIF_C">
+        <File dnOrder="32" id="WIFI_WINC1500_19_6_1_M2M_HIF_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="34" id="WIFI_WINC1500_19_6_1_M2M_HIF_H">
+        <File dnOrder="33" id="WIFI_WINC1500_19_6_1_M2M_HIF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="35" id="WIFI_WINC1500_19_6_1_M2M_OTA_C">
+        <File dnOrder="34" id="WIFI_WINC1500_19_6_1_M2M_OTA_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="36" id="WIFI_WINC1500_19_6_1_M2M_OTA_H">
+        <File dnOrder="35" id="WIFI_WINC1500_19_6_1_M2M_OTA_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="37" id="WIFI_WINC1500_19_6_1_M2M_PERIPH_C">
+        <File dnOrder="36" id="WIFI_WINC1500_19_6_1_M2M_PERIPH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="38" id="WIFI_WINC1500_19_6_1_M2M_PERIPH_H">
+        <File dnOrder="37" id="WIFI_WINC1500_19_6_1_M2M_PERIPH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="39" id="WIFI_WINC1500_19_6_1_M2M_SOCKET_HOST_IF_H">
+        <File dnOrder="38" id="WIFI_WINC1500_19_6_1_M2M_SOCKET_HOST_IF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="40" id="WIFI_WINC1500_19_6_1_M2M_SSL_C">
+        <File dnOrder="39" id="WIFI_WINC1500_19_6_1_M2M_SSL_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="41" id="WIFI_WINC1500_19_6_1_M2M_SSL_H">
+        <File dnOrder="40" id="WIFI_WINC1500_19_6_1_M2M_SSL_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="42" id="WIFI_WINC1500_19_6_1_M2M_TYPES_H">
+        <File dnOrder="41" id="WIFI_WINC1500_19_6_1_M2M_TYPES_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="43" id="WIFI_WINC1500_19_6_1_M2M_WIFI_C">
+        <File dnOrder="42" id="WIFI_WINC1500_19_6_1_M2M_WIFI_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="44" id="WIFI_WINC1500_19_6_1_M2M_WIFI_H">
+        <File dnOrder="43" id="WIFI_WINC1500_19_6_1_M2M_WIFI_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="45" id="WIFI_WINC1500_19_6_1_NETINET_IN_H">
+        <File dnOrder="44" id="WIFI_WINC1500_19_6_1_NETINET_IN_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="46" id="WIFI_WINC1500_19_6_1_NMASIC_C">
+        <File dnOrder="45" id="WIFI_WINC1500_19_6_1_NMASIC_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="47" id="WIFI_WINC1500_19_6_1_NMASIC_H">
+        <File dnOrder="46" id="WIFI_WINC1500_19_6_1_NMASIC_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="48" id="WIFI_WINC1500_19_6_1_NMBUS_C">
+        <File dnOrder="47" id="WIFI_WINC1500_19_6_1_NMBUS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="49" id="WIFI_WINC1500_19_6_1_NMBUS_H">
+        <File dnOrder="48" id="WIFI_WINC1500_19_6_1_NMBUS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="50" id="WIFI_WINC1500_19_6_1_NMDRV_C">
+        <File dnOrder="49" id="WIFI_WINC1500_19_6_1_NMDRV_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="51" id="WIFI_WINC1500_19_6_1_NMDRV_H">
+        <File dnOrder="50" id="WIFI_WINC1500_19_6_1_NMDRV_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="52" id="WIFI_WINC1500_19_6_1_NMSPI_C">
+        <File dnOrder="51" id="WIFI_WINC1500_19_6_1_NMSPI_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="53" id="WIFI_WINC1500_19_6_1_NMSPI_H">
+        <File dnOrder="52" id="WIFI_WINC1500_19_6_1_NMSPI_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="54" id="WIFI_WINC1500_19_6_1_NM_BSP_H">
+        <File dnOrder="53" id="WIFI_WINC1500_19_6_1_NM_BSP_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="55" id="WIFI_WINC1500_19_6_1_NM_COMMON_C">
+        <File dnOrder="54" id="WIFI_WINC1500_19_6_1_NM_COMMON_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="56" id="WIFI_WINC1500_19_6_1_NM_COMMON_H">
+        <File dnOrder="55" id="WIFI_WINC1500_19_6_1_NM_COMMON_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="57" id="WIFI_WINC1500_19_6_1_NM_DEBUG_H">
+        <File dnOrder="56" id="WIFI_WINC1500_19_6_1_NM_DEBUG_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="58" id="WIFI_WINC1500_19_6_1_SOCKET_C">
+        <File dnOrder="57" id="WIFI_WINC1500_19_6_1_SOCKET_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="59" id="WIFI_WINC1500_19_6_1_SOCKET_H">
+        <File dnOrder="58" id="WIFI_WINC1500_19_6_1_SOCKET_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="60" id="WIFI_WINC1500_19_6_1_SPI_FLASH_C">
+        <File dnOrder="59" id="WIFI_WINC1500_19_6_1_SPI_FLASH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="61" id="WIFI_WINC1500_19_6_1_SPI_FLASH_H">
+        <File dnOrder="60" id="WIFI_WINC1500_19_6_1_SPI_FLASH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="62" id="WIFI_WINC1500_19_6_1_SPI_FLASH_MAP_H">
+        <File dnOrder="61" id="WIFI_WINC1500_19_6_1_SPI_FLASH_MAP_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="63" id="WIFI_WINC3400_1_2_2_ECC_TYPES_H">
+        <File dnOrder="62" id="WIFI_WINC3400_1_2_2_ECC_TYPES_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="64" id="WIFI_WINC3400_1_2_2_FLEXIBLE_FLASH_C">
+        <File dnOrder="63" id="WIFI_WINC3400_1_2_2_FLEXIBLE_FLASH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="65" id="WIFI_WINC3400_1_2_2_FLEXIBLE_FLASH_H">
+        <File dnOrder="64" id="WIFI_WINC3400_1_2_2_FLEXIBLE_FLASH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="66" id="WIFI_WINC3400_1_2_2_INET_ADDR_C">
+        <File dnOrder="65" id="WIFI_WINC3400_1_2_2_INET_ADDR_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="67" id="WIFI_WINC3400_1_2_2_INET_NTOP_C">
+        <File dnOrder="66" id="WIFI_WINC3400_1_2_2_INET_NTOP_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="68" id="WIFI_WINC3400_1_2_2_M2M_FLASH_C">
+        <File dnOrder="67" id="WIFI_WINC3400_1_2_2_M2M_HIF_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="69" id="WIFI_WINC3400_1_2_2_M2M_FLASH_H">
+        <File dnOrder="68" id="WIFI_WINC3400_1_2_2_M2M_HIF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="70" id="WIFI_WINC3400_1_2_2_M2M_HIF_C">
+        <File dnOrder="69" id="WIFI_WINC3400_1_2_2_M2M_OTA_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="71" id="WIFI_WINC3400_1_2_2_M2M_HIF_H">
+        <File dnOrder="70" id="WIFI_WINC3400_1_2_2_M2M_OTA_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="72" id="WIFI_WINC3400_1_2_2_M2M_OTA_C">
+        <File dnOrder="71" id="WIFI_WINC3400_1_2_2_M2M_PERIPH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="73" id="WIFI_WINC3400_1_2_2_M2M_OTA_H">
+        <File dnOrder="72" id="WIFI_WINC3400_1_2_2_M2M_PERIPH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="74" id="WIFI_WINC3400_1_2_2_M2M_PERIPH_C">
+        <File dnOrder="73" id="WIFI_WINC3400_1_2_2_M2M_SOCKET_HOST_IF_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="75" id="WIFI_WINC3400_1_2_2_M2M_PERIPH_H">
+        <File dnOrder="74" id="WIFI_WINC3400_1_2_2_M2M_SSL_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="76" id="WIFI_WINC3400_1_2_2_M2M_SOCKET_HOST_IF_H">
+        <File dnOrder="75" id="WIFI_WINC3400_1_2_2_M2M_SSL_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="77" id="WIFI_WINC3400_1_2_2_M2M_SSL_C">
+        <File dnOrder="76" id="WIFI_WINC3400_1_2_2_M2M_TYPES_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="78" id="WIFI_WINC3400_1_2_2_M2M_SSL_H">
+        <File dnOrder="77" id="WIFI_WINC3400_1_2_2_M2M_WIFI_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="79" id="WIFI_WINC3400_1_2_2_M2M_TYPES_H">
+        <File dnOrder="78" id="WIFI_WINC3400_1_2_2_M2M_WIFI_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="80" id="WIFI_WINC3400_1_2_2_M2M_WIFI_C">
+        <File dnOrder="79" id="WIFI_WINC3400_1_2_2_NETINET_IN_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="81" id="WIFI_WINC3400_1_2_2_M2M_WIFI_H">
+        <File dnOrder="80" id="WIFI_WINC3400_1_2_2_NMASIC_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="82" id="WIFI_WINC3400_1_2_2_NETINET_IN_H">
+        <File dnOrder="81" id="WIFI_WINC3400_1_2_2_NMASIC_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="83" id="WIFI_WINC3400_1_2_2_NMASIC_C">
+        <File dnOrder="82" id="WIFI_WINC3400_1_2_2_NMBUS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="84" id="WIFI_WINC3400_1_2_2_NMASIC_H">
+        <File dnOrder="83" id="WIFI_WINC3400_1_2_2_NMBUS_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="85" id="WIFI_WINC3400_1_2_2_NMBUS_C">
+        <File dnOrder="84" id="WIFI_WINC3400_1_2_2_NMDRV_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="86" id="WIFI_WINC3400_1_2_2_NMBUS_H">
+        <File dnOrder="85" id="WIFI_WINC3400_1_2_2_NMDRV_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="87" id="WIFI_WINC3400_1_2_2_NMDRV_C">
+        <File dnOrder="86" id="WIFI_WINC3400_1_2_2_NMSPI_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="88" id="WIFI_WINC3400_1_2_2_NMDRV_H">
+        <File dnOrder="87" id="WIFI_WINC3400_1_2_2_NMSPI_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="89" id="WIFI_WINC3400_1_2_2_NMFLASH_C">
+        <File dnOrder="88" id="WIFI_WINC3400_1_2_2_NM_BSP_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="90" id="WIFI_WINC3400_1_2_2_NMFLASH_H">
+        <File dnOrder="89" id="WIFI_WINC3400_1_2_2_NM_COMMON_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="91" id="WIFI_WINC3400_1_2_2_NMSPI_C">
+        <File dnOrder="90" id="WIFI_WINC3400_1_2_2_NM_COMMON_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="92" id="WIFI_WINC3400_1_2_2_NMSPI_H">
+        <File dnOrder="91" id="WIFI_WINC3400_1_2_2_NM_DEBUG_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="93" id="WIFI_WINC3400_1_2_2_NM_BSP_H">
+        <File dnOrder="92" id="WIFI_WINC3400_1_2_2_SOCKET_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="94" id="WIFI_WINC3400_1_2_2_NM_COMMON_C">
+        <File dnOrder="93" id="WIFI_WINC3400_1_2_2_SOCKET_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="95" id="WIFI_WINC3400_1_2_2_NM_COMMON_H">
+        <File dnOrder="94" id="WIFI_WINC3400_1_2_2_SPI_FLASH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="96" id="WIFI_WINC3400_1_2_2_NM_DEBUG_H">
+        <File dnOrder="95" id="WIFI_WINC3400_1_2_2_SPI_FLASH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="97" id="WIFI_WINC3400_1_2_2_SOCKET_C">
+        <File dnOrder="96" id="WIFI_WINC3400_1_2_2_SPI_FLASH_MAP_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="98" id="WIFI_WINC3400_1_2_2_SOCKET_H">
+        <File dnOrder="97" id="WIFI_WINC3400_1_3_1_FLEXIBLE_FLASH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="99" id="WIFI_WINC3400_1_2_2_SPI_FLASH_C">
+        <File dnOrder="98" id="WIFI_WINC3400_1_3_1_FLEXIBLE_FLASH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="100" id="WIFI_WINC3400_1_2_2_SPI_FLASH_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="101" id="WIFI_WINC3400_1_2_2_SPI_FLASH_MAP_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="102" id="WIFI_WINC3400_1_3_1_ECC_TYPES_H">
+        <File dnOrder="99" id="WIFI_WINC3400_1_3_1_M2M_FLASH_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="103" id="WIFI_WINC3400_1_3_1_FLEXIBLE_FLASH_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="104" id="WIFI_WINC3400_1_3_1_FLEXIBLE_FLASH_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="105" id="WIFI_WINC3400_1_3_1_INET_ADDR_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="106" id="WIFI_WINC3400_1_3_1_INET_NTOP_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="107" id="WIFI_WINC3400_1_3_1_M2M_FLASH_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="108" id="WIFI_WINC3400_1_3_1_M2M_FLASH_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="109" id="WIFI_WINC3400_1_3_1_M2M_HIF_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="110" id="WIFI_WINC3400_1_3_1_M2M_HIF_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="111" id="WIFI_WINC3400_1_3_1_M2M_OTA_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="112" id="WIFI_WINC3400_1_3_1_M2M_OTA_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="113" id="WIFI_WINC3400_1_3_1_M2M_PERIPH_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="114" id="WIFI_WINC3400_1_3_1_M2M_PERIPH_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="115" id="WIFI_WINC3400_1_3_1_M2M_SOCKET_HOST_IF_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="116" id="WIFI_WINC3400_1_3_1_M2M_SSL_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="117" id="WIFI_WINC3400_1_3_1_M2M_SSL_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="118" id="WIFI_WINC3400_1_3_1_M2M_TYPES_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="119" id="WIFI_WINC3400_1_3_1_M2M_WIFI_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="120" id="WIFI_WINC3400_1_3_1_M2M_WIFI_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="121" id="WIFI_WINC3400_1_3_1_NETINET_IN_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="122" id="WIFI_WINC3400_1_3_1_NMASIC_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="123" id="WIFI_WINC3400_1_3_1_NMASIC_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="124" id="WIFI_WINC3400_1_3_1_NMBUS_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="125" id="WIFI_WINC3400_1_3_1_NMBUS_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="126" id="WIFI_WINC3400_1_3_1_NMDRV_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="127" id="WIFI_WINC3400_1_3_1_NMDRV_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="128" id="WIFI_WINC3400_1_3_1_NMSPI_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="129" id="WIFI_WINC3400_1_3_1_NMSPI_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="130" id="WIFI_WINC3400_1_3_1_NM_BSP_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="131" id="WIFI_WINC3400_1_3_1_NM_COMMON_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="132" id="WIFI_WINC3400_1_3_1_NM_COMMON_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="133" id="WIFI_WINC3400_1_3_1_NM_DEBUG_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="134" id="WIFI_WINC3400_1_3_1_SOCKET_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="135" id="WIFI_WINC3400_1_3_1_SOCKET_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="136" id="WIFI_WINC3400_1_3_1_SPI_FLASH_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="137" id="WIFI_WINC3400_1_3_1_SPI_FLASH_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="138" id="WIFI_WINC3400_1_3_1_SPI_FLASH_MAP_H">
+        <File dnOrder="100" id="WIFI_WINC3400_1_3_1_M2M_FLASH_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -4044,16 +3775,16 @@
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="310" y="60"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="190" y="100"/>
-        <ElementPosition dnOrder="2" id="appWincSerialBridge" x="644" y="478"/>
+        <ElementPosition dnOrder="2" id="appWincSerialBridge" x="527" y="516"/>
         <ElementPosition dnOrder="3" id="cmsis" x="170" y="60"/>
         <ElementPosition dnOrder="4" id="core" x="400" y="20"/>
         <ElementPosition dnOrder="5" id="dfp" x="180" y="20"/>
-        <ElementPosition dnOrder="6" id="drvWifiWinc" x="372" y="329"/>
+        <ElementPosition dnOrder="6" id="drvWifiWinc" x="330" y="279"/>
         <ElementPosition dnOrder="7" id="drv_spi" x="170" y="311"/>
         <ElementPosition dnOrder="8" id="eic" x="30" y="252"/>
         <ElementPosition dnOrder="9" id="evsys" x="20" y="20"/>
         <ElementPosition dnOrder="10" id="nvmctrl" x="30" y="180"/>
-        <ElementPosition dnOrder="11" id="sercom2" x="433" y="464"/>
+        <ElementPosition dnOrder="11" id="sercom2" x="248" y="598"/>
         <ElementPosition dnOrder="12" id="sercom4" x="15" y="316"/>
         <ElementPosition dnOrder="13" id="sys_time" x="520" y="101"/>
         <ElementPosition dnOrder="14" id="tc3" x="540" y="20"/>

@@ -4,7 +4,7 @@
 
 
 project: serial_bridge
-creation_date: 2020-08-26T16:49:20.617+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-08-28T17:15:10.424+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: IDE            # [IDE|Standalone|Headless]
 mplabx_version: v5.25        # if MPLAB X plugin only
@@ -46,6 +46,7 @@ modules:
     - {name: "touch", version: "v3.7.0"}
     - {name: "usb", version: "v3.6.0"}
     - {name: "wireless", version: "unknown"}
+    - {name: "wireless-changes", version: "unknown"}
     - {name: "wireless-old", version: "v3.2.0"}
     - {name: "wolfMQTT", version: "v1.2.1"}
     - {name: "wolfssh", version: "v1.4.1"}

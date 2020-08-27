@@ -16,13 +16,6 @@
               <itemPath>../src/config/sam_e54_xpro_winc3400/driver/spi/drv_spi.h</itemPath>
               <itemPath>../src/config/sam_e54_xpro_winc3400/driver/spi/drv_spi_definitions.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="usart" displayName="usart" projectFiles="true">
-              <logicalFolder name="src" displayName="src" projectFiles="true">
-                <itemPath>../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/src/drv_usart_local.h</itemPath>
-              </logicalFolder>
-              <itemPath>../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/drv_usart.h</itemPath>
-              <itemPath>../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/drv_usart_definitions.h</itemPath>
-            </logicalFolder>
             <logicalFolder name="f1" displayName="winc" projectFiles="true">
               <logicalFolder name="f1" displayName="include" projectFiles="true">
                 <logicalFolder name="f1" displayName="dev" projectFiles="true">
@@ -263,11 +256,6 @@
               <itemPath>../src/config/sam_e54_xpro_winc3400/driver/spi/src/drv_spi.c</itemPath>
               <itemPath>../src/config/sam_e54_xpro_winc3400/driver/spi/src/drv_spi_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="usart" displayName="usart" projectFiles="true">
-              <logicalFolder name="src" displayName="src" projectFiles="true">
-                <itemPath>../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/src/drv_usart.c</itemPath>
-              </logicalFolder>
-            </logicalFolder>
             <logicalFolder name="f1" displayName="winc" projectFiles="true">
               <logicalFolder name="f1" displayName="dev" projectFiles="true">
                 <logicalFolder name="f1" displayName="gpio" projectFiles="true">
@@ -454,22 +442,6 @@
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
-      <item path="../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/drv_usart.h"
-            ex="true"
-            overriding="false">
-      </item>
-      <item path="../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/drv_usart_definitions.h"
-            ex="true"
-            overriding="false">
-      </item>
-      <item path="../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/src/drv_usart.c"
-            ex="true"
-            overriding="false">
-      </item>
-      <item path="../../../sample_pro/firmware/src/config/sam_d21_xpro_winc3400/driver/usart/src/drv_usart_local.h"
-            ex="true"
-            overriding="false">
-      </item>
       <AtmelIceTool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="communication.interface" value="swd"/>
@@ -503,7 +475,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src/config/sam_e54_xpro_winc3400/driver/winc/include/;../src/config/sam_e54_xpro_winc3400/driver/winc/include/dev;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/bsp;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/bsp/include;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/common;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/driver;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/socket;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/spi_flash;../src;../src/config/sam_e54_xpro_winc3400;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/sam_e54_xpro_winc3400/platform"/>
+                  value="../src/config/sam_e54_xpro_winc3400/driver/usart;../src/config/sam_e54_xpro_winc3400/driver/winc/include/;../src/config/sam_e54_xpro_winc3400/driver/winc/include/dev;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/bsp;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/bsp/include;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/common;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/driver;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/socket;../src/config/sam_e54_xpro_winc3400/driver/winc/include/drv/spi_flash;../src;../src/config/sam_e54_xpro_winc3400;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/sam_e54_xpro_winc3400/platform"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -650,6 +622,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/mh3-new/wireless/apps/serial_bridge/firmware/sam_e54_xpro_winc3400.X/debug/sam_e54_xpro_winc3400/sam_e54_xpro_winc3400_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

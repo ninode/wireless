@@ -724,8 +724,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B6B6055E04076303A330D118FEFB9A73</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B6B6055E04076303A330D118FEFB9A73</UserChecksum>
+          <GeneratedChecksum dnOrder="5">33CD3DE8FDB7C38CECDCE10B06779D01</GeneratedChecksum>
+          <UserChecksum dnOrder="6">33CD3DE8FDB7C38CECDCE10B06779D01</UserChecksum>
         </File>
         <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
@@ -1797,7 +1797,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="aerospace;audio;aws_cloud;bootloader;bootloader_apps_ethernet;bootloader_apps_i2c;bootloader_apps_sdcard;bootloader_apps_uart;bootloader_apps_usb;bsp;bt;classb_sam_e5x_d5x;core;crypto;cryptoauthlib;cryptoauthlib_apps;csp;ethercat;expresslogic_threadx;gfx;gfx_apps;micrium_ucos3;motor_control;net;quick_docs;reference_apps;touch;usb;wireless;wireless;x2c;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="aerospace;audio;aws_cloud;bootloader;bootloader_apps_ethernet;bootloader_apps_i2c;bootloader_apps_sdcard;bootloader_apps_uart;bootloader_apps_usb;bsp;bt;classb_sam_e5x_d5x;core;crypto;cryptoauthlib;cryptoauthlib_apps;csp;ethercat;expresslogic_threadx;gfx;gfx_apps;micrium_ucos3;motor_control;net;quick_docs;reference_apps;touch;usb;wireless;wireless;wireless;x2c;"/>
       <Setting dnOrder="6" key="TRUSTZONE" value="false"/>
     </Settings>
   </Configurator>
