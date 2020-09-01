@@ -283,8 +283,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/peripheral/nvic/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/nvic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F46EE72D858E440FDE7E341209345904</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F46EE72D858E440FDE7E341209345904</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5F246987A9649C4C865BE75BCC6DA6AD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5F246987A9649C4C865BE75BCC6DA6AD</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
@@ -310,8 +310,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2E5AD8E651AF5B849ABFA5E9E18CBB6A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2E5AD8E651AF5B849ABFA5E9E18CBB6A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7D75255F0EC13F54F028D3BB2EB078CA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7D75255F0EC13F54F028D3BB2EB078CA</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
@@ -967,8 +967,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">BBA103AD6AB5FE636FD5B39132D26073</GeneratedChecksum>
-          <UserChecksum dnOrder="6">BBA103AD6AB5FE636FD5B39132D26073</UserChecksum>
+          <GeneratedChecksum dnOrder="5">09A68248AC96EF3F7132A87DC61E52A8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">09A68248AC96EF3F7132A87DC61E52A8</UserChecksum>
         </File>
         <File dnOrder="107">
           <Type dnOrder="0">HEADER</Type>
@@ -1820,7 +1820,7 @@
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="6">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
@@ -1829,7 +1829,7 @@
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
           <UserChecksum dnOrder="6">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
@@ -1838,10 +1838,10 @@
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_impl_basic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">63FBE37825657165B9EA584BF05DBA43</GeneratedChecksum>
-          <UserChecksum dnOrder="6">63FBE37825657165B9EA584BF05DBA43</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B358678B02AC7D3AD6CC80621ECC826D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B358678B02AC7D3AD6CC80621ECC826D</UserChecksum>
         </File>
         <File dnOrder="204">
           <Type dnOrder="0">HEADER</Type>
@@ -2263,8 +2263,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">91CB36F6EC29DAA7C584282A875E5CBA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">91CB36F6EC29DAA7C584282A875E5CBA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0525B31317EA9CBFEC119F7C1B8987DA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0525B31317EA9CBFEC119F7C1B8987DA</UserChecksum>
         </File>
         <File dnOrder="251">
           <Type dnOrder="0">HEADER</Type>
@@ -3057,6 +3057,15 @@
           <PhysicalPath dnOrder="4">/library/tcpip/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">CFA727A2AB910B5B462D51A388146811</GeneratedChecksum>
           <UserChecksum dnOrder="6">CFA727A2AB910B5B462D51A388146811</UserChecksum>
+        </File>
+        <File dnOrder="339">
+          <Type dnOrder="0">LINKER</Type>
+          <Name dnOrder="1">ATSAME54P20A.ld</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">67D76CA6F818F9C7235E8442D2074A0B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">67D76CA6F818F9C7235E8442D2074A0B</UserChecksum>
         </File>
       </Files>
       <Settings dnOrder="1">

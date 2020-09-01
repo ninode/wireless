@@ -40,8 +40,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AC14D1B72037D83BEE60A78AC2103D64</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AC14D1B72037D83BEE60A78AC2103D64</UserChecksum>
+          <GeneratedChecksum dnOrder="5">52D6CB302A96344120B2C84B06C4EEDA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">52D6CB302A96344120B2C84B06C4EEDA</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -76,8 +76,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9714FC09F1EBB39ECC4C173B5F11C3E9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9714FC09F1EBB39ECC4C173B5F11C3E9</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8379524491830025D93328EDC05DC852</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8379524491830025D93328EDC05DC852</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,8 +211,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/dmac/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/dmac/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B6F196873441AB0B9EF902F40E1B9115</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B6F196873441AB0B9EF902F40E1B9115</UserChecksum>
+          <GeneratedChecksum dnOrder="5">64FAE74BD056369F7BF0D6873FC533D1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">64FAE74BD056369F7BF0D6873FC533D1</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -238,8 +238,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/nvic/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/nvic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4F9C829004554C8E7352478D1A509CC1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4F9C829004554C8E7352478D1A509CC1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6B38699CAE4940AB018EA56EE8DF8BC6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6B38699CAE4940AB018EA56EE8DF8BC6</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -256,17 +256,17 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F97314BB04F79E93FC58FF43D5715896</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F97314BB04F79E93FC58FF43D5715896</UserChecksum>
+          <GeneratedChecksum dnOrder="5">EA6970018F22E76E94D24534DCF35503</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EA6970018F22E76E94D24534DCF35503</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">plib_sercom0_spi.c</Name>
+          <Name dnOrder="1">plib_sercom0_spi_master.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/spim/</LogicalPath>
-          <PhysicalPath dnOrder="4">/peripheral/sercom/spim/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D7E861CA02716EB994DD49B78F44318C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D7E861CA02716EB994DD49B78F44318C</UserChecksum>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/spi_master/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/sercom/spi_master/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">84F1E6531433E7EE5967C253558E4E9D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">84F1E6531433E7EE5967C253558E4E9D</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -274,8 +274,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">CE9FDDF76A59FBAAC9A7FC5B77849FE6</GeneratedChecksum>
-          <UserChecksum dnOrder="6">CE9FDDF76A59FBAAC9A7FC5B77849FE6</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6F4BC96987B86F0B1986DD92EDF5B325</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6F4BC96987B86F0B1986DD92EDF5B325</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
@@ -283,8 +283,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">11D7432FC6AE93CC7452AB086718BB65</GeneratedChecksum>
-          <UserChecksum dnOrder="6">11D7432FC6AE93CC7452AB086718BB65</UserChecksum>
+          <GeneratedChecksum dnOrder="5">BD69F1F48AD8DDA3C5D97C09619531FC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BD69F1F48AD8DDA3C5D97C09619531FC</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
@@ -310,8 +310,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">1D663AF01040F617CC298F9373DE9B57</GeneratedChecksum>
-          <UserChecksum dnOrder="6">1D663AF01040F617CC298F9373DE9B57</UserChecksum>
+          <GeneratedChecksum dnOrder="5">949BBD944EC8B81E639121B72E7C7510</GeneratedChecksum>
+          <UserChecksum dnOrder="6">949BBD944EC8B81E639121B72E7C7510</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
@@ -508,8 +508,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/driver/winc/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4AA07391431205B3719899F2AD90E2CB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4AA07391431205B3719899F2AD90E2CB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DA9E5CC7166DB440C7455068BEF22120</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DA9E5CC7166DB440C7455068BEF22120</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">SOURCE</Type>
@@ -589,8 +589,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/stdio/</LogicalPath>
           <PhysicalPath dnOrder="4">/stdio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A9F55E7CB78F22D9000CA03DC635973C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A9F55E7CB78F22D9000CA03DC635973C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">16BE5CCEE5F9AF5909BF3F69B51C7D93</GeneratedChecksum>
+          <UserChecksum dnOrder="6">16BE5CCEE5F9AF5909BF3F69B51C7D93</UserChecksum>
         </File>
         <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
@@ -625,17 +625,17 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAMD21J18A_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAMD21J18A_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8393113FB3BE6B6F0EAE7F3D37C78640</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8393113FB3BE6B6F0EAE7F3D37C78640</UserChecksum>
+          <GeneratedChecksum dnOrder="5">D03E3BB47A437765D48AB851735F684D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D03E3BB47A437765D48AB851735F684D</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">atsamd21j18a_compat.h</Name>
+          <Name dnOrder="1">cachel1_armv7.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">packs/ATSAMD21J18A_DFP/</LogicalPath>
-          <PhysicalPath dnOrder="4">/../../packs/ATSAMD21J18A_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6D6276673CC69271A1923D9D8E42CDC2</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6D6276673CC69271A1923D9D8E42CDC2</UserChecksum>
+          <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
+          <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">01B82424BC59A54620F7E9E0DB808EBB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">01B82424BC59A54620F7E9E0DB808EBB</UserChecksum>
         </File>
         <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
@@ -643,8 +643,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D0A91713174AE0A9464105CD4157DEC1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D0A91713174AE0A9464105CD4157DEC1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">00A88E28C299A373117BC4D5B9E80C80</GeneratedChecksum>
+          <UserChecksum dnOrder="6">00A88E28C299A373117BC4D5B9E80C80</UserChecksum>
         </File>
         <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
@@ -652,8 +652,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FB9082D52CC87C29BABCEC7CDA5DA8CD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FB9082D52CC87C29BABCEC7CDA5DA8CD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">734DF6998F09B2D22A4D9FE1D544FDFC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">734DF6998F09B2D22A4D9FE1D544FDFC</UserChecksum>
         </File>
         <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
@@ -661,8 +661,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">787D64C13CE3DCD1082EA06108F51EC6</GeneratedChecksum>
-          <UserChecksum dnOrder="6">787D64C13CE3DCD1082EA06108F51EC6</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5D653BEFE5E6B1D00AB3682CE5D24C11</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5D653BEFE5E6B1D00AB3682CE5D24C11</UserChecksum>
         </File>
         <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>
@@ -679,8 +679,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B2E4B79E96D9481B139252F7F1C5924F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B2E4B79E96D9481B139252F7F1C5924F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">42E8B722917508A3A9373D13AD827ED6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">42E8B722917508A3A9373D13AD827ED6</UserChecksum>
         </File>
         <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
@@ -688,8 +688,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AF3CC89090034E070238E8A7BE343262</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AF3CC89090034E070238E8A7BE343262</UserChecksum>
+          <GeneratedChecksum dnOrder="5">376D5C7FD29CAA507ACB1AAB8746B1AD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">376D5C7FD29CAA507ACB1AAB8746B1AD</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -697,8 +697,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8D06BEF47A08B8A7A91DE48D1C5DFDAB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8D06BEF47A08B8A7A91DE48D1C5DFDAB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">52F91AC0727F2311EDA0E3BAA7719A9F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">52F91AC0727F2311EDA0E3BAA7719A9F</UserChecksum>
         </File>
         <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
@@ -706,8 +706,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">824E1A4758A3DD0DC5046134863A5CDF</GeneratedChecksum>
-          <UserChecksum dnOrder="6">824E1A4758A3DD0DC5046134863A5CDF</UserChecksum>
+          <GeneratedChecksum dnOrder="5">D0D1C3DDF43F7A14517FF3EF32389E49</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D0D1C3DDF43F7A14517FF3EF32389E49</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
@@ -715,8 +715,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B0478E0DFBB919F587783E5CB5E6DBF3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B0478E0DFBB919F587783E5CB5E6DBF3</UserChecksum>
+          <GeneratedChecksum dnOrder="5">CCBD23918BE14943EA128B0D552031C5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CCBD23918BE14943EA128B0D552031C5</UserChecksum>
         </File>
         <File dnOrder="79">
           <Type dnOrder="0">HEADER</Type>
@@ -733,17 +733,17 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FCBC35B4E8A2999A39ED9A55E97A6206</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FCBC35B4E8A2999A39ED9A55E97A6206</UserChecksum>
+          <GeneratedChecksum dnOrder="5">359C47830502424BF3F68C5D72AD60F6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">359C47830502424BF3F68C5D72AD60F6</UserChecksum>
         </File>
         <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">packs/ATSAMD21J18A_DFP/</LogicalPath>
-          <PhysicalPath dnOrder="4">/../../packs/ATSAMD21J18A_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5D8DB4FB2D3F531AE89B5AD11CFBD453</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5D8DB4FB2D3F531AE89B5AD11CFBD453</UserChecksum>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A62880149571045CACABCBB3AC375EAD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A62880149571045CACABCBB3AC375EAD</UserChecksum>
         </File>
         <File dnOrder="82">
           <Type dnOrder="0">HEADER</Type>
@@ -940,8 +940,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/CMSIS/CMSIS/Core/Include/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/CMSIS/CMSIS/Core/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A0246C3B848A6A45D54CE5DA8DF3B9C8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A0246C3B848A6A45D54CE5DA8DF3B9C8</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B96ADDA2C111E73B26EBA5E7B4498912</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B96ADDA2C111E73B26EBA5E7B4498912</UserChecksum>
         </File>
         <File dnOrder="104">
           <Type dnOrder="0">HEADER</Type>
@@ -1037,7 +1037,7 @@
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="6">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
@@ -1046,7 +1046,7 @@
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
           <UserChecksum dnOrder="6">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
@@ -1055,10 +1055,10 @@
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_impl_basic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">63FBE37825657165B9EA584BF05DBA43</GeneratedChecksum>
-          <UserChecksum dnOrder="6">63FBE37825657165B9EA584BF05DBA43</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B358678B02AC7D3AD6CC80621ECC826D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B358678B02AC7D3AD6CC80621ECC826D</UserChecksum>
         </File>
         <File dnOrder="117">
           <Type dnOrder="0">HEADER</Type>
@@ -1129,17 +1129,17 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6B9459A2114F4FE5F62DCF3466E0D78B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6B9459A2114F4FE5F62DCF3466E0D78B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C16F3B098E4221871D1F72303EE99568</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C16F3B098E4221871D1F72303EE99568</UserChecksum>
         </File>
         <File dnOrder="125">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">plib_sercom0_spi.h</Name>
+          <Name dnOrder="1">plib_sercom0_spi_master.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/spim/</LogicalPath>
-          <PhysicalPath dnOrder="4">/peripheral/sercom/spim/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">24020C6F870EC9C16B0B8FAF499BE0EB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">24020C6F870EC9C16B0B8FAF499BE0EB</UserChecksum>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/spi_master/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/sercom/spi_master/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A8D053706578740E85A7F8342AFDDEFD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A8D053706578740E85A7F8342AFDDEFD</UserChecksum>
         </File>
         <File dnOrder="126">
           <Type dnOrder="0">HEADER</Type>
@@ -1152,12 +1152,12 @@
         </File>
         <File dnOrder="127">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">plib_sercom_spi_common.h</Name>
+          <Name dnOrder="1">plib_sercom_spi_master_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/spim/</LogicalPath>
-          <PhysicalPath dnOrder="4">/peripheral/sercom/spim/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">EC6705B0D355601CE62F39DD261EEE63</GeneratedChecksum>
-          <UserChecksum dnOrder="6">EC6705B0D355601CE62F39DD261EEE63</UserChecksum>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/spi_master/</LogicalPath>
+          <PhysicalPath dnOrder="4">/peripheral/sercom/spi_master/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">A06CFE6AEC7B18A5C3DEAC185207002C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A06CFE6AEC7B18A5C3DEAC185207002C</UserChecksum>
         </File>
         <File dnOrder="128">
           <Type dnOrder="0">HEADER</Type>
@@ -1165,8 +1165,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9B409E836AF212CD11C4BB20B1B7C26E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9B409E836AF212CD11C4BB20B1B7C26E</UserChecksum>
+          <GeneratedChecksum dnOrder="5">925FCFFDB3C2D6B21726F0B97CDA821B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">925FCFFDB3C2D6B21726F0B97CDA821B</UserChecksum>
         </File>
         <File dnOrder="129">
           <Type dnOrder="0">HEADER</Type>
@@ -1174,8 +1174,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">83C9817FBC4E9A40624ED3BA28F8B052</GeneratedChecksum>
-          <UserChecksum dnOrder="6">83C9817FBC4E9A40624ED3BA28F8B052</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0DE96936AB21998A284FA176F870E596</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0DE96936AB21998A284FA176F870E596</UserChecksum>
         </File>
         <File dnOrder="130">
           <Type dnOrder="0">HEADER</Type>
@@ -1183,8 +1183,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9123F379ED6F3FD032D954CC559D102A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9123F379ED6F3FD032D954CC559D102A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6DBEAF7BD42014F5492374805406687A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6DBEAF7BD42014F5492374805406687A</UserChecksum>
         </File>
         <File dnOrder="131">
           <Type dnOrder="0">HEADER</Type>
@@ -1228,8 +1228,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAMD21J18A_DFP/pio/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAMD21J18A_DFP/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">CF192A634F1CC95773726EE5CEFA2B91</GeneratedChecksum>
-          <UserChecksum dnOrder="6">CF192A634F1CC95773726EE5CEFA2B91</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C5D1633B6BB74A69DB0CBA77291BC43C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C5D1633B6BB74A69DB0CBA77291BC43C</UserChecksum>
         </File>
         <File dnOrder="136">
           <Type dnOrder="0">HEADER</Type>
@@ -1273,8 +1273,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">91CB36F6EC29DAA7C584282A875E5CBA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">91CB36F6EC29DAA7C584282A875E5CBA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0525B31317EA9CBFEC119F7C1B8987DA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0525B31317EA9CBFEC119F7C1B8987DA</UserChecksum>
         </File>
         <File dnOrder="141">
           <Type dnOrder="0">HEADER</Type>
@@ -1426,8 +1426,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5D5CDFD3AB0E678AACDD28A3276C8099</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5D5CDFD3AB0E678AACDD28A3276C8099</UserChecksum>
+          <GeneratedChecksum dnOrder="5">20E829A99B86C2889E4E2E536161C27A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">20E829A99B86C2889E4E2E536161C27A</UserChecksum>
         </File>
         <File dnOrder="158">
           <Type dnOrder="0">HEADER</Type>
@@ -1645,6 +1645,15 @@
           <GeneratedChecksum dnOrder="5">AF14D78B734053187B6E93E19BD70449</GeneratedChecksum>
           <UserChecksum dnOrder="6">AF14D78B734053187B6E93E19BD70449</UserChecksum>
         </File>
+        <File dnOrder="182">
+          <Type dnOrder="0">LINKER</Type>
+          <Name dnOrder="1">ATSAMD21J18A.ld</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">D5CD9172C8EF08FDC00E4F569329FFCF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D5CD9172C8EF08FDC00E4F569329FFCF</UserChecksum>
+        </File>
       </Files>
       <Settings dnOrder="1">
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" security="NON_SECURE" value="../src/config/sam_d21_xpro_winc3400/driver/winc/include/;"/>
@@ -1658,7 +1667,8 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="8" key="extra-include-directories" security="NON_SECURE" value="../src;../src/config/sam_d21_xpro_winc3400;../src/packs/ATSAMD21J18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <Setting category="C32-LD" dnOrder="9" key="heap-size" security="NON_SECURE" value="512"/>
         <Setting category="C32-LD" dnOrder="10" key="no-device-startup-code" security="NON_SECURE" value="true"/>
-        <Setting append="true" category="C32-LD" delimiter=";" dnOrder="11" key="preprocessor-macros" security="NON_SECURE" value=""/>
+        <Setting append="true" category="C32-LD" delimiter=";=" dnOrder="11" key="preprocessor-macros" security="NON_SECURE" value=""/>
+        <Setting append="true" category="C32CPP" delimiter=";" dnOrder="12" key="extra-include-directories" security="NON_SECURE" value="../src;../src/config/sam_d21_xpro_winc3400;../src/packs/ATSAMD21J18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
       </Settings>
     </Manifest>
     <Settings dnOrder="5">

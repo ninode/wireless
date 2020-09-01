@@ -87,13 +87,13 @@ extern "C" {
 
 
 /* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  5
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFFU
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         48000000
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (200)
+#define SYS_TIME_INDEX_0                            (0)
+#define SYS_TIME_MAX_TIMERS                         (5)
+#define SYS_TIME_HW_COUNTER_WIDTH                   (16)
+#define SYS_TIME_HW_COUNTER_PERIOD                  (0xFFFFU)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD             (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY                (48000000)
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (200)
 
 #define SYS_CONSOLE_DEVICE_MAX_INSTANCES   			1
 #define SYS_CONSOLE_UART_MAX_INSTANCES 	   			1
@@ -120,6 +120,12 @@ extern "C" {
 #define WDRV_WINC_DEVICE_WINC3400
 #define WDRV_WINC_DEVICE_SPLIT_INIT
 #define WDRV_WINC_DEVICE_MULTI_GAIN_TABLE
+#define WDRV_WINC_DEVICE_ENTERPRISE_CONNECT
+#define WDRV_WINC_DEVICE_EXT_CONNECT_PARAMS
+#define WDRV_WINC_DEVICE_BSS_ROAMING
+#define WDRV_WINC_DEVICE_DYNAMIC_BYPASS_MODE
+#define WDRV_WINC_DEVICE_CONF_NTP_SERVER
+#define WDRV_WINC_DEVICE_SOFT_AP_EXT
 #define WDRV_WINC_DEBUG_LEVEL               WDRV_WINC_DEBUG_TYPE_NONE
 
 /* SPI Driver Instance 0 Configuration Options */

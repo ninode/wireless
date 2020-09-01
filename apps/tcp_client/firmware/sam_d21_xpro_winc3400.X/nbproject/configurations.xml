@@ -10,9 +10,9 @@
                 <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/usart/plib_sercom3_usart.h</itemPath>
                 <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
               </logicalFolder>
-              <logicalFolder displayName="spim" name="f2" projectFiles="true">
-                <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/spim/plib_sercom0_spi.h</itemPath>
-                <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/spim/plib_sercom_spi_common.h</itemPath>
+              <logicalFolder displayName="spi_master" name="f2" projectFiles="true">
+                <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/spi_master/plib_sercom0_spi_master.h</itemPath>
+                <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/spi_master/plib_sercom_spi_master_common.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder displayName="nvmctrl" name="f2" projectFiles="true">
@@ -136,9 +136,15 @@
             <itemPath>../src/config/sam_d21_xpro_winc3400/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro_winc3400/system/system_module.h</itemPath>
           </logicalFolder>
+          <logicalFolder displayName="osal" name="f4" projectFiles="true">
+            <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal.h</itemPath>
+            <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal_impl_basic.h</itemPath>
+          </logicalFolder>
           <itemPath>../src/config/sam_d21_xpro_winc3400/device_cache.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro_winc3400/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro_winc3400/definitions.h</itemPath>
+          <itemPath>../src/config/sam_d21_xpro_winc3400/device.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro_winc3400/user.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro_winc3400/configuration.h</itemPath>
         </logicalFolder>
@@ -173,8 +179,6 @@
           <logicalFolder displayName="pio" name="f2" projectFiles="true">
             <itemPath>../src/packs/ATSAMD21J18A_DFP/pio/samd21j18a.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAMD21J18A_DFP/device.h</itemPath>
-          <itemPath>../src/packs/ATSAMD21J18A_DFP/atsamd21j18a_compat.h</itemPath>
           <itemPath>../src/packs/ATSAMD21J18A_DFP/atsamd21j18a.h</itemPath>
         </logicalFolder>
         <logicalFolder displayName="CMSIS" name="f2" projectFiles="true">
@@ -190,15 +194,11 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cachel1_armv7.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-      </logicalFolder>
-      <logicalFolder displayName="osal" name="f3" projectFiles="true">
-        <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal.h</itemPath>
-        <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/sam_d21_xpro_winc3400/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <itemPath>../src/example_conf.h</itemPath>
       <itemPath>../src/app.h</itemPath>
@@ -208,7 +208,13 @@
       <itemPath>../src/config/sam_d21_xpro_winc3400/harmony.prj</itemPath>
       <itemPath>../../../../../mhc/../../H3Release/wireless/apps/tcp_client/firmware/src/config/sam_d21_xpro_winc3400/sam_d21_xpro_winc3400.xml</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
+      <logicalFolder displayName="config" name="f1" projectFiles="true">
+        <logicalFolder displayName="sam_d21_xpro_winc3400" name="f1" projectFiles="true">
+          <itemPath>../src/config/sam_d21_xpro_winc3400/ATSAMD21J18A.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
     <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_d21_xpro_winc3400" name="f1" projectFiles="true">
@@ -217,8 +223,8 @@
               <logicalFolder displayName="usart" name="f1" projectFiles="true">
                 <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/usart/plib_sercom3_usart.c</itemPath>
               </logicalFolder>
-              <logicalFolder displayName="spim" name="f2" projectFiles="true">
-                <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/spim/plib_sercom0_spi.c</itemPath>
+              <logicalFolder displayName="spi_master" name="f2" projectFiles="true">
+                <itemPath>../src/config/sam_d21_xpro_winc3400/peripheral/sercom/spi_master/plib_sercom0_spi_master.c</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder displayName="nvmctrl" name="f2" projectFiles="true">
@@ -516,7 +522,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories" value="../src;../src/config/sam_d21_xpro_winc3400;../src/packs/ATSAMD21J18A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
