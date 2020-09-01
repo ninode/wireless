@@ -383,6 +383,7 @@
       <itemPath>../src/config/sam_e54_xpro_winc3400/harmony.prj</itemPath>
       <itemPath>../src/config/sam_e54_xpro_winc3400/sam_e54_xpro_winc3400.xml</itemPath>
       <itemPath>../../../../../mhc/../../H3Release/wireless/apps/serial_bridge/firmware/src/config/sam_e54_xpro_winc3400/sam_e54_xpro_winc3400.xml</itemPath>
+      <itemPath>../src/config/sam_e54_xpro_winc3400/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

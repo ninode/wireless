@@ -208,6 +208,7 @@
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/sam_d21_xpro_winc1500/harmony.prj</itemPath>
       <itemPath>../../../../../mhc/../../H3Release/wireless/apps/power_save_mode_example/firmware/src/config/sam_d21_xpro_winc1500/sam_d21_xpro_winc1500.xml</itemPath>
+      <itemPath>../src/config/sam_d21_xpro_winc1500/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
     <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">

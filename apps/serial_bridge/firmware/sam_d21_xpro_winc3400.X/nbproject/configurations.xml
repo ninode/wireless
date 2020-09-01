@@ -212,6 +212,7 @@
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/sam_d21_xpro_winc3400/harmony.prj</itemPath>
       <itemPath>../../../../../mhc/../../H3Release/wireless/apps/serial_bridge/firmware/src/config/sam_d21_xpro_winc3400/sam_d21_xpro_winc3400.xml</itemPath>
+      <itemPath>../src/config/sam_d21_xpro_winc3400/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
     <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
