@@ -44,8 +44,8 @@
 #ifndef _EXAMPLE_CONF_H
 #define _EXAMPLE_CONF_H
 
-#define WLAN_SSID           "WINC1500_SOFT_AP"
-#define WLAN_CHANNEL        1 /* WINC1500's Working Channel */
+#define WLAN_SSID           "WINC3400_SOFT_AP"
+#define WLAN_CHANNEL        1 /* WINC3400's Working Channel */
 
 // uncomment one of the authentication type below (Open or WEP)
 #define WLAN_AUTH_OPEN   

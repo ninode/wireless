@@ -186,6 +186,9 @@ void APP_ExampleTasks(DRV_HANDLE handle)
             {
                 case WIFI_STATE_IDLE:
                 {
+
+                    /* Use 6-pin key to provision. */
+
                     uint8_t pinCode[6] = {1, 2, 3, 4, 5, 6};
 
                     WDRV_WINC_BSSDisconnect(handle);

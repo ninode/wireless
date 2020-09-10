@@ -284,6 +284,11 @@ void APP_ExampleInitialize(DRV_HANDLE handle)
     APP_DebugPrintf("===========================================\r\n");
     APP_DebugPrintf("\r\n");
     
+    /* This delay is a temporary workaround and will be replaced with required clock settings,
+        taking into account the SLEEP TIMER CALIBRATION cycle for different MCUs. */
+
+    WDRV_MSDelay(100);
+
     state = EXAMP_STATE_INIT;
 
     serverSocket = -1;
