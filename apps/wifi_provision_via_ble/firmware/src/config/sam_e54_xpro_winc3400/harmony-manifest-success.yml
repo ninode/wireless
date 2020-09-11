@@ -4,7 +4,7 @@
 
 
 project: wifi_provision_via_ble
-creation_date: 2020-09-01T16:57:55.118+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-09-11T15:03:58.253+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 7
 mhc_mode: Headless            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
@@ -12,10 +12,10 @@ plugin_version: NA        # if MPLAB X plugin only
 compiler: xc32
 
 modules:
-    - {name: "csp", version: "v3.8.0-rc.3"}
-    - {name: "core", version: "v3.8.0-rc.3"}
-    - {name: "dev_packs", version: "v3.8.0-rc.3"}
+    - {name: "csp", version: "v3.8.0"}
+    - {name: "core", version: "v3.8.0"}
+    - {name: "dev_packs", version: "v3.8.0"}
     - {name: "mhc", version: "v3.5.1"}
-    - {name: "wireless", version: "unknown"}
-    - {name: "bsp", version: "v3.8.0-rc.1"}
+    - {name: "wireless", version: "v3.3.0-rc1"}
+    - {name: "bsp", version: "v3.8.0"}
 

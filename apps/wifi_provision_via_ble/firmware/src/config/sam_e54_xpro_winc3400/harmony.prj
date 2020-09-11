@@ -1795,8 +1795,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc3400/system/console/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/console/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">0525B31317EA9CBFEC119F7C1B8987DA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">0525B31317EA9CBFEC119F7C1B8987DA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">91CB36F6EC29DAA7C584282A875E5CBA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">91CB36F6EC29DAA7C584282A875E5CBA</UserChecksum>
         </File>
         <File dnOrder="199">
           <Type dnOrder="0">HEADER</Type>
