@@ -28,7 +28,7 @@
 // *****************************************************************************
 
 #include "app_control.h"
-#include "app.h"
+#include "app_driver.h"
 #include "system_config.h"
 #include "system_definitions.h"
 
@@ -171,7 +171,7 @@ void APP_CONTROL_Initialize ( void )
     
     if (!SYS_CMD_ADDGRP(WLANCmdTbl, sizeof(WLANCmdTbl)/sizeof(*WLANCmdTbl), "wlan", ": WLAN commands"))
     {
-        SYS_ERROR(SYS_ERROR_ERROR, "Failed to create WLAN Commands\r\n", 0);
+        SYS_ERROR(SYS_ERROR_ERROR, "Failed to create WLAN Commands\r\n");
     }
     
     app_controlData.state = APP_CONTROL_STATE_INIT;
@@ -215,32 +215,46 @@ void APP_CONTROL_Tasks ( void )
 
 static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
 {
+    if (argc < 2)
+    {
+        return;
+    }
+    
     if(!strcmp("set", argv[1]))
     {
-        if(argc < 6)
+        if (argc < 3)
         {
-            SYS_CONSOLE_MESSAGE("usage: wlan set <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
+            SYS_CONSOLE_MESSAGE("usage: wlan set config <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password>\r\n");
+            SYS_CONSOLE_MESSAGE("usage: wlan set regdomain <reg_domain_name>\r\n");
+            return;
+        }
+        
+        if (!strcmp("config", argv[2]))
+        {
+            if (argc < 7)
+            {
+                SYS_CONSOLE_MESSAGE("usage: wlan set config <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password>\r\n");
             return;
         }
         else
         {
-            char *ssid = argv[2];
-            char *authMode = argv[5];
+                char *ssid = argv[3];
+                char *authMode = argv[6];
             char *password;
-            unsigned char ssidLength = strtoul(argv[3],0,10);
-            unsigned char channel = strtoul(argv[4],0,10);
+                unsigned char ssidLength = strtoul(argv[4],0,10);
+                unsigned char channel = strtoul(argv[5],0,10);
                         
-            if (7 == argc)
+                if (8 == argc)
             {
-                password = argv[6];
+                    password = argv[7];
             }
-            else if (6 == argc)
+                else if (7 == argc)
             {
                 password = "  ";
             }
             else 
             {
-                SYS_CONSOLE_MESSAGE("usage: wlan set <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password> \r\n");
+                    SYS_CONSOLE_MESSAGE("usage: wlan set config <ssid> <ssid_length> <channel> <open | wpa2 | wpam | wpa3 | wpa3m | wep> <password>\r\n");
                 return;
             }
             
@@ -256,7 +270,8 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
                 memcpy(app_controlData.wlanConfig.ssid, ssid, ssidLength);
             }
             
-            if(channel > 13){
+                if (channel > 13)
+                {
                 SYS_CONSOLE_MESSAGE("Invalid channel number");
                 return;
             }
@@ -331,6 +346,28 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             }
             
             app_controlData.wlanConfigValid = true;
+            }
+        }
+        else if (!strcmp("regdomain", argv[2]))
+        {
+            int length;
+            
+            if (argc < 4)
+            {
+                SYS_CONSOLE_MESSAGE("usage: wlan set regdomain <name>\r\n");
+                return;
+            }
+            else
+            {
+                length = strlen(argv[3]);
+                
+                if (length < 7)
+                {
+                    memset(app_controlData.regDomName, 0, 7);
+                    strcpy(app_controlData.regDomName, argv[3]);
+                    app_controlData.regDomChanged = true;
+                }
+            }
         }
     }
     else if(!strcmp("connect", argv[1]))
@@ -346,6 +383,11 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
     }
     else if(!strcmp("config", argv[1]))
     {
+        if (argc < 3)
+        {
+            return;
+        }
+        
         if(!strcmp("save", argv[2]))
         {
             if(app_controlData.wlanConfigValid == true)
@@ -394,9 +436,38 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
     }
     else if(!strcmp("get", argv[1]))
     {
+        if (argc < 3)
+        {
+            SYS_CONSOLE_MESSAGE("wlan get rssi - display the rssi of the current association\r\n");
+            SYS_CONSOLE_MESSAGE("wlan get regdomain <all | current> - display the set regulatory domain\r\n");
+            return;
+        }
+        
         if(!strcmp("rssi", argv[2]))
         {
             APP_RSSIGet();
+        }
+        else if (!strcmp("regdomain", argv[2]))
+        {
+            if (argc < 4)
+            {
+                SYS_CONSOLE_MESSAGE("wlan get regdomain <all | current> - display the all or set regulatory domain\r\n");
+                return;
+            }
+            
+            if ((!strcmp("all", argv[3])) || (!strcmp("current", argv[3])))
+            {
+                uint8_t regDomainSelect;
+                if (!strcmp("all", argv[3]))
+                {
+                    regDomainSelect = 0;
+                }
+                else
+                {
+                    regDomainSelect = 1;
+                }
+                APP_RegDomainGet(regDomainSelect);
+            }
         }
     }
 }

@@ -32,7 +32,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include "configuration.h"
-#include "definitions.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -58,35 +57,14 @@ extern "C" {
     This enumeration defines the valid application states.  These states
     determine the behavior of the application at various times.
 */
-    
-typedef enum 
-{
-    OPEN = 0,
-    WPA2,
-    WPAWPA2MIXED,
-    WPA3,
-    WPA2WPA3MIXED,
-    WEP,
-    NONE
-} WIFI_AUTH_MODE;
-
-typedef enum
-{
-    PASSIVE,
-    ACTIVE
-}SCAN_TYPE;
 
 typedef enum
 {
     /* Application's state machine's initial state. */
     APP_STATE_INIT=0,
-    APP_STATE_WDRV_INIT_READY,
-    APP_TCPIP_WAIT_FOR_TCPIP_INIT,
-    APP_TCPIP_ERROR,
-    APP_WIFI_CONFIG,
-    APP_WIFI_CONNECT,
-    APP_WIFI_IDLE,
-    APP_WIFI_ERROR,
+    APP_STATE_SERVICE_TASKS,
+    /* TODO: Define states used by the application state machine. */
+
 } APP_STATES;
 
 
@@ -107,8 +85,9 @@ typedef struct
 {
     /* The application's current state */
     APP_STATES state;
-    DRV_HANDLE wdrvHandle;
-    bool       isConnected;
+
+    /* TODO: Define any additional data used by the application. */
+
 } APP_DATA;
 
 // *****************************************************************************
@@ -190,9 +169,6 @@ void APP_Initialize ( void );
  */
 
 void APP_Tasks( void );
-
-void APP_Scan(uint8_t channel, SCAN_TYPE scanType, uint16_t scanTime);
-void APP_RSSIGet();
 
 
 

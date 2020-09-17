@@ -83,7 +83,7 @@ typedef enum
 
 typedef struct __attribute__((packed, aligned(4)))
 {
-    unsigned char ssid[SSID_LENGTH];
+    char ssid[SSID_LENGTH];
     unsigned char ssidLength;
     unsigned char channel;
     unsigned char authMode;
@@ -97,8 +97,10 @@ typedef struct
     /* The application's current state */
     APP_CONTROL_STATES state;
     WLAN_CONFIG_DATA wlanConfig;
+    char regDomName[6+1];
     bool wlanConfigChanged;
     bool wlanConfigValid;
+    bool regDomChanged;
 } APP_CONTROL_DATA;
 
 extern APP_CONTROL_DATA app_controlData;
