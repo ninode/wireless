@@ -103,8 +103,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/driver/winc/drv/driver/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/drv/driver/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DDD5F57960C297A5FC0CCA71D3158F9F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DDD5F57960C297A5FC0CCA71D3158F9F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5823B667B9ACD2557980EB826C2A4E5E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5823B667B9ACD2557980EB826C2A4E5E</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -364,8 +364,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_winc3400/driver/winc/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FFFFA10876259C85FD5032D6864E1B85</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FFFFA10876259C85FD5032D6864E1B85</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4F38D53E5F023DBC0D405056BC43568F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4F38D53E5F023DBC0D405056BC43568F</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">SOURCE</Type>

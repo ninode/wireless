@@ -127,7 +127,7 @@ extern "C" {
 #define WDRV_WINC_DEVICE_CONF_NTP_SERVER
 #define WDRV_WINC_DEVICE_SOFT_AP_EXT
 #define WDRV_WINC_ENABLE_BLE
-#define WDRV_WINC_DEBUG_LEVEL               WDRV_WINC_DEBUG_TYPE_VERBOSE
+#define WDRV_WINC_DEBUG_LEVEL               WDRV_WINC_DEBUG_TYPE_NONE
 
 /* SPI Driver Instance 0 Configuration Options */
 #define DRV_SPI_INDEX_0                       0

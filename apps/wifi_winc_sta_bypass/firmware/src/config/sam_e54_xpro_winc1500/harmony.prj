@@ -562,8 +562,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e54_xpro_winc1500/driver/winc/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/winc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FFFFA10876259C85FD5032D6864E1B85</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FFFFA10876259C85FD5032D6864E1B85</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4F38D53E5F023DBC0D405056BC43568F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4F38D53E5F023DBC0D405056BC43568F</UserChecksum>
         </File>
         <File dnOrder="62">
           <Type dnOrder="0">SOURCE</Type>
