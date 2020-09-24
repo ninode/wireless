@@ -796,8 +796,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/net_pres/pres/</LogicalPath>
           <PhysicalPath dnOrder="4">/net_pres/pres/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FE680FAA0E849D0FC1AFDB1F542CC1EB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FE680FAA0E849D0FC1AFDB1F542CC1EB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">98FBCDAE8D08055A4805E0C0DB104767</GeneratedChecksum>
+          <UserChecksum dnOrder="6">98FBCDAE8D08055A4805E0C0DB104767</UserChecksum>
         </File>
         <File dnOrder="88">
           <Type dnOrder="0">SOURCE</Type>
@@ -913,8 +913,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4375381C88E24A1BB6FC1D9C4B0484FC</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4375381C88E24A1BB6FC1D9C4B0484FC</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7658200EC62B62DD764369793344C802</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7658200EC62B62DD764369793344C802</UserChecksum>
         </File>
         <File dnOrder="101">
           <Type dnOrder="0">SOURCE</Type>
@@ -1282,8 +1282,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/system/wifi/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/wifi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4FCC06ECB9060C33B752A462AB7A3275</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4FCC06ECB9060C33B752A462AB7A3275</UserChecksum>
+          <GeneratedChecksum dnOrder="5">21DDFE37F8864A99FDFC5098586D324E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">21DDFE37F8864A99FDFC5098586D324E</UserChecksum>
         </File>
         <File dnOrder="142">
           <Type dnOrder="0">SOURCE</Type>
@@ -1291,8 +1291,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/system/wifiprov/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/wifiprov/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B33975CC64B8660835DEEF2024E8D1DB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B33975CC64B8660835DEEF2024E8D1DB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">3E78F936D92F6A7774FA46FA2FCB356E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">3E78F936D92F6A7774FA46FA2FCB356E</UserChecksum>
         </File>
         <File dnOrder="143">
           <Type dnOrder="0">SOURCE</Type>
@@ -1318,8 +1318,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">CD58DD717743C9C2CE0FD812D1EC6FC1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">CD58DD717743C9C2CE0FD812D1EC6FC1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0CBBEFB9397919B8EBE6A820E0B5C66D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0CBBEFB9397919B8EBE6A820E0B5C66D</UserChecksum>
         </File>
         <File dnOrder="146">
           <Type dnOrder="0">SOURCE</Type>
@@ -1489,8 +1489,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/driver/wifi/pic32mzw1/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/wifi/pic32mzw1/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">55B9CB13B24B7740B2BB02D7E5B195BA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">55B9CB13B24B7740B2BB02D7E5B195BA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">58B32EF41D099AC29A89CF3BC3173647</GeneratedChecksum>
+          <UserChecksum dnOrder="6">58B32EF41D099AC29A89CF3BC3173647</UserChecksum>
         </File>
         <File dnOrder="165">
           <Type dnOrder="0">SOURCE</Type>
@@ -2479,8 +2479,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">661123494BAD18CA79933E346D350245</GeneratedChecksum>
-          <UserChecksum dnOrder="6">661123494BAD18CA79933E346D350245</UserChecksum>
+          <GeneratedChecksum dnOrder="5">979C273F56471AC2AD44819FFD76AD77</GeneratedChecksum>
+          <UserChecksum dnOrder="6">979C273F56471AC2AD44819FFD76AD77</UserChecksum>
         </File>
         <File dnOrder="275">
           <Type dnOrder="0">HEADER</Type>
@@ -4747,8 +4747,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D2DF651CE5BC08FF1D865B8FC8A56BED</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D2DF651CE5BC08FF1D865B8FC8A56BED</UserChecksum>
+          <GeneratedChecksum dnOrder="5">34C817709D3F54FE0AD5A90F33B4CB7C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">34C817709D3F54FE0AD5A90F33B4CB7C</UserChecksum>
         </File>
         <File dnOrder="527">
           <Type dnOrder="0">IMPORTANT</Type>
@@ -4784,7 +4784,7 @@
         <Setting append="true" category="C32" delimiter=";" dnOrder="8" key="preprocessor-macros" security="NON_SECURE" value="WOLFSSL_IGNORE_FILE_WARN"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="9" key="extra-include-directories-for-assembler" security="NON_SECURE" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mz_w1_curiosity_freertos;"/>
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="10" key="extra-include-directories-for-preprocessor" security="NON_SECURE" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mz_w1_curiosity_freertos;"/>
-        <Setting category="C32-LD" dnOrder="11" key="heap-size" security="NON_SECURE" value="150000"/>
+        <Setting category="C32-LD" dnOrder="11" key="heap-size" security="NON_SECURE" value="160000"/>
         <Setting category="C32-LD" dnOrder="12" key="no-device-startup-code" security="NON_SECURE" value="true"/>
         <Setting append="true" category="C32-LD" delimiter=";=" dnOrder="13" key="preprocessor-macros" security="NON_SECURE" value=""/>
         <Setting append="true" category="C32CPP" delimiter=";" dnOrder="14" key="extra-include-directories" security="NON_SECURE" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;"/>
@@ -4794,7 +4794,7 @@
     </Manifest>
     <Settings dnOrder="5">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.7.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-W_DFP\1.3.176\atdf\PIC32MZ1025W104132.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-W_DFP\1.3.177\atdf\PIC32MZ1025W104132.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

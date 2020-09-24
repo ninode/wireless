@@ -4,7 +4,7 @@
 
 
 project: wifi_easy_config
-creation_date: 2020-09-16T18:09:46.781+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-09-22T14:46:18.105+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: IDE            # [IDE|Standalone|Headless]
 mplabx_version: v5.35        # if MPLAB X plugin only
@@ -12,13 +12,13 @@ plugin_version: v3.6.0        # if MPLAB X plugin only
 compiler: XC32 (2.30)
 
 modules:
-    - {name: "core", version: "v4.0.0"}
-    - {name: "csp", version: "v4.0.0"}
-    - {name: "dev_packs", version: "v4.0.0"}
+    - {name: "core", version: "unknown"}
+    - {name: "csp", version: "unknown"}
+    - {name: "dev_packs", version: "unknown"}
     - {name: "mhc", version: "v3.5.1"}
     - {name: "wireless", version: "unknown"}
     - {name: "wolfssl", version: "v4.5.0"}
-    - {name: "net", version: "v4.0.0"}
-    - {name: "bsp", version: "v4.0.0"}
-    - {name: "crypto", version: "v4.0.0"}
+    - {name: "net", version: "v4.0.1"}
+    - {name: "bsp", version: "unknown"}
+    - {name: "crypto", version: "unknown"}
 

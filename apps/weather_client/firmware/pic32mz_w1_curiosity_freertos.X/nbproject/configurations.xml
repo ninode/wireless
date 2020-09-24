@@ -481,7 +481,7 @@
                 <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/tcpip_commands.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/ipv4.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/tcpip_heap_alloc.c</itemPath>
-                <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/tcpip_heap_internal.c</itemPath>
+                <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/tcpip_heap_external.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/dhcp.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/dns.c</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity_freertos/library/tcpip/src/hash_fnv.c</itemPath>

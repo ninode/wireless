@@ -1,6 +1,6 @@
 /* callbacks.h
  *
- * Copyright (C) 2006-2020 wolfSSL Inc.
+ * Copyright (C) 2006-2019 wolfSSL Inc.
  *
  * This file is part of wolfSSL.
  *
@@ -31,7 +31,7 @@
 #endif
 
 
-enum { /* CALLBACK CONSTANTS */
+enum { /* CALLBACK CONTSTANTS */
     MAX_PACKETNAME_SZ     =  24,
     MAX_CIPHERNAME_SZ     =  24,
     MAX_TIMEOUT_NAME_SZ   =  24,
@@ -53,21 +53,19 @@ typedef struct handShakeInfo_st {
 
 
 #if defined(HAVE_SYS_TIME_H) && !defined(NO_TIMEVAL)
-    typedef struct timeval WOLFSSL_TIMEVAL;
+    typedef struct timeval Timeval;
 #else /* HAVE_SYS_TIME_H */
-    /* Define the timeval explicitly. */
+    /* Define the Timeval explicitly. */
     typedef struct {
         long tv_sec;  /* Seconds. */
         long tv_usec; /* Microseconds. */
-    } WOLFSSL_TIMEVAL;
+    } Timeval;
 #endif /* HAVE_SYS_TIME_H */
-#if !defined(NO_OLD_TIMEVAL_NAME)
-    #define Timeval WOLFSSL_TIMEVAL
-#endif
+
 
 typedef struct packetInfo_st {
     char           packetName[MAX_PACKETNAME_SZ + 1]; /* SSL packet name */
-    WOLFSSL_TIMEVAL timestamp;                       /* when it occurred    */
+    Timeval        timestamp;                       /* when it occurred    */
     unsigned char  value[MAX_VALUE_SZ];             /* if fits, it's here */
     unsigned char* bufferValue;                     /* otherwise here (non 0) */
     int            valueSz;                         /* sz of value or buffer */
@@ -79,7 +77,7 @@ typedef struct timeoutInfo_st {
     int        flags;                              /* for future use */
     int        numberPackets;                      /* actual # of packets */
     PacketInfo packets[MAX_PACKETS_HANDSHAKE];     /* list of all packets  */
-    WOLFSSL_TIMEVAL timeoutValue;                  /* timer that caused it */
+    Timeval    timeoutValue;                       /* timer that caused it */
 } TimeoutInfo;
 
 

@@ -1228,8 +1228,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/system/wifi/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/wifi/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">641CDC8059A2926053414AF1061F1017</GeneratedChecksum>
-          <UserChecksum dnOrder="6">641CDC8059A2926053414AF1061F1017</UserChecksum>
+          <GeneratedChecksum dnOrder="5">BC19939B5FA2ACDA98BBFBCBD3F9F0D3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BC19939B5FA2ACDA98BBFBCBD3F9F0D3</UserChecksum>
         </File>
         <File dnOrder="136">
           <Type dnOrder="0">SOURCE</Type>
@@ -1237,8 +1237,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/system/wifiprov/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/wifiprov/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B33975CC64B8660835DEEF2024E8D1DB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B33975CC64B8660835DEEF2024E8D1DB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">3E78F936D92F6A7774FA46FA2FCB356E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">3E78F936D92F6A7774FA46FA2FCB356E</UserChecksum>
         </File>
         <File dnOrder="137">
           <Type dnOrder="0">SOURCE</Type>
@@ -1408,8 +1408,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/driver/wifi/pic32mzw1/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/wifi/pic32mzw1/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">55B9CB13B24B7740B2BB02D7E5B195BA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">55B9CB13B24B7740B2BB02D7E5B195BA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">58B32EF41D099AC29A89CF3BC3173647</GeneratedChecksum>
+          <UserChecksum dnOrder="6">58B32EF41D099AC29A89CF3BC3173647</UserChecksum>
         </File>
         <File dnOrder="156">
           <Type dnOrder="0">SOURCE</Type>
@@ -4459,8 +4459,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D2DF651CE5BC08FF1D865B8FC8A56BED</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D2DF651CE5BC08FF1D865B8FC8A56BED</UserChecksum>
+          <GeneratedChecksum dnOrder="5">34C817709D3F54FE0AD5A90F33B4CB7C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">34C817709D3F54FE0AD5A90F33B4CB7C</UserChecksum>
         </File>
         <File dnOrder="495">
           <Type dnOrder="0">IMPORTANT</Type>
@@ -4503,11 +4503,11 @@
     </Manifest>
     <Settings dnOrder="5">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.7.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-W_DFP\1.3.176\atdf\PIC32MZ1025W104132.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-W_DFP\1.3.177\atdf\PIC32MZ1025W104132.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;crypto;cryptoauthlib;csp;net;net;usb;wireless;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;cryptoauthlib;csp;net;usb;wireless;"/>
     </Settings>
   </Configurator>
 </Configuration>

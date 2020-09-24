@@ -85,7 +85,7 @@ extern "C" {
 #define SYS_NET_INDEX0_RECONNECT       			1
 #define SYS_NET_INDEX0_ENABLE_TLS        		0
 #define SYS_NET_INDEX0_IPPROT       			SYS_NET_IP_PROT_UDP
-#define SYS_NET_INDEX0_HOST_NAME        		"192.168.43.199"
+#define SYS_NET_INDEX0_HOST_NAME        		"192.168.43.192"
 
 
 
@@ -436,7 +436,7 @@ extern "C" {
 #define NO_DEV_RANDOM
 #define HAVE_HASHDRBG
 #define WC_NO_HARDEN
-#define SINGLE_THREADED
+#define FREERTOS
 #define NO_ERROR_STRINGS
 #define NO_WOLFSSL_MEMORY
 

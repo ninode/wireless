@@ -873,7 +873,7 @@ void WDRV_PIC32MZW_Tasks(SYS_MODULE_OBJ object)
             DRV_PIC32MZW_MEM_ALLOC_HDR *pAllocHdr;
             int numDiscard;
 
-            OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvEventSemaphore, 1);
+            OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvEventSemaphore, OSAL_WAIT_FOREVER);
 
             if (OSAL_RESULT_TRUE == OSAL_SEM_Pend(&pic32mzwCtrlDescriptor.drvAccessSemaphore, 0))
             {

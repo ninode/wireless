@@ -4,7 +4,7 @@
 
 
 project: udp_client
-creation_date: 2020-09-14T19:03:46.045+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-09-23T15:26:58.990+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 7
 mhc_mode: IDE            # [IDE|Standalone|Headless]
 mplabx_version: v5.35        # if MPLAB X plugin only
@@ -12,9 +12,9 @@ plugin_version: v3.6.0        # if MPLAB X plugin only
 compiler: XC32 (2.40)
 
 modules:
-    - {name: "csp", version: "v4.0.0"}
-    - {name: "core", version: "v4.0.0"}
-    - {name: "dev_packs", version: "v4.0.0"}
+    - {name: "csp", version: "unknown"}
+    - {name: "core", version: "unknown"}
+    - {name: "dev_packs", version: "unknown"}
     - {name: "mhc", version: "v3.5.1"}
     - {name: "wireless", version: "unknown"}
     - {name: "wolfssl", version: "v4.5.0"}

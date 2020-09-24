@@ -962,36 +962,16 @@
                 <Dynamic dnOrder="0" id="FreeRTOS" value="200000000"/>
               </Values>
             </Integer>
-            <File dnOrder="1" id="FREERTOS_HEAP_1_C">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <File dnOrder="2" id="FREERTOS_HEAP_3_C">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </File>
-            <Combo dnOrder="3" id="FREERTOS_MEMORY_MANAGEMENT_CHOICE">
+            <Combo dnOrder="1" id="FREERTOS_MEMORY_MANAGEMENT_CHOICE">
               <Values dnOrder="0">
-                <User dnOrder="0" value="Heap_3"/>
+                <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="Heap_3"/>
+                <User dnOrder="1" value="Heap_3"/>
               </Values>
             </Combo>
-            <Integer dnOrder="4" id="FREERTOS_PERIPHERAL_CLOCK_HZ">
+            <Integer dnOrder="2" id="FREERTOS_PERIPHERAL_CLOCK_HZ">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="FreeRTOS" value="100000000"/>
               </Values>
-            </Integer>
-            <Integer dnOrder="5" id="FREERTOS_TOTAL_HEAP_SIZE">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">false</Value>
-                </Boolean>
-              </Attributes>
             </Integer>
           </Symbols>
         </UniqueComponent>
@@ -1399,66 +1379,24 @@
                 <Dynamic dnOrder="0" id="lib_wolfcrypt" value="false"/>
               </Values>
             </Boolean>
-            <Boolean dnOrder="2" id="wolfcrypt_aes_hw">
+            <Boolean dnOrder="2" id="wolfcrypt_hkdf">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="visible">
                   <Value dnOrder="0">true</Value>
                 </Boolean>
               </Attributes>
             </Boolean>
-            <Boolean dnOrder="3" id="wolfcrypt_hkdf">
+            <Boolean dnOrder="3" id="wolfcrypt_hmac">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="visible">
                   <Value dnOrder="0">true</Value>
                 </Boolean>
               </Attributes>
             </Boolean>
-            <Boolean dnOrder="4" id="wolfcrypt_hmac">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Boolean>
-            <Boolean dnOrder="5" id="wolfcrypt_hw">
+            <Boolean dnOrder="4" id="wolfcrypt_hw">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="true"/>
               </Values>
-            </Boolean>
-            <Boolean dnOrder="6" id="wolfcrypt_md5_hw">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Boolean>
-            <Boolean dnOrder="7" id="wolfcrypt_sha1_hw">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Boolean>
-            <Boolean dnOrder="8" id="wolfcrypt_sha224">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Boolean>
-            <Boolean dnOrder="9" id="wolfcrypt_sha264_hw">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Boolean>
-            <Boolean dnOrder="10" id="wolfcrypt_tdes_hw">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
             </Boolean>
           </Symbols>
         </UniqueComponent>
@@ -1782,30 +1720,11 @@
                 <UniqueComponent dnOrder="2" id="tcpipIcmp">
                   <Symbols dnOrder="0">
                     <Boolean dnOrder="0" id="TCPIP_ICMP_CLIENT_USER_NOTIFICATION">
-                      <Attributes dnOrder="0">
-                        <Boolean dnOrder="0" id="visible">
-                          <Value dnOrder="0">true</Value>
-                        </Boolean>
-                      </Attributes>
-                      <Values dnOrder="1">
+                      <Values dnOrder="0">
                         <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="true"/>
                       </Values>
                     </Boolean>
-                    <Integer dnOrder="1" id="TCPIP_ICMP_ECHO_REQUEST_TIMEOUT">
-                      <Attributes dnOrder="0">
-                        <Boolean dnOrder="0" id="visible">
-                          <Value dnOrder="0">true</Value>
-                        </Boolean>
-                      </Attributes>
-                    </Integer>
-                    <Integer dnOrder="2" id="TCPIP_ICMP_TASK_TICK_RATE">
-                      <Attributes dnOrder="0">
-                        <Boolean dnOrder="0" id="visible">
-                          <Value dnOrder="0">true</Value>
-                        </Boolean>
-                      </Attributes>
-                    </Integer>
-                    <Boolean dnOrder="3" id="TCPIP_STACK_USE_ICMP_CLIENT">
+                    <Boolean dnOrder="1" id="TCPIP_STACK_USE_ICMP_CLIENT">
                       <Values dnOrder="0">
                         <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="true"/>
                       </Values>
@@ -1920,32 +1839,49 @@
                 <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="calloc"/>
               </Values>
             </String>
-            <Integer dnOrder="1" id="TCPIP_STACK_DRAM_SIZE">
-              <Values dnOrder="0">
+            <Integer dnOrder="1" id="TCPIP_STACK_DRAM_RUN_LIMIT">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Integer>
+            <Integer dnOrder="2" id="TCPIP_STACK_DRAM_SIZE">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+              <Values dnOrder="1">
                 <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="65000"/>
                 <User dnOrder="1" value="55000"/>
               </Values>
             </Integer>
-            <String dnOrder="2" id="TCPIP_STACK_FREE_FUNC">
+            <String dnOrder="3" id="TCPIP_STACK_FREE_FUNC">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="free"/>
               </Values>
             </String>
-            <Integer dnOrder="3" id="TCPIP_STACK_HEAP_SIZE_RECOMMEND">
+            <Integer dnOrder="4" id="TCPIP_STACK_HEAP_SIZE_RECOMMEND">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="tcpipStack" value="28"/>
               </Values>
             </Integer>
-            <String dnOrder="4" id="TCPIP_STACK_MALLOC_FUNC">
+            <String dnOrder="5" id="TCPIP_STACK_MALLOC_FUNC">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="malloc"/>
               </Values>
             </String>
-            <Boolean dnOrder="5" id="TCPIP_STACK_USER_NOTIFICATION">
+            <Boolean dnOrder="6" id="TCPIP_STACK_USER_NOTIFICATION">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="true"/>
               </Values>
             </Boolean>
+            <Combo dnOrder="7" id="TCPIP_STACK_USE_HEAP_CONFIG">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="sysWifiPic32mzw1" value="TCPIP_STACK_HEAP_TYPE_EXTERNAL_HEAP"/>
+              </Values>
+            </Combo>
           </Symbols>
           <Attachments dnOrder="1">
             <DirectDependency dnOrder="0" id="Core_SysConsole_Dependency">
@@ -2109,7 +2045,28 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="System Component">
+    <ComponentGraph dnOrder="0" id="NETWORK LAYER">
+      <ElementPositions dnOrder="0">
+        <ElementPosition dnOrder="0" id="tcpipArp" x="440" y="20"/>
+        <ElementPosition dnOrder="1" id="tcpipIPv4" x="300" y="20"/>
+        <ElementPosition dnOrder="2" id="tcpipIcmp" x="30" y="60"/>
+        <ElementPosition dnOrder="3" id="tcpip_network_config" x="20" y="20"/>
+      </ElementPositions>
+    </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
+    <ComponentGraph dnOrder="2" id="APPLICATION LAYER">
+      <ElementPositions dnOrder="0">
+        <ElementPosition dnOrder="0" id="tcpipDhcp" x="320" y="20"/>
+        <ElementPosition dnOrder="1" id="tcpipDns" x="30" y="60"/>
+        <ElementPosition dnOrder="2" id="tcpip_apps_config" x="20" y="20"/>
+      </ElementPositions>
+    </ComponentGraph>
+    <ComponentGraph dnOrder="3" id="DRIVER LAYER">
+      <ElementPositions dnOrder="0">
+        <ElementPosition dnOrder="0" id="tcpip_driver_config" x="20" y="20"/>
+      </ElementPositions>
+    </ComponentGraph>
+    <ComponentGraph dnOrder="4" id="System Component">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="FreeRTOS" x="30" y="580"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="30" y="480"/>
@@ -2130,25 +2087,7 @@
         <ElementPosition dnOrder="16" id="uart1" x="340" y="20"/>
       </ElementPositions>
     </ComponentGraph>
-    <ComponentGraph dnOrder="1" id="DRIVER LAYER">
-      <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="tcpip_driver_config" x="20" y="20"/>
-      </ElementPositions>
-    </ComponentGraph>
-    <ComponentGraph dnOrder="2" id="BASIC CONFIGURATION">
-      <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="tcpipCmd" x="240" y="20"/>
-        <ElementPosition dnOrder="1" id="tcpip_basic_config" x="20" y="20"/>
-      </ElementPositions>
-    </ComponentGraph>
-    <ComponentGraph dnOrder="3" id="TRANSPORT LAYER">
-      <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="tcpipTcp" x="440" y="20"/>
-        <ElementPosition dnOrder="1" id="tcpipUdp" x="300" y="20"/>
-        <ElementPosition dnOrder="2" id="tcpip_transport_config" x="20" y="20"/>
-      </ElementPositions>
-    </ComponentGraph>
-    <ComponentGraph dnOrder="4" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="5" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="System Component" x="265" y="142"/>
         <ElementPosition dnOrder="1" id="core" x="436" y="22"/>
@@ -2156,20 +2095,17 @@
         <ElementPosition dnOrder="3" id="sysWifiProvPic32mzw1" x="20" y="20"/>
       </ElementPositions>
     </ComponentGraph>
-    <ComponentGraph dnOrder="5" id="NETWORK LAYER">
+    <ComponentGraph dnOrder="6" id="BASIC CONFIGURATION">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="tcpipArp" x="440" y="20"/>
-        <ElementPosition dnOrder="1" id="tcpipIPv4" x="300" y="20"/>
-        <ElementPosition dnOrder="2" id="tcpipIcmp" x="30" y="60"/>
-        <ElementPosition dnOrder="3" id="tcpip_network_config" x="20" y="20"/>
+        <ElementPosition dnOrder="0" id="tcpipCmd" x="240" y="20"/>
+        <ElementPosition dnOrder="1" id="tcpip_basic_config" x="20" y="20"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="6"/>
-    <ComponentGraph dnOrder="7" id="APPLICATION LAYER">
+    <ComponentGraph dnOrder="7" id="TRANSPORT LAYER">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="tcpipDhcp" x="320" y="20"/>
-        <ElementPosition dnOrder="1" id="tcpipDns" x="30" y="60"/>
-        <ElementPosition dnOrder="2" id="tcpip_apps_config" x="20" y="20"/>
+        <ElementPosition dnOrder="0" id="tcpipTcp" x="440" y="20"/>
+        <ElementPosition dnOrder="1" id="tcpipUdp" x="300" y="20"/>
+        <ElementPosition dnOrder="2" id="tcpip_transport_config" x="20" y="20"/>
       </ElementPositions>
     </ComponentGraph>
     <ComponentGraph dnOrder="8" id="TCP/IP STACK">
