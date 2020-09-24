@@ -72,7 +72,7 @@ void _DRV_BA414E_Tasks(  void *pvParameters  )
 TaskHandle_t xAPP_Tasks;
 
 void _APP_Tasks(  void *pvParameters  )
-{
+{   
     while(1)
     {
         APP_Tasks();
@@ -115,7 +115,6 @@ static void _WDRV_PIC32MZW1_Tasks(  void *pvParameters  )
     while(1)
     {
         WDRV_PIC32MZW_Tasks(sysObj.drvWifiPIC32MZW1);
-        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
 
@@ -170,7 +169,7 @@ void SYS_Tasks ( void )
     );
 
 
-        xTaskCreate( _WDRV_PIC32MZW1_Tasks,
+    xTaskCreate( _WDRV_PIC32MZW1_Tasks,
         "WDRV_PIC32MZW1_Tasks",
         1024,
         (void*)NULL,
