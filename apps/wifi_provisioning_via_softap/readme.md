@@ -1,6 +1,6 @@
 ---
 parent: Example Applications
-title: Serial Bridge
+title: Wifi Provisioning via SoftAP
 has_toc: true
 has_children: false
 has_toc: false
@@ -8,32 +8,31 @@ nav_order: 1
 
 family: SAMD21
 family: SAME54
-function: Serial Bridge
+function: Wifi Provisioning via SoftAP
 ---
 
-# Serial Bridge
+# Wifi Provisioning via SoftAP
 
-This example compiles the serial bridge application which is used to communicate to WINC devices from PC.
+This example compiles the Wifi Provisioning via SoftAP application which is used to provision a WiFi connection.
 
 ## Description
 
-Serial bridge application acts as a bridge between PC and WINC devices. For example firmware update project use serial bridge application to load the firmware to WINC device via serial bridge application located in host MCU.
+In this demonstration, the WINC Driver will advertise a SoftAP. The SoftAP connection is leveraged to provision a WiFi connection.
 
 ## Downloading and building the application
 
 To download or clone this application from Github, go to the [top level of the repository](https://github.com/Microchip-MPLAB-Harmony/wireless)
 
 
-Path of the application within the repository is **apps/serial_bridge/firmware** .
+Path of the application within the repository is **apps/wifi_provisioning_via_softap/firmware** .
 
 To build the application, refer to the following table and open the project using its IDE.
 
 | Project Name      | Description                                    |
 | ----------------- | ---------------------------------------------- |
-| sam_d21_xpro_winc1500.X | MPLABX project for SAMD21 and WINC3400 Xplained pro |
+| sam_d21_xpro_winc1500.X | MPLABX project for SAMD21 and WINC1500 Xplained pro |
 | sam_d21_xpro_winc3400.X | MPLABX project for SAMD21 and WINC3400 Xplained pro |
-| sam_e54_xpro_winc1500.X | MPLABX project for SAME54 and WINC3400 Xplained pro |
-| sam_e54_xpro_winc3400.X | MPLABX project for SAME54 and WINC3400 Xplained pro |
+| sam_e54_xpro_winc1500.X | MPLABX project for SAME54 and WINC1500 Xplained pro |
 |||
 
 ## Setting up SAMEXXX Xplained Pro board
@@ -44,5 +43,4 @@ To build the application, refer to the following table and open the project usin
 
 1. Open the project.
 2. Build and program the generated code into the hardware using its IDE.
-3. Please refer to "WINC Firmware Update Guide" for more information.
-4. Please note this example will not output any console messages.
+3. Please refer "firmware update guide" and "WINC Driver Demonstrations" for more information.

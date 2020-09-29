@@ -55,19 +55,19 @@ To build the application, refer to the following table and open the project usin
 
 4. Download the Microchip Bluetooth Data application from App Store and open it.
 
-5. The WINC3400 device will scan the APs and ready to get paired with Mobile applicaiton.
+5. The WINC3400 device will scan the APs and ready to get paired with Mobile application.
 
 ![ble_scan](images/ble_scan.png)
 
-6. In the Mobile Applicaiton, Open the "Ble provisioner" widget.
+6. In the Mobile Application, Open the "Ble provisioner" widget.
 
 ![ble_scan](images/wifi_prov_widget.jpg)
 
-7. In the "Ble provisioner" widget, press the "scan" button. It will list the sorrounding BLE devices. 
+7. In the "Ble provisioner" widget, press the "scan" button. It will list the surrounding BLE devices. 
 
 ![scan](images/scan.jpg)
 
-7. The default name given for WINC3400 in the "Wi-Fi provisioning using BLE" applicaiton is "Wifi Prov". Click on "Wifi Prov" device.
+7. The default name given for WINC3400 in the "Wi-Fi provisioning using BLE" application is "Wifi Prov". Click on "Wifi Prov" device.
 
 ![select_device](images/select_device.jpg)
 
@@ -91,13 +91,3 @@ To build the application, refer to the following table and open the project usin
 11. The device will connect to the AP and print the IP address obtained.
 
 ![ble_scan](images/ble_provisoing_full_log.png)
-
-
-
-
-
-
-
-
-
-
