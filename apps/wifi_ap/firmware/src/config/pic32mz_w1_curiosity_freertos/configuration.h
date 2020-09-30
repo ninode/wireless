@@ -348,7 +348,7 @@ extern "C" {
 #define NO_WRITEV
 #define NO_FILESYSTEM
 #define USE_FAST_MATH
-#define NO_PWDBASED
+#define NO_BIG_INT
 #define HAVE_MCAPI
 #define WOLF_CRYPTO_CB  // provide call-back support
 #define WOLFCRYPT_ONLY
@@ -375,7 +375,7 @@ extern "C" {
 #define NO_DH
 #define NO_DSA
 #define FP_MAX_BITS 4096
-#define USE_CERT_BUFFERS_2048
+#define USE_CERT_BUFFERS_1024
 #define NO_DEV_RANDOM
 #define HAVE_HASHDRBG
 #define WC_NO_HARDEN

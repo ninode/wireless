@@ -342,7 +342,7 @@
     #define BENCH_EMBEDDED
 #endif
 
-#ifdef MICROCHIP_PIC32
+#if defined(MICROCHIP_PIC32) && !defined(MICROCHIP_MPLAB_HARMONY_3)
     /* #define WOLFSSL_MICROCHIP_PIC32MZ */
     #define SIZEOF_LONG_LONG 8
     #define SINGLE_THREADED
@@ -380,7 +380,7 @@
 #ifdef MICROCHIP_TCPIP
     /* include timer, NTP functions */
     #ifdef MICROCHIP_MPLAB_HARMONY
-        #include "tcpip/tcpip.h"
+        #include "definitions.h"
     #else
         #include "system/system_services.h"
         #include "tcpip/sntp.h"
