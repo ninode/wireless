@@ -4,7 +4,7 @@
 
 
 project: wifi_winc_sta_bypass
-creation_date: 2020-09-23T11:51:29.683+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-09-30T17:24:12.206+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 7
 mhc_mode: Headless            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
@@ -17,6 +17,6 @@ modules:
     - {name: "dev_packs", version: "v3.8.0"}
     - {name: "mhc", version: "v3.5.1"}
     - {name: "wireless", version: "unknown"}
-    - {name: "net", version: "unknown"}
+    - {name: "net", version: "v3.6.2"}
     - {name: "bsp", version: "v3.8.0"}
 
