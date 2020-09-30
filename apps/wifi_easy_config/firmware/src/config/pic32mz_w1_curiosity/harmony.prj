@@ -4479,7 +4479,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;cryptoauthlib;csp;net;usb;wireless;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="audio;aws_cloud;bootloader;bsp;core;core_apps_pic32mz_w1;crypto;cryptoauthlib;cryptoauthlib_apps;csp;csp_apps_pic32mz_w1;gfx;net;quick_docs;reference_apps;touch;usb;wireless;"/>
     </Settings>
   </Configurator>
 </Configuration>

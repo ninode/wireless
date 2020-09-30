@@ -78,16 +78,6 @@ void _NET_PRES_Tasks(  void *pvParameters  )
     }
 }
 
-
-void _TCPIP_STACK_Task(  void *pvParameters  )
-{
-    while(1)
-    {
-        TCPIP_STACK_Task(sysObj.tcpip);
-        vTaskDelay(1 / portTICK_PERIOD_MS);
-    }
-}
-
 /* Handle for the APP_PIC32MZW1_Tasks. */
 TaskHandle_t xAPP_PIC32MZW1_Tasks;
 
@@ -96,6 +86,16 @@ void _APP_PIC32MZW1_Tasks(  void *pvParameters  )
     while(1)
     {
         APP_PIC32MZW1_Tasks();
+    }
+}
+
+
+void _TCPIP_STACK_Task(  void *pvParameters  )
+{
+    while(1)
+    {
+        TCPIP_STACK_Task(sysObj.tcpip);
+        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
 

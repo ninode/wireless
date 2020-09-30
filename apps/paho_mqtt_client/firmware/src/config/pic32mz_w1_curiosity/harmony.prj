@@ -1183,8 +1183,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/system/mqtt/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/mqtt/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DE6F6A50486A86A15E0C57E74168B984</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DE6F6A50486A86A15E0C57E74168B984</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F0DE014E37B64625438C94D1894EE322</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F0DE014E37B64625438C94D1894EE322</UserChecksum>
         </File>
         <File dnOrder="131">
           <Type dnOrder="0">SOURCE</Type>
@@ -1192,8 +1192,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/system/mqtt/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/mqtt/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">48EE5EA1C67EF6AC8EE5616E7D4C0713</GeneratedChecksum>
-          <UserChecksum dnOrder="6">48EE5EA1C67EF6AC8EE5616E7D4C0713</UserChecksum>
+          <GeneratedChecksum dnOrder="5">36FCCFD706B41D5E650C53C649DDF34D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">36FCCFD706B41D5E650C53C649DDF34D</UserChecksum>
         </File>
         <File dnOrder="132">
           <Type dnOrder="0">SOURCE</Type>
@@ -1201,8 +1201,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/system/net/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/net/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A37208742673ABBB5973D1531616E48B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A37208742673ABBB5973D1531616E48B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E86FFE1F363175154D4889E35E90B10B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E86FFE1F363175154D4889E35E90B10B</UserChecksum>
         </File>
         <File dnOrder="133">
           <Type dnOrder="0">SOURCE</Type>
@@ -4216,8 +4216,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5"/>
-          <UserChecksum dnOrder="6"/>
+          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
         </File>
         <File dnOrder="468">
           <Type dnOrder="0">HEADER</Type>
@@ -4507,7 +4507,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;cryptoauthlib;csp;net;usb;wireless;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="audio;aws_cloud;bootloader;bsp;core;core_apps_pic32mz_w1;crypto;cryptoauthlib;cryptoauthlib_apps;csp;csp_apps_pic32mz_w1;gfx;net;quick_docs;reference_apps;touch;usb;wireless;"/>
     </Settings>
   </Configurator>
 </Configuration>
