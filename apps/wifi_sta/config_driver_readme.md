@@ -9,7 +9,7 @@ nav_order: 3
 
 # WLAN STA
 
-This example application shows how to use the PIC32MZW1 WLAN APIs to configure the device in STA mode.
+This example application shows how to use the PIC32MZW1 WLAN APIs to configure the device in STA mode directly using the WLAN driver APIs.
 
 ## Description
 
@@ -19,7 +19,7 @@ In this application, an analog input is converted by a hardware trigger generate
 
 To download or clone this application from Github, go to the [top level of the repository](https://github.com/Microchip-MPLAB-Harmony/wireless) and click
 
-![clone](../..//docs/images/clone.png)
+![clone](images/clone.png)
 
 Path of the application within the repository is **apps/wifi_sta/firmware** .
 
@@ -27,8 +27,8 @@ To build the application, refer to the following table and open the project usin
 
 | Project Name      | Description                                    |
 | ----------------- | ---------------------------------------------- |
-| pic32mz_w1_curiosity.X | MPLABX project for PIC32MZ W1 Curiosity Board |
-|||
+| pic32mz_w1_curiosity_driver.X | MPLABX project for PIC32MZ W1 Curiosity Board |
+|
 
 ## Configuring the Application
 
@@ -37,13 +37,15 @@ To build the application, refer to the following table and open the project usin
 The available regulatory domains are  - GEN, USA, EMEA, CUST1 and CUST2. One of these regulatory domains must be selected as an active domain. This selection can be done in two ways.
 
 #### Using MHC
+
  Figure below shows how to set the regulatory domain in MHC and the path is: TCPIP & SYS_CONSOLE -> TCP/IP STACK -> BASIC CONFIGURATION -> PIC32MZW1
 
 ![](images/mhc_regulatory.png)
 
 
 #### Using command
-**wlan set regdomain <reg_domain_name>** is the command used to set the regulatory domain. (wlan set regdomain USA – sets the regulatory domain to USA).
+
+**wlan set regdomain \<reg_domain_name>** is the command used to set the regulatory domain. (wlan set regdomain USA – sets the regulatory domain to USA).
 
 
 ## Setting up the hardware
@@ -52,8 +54,8 @@ The following table shows the target hardware for the application projects.
 
 | Project Name| Board|
 |:---------|:---------:|
-| pic32mz_w1_curiosity.X | PIC32MZ W1 Curiosity Board |
-|||
+| pic32mz_w1_curiosity_driver.X | PIC32MZ W1 Curiosity Board |
+|
 
 ### Setting up PIC32MZ W1 Curiosity Board
 
@@ -64,7 +66,7 @@ The following table shows the target hardware for the application projects.
 
 1. Open the Terminal application (Ex.:Tera term) on the computer
 2. Connect to the "USB to UART" COM port and configure the serial settings as follows:
-    - Baud : 230400 (TODO: change to 115200 ?)
+    - Baud : 230400
     - Data : 8 Bits
     - Parity : None
     - Stop : 1 Bit
@@ -75,11 +77,14 @@ The following table shows the target hardware for the application projects.
 ![output](images/output.png)
 
 ## Supported Commands
+
 | Command      | Description |
 | -------------| ------------|
-| wlan set - <ssid> <ssid_length> <channel> <open/wpa2/wpam/wpa3/wep> <password> | Configures the SSID, SSID length, channel number and the security of the AP that DUT wants to connect. NOTE: Valid channel numbers are in range 1-13 or 0 to scan all channels wlan connect	Connects the device to the AP that is configured in the command “wlan set” | 
+| wlan set config \<ssid> \<ssid_length> \<channel> \<open/wpa2/wpam/wpa3/wep> \<password> | Configures the SSID, SSID length, channel number and the security of the AP that DUT wants to connect. NOTE: Valid channel numbers are in range 1-13 or 0 to scan all channels wlan connect	Connects the device to the AP that is configured in the command “wlan set” | 
 |wlan connect |	Connects the device to the AP that is configured in the command “wlan set” |
-| wlan scan - <active / passive> <channel> <scan time in ms> | Rus either a active or passive (as per the input) scan on the channel number specified for the time issued in ms. |
+| wlan scan \<active / passive> \<channel> \<scan time in ms> | Rus either a active or passive (as per the input) scan on the channel number specified for the time issued in ms. |
 |wlan rssi | Gets the RSSI of current association |
-| wlan config save |	Saves the parameters issued in command “wlan set” to flash memory. On restart an attempt is made to establish a connection to the credentials saved in flash memory. | 
-
+| wlan config save |	Saves the parameters issued in command “wlan set” to flash memory. On restart an attempt is made to establish a connection to the credentials saved in flash memory. |
+| wlan set regdomain <reg_domain_name>| Sets the regulatory domain |
+| wlan get regdomain \<all / current> | Displays the regulatory domain all – request all regulatory domains; current - request current regulatory domain
+|

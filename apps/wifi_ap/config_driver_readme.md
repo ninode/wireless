@@ -9,7 +9,7 @@ nav_order: 3
 
 # WLAN AP
 
-This example application shows how to use the PIC32MZW1 WLAN APIs to configure the device in AP mode.
+This example application shows how to use the PIC32MZW1 WLAN APIs to configure the device in AP mode directly using the WLAN driver APIs.
 
 ## Description
 
@@ -19,7 +19,7 @@ In this application, an analog input is converted by a hardware trigger generate
 
 To download or clone this application from Github, go to the [top level of the repository](https://github.com/Microchip-MPLAB-Harmony/wireless) and click
 
-![clone](../..//docs/images/clone.png)
+![clone](images/clone.png)
 
 Path of the application within the repository is **apps/wifi_ap/firmware** .
 
@@ -28,7 +28,7 @@ To build the application, refer to the following table and open the project usin
 | Project Name      | Description                                    |
 | ----------------- | ---------------------------------------------- |
 | pic32mz_w1_curiosity_driver.X | MPLABX project for PIC32MZ W1 Curiosity Board |
-|||
+|
 
 
 ## Configuring the Application
@@ -44,7 +44,8 @@ The available regulatory domains are  - GEN, USA, EMEA, CUST1 and CUST2. One of 
 
 
 #### Using command
-**wlan set regdomain <reg_domain_name>** is the command used to set the regulatory domain. (wlan set regdomain USA – sets the regulatory domain to USA).
+
+**wlan set regdomain \<reg_domain_name>** is the command used to set the regulatory domain. (wlan set regdomain USA – sets the regulatory domain to USA).
 
 ## Setting up the hardware
 
@@ -53,7 +54,7 @@ The following table shows the target hardware for the application projects.
 | Project Name| Board|
 |:---------|:---------:|
 | pic32mz_w1_curiosity_driver.X | PIC32MZ W1 Curiosity Board |
-|||
+|
 
 ### Setting up PIC32MZ W1 Curiosity Board
 
@@ -75,11 +76,14 @@ The following table shows the target hardware for the application projects.
 ![output](images/output.png)
 
 ## Supported Commands
+
 | Command      | Description |
 | -------------| ------------|
-| wlan set - <ssid> <ssid_length> <ssid_visible> <channel> <open/wpa2/wpam/wpa3/wpa3m/wep> <password> <ip_addr> | Configures the SSID, SSID length, channel number and the security of the AP that DUT wants to connect. NOTE: Valid channel numbers are in range 1-13 or 0 to scan all channels wlan connect	Connects the device to the AP that is configured in the command “wlan set” | 
+| wlan set config \<ssid> \<ssid_length> \<ssid_visible> \<channel> \<open/wpa2/wpam/wpa3/wpa3m/wep> \<password> | Configures the SSID, SSID length, channel number and the security of the AP that DUT wants to connect. NOTE: Valid channel numbers are in range 1-13 or 0 to scan all channels wlan connect	Connects the device to the AP that is configured in the command “wlan set” | 
 | wlan ap start	| Start the AP |
 | wlan ap stop	| Stop the AP |
-| wlan scan - <active / passive> <channel> <scan time in ms> | Rus either a active or passive (as per the input) scan on the channel number specified for the time issued in ms. |
 |wlan show devices |	The connected devices are shown – MAC and IP addresses are displayed |
-| wlan config save |	Saves the parameters issued in command “wlan set” to flash memory. On restart DUT is started as AP with the credentials stored in flash. | 
+| wlan config save |	Saves the parameters issued in command “wlan set” to flash memory. On restart DUT is started as AP with the credentials stored in flash. |
+| wlan set regdomain <reg_domain_name>| Sets the regulatory domain |
+| wlan get regdomain \<all / current> | Displays the regulatory domain all – request all regulatory domains; current - request current regulatory domain
+|
