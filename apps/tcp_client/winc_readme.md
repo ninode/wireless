@@ -1,30 +1,36 @@
 ---
-parent: Harmony 3 Wireless Package
-title: Wifi Provisioning via SoftAP
+parent: Example Applications
+title: TCP Client
 has_toc: true
 has_children: false
 has_toc: false
 nav_order: 1
 
+family: WINC
 family: SAMD21
 family: SAME54
-function: Wifi Provisioning via SoftAP
+function: TCP Client
 ---
 
-# Wifi Provisioning via SoftAP
+# TCP Client
 
-This example compiles the Wifi Provisioning via SoftAP application which is used to provision a WiFi connection.
+The WINC example application demonstrates as a conventional, open tcp client-server communication.
 
 ## Description
 
-In this demonstration, the WINC Driver will advertise a SoftAP. The SoftAP connection is leveraged to provision a WiFi connection.
+In this demonstration, the WINC Driver will connect to a BSS and begin a TCP client socket connection to a remote server service.
+This demonstration can be configured in the following ways in the source code.
+• The BSS to connect to.
+• The TCP server address and port to connect to.
+• The receive buffer size.
+• The message which should be sent as the first data once connected to the server.
 
 ## Downloading and building the application
 
 To download or clone this application from Github, go to the [top level of the repository](https://github.com/Microchip-MPLAB-Harmony/wireless)
 
 
-Path of the application within the repository is **apps/wifi_provisioning_via_softap/firmware** .
+Path of the application within the repository is **apps/tcp_client/firmware** .
 
 To build the application, refer to the following table and open the project using its IDE.
 
@@ -33,6 +39,7 @@ To build the application, refer to the following table and open the project usin
 | sam_d21_xpro_winc1500.X | MPLABX project for SAMD21 and WINC1500 Xplained pro |
 | sam_d21_xpro_winc3400.X | MPLABX project for SAMD21 and WINC3400 Xplained pro |
 | sam_e54_xpro_winc1500.X | MPLABX project for SAME54 and WINC1500 Xplained pro |
+| sam_e54_xpro_winc3400.X | MPLABX project for SAME54 and WINC3400 Xplained pro |
 |||
 
 ## Setting up SAMXXX Xplained Pro board
@@ -43,4 +50,4 @@ To build the application, refer to the following table and open the project usin
 
 1. Open the project.
 2. Build and program the generated code into the hardware using its IDE.
-3. Please refer "firmware update guide" and "WINC Driver Demonstrations" for more information.
+3. Refer "firmware update guide" and "WINC Driver Demonstrations" for information.

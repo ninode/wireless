@@ -1,5 +1,5 @@
 ---
-parent: Example Applications
+parent: Harmony 3 Wireless Package
 title: Power Save Mode
 has_toc: true
 has_children: false
@@ -11,7 +11,7 @@ family: SAME54
 function: Power Save Mode
 ---
 
-# Serial Bridge
+# Power Save Mode
 
 This example compiles the Power Save Mode application which is used to demonstrate WINC's low power mode.
 
@@ -36,7 +36,7 @@ To build the application, refer to the following table and open the project usin
 | sam_e54_xpro_winc3400.X | MPLABX project for SAME54 and WINC3400 Xplained pro |
 |||
 
-## Setting up SAMEXXX Xplained Pro board
+## Setting up SAMXXX Xplained Pro board
 
 - Connect the Debug USB port on the SAMXXX Xplained Pro board to the computer using a micro USB cable
 

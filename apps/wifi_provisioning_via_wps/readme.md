@@ -1,5 +1,5 @@
 ---
-parent: Example Applications
+parent: Harmony 3 Wireless Package
 title: Wifi Provisioning via WPS
 has_toc: true
 has_children: false
@@ -35,7 +35,7 @@ To build the application, refer to the following table and open the project usin
 | sam_e54_xpro_winc1500.X | MPLABX project for SAME54 and WINC1500 Xplained pro |
 |||
 
-## Setting up SAMEXXX Xplained Pro board
+## Setting up SAMXXX Xplained Pro board
 
 - Connect the Debug USB port on the SAMXXX Xplained Pro board to the computer using a micro USB cable
 
