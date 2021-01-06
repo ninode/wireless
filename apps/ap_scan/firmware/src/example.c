@@ -1,27 +1,4 @@
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
-*
-* Subject to your compliance with these terms, you may use Microchip software
-* and any derivatives exclusively with Microchip products. It is your
-* responsibility to comply with third party license terms applicable to your
-* use of third party software (including open source software) that may
-* accompany Microchip software.
-*
-* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
-* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
-* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
-* PARTICULAR PURPOSE.
-*
-* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
-* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
-* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
-* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
-* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
-* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
-* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
-
-/*******************************************************************************
   WINC Example Application
 
   File Name:
@@ -46,12 +23,33 @@
         ICMP_ECHO_INTERVAL  -- Time between ICMP echo requests, in milliseconds
 *******************************************************************************/
 
-#include "app.h"
-#include "driver/winc/include/wdrv_winc_client_api.h"
-#include "m2m_wifi.h"
-#include "wdrv_winc_common.h"
-#include "wdrv_winc_gpio.h"
+/*******************************************************************************
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
 
+#include "app.h"
+#include "wdrv_winc_client_api.h"
+
+extern APP_DATA appData;
 
 #define WLAN_SSID           "MicrochipDemoAp"
 #define WLAN_AUTH_WPA_PSK    M2M_WIFI_SEC_WPA_PSK
@@ -60,7 +58,6 @@
 //#define ICMP_ECHO_TARGET    "192.168.1.1"
 //#define ICMP_ECHO_COUNT     3
 //#define ICMP_ECHO_INTERVAL  100
-void APP_DebugPrintf(const char* format, ...);
 
 typedef enum
 {
@@ -92,19 +89,19 @@ static void APP_ExampleICMPEchoResponseCallback(DRV_HANDLE handle, uint32_t ipAd
     {
         case WDRV_WINC_ICMP_ECHO_STATUS_SUCCESS:
         {
-            APP_DebugPrintf("ICMP echo request successful; RTT = %ld ms\r\n", RTT);
+            SYS_CONSOLE_Print(appData.consoleHandle, "ICMP echo request successful; RTT = %ld ms\r\n", RTT);
             break;
         }
 
         case WDRV_WINC_ICMP_ECHO_STATUS_UNREACH:
         {
-            APP_DebugPrintf("ICMP echo request failed; destination unreachable\r\n");
+            SYS_CONSOLE_Print(appData.consoleHandle, "ICMP echo request failed; destination unreachable\r\n");
             break;
         }
 
         case WDRV_WINC_ICMP_ECHO_STATUS_TIMEOUT:
         {
-            APP_DebugPrintf("ICMP echo request failed; timeout\r\n");
+            SYS_CONSOLE_Print(appData.consoleHandle, "ICMP echo request failed; timeout\r\n");
             break;
         }
     }
@@ -125,15 +122,15 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
 {
     char s[20];
 
-    APP_DebugPrintf("IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
+    SYS_CONSOLE_Print(appData.consoleHandle, "IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
 }
 
-static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
+static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_ASSOC_HANDLE assocHandle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
 {
     if (WDRV_WINC_CONN_STATE_CONNECTED == currentState)
     {
         /* When connected reset the ICMP echo request counter and state. */
-        APP_DebugPrintf("Connected\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "Connected\r\n");
 
 #ifdef ICMP_ECHO_TARGET
         icmpEchoCount     = ICMP_ECHO_COUNT;
@@ -144,7 +141,7 @@ static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_S
     }
     else if (WDRV_WINC_CONN_STATE_DISCONNECTED == currentState)
     {
-        APP_DebugPrintf("Disconnected\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "Disconnected\r\n");
 
         state = EXAMP_STATE_DISCONNECTED;
     }
@@ -152,10 +149,10 @@ static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_S
 
 void APP_ExampleInitialize(DRV_HANDLE handle)
 {
-    APP_DebugPrintf("\r\n");
-    APP_DebugPrintf("=========================\r\n");
-    APP_DebugPrintf("WINC AP Scan Example\r\n");
-    APP_DebugPrintf("=========================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "=========================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "WINC AP Scan Example\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "=========================\r\n");
 
     state = EXAMP_STATE_INIT;
 }
@@ -175,7 +172,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             /* Start a BSS find operation on all channels. */
 
-            if (WDRV_WINC_STATUS_OK == WDRV_WINC_BSSFindFirst(handle, WDRV_WINC_ALL_CHANNELS, true, NULL))
+            if (WDRV_WINC_STATUS_OK == WDRV_WINC_BSSFindFirst(handle, WDRV_WINC_ALL_CHANNELS, true, NULL, NULL))
             {
                 state = EXAMP_STATE_SCANNING;
                 foundBSS = false;
@@ -190,7 +187,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (false == WDRV_WINC_BSSFindInProgress(handle))
             {
-                APP_DebugPrintf("Scan complete, %d AP(s) found\r\n", WDRV_WINC_BSSFindGetNumBSSResults(handle));
+                SYS_CONSOLE_Print(appData.consoleHandle, "Scan complete, %d AP(s) found\r\n", WDRV_WINC_BSSFindGetNumBSSResults(handle));
                 state = EXAMP_STATE_SCAN_GET_RESULTS;
             }
             break;
@@ -204,11 +201,11 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (WDRV_WINC_STATUS_OK == WDRV_WINC_BSSFindGetInfo(handle, &BSSInfo))
             {
-                APP_DebugPrintf("AP found: RSSI: %d %s\r\n", BSSInfo.rssi, BSSInfo.ssid.name);
+                SYS_CONSOLE_Print(appData.consoleHandle, "AP found: RSSI: %d %s\r\n", BSSInfo.rssi, BSSInfo.ctx.ssid.name);
 
                 /* Check if this SSID matches the search target SSID. */
 
-                if (((sizeof(WLAN_SSID)-1) == BSSInfo.ssid.length) && (0 == memcmp(BSSInfo.ssid.name, WLAN_SSID, BSSInfo.ssid.length)))
+                if (((sizeof(WLAN_SSID)-1) == BSSInfo.ctx.ssid.length) && (0 == memcmp(BSSInfo.ctx.ssid.name, WLAN_SSID, BSSInfo.ctx.ssid.length)))
                 {
                     foundBSS = true;
                 }
@@ -224,12 +221,12 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                     if (true == foundBSS)
                     {
-                        APP_DebugPrintf("Target AP found, trying to connect\r\n");
+                        SYS_CONSOLE_Print(appData.consoleHandle, "Target AP found, trying to connect\r\n");
                         state = EXAMP_STATE_SCAN_DONE;
                     }
                     else
                     {
-                        APP_DebugPrintf("Target BSS not found\r\n");
+                        SYS_CONSOLE_Print(appData.consoleHandle, "Target BSS not found\r\n");
                         state = EXAMP_STATE_ERROR;
                     }
                 }
@@ -311,7 +308,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (WDRV_WINC_STATUS_OK == WDRV_WINC_ICMPEchoRequest(handle, inet_addr(ICMP_ECHO_TARGET), 0, &APP_ExampleICMPEchoResponseCallback))
             {
-                APP_DebugPrintf("ICMP echo request sent\r\n");
+                SYS_CONSOLE_Print(appData.consoleHandle, "ICMP echo request sent\r\n");
 
                 state = EXAMP_STATE_ICMP_ECHO_REQUEST_SENT;
             }
@@ -363,5 +360,3 @@ void APP_ExampleTasks(DRV_HANDLE handle)
         }
     }
 }
-
-// DOM-IGNORE-END

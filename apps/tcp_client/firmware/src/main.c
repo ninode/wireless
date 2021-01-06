@@ -15,6 +15,7 @@
     "main" function calls the "SYS_Initialize" function to initialize the state
     machines of all modules in the system
  *******************************************************************************/
+
 /*******************************************************************************
 Copyright (C) 2020 released Microchip Technology Inc.  All rights reserved.
 

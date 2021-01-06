@@ -17,9 +17,9 @@
     internally by the application (such as the "APP_STATES" definition).  Both
     are defined here for convenience.
 *******************************************************************************/
-// DOM-IGNORE-BEGIN
- /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+
+/*******************************************************************************
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -51,13 +51,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include "configuration.h"
 #include "definitions.h"
-#include "system/console/sys_console.h"
+#include "configuration.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -66,10 +61,6 @@ extern "C" {
 
 #endif
 // DOM-IGNORE-END
-
-#define WIFI_PROV_DEMO          1
-
-#define EXAMPLE_DEMO WIFI_PROV_DEMO
 
 // *****************************************************************************
 // *****************************************************************************
@@ -96,7 +87,6 @@ typedef enum
     APP_STATE_WDRV_OPEN,
 } APP_STATES;
 
-
 // *****************************************************************************
 /* Application Data
 
@@ -118,7 +108,6 @@ typedef struct
     SYS_CONSOLE_HANDLE consoleHandle;
 
 } APP_DATA;
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -199,16 +188,6 @@ void APP_Initialize ( void );
  */
 
 void APP_Tasks( void );
-
-void APP_ExampleInitialize( DRV_HANDLE handle );
-
-void APP_ExampleTasks( DRV_HANDLE handle );
-
-void APP_DebugPrintf(const char* format, ...);
-
-char APP_HexToChar(uint8_t hex);
-
-void APP_DebugPrintBuffer(const uint8_t *pBuf, uint16_t bufLen);
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

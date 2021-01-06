@@ -20,9 +20,8 @@
         TCP_SEND_MESSAGE    -- Customizable TCP packet content
 *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -47,6 +46,8 @@
 #include "app.h"
 #include "wdrv_winc_client_api.h"
 #include "example_conf.h"
+
+extern APP_DATA appData;
 
 typedef enum
 {
@@ -78,13 +79,13 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
             if ((NULL != pConnectMessage) && (pConnectMessage->s8Error >= 0))
             {
-                APP_DebugPrintf("Socket %d connect success\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Socket %d connect success\r\n", socket);
                 recv(clientSocket, recvBuffer, TCP_BUFFER_SIZE, 0);
                 send(clientSocket, TCP_SEND_MESSAGE, sizeof(TCP_SEND_MESSAGE), 0);
             }
             else
             {
-                APP_DebugPrintf("Socket %d connect error %d\r\n", socket, pConnectMessage->s8Error);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Socket %d connect error %d\r\n", socket, pConnectMessage->s8Error);
 
                 if (-1 != clientSocket)
                 {
@@ -103,7 +104,7 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
             if ((NULL != pRecvMessage) && (pRecvMessage->s16BufferSize > 0))
             {
-                APP_DebugPrintf("Socket receive, size = %d bytes ", pRecvMessage->s16BufferSize);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Socket receive, size = %d bytes ", pRecvMessage->s16BufferSize);
 
                 if (pRecvMessage->s16BufferSize > 20)
                 {
@@ -114,20 +115,20 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
                     pRecvMessage->pu8Buffer[pRecvMessage->s16BufferSize] = '\0';
                 }
 
-                APP_DebugPrintf((char*)pRecvMessage->pu8Buffer);
+                SYS_CONSOLE_Print(appData.consoleHandle, (char*)pRecvMessage->pu8Buffer);
 
                 if (pRecvMessage->s16BufferSize > 20)
                 {
-                    APP_DebugPrintf("...");
+                    SYS_CONSOLE_Print(appData.consoleHandle, "...");
                 }
 
-                APP_DebugPrintf("]\r\n");
+                SYS_CONSOLE_Print(appData.consoleHandle, "]\r\n");
 
                 recv(socket, recvBuffer, TCP_BUFFER_SIZE, 0);
             }
             else
             {
-                APP_DebugPrintf("Receive on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Receive on socket %d failed\r\n", socket);
 
                 if (-1 != clientSocket)
                 {
@@ -140,7 +141,7 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
         case SOCKET_MSG_SEND:
         {
-            APP_DebugPrintf("Socket %d send completed\r\n", socket);
+            SYS_CONSOLE_Print(appData.consoleHandle, "Socket %d send completed\r\n", socket);
             break;
         }
 
@@ -155,14 +156,14 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
 {
     char s[20];
 
-    APP_DebugPrintf("IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
+    SYS_CONSOLE_Print(appData.consoleHandle, "IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
 }
 
-static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
+static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_ASSOC_HANDLE assocHandle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
 {
     if (WDRV_WINC_CONN_STATE_CONNECTED == currentState)
     {
-        APP_DebugPrintf("Connected\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "Connected\r\n");
 
         state = EXAMP_STATE_CONNECTED;
     }
@@ -170,13 +171,13 @@ static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_S
     {
         if (EXAMP_STATE_CONNECTING == state)
         {
-            APP_DebugPrintf("Failed to connect\r\n");
+            SYS_CONSOLE_Print(appData.consoleHandle, "Failed to connect\r\n");
 
             state = EXAMP_STATE_INIT;
         }
         else
         {
-            APP_DebugPrintf("Disconnected\r\n");
+            SYS_CONSOLE_Print(appData.consoleHandle, "Disconnected\r\n");
 
             if (-1 != clientSocket)
             {
@@ -191,10 +192,10 @@ static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_S
 
 void APP_ExampleInitialize(DRV_HANDLE handle)
 {
-    APP_DebugPrintf("\r\n");
-    APP_DebugPrintf("===========================\r\n");
-    APP_DebugPrintf("WINC TCP Client Example\r\n");
-    APP_DebugPrintf("===========================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "===========================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "WINC TCP Client Example\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "===========================\r\n");
 
     state = EXAMP_STATE_INIT;
 
@@ -335,5 +336,3 @@ void APP_ExampleTasks(DRV_HANDLE handle)
         }
     }
 }
-
-// DOM-IGNORE-END

@@ -1,27 +1,4 @@
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
-*
-* Subject to your compliance with these terms, you may use Microchip software
-* and any derivatives exclusively with Microchip products. It is your
-* responsibility to comply with third party license terms applicable to your
-* use of third party software (including open source software) that may
-* accompany Microchip software.
-*
-* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
-* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
-* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
-* PARTICULAR PURPOSE.
-*
-* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
-* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
-* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
-* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
-* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
-* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
-* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
-
-/*******************************************************************************
   WINC Example Application
 
   File Name:
@@ -43,6 +20,30 @@
         WLAN_DHCP_SRV_ADDR  -- IP address of DHCP server to create
         TCP_BUFFER_SIZE     -- Size of the socket buffer holding the receive data
 *******************************************************************************/
+
+/*******************************************************************************
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
+
 
 /** \mainpage
  * \section intro Introduction
@@ -72,10 +73,10 @@
  * ===========================================
  * WINC WiFi TCP Server Soft AP Example
  * ===========================================
- * 
+ *
  * AP started, you can connect to WINC1500_SOFT_AP
  * On the connected device, start a TCP client connection to 192.168.1.1 on port 6666
- * 
+ *
  * AP Mode: Station connected
  * AP Mode: Station IP address is 192.168.1.100
  * Bind on socket 0 successful, server_socket = 0
@@ -97,6 +98,8 @@
 #include "wdrv_winc_client_api.h"
 #include "example_conf.h"
 
+extern APP_DATA appData;
+
 typedef enum
 {
     /* Example's state machine's initial state. */
@@ -109,13 +112,15 @@ typedef enum
 } EXAMP_STATES;
 
 /** Message format definitions. */
-typedef struct s_msg_wifi_product {
-	uint8_t name[9];
+typedef struct s_msg_wifi_product
+{
+    uint8_t name[9];
 } t_msg_wifi_product;
 
 /** Message format declarations. */
-static t_msg_wifi_product msg_wifi_product = {
-	.name = WLAN_PRODUCT_NAME,
+static t_msg_wifi_product msg_wifi_product =
+{
+    .name = "WINC_H3",
 };
 
 static EXAMP_STATES state;
@@ -135,12 +140,12 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
             if ((NULL != pBindMessage) && (0 == pBindMessage->status))
             {
-                APP_DebugPrintf("Bind on socket %d successful, server_socket = %d\r\n", socket, serverSocket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Bind on socket %d successful, server_socket = %d\r\n", socket, serverSocket);
                 listen(serverSocket, 0);
             }
             else
             {
-                APP_DebugPrintf("Bind on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Bind on socket %d failed\r\n", socket);
 
                 shutdown(serverSocket);
                 serverSocket =  -1;
@@ -155,12 +160,12 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
             if ((NULL != pListenMessage) && (0 == pListenMessage->status))
             {
-                APP_DebugPrintf("Listen on socket %d successful\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Listen on socket %d successful\r\n", socket);
                 accept(serverSocket, NULL, NULL);
             }
             else
             {
-                APP_DebugPrintf("Listen on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Listen on socket %d failed\r\n", socket);
 
                 shutdown(serverSocket);
                 serverSocket =  -1;
@@ -178,23 +183,23 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
                 char s[20];
 
                 accept(serverSocket, NULL, 0);
-                
+
                 if (tcp_client_socket > 0) // close any open client (only one client supported at one time)
                 {
                     shutdown(tcp_client_socket);
                 }
-                
+
                 tcp_client_socket = pAcceptMessage->sock;
 
-                APP_DebugPrintf("Connection from  %s:%d\r\n", inet_ntop(AF_INET, &pAcceptMessage->strAddr.sin_addr.s_addr, s, sizeof(s)), _ntohs(pAcceptMessage->strAddr.sin_port));
+                SYS_CONSOLE_Print(appData.consoleHandle, "Connection from %s:%d\r\n", inet_ntop(AF_INET, &pAcceptMessage->strAddr.sin_addr.s_addr, s, sizeof(s)), _ntohs(pAcceptMessage->strAddr.sin_port));
 
                 memset(recvBuffer, 0, TCP_BUFFER_SIZE);
                 recv(tcp_client_socket, recvBuffer, TCP_BUFFER_SIZE, 0);
-                
+
             }
             else
             {
-                APP_DebugPrintf("Accept on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Accept on socket %d failed\r\n", socket);
 
                 shutdown(serverSocket);
                 serverSocket =  -1;
@@ -206,19 +211,19 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
         case SOCKET_MSG_RECV:
         {
             tstrSocketRecvMsg *pRecvMessage = (tstrSocketRecvMsg*)pMessage;
-            
+
             if ((NULL != pRecvMessage) && (pRecvMessage->s16BufferSize > 0))
             {
-                APP_DebugPrintf("Receive on socket %d successful\r\n", socket);
-                APP_DebugPrintf("Client sent %d bytes\r\n", pRecvMessage->s16BufferSize);
-                APP_DebugPrintf("Client sent %s\r\n", pRecvMessage->pu8Buffer);
-                APP_DebugPrintf("Sending a test message to client\r\n");
-                
+                SYS_CONSOLE_Print(appData.consoleHandle, "Receive on socket %d successful\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Client sent %d bytes\r\n", pRecvMessage->s16BufferSize);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Client sent %s\r\n", pRecvMessage->pu8Buffer);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Sending a test message to client\r\n");
+
                 send(tcp_client_socket, &msg_wifi_product, sizeof(t_msg_wifi_product), 0);
             }
             else
             {
-                APP_DebugPrintf("Receive on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Receive on socket %d failed\r\n", socket);
 
                 shutdown(serverSocket);
                 serverSocket = -1;
@@ -229,9 +234,9 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
         case SOCKET_MSG_SEND:
         {
-            APP_DebugPrintf("Socket %d send completed\r\n", socket);
-            APP_DebugPrintf("TCP Server Test Complete!\r\n", socket);
-            APP_DebugPrintf("Closing sockets\r\n", socket);
+            SYS_CONSOLE_Print(appData.consoleHandle, "Socket %d send completed\r\n", socket);
+            SYS_CONSOLE_Print(appData.consoleHandle, "TCP Server Test Complete!\r\n");
+            SYS_CONSOLE_Print(appData.consoleHandle, "Closing sockets\r\n");
             shutdown(tcp_client_socket);
             shutdown(serverSocket);
             state = EXAMP_STATE_DONE;
@@ -245,45 +250,42 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
     }
 }
 
-static void APP_ExampleAPConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
+static void APP_ExampleAPConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_ASSOC_HANDLE assocHandle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
 {
     if (WDRV_WINC_CONN_STATE_CONNECTED == currentState)
     {
-        APP_DebugPrintf("AP Mode: Station connected\r\n");               
+        SYS_CONSOLE_Print(appData.consoleHandle, "AP Mode: Station connected\r\n");
     }
     else if (WDRV_WINC_CONN_STATE_DISCONNECTED == currentState)
     {
-        APP_DebugPrintf("AP Mode: Station disconnected\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "AP Mode: Station disconnected\r\n");
 
         if (-1 != serverSocket)
         {
             shutdown(serverSocket);
             serverSocket = -1;
         }
-
     }
 }
-
 
 #if defined(WLAN_DHCP_SRV_ADDR) && defined(WLAN_DHCP_SRV_NETMASK)
 static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAddress)
 {
     char s[20];
 
-    APP_DebugPrintf("AP Mode: Station IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
+    SYS_CONSOLE_Print(appData.consoleHandle, "AP Mode: Station IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
     state = EXAMP_STATE_START_TCP_SERVER;
 }
 #endif
 
-
 void APP_ExampleInitialize(DRV_HANDLE handle)
 {
-    APP_DebugPrintf("\r\n");
-    APP_DebugPrintf("===========================================\r\n");
-    APP_DebugPrintf("WINC WiFi TCP Server Soft AP Example\r\n");
-    APP_DebugPrintf("===========================================\r\n");
-    APP_DebugPrintf("\r\n");
-    
+    SYS_CONSOLE_Print(appData.consoleHandle, "\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "===========================================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "WINC WiFi TCP Server Soft AP Example\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "===========================================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "\r\n");
+
     state = EXAMP_STATE_INIT;
 
     serverSocket = -1;
@@ -295,7 +297,6 @@ void APP_ExampleTasks(DRV_HANDLE handle)
     {
         case EXAMP_STATE_INIT:
         {
-
             /* Preset the error state incase any following operations fail. */
 
             state = EXAMP_STATE_ERROR;
@@ -319,7 +320,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
             }
 
 #if defined(WLAN_AUTH_OPEN)
-            /* Create authentication context for open authentication. */
+            /* Create authentication context for Open. */
 
             if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetOpen(&authCtx))
             {
@@ -351,8 +352,8 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (WDRV_WINC_STATUS_OK == WDRV_WINC_APStart(handle, &bssCtx, &authCtx, NULL, &APP_ExampleAPConnectNotifyCallback))
             {
-                APP_DebugPrintf("AP started, you can connect to %s\r\n", WLAN_SSID);
-                APP_DebugPrintf("On the connected device, start a TCP client connection to %s on port %d\r\n\r\n", WLAN_DHCP_SRV_ADDR, TCP_LISTEN_PORT);
+                SYS_CONSOLE_Print(appData.consoleHandle, "AP started, you can connect to %s\r\n", WLAN_SSID);
+                SYS_CONSOLE_Print(appData.consoleHandle, "On the connected device, start a TCP client connection to %s on port %d\r\n\r\n", WLAN_DHCP_SRV_ADDR, TCP_LISTEN_PORT);
 
                 state = EXAMP_STATE_WAIT_FOR_STATION;
             }
@@ -382,16 +383,16 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                 if (bind(serverSocket, (struct sockaddr*)&addr, sizeof(struct sockaddr_in)) < 0)
                 {
-                    APP_DebugPrintf("Socket bind error\r\n");
+                    SYS_CONSOLE_Print(appData.consoleHandle, "Socket bind error\r\n");
                     state = EXAMP_STATE_ERROR;
                     break;
                 }
-                
+
                 state = EXAMP_STATE_SOCKET_LISTENING;
             }
             else
             {
-                APP_DebugPrintf("Socket creation error\r\n");
+                SYS_CONSOLE_Print(appData.consoleHandle, "Socket creation error\r\n");
                 state = EXAMP_STATE_ERROR;
                 break;
             }
@@ -419,5 +420,3 @@ void APP_ExampleTasks(DRV_HANDLE handle)
         }
     }
 }
-
-

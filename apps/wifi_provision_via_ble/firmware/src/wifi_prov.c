@@ -9,9 +9,8 @@
   Description:
 *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
- /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+/*******************************************************************************
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -38,11 +37,11 @@
 #include "at_ble_api.h"
 #include "wifiprov_task.h"
 
-#if EXAMPLE_DEMO == WIFI_PROV_DEMO
+extern APP_DATA appData;
 
 typedef enum
 {
-    /* Example's appState machine's initial appState. */
+    /* Example's state machine's initial state. */
     EXAMP_STATE_INIT=0,
     EXAMP_STATE_IDLE,
     EXAMP_STATE_RUNNING,
@@ -66,11 +65,11 @@ static struct wifiprov_scanlist_ind scanList;
 static WDRV_WINC_AUTH_CONTEXT authCtx;
 static WDRV_WINC_BSS_CONTEXT bssCtx;
 
-static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
+static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_ASSOC_HANDLE assocHandle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
 {
     if (WDRV_WINC_CONN_STATE_CONNECTED == currentState)
     {
-        APP_DebugPrintf("Wifi State :: CONNECTED ::\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "Wifi State :: CONNECTED ::\r\n");
 
         wifiState = WIFI_STATE_CONNECTED;
 
@@ -78,7 +77,7 @@ static void APP_ExampleConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_S
     }
     else if (WDRV_WINC_CONN_STATE_DISCONNECTED == currentState)
     {
-        APP_DebugPrintf("Wifi State :: DISCONNECTED ::\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "Wifi State :: DISCONNECTED ::\r\n");
 
         wifiState = WIFI_STATE_IDLE;
 
@@ -90,15 +89,15 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
 {
     char s[20];
 
-    APP_DebugPrintf("DHCP IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
+    SYS_CONSOLE_Print(appData.consoleHandle, "DHCP IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
 }
 
 void APP_ExampleInitialize(DRV_HANDLE handle)
 {
-    APP_DebugPrintf("\r\n");
-    APP_DebugPrintf("======================================\r\n");
-    APP_DebugPrintf("WINC3400 BLE WiFi Provisioning Example\r\n");
-    APP_DebugPrintf("======================================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "======================================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "WINC3400 BLE WiFi Provisioning Example\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "======================================\r\n");
 
     appState = EXAMP_STATE_INIT;
 }
@@ -116,15 +115,19 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (WDRV_WINC_STATUS_OK != WDRV_WINC_BLEStart(handle))
             {
-                APP_DebugPrintf("Failed to start BLE\r\n");
+                SYS_CONSOLE_Print(appData.consoleHandle, "Failed to start BLE\r\n");
 
                 appState = EXAMP_STATE_ERROR;
                 break;
             }
 
+#ifdef WDRV_WINC_DEVICE_BLE_API_REV_2
+            if (AT_BLE_SUCCESS != wifiprov_configure_provisioning((uint8_t *)"WiFi Prov", AT_BLE_AUTH_MITM_NO_BOND))
+#else
             if (AT_BLE_SUCCESS != wifiprov_configure_provisioning((uint8_t *)"WiFi Prov"))
+#endif
             {
-                APP_DebugPrintf("Failed to configure BLE provisioning\r\n");
+                SYS_CONSOLE_Print(appData.consoleHandle, "Failed to configure BLE provisioning\r\n");
 
                 appState = EXAMP_STATE_ERROR;
                 break;
@@ -132,7 +135,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (AT_BLE_SUCCESS != wifiprov_create_db())
             {
-                APP_DebugPrintf("Failed to create BLE provisioning database\r\n");
+                SYS_CONSOLE_Print(appData.consoleHandle, "Failed to create BLE provisioning database\r\n");
 
                 appState = EXAMP_STATE_ERROR;
                 break;
@@ -153,7 +156,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
             {
                 if (WDRV_WINC_STATUS_OK != WDRV_WINC_BLEStart(handle))
                 {
-                    APP_DebugPrintf("Failed to start BLE\r\n");
+                    SYS_CONSOLE_Print(appData.consoleHandle, "Failed to start BLE\r\n");
 
                     appState = EXAMP_STATE_ERROR;
                     break;
@@ -175,7 +178,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (AT_BLE_SUCCESS == at_ble_event_get(&bleEvent, &bleParams, 0))
             {
-                APP_DebugPrintf("BLE event received: %d\r\n", bleEvent);
+                SYS_CONSOLE_Print(appData.consoleHandle, "BLE event received: %d\r\n", bleEvent);
             }
             else
             {
@@ -195,13 +198,13 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                     if (AT_BLE_SUCCESS == wifiprov_start(pinCode, sizeof(pinCode)))
                     {
-                        APP_DebugPrintf("BLE provisioning started\r\n");
+                        SYS_CONSOLE_Print(appData.consoleHandle, "BLE provisioning started\r\n");
 
                         wifiState = WIFI_STATE_WAIT_FOR_SCAN_REQUEST;
                     }
                     else
                     {
-                        APP_DebugPrintf("Failed to start BLE provisioning\r\n");
+                        SYS_CONSOLE_Print(appData.consoleHandle, "Failed to start BLE provisioning\r\n");
 
                         appState = EXAMP_STATE_ERROR;
                     }
@@ -215,15 +218,15 @@ void APP_ExampleTasks(DRV_HANDLE handle)
                     {
                         at_ble_wifiprov_scan_mode_change_ind_t *pScanModeInd = (at_ble_wifiprov_scan_mode_change_ind_t *)&bleParams;
 
-                        APP_DebugPrintf("AT_BLE_WIFIPROV_SCAN_MODE_CHANGE_IND :%x\r\n", pScanModeInd->scanmode);
+                        SYS_CONSOLE_Print(appData.consoleHandle, "AT_BLE_WIFIPROV_SCAN_MODE_CHANGE_IND :%x\r\n", pScanModeInd->scanmode);
 
                         if (WIFIPROV_SCANMODE_SCANNING == pScanModeInd->scanmode)
                         {
                             if (false == WDRV_WINC_BSSFindInProgress(handle))
                             {
-                                if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSFindFirst(handle, WDRV_WINC_ALL_CHANNELS, true, NULL))
+                                if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSFindFirst(handle, WDRV_WINC_ALL_CHANNELS, true, NULL, NULL))
                                 {
-                                    APP_DebugPrintf("Failed to start BSS scanning\r\n");
+                                    SYS_CONSOLE_Print(appData.consoleHandle, "Failed to start BSS scanning\r\n");
 
                                     appState = EXAMP_STATE_ERROR;
 
@@ -234,7 +237,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                                 wifiprov_scan_mode_change_ind_send(WIFIPROV_SCANMODE_SCANNING);
 
-                                APP_DebugPrintf("Scanning for BSSs\r\n");
+                                SYS_CONSOLE_Print(appData.consoleHandle, "Scanning for BSSs\r\n");
 
                                 wifiState = WIFI_STATE_SCANNING;
                             }
@@ -244,14 +247,14 @@ void APP_ExampleTasks(DRV_HANDLE handle)
                     {
                         at_ble_wifiprov_complete_ind *pWiFiProvInfo = (at_ble_wifiprov_complete_ind *)&bleParams;
 
-                        APP_DebugPrintf("AT_BLE_WIFIPROV_COMPLETE_IND :%x\n", pWiFiProvInfo->status);
+                        SYS_CONSOLE_Print(appData.consoleHandle, "AT_BLE_WIFIPROV_COMPLETE_IND :%x\n", pWiFiProvInfo->status);
 
                         WDRV_WINC_AuthCtxSetDefaults(&authCtx);
                         WDRV_WINC_BSSCtxSetDefaults(&bssCtx);
 
                         if (AT_BLE_SUCCESS == pWiFiProvInfo->status)
                         {
-                            APP_DebugPrintf("Provisioning data received\r\n");
+                            SYS_CONSOLE_Print(appData.consoleHandle, "Provisioning data received\r\n");
 
                             switch (pWiFiProvInfo->sec_type)
                             {
@@ -275,7 +278,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                                 default:
                                 {
-                                    APP_DebugPrintf("Unsupported security type %d\r\n", pWiFiProvInfo->sec_type);
+                                    SYS_CONSOLE_Print(appData.consoleHandle, "Unsupported security type %d\r\n", pWiFiProvInfo->sec_type);
                                     appState = EXAMP_STATE_ERROR;
 
                                     status = WDRV_WINC_STATUS_INVALID_ARG;
@@ -285,23 +288,23 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                             if (WDRV_WINC_STATUS_OK != status)
                             {
-                                APP_DebugPrintf("Invalid security information\r\n");
+                                SYS_CONSOLE_Print(appData.consoleHandle, "Invalid security information\r\n");
                                 appState = EXAMP_STATE_ERROR;
                                 break;
                             }
 
                             if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetSSID(&bssCtx, pWiFiProvInfo->ssid, pWiFiProvInfo->ssid_length))
                             {
-                                APP_DebugPrintf("Invalid BSS information\r\n");
+                                SYS_CONSOLE_Print(appData.consoleHandle, "Invalid BSS information\r\n");
                                 appState = EXAMP_STATE_ERROR;
                                 break;
                             }
 
-                            APP_DebugPrintf("Connecting to %s\r\n", pWiFiProvInfo->ssid);
+                            SYS_CONSOLE_Print(appData.consoleHandle, "Connecting to %s\r\n", pWiFiProvInfo->ssid);
 
                             if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSConnect(handle, &bssCtx, &authCtx, APP_ExampleConnectNotifyCallback))
                             {
-                                APP_DebugPrintf("Connection failed\r\n");
+                                SYS_CONSOLE_Print(appData.consoleHandle, "Connection failed\r\n");
                                 appState = EXAMP_STATE_ERROR;
                                 break;
                             }
@@ -310,7 +313,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
                         }
                         else
                         {
-                            APP_DebugPrintf("Provisioning Failed\r\n");
+                            SYS_CONSOLE_Print(appData.consoleHandle, "Provisioning Failed\r\n");
 
                             appState = EXAMP_STATE_ERROR;
                         }
@@ -326,7 +329,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                         numBSSs = WDRV_WINC_BSSFindGetNumBSSResults(handle);
 
-                        APP_DebugPrintf("Scan complete, %d BSS(s) found\r\n", numBSSs);
+                        SYS_CONSOLE_Print(appData.consoleHandle, "Scan complete, %d BSS(s) found\r\n", numBSSs);
 
                         if (0 == numBSSs)
                         {
@@ -351,16 +354,16 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
                     if (WDRV_WINC_STATUS_OK == WDRV_WINC_BSSFindGetInfo(handle, &bssInfo))
                     {
-                        APP_DebugPrintf("BSS found: RSSI: %d %s\r\n", bssInfo.rssi, bssInfo.ssid.name);
+                        SYS_CONSOLE_Print(appData.consoleHandle, "BSS found: RSSI: %d %s\r\n", bssInfo.rssi, bssInfo.ctx.ssid.name);
 
-                        if ((scanList.num_valid < MAX_WIPROVTASK_AP_NUM) && (0 != bssInfo.ssid.name[0]))
+                        if ((scanList.num_valid < MAX_WIPROVTASK_AP_NUM) && (0 != bssInfo.ctx.ssid.name[0]))
                         {
                             uint8_t idx = scanList.num_valid;
 
                             scanList.scandetails[idx].sec_type = bssInfo.authType;
                             scanList.scandetails[idx].rssi     = bssInfo.rssi;
                             memset(scanList.scandetails[idx].ssid, 0, MAX_WIPROVTASK_SSID_LENGTH);
-                            memcpy(scanList.scandetails[idx].ssid, bssInfo.ssid.name, bssInfo.ssid.length);
+                            memcpy(scanList.scandetails[idx].ssid, bssInfo.ctx.ssid.name, bssInfo.ctx.ssid.length);
 
                             scanList.num_valid++;
                         }
@@ -421,7 +424,3 @@ void APP_ExampleTasks(DRV_HANDLE handle)
         }
     }
 }
-
-#endif
-
-// DOM-IGNORE-END

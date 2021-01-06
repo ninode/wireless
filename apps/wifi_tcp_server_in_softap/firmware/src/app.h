@@ -1,5 +1,25 @@
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+  MPLAB Harmony Application Header File
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    app.h
+
+  Summary:
+    This header file provides prototypes and definitions for the application.
+
+  Description:
+    This header file provides function prototypes and data type definitions for
+    the application.  Some of these are required by the system (such as the
+    "APP_Initialize" and "APP_Tasks" prototypes) and some of them are only used
+    internally by the application (such as the "APP_STATES" definition).  Both
+    are defined here for convenience.
+*******************************************************************************/
+
+/*******************************************************************************
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -21,25 +41,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-/*******************************************************************************
-  MPLAB Harmony Application Header File
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    app.h
-
-  Summary:
-    This header file provides prototypes and definitions for the application.
-
-  Description:
-    This header file provides function prototypes and data type definitions for
-    the application.  Some of these are required by the system (such as the
-    "APP_Initialize" and "APP_Tasks" prototypes) and some of them are only used
-    internally by the application (such as the "APP_STATES" definition).  Both
-    are defined here for convenience.
-*******************************************************************************/
 
 #ifndef _APP_H
 #define _APP_H
@@ -50,12 +51,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
+#include "definitions.h"
 #include "configuration.h"
-#include "system/console/sys_console.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -64,7 +61,6 @@ extern "C" {
 
 #endif
 // DOM-IGNORE-END
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -82,7 +78,6 @@ extern "C" {
     This enumeration defines the valid application states.  These states
     determine the behavior of the application at various times.
 */
-
 
 typedef enum
 {
@@ -194,19 +189,13 @@ void APP_Initialize ( void );
 
 void APP_Tasks( void );
 
-void APP_DebugPrintf(const char* format, ...);
-
-char APP_HexToChar(uint8_t hex);
-
-void APP_DebugPrintBuffer(const uint8_t *pBuf, uint16_t bufLen);
-
-#endif /* _APP_H */
-
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
 #endif
 //DOM-IGNORE-END
+
+#endif /* _APP_H */
 
 /*******************************************************************************
  End of File

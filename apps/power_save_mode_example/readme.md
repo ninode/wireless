@@ -30,9 +30,9 @@ To build the application, refer to the following table and open the project usin
 
 | Project Name      | Description                                    |
 | ----------------- | ---------------------------------------------- |
-| sam_d21_xpro_winc1500.X | MPLABX project for SAMD21 and WINC3400 Xplained pro |
+| sam_d21_xpro_winc1500.X | MPLABX project for SAMD21 and WINC1500 Xplained pro |
 | sam_d21_xpro_winc3400.X | MPLABX project for SAMD21 and WINC3400 Xplained pro |
-| sam_e54_xpro_winc1500.X | MPLABX project for SAME54 and WINC3400 Xplained pro |
+| sam_e54_xpro_winc1500.X | MPLABX project for SAME54 and WINC1500 Xplained pro |
 | sam_e54_xpro_winc3400.X | MPLABX project for SAME54 and WINC3400 Xplained pro |
 |||
 

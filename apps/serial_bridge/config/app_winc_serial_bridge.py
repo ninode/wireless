@@ -15,30 +15,21 @@ def instantiateComponent(appWincSerialBridgeApp):
 
     appWincSerialBridgeApp.addDependency('uart', 'UART', False, True);
 
-    appWincSerialBridgeApp.addDependency('wdrv_winc', 'WDRV_WINC', False, True);
+    appWincSerialBridgeApp.addDependency('wdrv_winc', 'WDRV_WINC', True, True);
 
     appPLIB = appWincSerialBridgeApp.createStringSymbol('APP_USART_PLIB', None)
     appPLIB.setLabel('PLIB Used')
     appPLIB.setReadOnly(True)
     appPLIB.setDefaultValue('')
 
-    appPlatformSercomDataHdr = appWincSerialBridgeApp.createFileSymbol('APP_PLATFORM_SERCOM_DATA_FILE_SRC', None)
-    appPlatformSercomDataHdr.setSourcePath('apps/serial_bridge/templates/platform_sercom_data.c.ftl')
-    appPlatformSercomDataHdr.setOutputName('platform_sercom_data.c')
-    appPlatformSercomDataHdr.setDestPath('platform')
-    appPlatformSercomDataHdr.setProjectPath('config/' + configName + '/platform/')
-    appPlatformSercomDataHdr.setType('SOURCE')
-    appPlatformSercomDataHdr.setMarkup(True)
-    appPlatformSercomDataHdr.setOverwrite(True)
-
-    appPlatformSercomDataSrc = appWincSerialBridgeApp.createFileSymbol('APP_PLATFORM_SERCOM_DATA_FILE_HEADER', None)
-    appPlatformSercomDataSrc.setSourcePath('apps/serial_bridge/templates/platform_sercom_data.h.ftl')
-    appPlatformSercomDataSrc.setOutputName('platform_sercom_data.h')
-    appPlatformSercomDataSrc.setDestPath('platform')
-    appPlatformSercomDataSrc.setProjectPath('config/' + configName + '/platform/')
-    appPlatformSercomDataSrc.setType('HEADER')
-    appPlatformSercomDataSrc.setMarkup(True)
-    appPlatformSercomDataSrc.setOverwrite(True)
+    appPlatformSercomSrc = appWincSerialBridgeApp.createFileSymbol('APP_PLATFORM_SERCOM_FILE_SRC', None)
+    appPlatformSercomSrc.setSourcePath('apps/serial_bridge/templates/platform_sercom.c.ftl')
+    appPlatformSercomSrc.setOutputName('platform_sercom.c')
+    appPlatformSercomSrc.setDestPath('platform')
+    appPlatformSercomSrc.setProjectPath('config/' + configName + '/platform/')
+    appPlatformSercomSrc.setType('SOURCE')
+    appPlatformSercomSrc.setMarkup(True)
+    appPlatformSercomSrc.setOverwrite(True)
 
     appPlatformSercomDataPath = appWincSerialBridgeApp.createSettingSymbol('APP_PLATFORM_SERCOM_DATA_FILE_PATH', None)
     appPlatformSercomDataPath.setValue('../src/config/' + configName + '/platform;')

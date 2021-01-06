@@ -33,9 +33,7 @@
 #include "platform/platform.h"
 #include "nmdrv.h"
 #include "nmbus.h"
-#if defined(WDRV_WINC_DEVICE_WINC1500)
 #include "m2m_wifi.h"
-#endif
 
 #define SB_HEADER_SIZE      12
 
@@ -204,11 +202,7 @@ void SerialBridge_Init(SERIAL_BRIDGE_DECODER_STATE *const pSBDecoderState, uint3
 
     SerialBridge_PlatformUARTSetBaudRate(baudRate);
 
-#if defined(WDRV_WINC_DEVICE_WINC1500)
     m2m_wifi_download_mode();
-#elif defined(WDRV_WINC_DEVICE_WINC3400)
-    nm_cpu_start();
-#endif
 }
 
 void SerialBridge_Process(SERIAL_BRIDGE_DECODER_STATE *const pSBDecoderState)

@@ -20,10 +20,9 @@
     are called.  That is the responsibility of the configuration-specific system
     files.
  *******************************************************************************/
- 
- // DOM-IGNORE-BEGIN
- /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+
+/*******************************************************************************
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -51,32 +50,19 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include <stdlib.h>
 #include "app.h"
 #include "wdrv_winc_client_api.h"
-#include "stdarg.h"
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Global Data Definitions
-// *****************************************************************************
-// *****************************************************************************
-static DRV_HANDLE wdrvHandle;
-
 
 void APP_ExampleInitialize(DRV_HANDLE handle);
 void APP_ExampleTasks(DRV_HANDLE handle);
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_PRINT_BUFFER_SIZ    2048
-static DRV_HANDLE wdrvHandle;
 
-static char printBuff[APP_PRINT_BUFFER_SIZ] __attribute__((aligned(4)));
-static int printBuffPtr;
-static OSAL_MUTEX_HANDLE_TYPE consoleMutex;
+static DRV_HANDLE wdrvHandle;
 
 // *****************************************************************************
 /* Application Data
@@ -101,79 +87,10 @@ APP_DATA appData;
 // *****************************************************************************
 // *****************************************************************************
 
-/* TODO:  Add any necessary callback functions.
-*/
-static void APP_DebugPrint(uint8_t *pBuf, size_t len)
-{
-    if ((len > 0) && (len < APP_PRINT_BUFFER_SIZ))
-    {
-        if (OSAL_RESULT_TRUE == OSAL_MUTEX_Lock(&consoleMutex, OSAL_WAIT_FOREVER))
-        {
-            if ((len + printBuffPtr) > APP_PRINT_BUFFER_SIZ)
-            {
-                printBuffPtr = 0;
-            }
-
-            memcpy(&printBuff[printBuffPtr], pBuf, len);
-            SYS_CONSOLE_Write(appData.consoleHandle, &printBuff[printBuffPtr], len);
-
-            printBuffPtr = (printBuffPtr + len + 3) & ~3;
-
-            OSAL_MUTEX_Unlock(&consoleMutex);
-        }
-    }
-}
-
-void APP_DebugPrintf(const char* format, ...)
-{
-    char tmpBuf[APP_PRINT_BUFFER_SIZ];
-    size_t len = 0;
-    va_list args;
-    va_start( args, format );
-
-    len = vsnprintf(tmpBuf, APP_PRINT_BUFFER_SIZ, format, args);
-
-    va_end( args );
-
-    APP_DebugPrint((uint8_t*)tmpBuf, len);
-}
-
-char APP_HexToChar(uint8_t hex)
-{
-    if (hex < 10)
-        return '0' + hex;
-
-    if (hex < 16)
-        return 'A' + (hex - 10);
-
-    return '-';
-}
-
-void APP_DebugPrintBuffer(const uint8_t *pBuf, uint16_t bufLen)
-{
-    uint8_t tmpBuf[APP_PRINT_BUFFER_SIZ];
-    size_t len = 0;
-    uint16_t i;
-    uint8_t *pB;
-
-    if ((NULL == pBuf) || (0 == bufLen))
-        return;
-
-    if (bufLen > (APP_PRINT_BUFFER_SIZ/2))
-        bufLen = (APP_PRINT_BUFFER_SIZ/2);
-
-    pB = tmpBuf;
-    for (i=0; i<bufLen; i++)
-    {
-        *pB++ = APP_HexToChar((pBuf[i] & 0xf0) >> 4);
-        *pB++ = APP_HexToChar(pBuf[i] & 0x0f);
-    }
-
-    len = bufLen*2;
-
-    APP_DebugPrint(tmpBuf, len);
-}
-
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Local Functions
+// *****************************************************************************
 // *****************************************************************************
 
 // *****************************************************************************
@@ -194,13 +111,7 @@ void APP_Initialize(void)
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
-
-    printBuffPtr = 0;
-    OSAL_MUTEX_Create(&consoleMutex);
-
-    WDRV_WINC_DebugRegisterCallback(APP_DebugPrintf);
 }
-
 
 /******************************************************************************
   Function:
@@ -212,13 +123,14 @@ void APP_Initialize(void)
 
 void APP_Tasks(void)
 {
+    /* Check the application's current state. */
     switch(appData.state)
     {
         case APP_STATE_INIT:
         {
             /* Get handles to both the USB console instances */
             appData.consoleHandle = SYS_CONSOLE_HandleGet(SYS_CONSOLE_INDEX_0);
-            
+
             if (SYS_STATUS_READY == WDRV_WINC_Status(sysObj.drvWifiWinc))
             {
                 appData.state = APP_STATE_WDRV_INIT_READY;

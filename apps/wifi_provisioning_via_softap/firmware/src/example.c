@@ -2,7 +2,7 @@
   WINC Example Application
 
   File Name:
-    tcp_server_ap.c
+    example.c
 
   Summary:
     Wi-Fi Provisioning via soft AP example.
@@ -21,9 +21,8 @@
         TCP_BUFFER_SIZE     -- Size of the socket buffer holding the receive data
 *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -96,6 +95,8 @@
 #include "wdrv_winc_client_api.h"
 #include "example_conf.h"
 
+extern APP_DATA appData;
+
 typedef enum
 {
     /* Example's state machine's initial state. */
@@ -129,12 +130,12 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
             if ((NULL != pBindMessage) && (0 == pBindMessage->status))
             {
-                APP_DebugPrintf("Bind on socket %d successful, server_socket = %d\r\n", socket, serverSocket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Bind on socket %d successful, server_socket = %d\r\n", socket, serverSocket);
                 listen(serverSocket, 0);
             }
             else
             {
-                APP_DebugPrintf("Bind on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Bind on socket %d failed\r\n", socket);
 
                 shutdown(serverSocket);
                 serverSocket =  -1;
@@ -149,12 +150,12 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
 
             if ((NULL != pListenMessage) && (0 == pListenMessage->status))
             {
-                APP_DebugPrintf("Listen on socket %d successful\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Listen on socket %d successful\r\n", socket);
                 accept(serverSocket, NULL, NULL);
             }
             else
             {
-                APP_DebugPrintf("Listen on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Listen on socket %d failed\r\n", socket);
 
                 shutdown(serverSocket);
                 serverSocket =  -1;
@@ -174,10 +175,9 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
                 accept(serverSocket, NULL, 0);
                 tcp_client_socket = pAcceptMessage->sock;
 
-                APP_DebugPrintf("Connection from  %s:%d\r\n", inet_ntop(AF_INET, &pAcceptMessage->strAddr.sin_addr.s_addr, s, sizeof(s)), _ntohs(pAcceptMessage->strAddr.sin_port));
+                SYS_CONSOLE_Print(appData.consoleHandle, "Connection from  %s:%d\r\n", inet_ntop(AF_INET, &pAcceptMessage->strAddr.sin_addr.s_addr, s, sizeof(s)), _ntohs(pAcceptMessage->strAddr.sin_port));
 
                 recv(tcp_client_socket, recvBuffer, TCP_BUFFER_SIZE, 0);
-                
             }
             break;
         }
@@ -186,93 +186,97 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
         {
             tstrSocketRecvMsg *pRecvMessage = (tstrSocketRecvMsg*)pMessage;
             tstrM2mWifiWepParams wep_parameters = {0,0,{0}};
-            
+
             if ((NULL != pRecvMessage) && (pRecvMessage->s16BufferSize > 0))
             {
                 char *p;
 
                 p = strtok((char *)pRecvMessage->pu8Buffer, ",");
-                if (p != NULL && !strncmp(p, "apply", 5)) {
+                if ((p != NULL) && (!strncmp(p, "apply", 5)))
+                {
                     char str_ssid[M2M_MAX_SSID_LEN], str_pw[M2M_MAX_PSK_LEN];
                     unsigned char sec_type = 0;
 
                     p = strtok(NULL, ",");
-                    if (p) {
+                    if (p)
+                    {
                         strcpy(str_ssid, p);
                     }
 
                     p = strtok(NULL, ",");
-                    if (p) {
+                    if (p)
+                    {
                         sec_type = atoi(p);
                     }
 
                     p = strtok(NULL, ",");
-                    if (p) {
+                    if (p)
+                    {
                         strcpy(str_pw, p);
                     }
-                    if(sec_type == M2M_WIFI_SEC_WEP){
-                        wep_parameters.u8KeyIndx=1;
-                        wep_parameters.u8KeySz = strlen(str_pw)+1;
+
+                    if (sec_type == M2M_WIFI_SEC_WEP)
+                    {
+                        wep_parameters.u8KeyIndx = 1;
+                        wep_parameters.u8KeySz   = strlen(str_pw)+1;
                         memcpy(wep_parameters.au8WepKey,str_pw,wep_parameters.u8KeySz);
                     }
-                    
+
                     state = EXAMP_STATE_ERROR;
-                    
-                    
-                    APP_DebugPrintf("Disable to AP.\r\n");
+
+                    SYS_CONSOLE_Print(appData.consoleHandle, "Disable to AP.\r\n");
                     shutdown(serverSocket);
-                    
+
                     state = EXAMP_STATE_AP_STOPPED;
-                  
+
                     /* Initialize the BSS context to use default values. */
 
                     if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetDefaults(&bssCtx))
                     {
                         break;
                     }
-                    
+
                     /* Update BSS context with target SSID for connection. */
 
                     if (WDRV_WINC_STATUS_OK != WDRV_WINC_BSSCtxSetSSID(&bssCtx, (uint8_t*)str_ssid, strlen((char *)str_ssid)))
                     {
-                        APP_DebugPrintf("Fail to set SSID....\r\n");
+                        SYS_CONSOLE_Print(appData.consoleHandle, "Fail to set SSID....\r\n");
                         break;
                     }
-                    
+
                     switch (sec_type)
                     {
                         case WDRV_WINC_AUTH_TYPE_OPEN:
-                        {        
-                                if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetOpen(&authCtx))
-                                {
-                                    APP_DebugPrintf("Fail to set Auth Open....\r\n");
-                                    break;
-                                }
-                                
+                        {
+                            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetOpen(&authCtx))
+                            {
+                                SYS_CONSOLE_Print(appData.consoleHandle, "Fail to set Auth Open....\r\n");
                                 break;
-                        }
-                        
-                        case WDRV_WINC_AUTH_TYPE_WPA_PSK:
-                        {        
-                                if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)str_pw, strlen(str_pw)))
-                                {
-                                    APP_DebugPrintf("Fail to set Auth WPAPSK....\r\n");
-                                    break;
-                                }
-                                
-                                break;
-                        }
-                        
-                        case WDRV_WINC_AUTH_TYPE_WEP:
-                        {        
-                            
-                                if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWEP(&authCtx, wep_parameters.u8KeyIndx, wep_parameters.au8WepKey, wep_parameters.u8KeySz))
-                                {
-                                    APP_DebugPrintf("Fail to set Auth WEP....\r\n");
-                                    break;
-                                }
+                            }
 
+                            break;
+                        }
+
+                        case WDRV_WINC_AUTH_TYPE_WPA_PSK:
+                        {
+                            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWPA(&authCtx, (uint8_t*)str_pw, strlen(str_pw)))
+                            {
+                                SYS_CONSOLE_Print(appData.consoleHandle, "Fail to set Auth WPAPSK....\r\n");
                                 break;
+                            }
+
+                            break;
+                        }
+
+                        case WDRV_WINC_AUTH_TYPE_WEP:
+                        {
+                            if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetWEP(&authCtx, wep_parameters.u8KeyIndx, wep_parameters.au8WepKey, wep_parameters.u8KeySz))
+                            {
+                                SYS_CONSOLE_Print(appData.consoleHandle, "Fail to set Auth WEP....\r\n");
+                                break;
+                            }
+
+                            break;
                         }
                     }
 
@@ -281,18 +285,18 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
             }
             else
             {
-                APP_DebugPrintf("Receive on socket %d failed\r\n", socket);
+                SYS_CONSOLE_Print(appData.consoleHandle, "Receive on socket %d failed\r\n", socket);
                 shutdown(socket);
             }
-            
-                memset(recvBuffer, 0, TCP_BUFFER_SIZE);
-                recv(tcp_client_socket, recvBuffer, TCP_BUFFER_SIZE, 0);
+
+            memset(recvBuffer, 0, TCP_BUFFER_SIZE);
+            recv(tcp_client_socket, recvBuffer, TCP_BUFFER_SIZE, 0);
             break;
         }
 
         case SOCKET_MSG_SEND:
         {
-            APP_DebugPrintf("Socket %d send completed\r\n", socket);
+            SYS_CONSOLE_Print(appData.consoleHandle, "Socket %d send completed\r\n", socket);
             break;
         }
 
@@ -303,12 +307,12 @@ static void APP_ExampleSocketEventCallback(SOCKET socket, uint8_t messageType, v
     }
 }
 
-static void APP_ExampleAPConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
+static void APP_ExampleAPConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_ASSOC_HANDLE assocHandle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
 {
     if (WDRV_WINC_CONN_STATE_CONNECTED == currentState)
     {
-        APP_DebugPrintf("AP Mode: Station connected\r\n");
-        
+        SYS_CONSOLE_Print(appData.consoleHandle, "AP Mode: Station connected\r\n");
+
         if (-1 == serverSocket)
         {
             serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -328,36 +332,30 @@ static void APP_ExampleAPConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN
                 state = EXAMP_STATE_SOCKET_LISTENING;
             }
         }
-        
     }
     else if (WDRV_WINC_CONN_STATE_DISCONNECTED == currentState)
     {
-        APP_DebugPrintf("AP Mode: Station disconnected\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "AP Mode: Station disconnected\r\n");
 
         if (-1 != serverSocket)
         {
             shutdown(serverSocket);
             serverSocket = -1;
         }
-
     }
 }
 
-static void APP_ExampleSTAConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
+static void APP_ExampleSTAConnectNotifyCallback(DRV_HANDLE handle, WDRV_WINC_ASSOC_HANDLE assocHandle, WDRV_WINC_CONN_STATE currentState, WDRV_WINC_CONN_ERROR errorCode)
 {
     if (WDRV_WINC_CONN_STATE_CONNECTED == currentState)
     {
-        APP_DebugPrintf("STA mode: Station connected\r\n");
+        SYS_CONSOLE_Print(appData.consoleHandle, "STA mode: Station connected\r\n");
+
         state = EXAMP_STATE_CONNECTED;
-        
-      
-        
-        
     }
     else if (WDRV_WINC_CONN_STATE_DISCONNECTED == currentState)
     {
-        APP_DebugPrintf("STA mode: Station disconnected\r\n");
-
+        SYS_CONSOLE_Print(appData.consoleHandle, "STA mode: Station disconnected\r\n");
 
         state = EXAMP_STATE_STA_STARTED;
     }
@@ -368,26 +366,25 @@ static void APP_ExampleDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAd
 {
     char s[20];
 
-    APP_DebugPrintf("AP Mode: Station IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
+    SYS_CONSOLE_Print(appData.consoleHandle, "AP Mode: Station IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
 }
 #endif
 
-#if 1
 static void APP_ExampleSTAModeDHCPAddressEventCallback(DRV_HANDLE handle, uint32_t ipAddress)
 {
     char s[20];
 
-    APP_DebugPrintf("STA Mode: Station IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
+    SYS_CONSOLE_Print(appData.consoleHandle, "STA Mode: Station IP address is %s\r\n", inet_ntop(AF_INET, &ipAddress, s, sizeof(s)));
 }
-#endif
+
 void APP_ExampleInitialize(DRV_HANDLE handle)
 {
-    APP_DebugPrintf("\r\n");
-    APP_DebugPrintf("===========================================\r\n");
-    APP_DebugPrintf("WINC WiFi Provisioning Soft AP Example\r\n");
-    APP_DebugPrintf("===========================================\r\n");
-    APP_DebugPrintf("\r\n");
-    
+    SYS_CONSOLE_Print(appData.consoleHandle, "\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "===========================================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "WINC WiFi Provisioning Soft AP Example\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "===========================================\r\n");
+    SYS_CONSOLE_Print(appData.consoleHandle, "\r\n");
+
     state = EXAMP_STATE_INIT;
 
     serverSocket = -1;
@@ -399,7 +396,6 @@ void APP_ExampleTasks(DRV_HANDLE handle)
     {
         case EXAMP_STATE_INIT:
         {
-
             /* Preset the error state incase any following operations fail. */
 
             state = EXAMP_STATE_ERROR;
@@ -423,7 +419,7 @@ void APP_ExampleTasks(DRV_HANDLE handle)
             }
 
 #if defined(WLAN_AUTH_OPEN)
-            /* Create authentication context for WPA. */
+            /* Create authentication context for Open. */
 
             if (WDRV_WINC_STATUS_OK != WDRV_WINC_AuthCtxSetOpen(&authCtx))
             {
@@ -455,8 +451,8 @@ void APP_ExampleTasks(DRV_HANDLE handle)
 
             if (WDRV_WINC_STATUS_OK == WDRV_WINC_APStart(handle, &bssCtx, &authCtx, NULL, &APP_ExampleAPConnectNotifyCallback))
             {
-                APP_DebugPrintf("AP started, you can connect to %s\r\n", WLAN_SSID);
-                APP_DebugPrintf("On the android device, connect to %s then run setting app\r\n", WLAN_SSID);
+                SYS_CONSOLE_Print(appData.consoleHandle, "AP started, you can connect to %s\r\n", WLAN_SSID);
+                SYS_CONSOLE_Print(appData.consoleHandle, "On the android device, connect to %s then run setting app\r\n", WLAN_SSID);
 
                 state = EXAMP_STATE_AP_STARTED;
             }
@@ -490,42 +486,42 @@ void APP_ExampleTasks(DRV_HANDLE handle)
         {
             break;
         }
-        
+
         case EXAMP_STATE_AP_STOPPED:
         {
             if (WDRV_WINC_STATUS_OK == WDRV_WINC_APStop(handle))
             {
                 state = EXAMP_STATE_STA_STARTED;
-            
+
                 if (-1 != serverSocket)
                 {
                     shutdown(serverSocket);
                     serverSocket = -1;
                 }
             }
-             
+
             WDRV_MSDelay(500);
             break;
         }
 
         case EXAMP_STATE_STA_STARTED:
         {
-            
-              if (WDRV_WINC_STATUS_OK != WDRV_WINC_IPUseDHCPSet(handle, &APP_ExampleSTAModeDHCPAddressEventCallback))
+            if (WDRV_WINC_STATUS_OK != WDRV_WINC_IPUseDHCPSet(handle, &APP_ExampleSTAModeDHCPAddressEventCallback))
             {
-                APP_DebugPrintf("WDRV_WINC_IPUseDHCPSet() fail ...\r\n");
+                SYS_CONSOLE_Print(appData.consoleHandle, "WDRV_WINC_IPUseDHCPSet() fail ...\r\n");
                 break;
             }
-            
+
             WDRV_WINC_BSSConnect(handle, &bssCtx, &authCtx, &APP_ExampleSTAConnectNotifyCallback);
             state = EXAMP_STATE_CONNECTING;
             break;
         }
-        
+
         case EXAMP_STATE_CONNECTED:
         {
-          
+            break;
         }
+
         case EXAMP_STATE_ERROR:
         {
             break;
@@ -537,5 +533,3 @@ void APP_ExampleTasks(DRV_HANDLE handle)
         }
     }
 }
-
-
