@@ -9,7 +9,7 @@
           <logicalFolder name="f7" displayName="crypto" projectFiles="true">
             <itemPath>../src/config/pic32mz_w1_curiosity/crypto/crypto.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="driver" projectFiles="true">
+          <logicalFolder name="f3" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="wifi" projectFiles="true">
               <logicalFolder name="f1" displayName="pic32mzw1" projectFiles="true">
                 <logicalFolder name="f1" displayName="include" projectFiles="true">
@@ -36,7 +36,7 @@
             <itemPath>../src/config/pic32mz_w1_curiosity/driver/driver.h</itemPath>
             <itemPath>../src/config/pic32mz_w1_curiosity/driver/driver_common.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f6" displayName="library" projectFiles="true">
+          <logicalFolder name="f5" displayName="library" projectFiles="true">
             <logicalFolder name="f1" displayName="tcpip" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <logicalFolder name="f1" displayName="common" projectFiles="true">
@@ -113,6 +113,8 @@
                 <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/lldp_manager.h</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/lldp_private.h</itemPath>
                 <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/lldp_tlv.h</itemPath>
+                <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/tcpip_mac_bridge_manager.h</itemPath>
+                <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/src/tcpip_mac_bridge_private.h</itemPath>
               </logicalFolder>
               <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/tcpip_common_ports.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/tcpip_mac.h</itemPath>
@@ -157,24 +159,25 @@
               <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/iperf.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/tcpip_commands.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/tcpip.h</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/tcpip_mac_bridge.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/library/tcpip/tcpip_ethernet.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="net_pres" projectFiles="true">
+          <logicalFolder name="f6" displayName="net_pres" projectFiles="true">
             <logicalFolder name="f1" displayName="pres" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/src/net_pres_local.h</itemPath>
               </logicalFolder>
               <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres.h</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_socketapi.h</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_socketapiconversion.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_certstore.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_encryptionproviderapi.h</itemPath>
-              <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_socketapi.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_transportapi.h</itemPath>
-              <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_socketapiconversion.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/net_pres_enc_glue.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="osal" projectFiles="true">
+          <logicalFolder name="f4" displayName="osal" projectFiles="true">
             <itemPath>../src/config/pic32mz_w1_curiosity/osal/osal.h</itemPath>
             <itemPath>../src/config/pic32mz_w1_curiosity/osal/osal_definitions.h</itemPath>
             <itemPath>../src/config/pic32mz_w1_curiosity/osal/osal_impl_basic.h</itemPath>
@@ -201,13 +204,13 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="system" projectFiles="true">
-            <logicalFolder name="f7" displayName="command" projectFiles="true">
+            <logicalFolder name="f8" displayName="command" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/command/sys_command.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="console" projectFiles="true">
+            <logicalFolder name="f10" displayName="console" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/console/sys_console.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="debug" projectFiles="true">
+            <logicalFolder name="f7" displayName="debug" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/debug/sys_debug.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="int" projectFiles="true">
@@ -221,12 +224,15 @@
             <logicalFolder name="f2" displayName="net" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/net/sys_net.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f6" displayName="reset" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/system/reset/sys_reset.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f3" displayName="time" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="wifi" projectFiles="true">
+            <logicalFolder name="f9" displayName="wifi" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/wifi/sys_wifi.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="wifiprov" projectFiles="true">
@@ -236,10 +242,8 @@
             <itemPath>../src/config/pic32mz_w1_curiosity/system/system.h</itemPath>
             <itemPath>../src/config/pic32mz_w1_curiosity/system/system_common.h</itemPath>
             <itemPath>../src/config/pic32mz_w1_curiosity/system/system_module.h</itemPath>
-            <itemPath>../src/config/pic32mz_w1_curiosity/system/sys_clk_h2_adapter.h</itemPath>
             <itemPath>../src/config/pic32mz_w1_curiosity/system/sys_time_h2_adapter.h</itemPath>
             <itemPath>../src/config/pic32mz_w1_curiosity/system/sys_random_h2_adapter.h</itemPath>
-            <itemPath>../src/config/pic32mz_w1_curiosity/system/sys_reset_h2_adapter.h</itemPath>
           </logicalFolder>
           <itemPath>../src/config/pic32mz_w1_curiosity/device.h</itemPath>
           <itemPath>../src/config/pic32mz_w1_curiosity/user.h</itemPath>
@@ -424,10 +428,10 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_w1_curiosity" projectFiles="true">
-          <logicalFolder name="f7" displayName="crypto" projectFiles="true">
+          <logicalFolder name="f6" displayName="crypto" projectFiles="true">
             <itemPath>../src/config/pic32mz_w1_curiosity/crypto/src/crypto.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f6" displayName="driver" projectFiles="true">
+          <logicalFolder name="f5" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="wifi" projectFiles="true">
               <logicalFolder name="f1" displayName="pic32mzw1" projectFiles="true">
                 <itemPath>../src/config/pic32mz_w1_curiosity/driver/wifi/pic32mzw1/drv_pic32mzw1_crypto.c</itemPath>
@@ -473,7 +477,7 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="net_pres" projectFiles="true">
+          <logicalFolder name="f7" displayName="net_pres" projectFiles="true">
             <logicalFolder name="f1" displayName="pres" projectFiles="true">
               <logicalFolder name="f1" displayName="src" projectFiles="true">
                 <itemPath>../src/config/pic32mz_w1_curiosity/net_pres/pres/src/net_pres.c</itemPath>
@@ -502,11 +506,11 @@
               <itemPath>../src/config/pic32mz_w1_curiosity/peripheral/uart/plib_uart1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f4" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/pic32mz_w1_curiosity/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
-            <logicalFolder name="f7" displayName="command" projectFiles="true">
+            <logicalFolder name="f8" displayName="command" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/command/src/sys_command.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f5" displayName="console" projectFiles="true">
@@ -516,7 +520,7 @@
               <itemPath>../src/config/pic32mz_w1_curiosity/system/console/src/sys_console.c</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/system/console/src/sys_console_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="debug" projectFiles="true">
+            <logicalFolder name="f9" displayName="debug" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/debug/src/sys_debug_local.h</itemPath>
               <itemPath>../src/config/pic32mz_w1_curiosity/system/debug/src/sys_debug.c</itemPath>
             </logicalFolder>
@@ -530,10 +534,13 @@
             <logicalFolder name="f2" displayName="net" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/net/src/sys_net.c</itemPath>
             </logicalFolder>
+            <logicalFolder name="f7" displayName="reset" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/system/reset/sys_reset.c</itemPath>
+            </logicalFolder>
             <logicalFolder name="f3" displayName="time" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="wifi" projectFiles="true">
+            <logicalFolder name="f10" displayName="wifi" projectFiles="true">
               <itemPath>../src/config/pic32mz_w1_curiosity/system/wifi/src/sys_wifi.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="wifiprov" projectFiles="true">
@@ -541,6 +548,7 @@
               <itemPath>../src/config/pic32mz_w1_curiosity/system/wifiprov/src/sys_wifiprov_json.c</itemPath>
             </logicalFolder>
             <itemPath>../src/config/pic32mz_w1_curiosity/system/sys_time_h2_adapter.c</itemPath>
+            <itemPath>../src/config/pic32mz_w1_curiosity/system/sys_random_h2_adapter.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/pic32mz_w1_curiosity/tasks.c</itemPath>
           <itemPath>../src/config/pic32mz_w1_curiosity/initialization.c</itemPath>
@@ -673,13 +681,78 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f2"
+                     displayName="pic32mz_w1_curiosity.mhc"
+                     projectFiles="true">
+        <logicalFolder name="f1" displayName="System_Component" projectFiles="true">
+          <logicalFolder name="f1" displayName="TCP_IP_STACK" projectFiles="true">
+            <logicalFolder name="f1" displayName="APPLICATION_LAYER" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/APPLICATION_LAYER/APPLICATION_LAYER.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/APPLICATION_LAYER/tcpipDhcp.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/APPLICATION_LAYER/tcpipDhcps.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/APPLICATION_LAYER/tcpipDns.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/APPLICATION_LAYER/tcpipDnss.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/APPLICATION_LAYER/tcpip_apps_config.yml</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="BASIC_CONFIGURATION" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/BASIC_CONFIGURATION/BASIC_CONFIGURATION.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/BASIC_CONFIGURATION/tcpipCmd.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/BASIC_CONFIGURATION/tcpip_basic_config.yml</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="DRIVER_LAYER" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/DRIVER_LAYER/DRIVER_LAYER.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/DRIVER_LAYER/tcpip_driver_config.yml</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="NETWORK_LAYER" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/NETWORK_LAYER/NETWORK_LAYER.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/NETWORK_LAYER/tcpipArp.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/NETWORK_LAYER/tcpipIcmp.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/NETWORK_LAYER/tcpipIPv4.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/NETWORK_LAYER/tcpip_network_config.yml</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="PRESENTATION_LAYER" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/PRESENTATION_LAYER/net_Pres.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/PRESENTATION_LAYER/PRESENTATION_LAYER.yml</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="TRANSPORT_LAYER" projectFiles="true">
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/TRANSPORT_LAYER/tcpipTcp.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/TRANSPORT_LAYER/tcpipUdp.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/TRANSPORT_LAYER/tcpip_transport_config.yml</itemPath>
+              <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/TRANSPORT_LAYER/TRANSPORT_LAYER.yml</itemPath>
+            </logicalFolder>
+            <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/TCP_IP_STACK/TCP_IP_STACK.yml</itemPath>
+          </logicalFolder>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/core_timer.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/dfp.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/drvWifiPic32mzw1.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/HarmonyCore.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/lib_crypto.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/lib_pahomqtt.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/lib_wolfcrypt.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/nvm.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/System_Component.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/sys_command.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/sys_console.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/sys_debug.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/sys_time.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/tcpipNetConfig.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/tcpipStack.yml</itemPath>
+          <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/System_Component/uart1.yml</itemPath>
+        </logicalFolder>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/core.yml</itemPath>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/GraphSettings.yml</itemPath>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/project.yml</itemPath>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/settings.yml</itemPath>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/sysMqttPic32mzw1.yml</itemPath>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/sysNetPic32mzw1.yml</itemPath>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/sysWifiPic32mzw1.yml</itemPath>
+        <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.mhc/sysWifiProvPic32mzw1.yml</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="wolfcrypt" projectFiles="true">
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/misc.c</itemPath>
         <itemPath>../src/third_party/wolfssl/wolfssl/wolfcrypt/src/evp.c</itemPath>
       </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/pic32mz_w1_curiosity/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32mz_w1_curiosity/pic32mz_w1_curiosity.xml</itemPath>
       <itemPath>../src/config/pic32mz_w1_curiosity/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -696,7 +769,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>pk4hybrid</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -722,6 +795,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>

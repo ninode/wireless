@@ -74,7 +74,7 @@ static SYS_WIFI_CONFIG wificonfig;
 #define MQTT_PERIOIDC_PUB_TIMEOUT   30 //Sec
 #define MQTT_PUB_TIMEOUT_CONST (MQTT_PERIOIDC_PUB_TIMEOUT * SYS_TMR_TickCounterFrequencyGet())
 
-//#define APP_CFG_WITH_CLOUD_API
+//#define APP_CFG_WITH_MQTT_API
 
 // *****************************************************************************
 // *****************************************************************************
@@ -252,19 +252,19 @@ void APP_Tasks ( void )
         
         case APP_STATE_MODE_STA:
         {
-#ifdef APP_CFG_WITH_CLOUD_API
+#ifdef APP_CFG_WITH_MQTT_API
             SYS_MQTT_Config   *psMqttCfg;
 
             memset(&g_sTmpSysMqttCfg, 0, sizeof(g_sTmpSysMqttCfg));
             psMqttCfg = &g_sTmpSysMqttCfg;
             psMqttCfg->sBrokerConfig.autoConnect = false;
-            psMqttCfg->sBrokerConfig.tlsEnabled = false;
-            strcpy(psMqttCfg->sBrokerConfig.brokerName, "broker.hivemq.com");
-            psMqttCfg->sBrokerConfig.serverPort = 1883;
+            psMqttCfg->sBrokerConfig.tlsEnabled = true;
+            strcpy(psMqttCfg->sBrokerConfig.brokerName, "test.mosquitto.org");
+            psMqttCfg->sBrokerConfig.serverPort = 8883;
             psMqttCfg->subscribeCount = 1;
             psMqttCfg->sSubscribeConfig[0].qos = 1;
             strcpy(psMqttCfg->sSubscribeConfig[0].topicName, "MCHP/sample/b");
-            g_sSysMqttHandle = SYS_MQTT_Open(&g_sTmpSysMqttCfg, MqttCallback, NULL);    
+            g_sSysMqttHandle = SYS_MQTT_Connect(&g_sTmpSysMqttCfg, MqttCallback, NULL);    
 #else    
             g_sSysMqttHandle = SYS_MQTT_Connect(NULL, MqttCallback, NULL); 
 #endif    

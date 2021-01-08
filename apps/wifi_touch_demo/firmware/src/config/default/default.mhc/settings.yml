@@ -1,0 +1,14 @@
+configName: default
+folderName: Firmware
+format_version: v1.0
+frameworkPath: ../../Harmony3
+processor: PIC32MZ1025W104132
+projectName: PIC32_WFI32E_Curiosity_QT7_Touch_Example
+settings:
+  PackageFilter: audio;aws_cloud;azure-rtos-threadx;bootloader;bootloader_apps_uart;bsp;bt;core;core_apps_pic32mz_w1;crypto;cryptoauthlib;cryptoauthlib_apps;csp;csp_apps_pic32mz_w1;net;quick_docs;touch;touch_apps;usb;wireless;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: ALL
+  DFPPath: .\dev_packs\Microchip\PIC32MZ-W_DFP\1.3.177\atdf\PIC32MZ1025W104132.atdf
