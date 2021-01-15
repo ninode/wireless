@@ -272,13 +272,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: B51F93A5873769DC9149F86C5BE8F2B2
-- generatedChecksum: 8B3B7A51F654DC5B8A42E74B8534B955
+- generatedChecksum: 61C9AB6F078D218812B7C0B0399822BE
   logicalPath: config\sam_d21_xpro_winc1500\driver\winc
   name: wdrv_winc.c
   physicalPath: driver\winc
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 8B3B7A51F654DC5B8A42E74B8534B955
+  userChecksum: 61C9AB6F078D218812B7C0B0399822BE
 - generatedChecksum: 1C250277649C756DDA1BF1A3DFF46C83
   logicalPath: config\sam_d21_xpro_winc1500\driver\winc
   name: wdrv_winc_assoc.c
@@ -286,13 +286,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 1C250277649C756DDA1BF1A3DFF46C83
-- generatedChecksum: B1D6EE9F8F4212D576D33146A12D9B00
+- generatedChecksum: E17A5533170340AAD26EEBDF6E22A73F
   logicalPath: config\sam_d21_xpro_winc1500\driver\winc
   name: wdrv_winc_authctx.c
   physicalPath: driver\winc
   security: NON_SECURE
   type: SOURCE
-  userChecksum: B1D6EE9F8F4212D576D33146A12D9B00
+  userChecksum: E17A5533170340AAD26EEBDF6E22A73F
 - generatedChecksum: 23D94F4BD1C11F40C9C2EBF80D6B216C
   logicalPath: config\sam_d21_xpro_winc1500\driver\winc
   name: wdrv_winc_bssctx.c
@@ -503,13 +503,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 52F91AC0727F2311EDA0E3BAA7719A9F
-- generatedChecksum: D5B681BE6A1947AA2F3CCF80496DA3A7
+- generatedChecksum: 9BDA0770A2781D167BCED451D990C95D
   logicalPath: config\sam_d21_xpro_winc1500
   name: configuration.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: D5B681BE6A1947AA2F3CCF80496DA3A7
+  userChecksum: 9BDA0770A2781D167BCED451D990C95D
 - generatedChecksum: CCBD23918BE14943EA128B0D552031C5
   logicalPath: packs\CMSIS\CMSIS\Core\Include
   name: core_cm0plus.h
@@ -1070,13 +1070,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: F123D6104DB9C55CD684CE27F3B22781
-- generatedChecksum: null
+- generatedChecksum: 4B3C3EF8A318908A22B78500515C3288
   logicalPath: config\sam_d21_xpro_winc1500
   name: user.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: null
+  userChecksum: 4B3C3EF8A318908A22B78500515C3288
 - generatedChecksum: 033E6D1A1DE09563D6768BE330BAFFE2
   logicalPath: config\sam_d21_xpro_winc1500\driver\winc\include
   name: wdrv_winc.h
@@ -1182,13 +1182,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: BB29E3755A067138F9A41BB5C23D4423
-- generatedChecksum: 23D866BF58A9E9F2115C4E9B7533B07C
+- generatedChecksum: F70714D3F24AAC58E9C6D457DD9C3383
   logicalPath: config\sam_d21_xpro_winc1500\driver\winc\include
   name: wdrv_winc_socket.h
   physicalPath: driver\winc\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 23D866BF58A9E9F2115C4E9B7533B07C
+  userChecksum: F70714D3F24AAC58E9C6D457DD9C3383
 - generatedChecksum: E5AF59122D8CB3058702BE143FD19B91
   logicalPath: config\sam_d21_xpro_winc1500\driver\winc\include
   name: wdrv_winc_softap.h
