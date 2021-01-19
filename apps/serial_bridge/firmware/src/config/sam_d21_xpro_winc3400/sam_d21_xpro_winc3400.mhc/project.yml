@@ -384,13 +384,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: C10080B1E0B43C51F7553E8985831817
-- generatedChecksum: 16544B3A7922E7A385DAE15D9B1D1FD5
+- generatedChecksum: C73AE3969B43B0E5A001DC9D791481FC
   logicalPath: config\sam_d21_xpro_winc3400\driver\winc
   name: wdrv_winc_sta.c
   physicalPath: driver\winc
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 16544B3A7922E7A385DAE15D9B1D1FD5
+  userChecksum: C73AE3969B43B0E5A001DC9D791481FC
 - generatedChecksum: 0E05FA2D3237381C3C0217A9C86A7003
   logicalPath: config\sam_d21_xpro_winc3400\driver\winc
   name: wdrv_winc_systime.c
@@ -1063,13 +1063,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: F123D6104DB9C55CD684CE27F3B22781
-- generatedChecksum: 4B3C3EF8A318908A22B78500515C3288
+- generatedChecksum: null
   logicalPath: config\sam_d21_xpro_winc3400
   name: user.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: 4B3C3EF8A318908A22B78500515C3288
+  userChecksum: null
 - generatedChecksum: 033E6D1A1DE09563D6768BE330BAFFE2
   logicalPath: config\sam_d21_xpro_winc3400\driver\winc\include
   name: wdrv_winc.h

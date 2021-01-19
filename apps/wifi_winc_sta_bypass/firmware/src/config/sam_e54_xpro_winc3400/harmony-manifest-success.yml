@@ -4,7 +4,7 @@
 
 
 project: wifi_winc_sta_bypass
-creation_date: 2021-01-15T15:52:28.095+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2021-01-19T14:45:35.511+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 7
 mhc_mode: Headless            # [IDE|Standalone|Headless]
 mhc_version: v3.6.5
@@ -17,6 +17,8 @@ modules:
     - {name: "core", version: "v3.8.1"}
     - {name: "dev_packs", version: "v3.8.0"}
     - {name: "wireless", version: "unknown"}
+    - {name: "wolfssl", version: "v4.5.0"}
     - {name: "net", version: "v3.7.0"}
     - {name: "bsp", version: "v3.8.2"}
+    - {name: "crypto", version: "v3.6.1"}
 

@@ -48,6 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "crypto/crypto.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "peripheral/tc/plib_tc3.h"
 #include "system/time/sys_time.h"
@@ -72,6 +73,7 @@
 #include "peripheral/cmcc/plib_cmcc.h"
 #include "peripheral/sercom/spi_master/plib_sercom4_spi_master.h"
 #include "peripheral/eic/plib_eic.h"
+#include "wolfssl/wolfcrypt/port/pic32/crypt_wolfcryptcb.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
 #include "app.h"
