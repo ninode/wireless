@@ -83,7 +83,7 @@ void TcpClientCallback(uint32_t event, void *data, void* cookie)
             memset(networkBuffer, 0, sizeof(networkBuffer));
             sprintf(networkBuffer, "GET / HTTP/1.1\r\n"
                     "Host: %s\r\n"
-                    "Connection: close\r\n\r\n", g_sSysNetConfig.host_name);
+                    "Connection: close\r\n\r\n", g_sSysNetConfig0.host_name);
             
             while(SYS_NET_SendMsg(g_tcpSrvcHandle, (uint8_t*) networkBuffer, strlen(networkBuffer)) == 0);
             break;
