@@ -141,12 +141,14 @@ void APP_Tasks(void)
 
         case APP_STATE_INIT_WINC:
         {
-            if (SYS_STATUS_READY == WDRV_WINC_Status(sysObj.drvWifiWinc))
+            if (SYS_STATUS_BUSY == WDRV_WINC_Status(sysObj.drvWifiWinc))
             {
-                SerialBridge_Init(&serialBridgeDecoderState, 115200);
-
-                appData.state = APP_STATE_WDRV_OPEN_BRIDGE;
+                break;
             }
+
+            SerialBridge_Init(&serialBridgeDecoderState, 115200);
+
+            appData.state = APP_STATE_WDRV_OPEN_BRIDGE;
             break;
         }
 
