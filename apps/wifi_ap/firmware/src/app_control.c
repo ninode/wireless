@@ -377,6 +377,39 @@ static void WLANCMDProcessing(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv
             }
         }
     }
+    else if(!strcmp("scan", argv[1]))
+    {
+        if(argc < 5)
+        {
+            SYS_CONSOLE_MESSAGE("usage: wlan scan <active | passive> <channel> <scan time in ms>\r\n");
+            SYS_CONSOLE_MESSAGE("EX: wlan scan active 1 200 - Runs active scan on channel 1 for 200ms\r\n");
+            SYS_CONSOLE_MESSAGE("EX: wlan scan passive 6 120 - Runs passive scan on channel 6 for 120ms\r\n");
+            SYS_CONSOLE_MESSAGE("Note: Setting channel to '0' scans all channels and scan time of 0 uses default values\r\n");
+            
+            return;
+        }
+        else
+        {
+            if((!strcmp("active", argv[2])) || (!strcmp("passive", argv[2])))
+            {
+                unsigned char channel;
+                uint16_t time;
+                SCAN_TYPE scanType;
+                
+                channel  = strtoul(argv[3],0,10);
+                time     = strtoul(argv[4],0,10);
+                if(!strcmp("active", argv[2]))
+                {
+                    scanType = ACTIVE;
+                }
+                else
+                {
+                    scanType = PASSIVE;
+                }
+                APP_Scan(channel, scanType, time);
+            }
+        }
+    }
     else if(!strcmp("ap", argv[1]))
     {
         if (argc < 3)

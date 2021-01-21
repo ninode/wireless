@@ -76,6 +76,81 @@ static void APP_TimerCallback(uintptr_t context)
     APP_APShowConnectedDevices();
 }
 
+static bool APP_BSSFindNotifyCallback(DRV_HANDLE handle, uint8_t index, uint8_t ofTotal, WDRV_PIC32MZW_BSS_INFO *pBSSInfo)
+{
+    WDRV_PIC32MZW_BSS_INFO bssInfo;
+    
+    if(ofTotal == 0)
+    {
+        SYS_CONSOLE_MESSAGE("APP: No AP Found Rescan\r\n");
+        return true;
+    }
+        
+    if(index == 1)
+    {
+        SYS_CONSOLE_PRINT("#%02d\r\n", ofTotal);
+        SYS_CONSOLE_PRINT(">>#  RI  Sec  Recommend CH BSSID             SSID\r\n");
+        SYS_CONSOLE_PRINT(">>#      Cap  Auth Type\r\n>>#\r\n");
+    }
+    
+    if (WDRV_PIC32MZW_STATUS_OK == WDRV_PIC32MZW_BSSFindGetInfo(appData.wdrvHandle, &bssInfo))
+    {
+        SYS_CONSOLE_PRINT(">>%02d %d 0x%02x ", index, bssInfo.rssi, bssInfo.secCapabilities);
+
+        switch (bssInfo.authTypeRecommended)
+        {
+            case WDRV_PIC32MZW_AUTH_TYPE_OPEN:
+            {
+                SYS_CONSOLE_PRINT("OPEN     ");
+                break;
+            }
+
+            case WDRV_PIC32MZW_AUTH_TYPE_WEP:
+            {
+                SYS_CONSOLE_PRINT("WEP");
+                break;
+            }
+
+            case WDRV_PIC32MZW_AUTH_TYPE_WPAWPA2_PERSONAL:
+            {
+                SYS_CONSOLE_PRINT("WPA/2 PSK");
+                break;
+            }
+
+            case WDRV_PIC32MZW_AUTH_TYPE_WPA2_PERSONAL:
+            {
+                SYS_CONSOLE_PRINT("WPA2 PSK ");
+                break;
+            }
+#ifdef WDRV_PIC32MZW_WPA3_SUPPORT
+            case WDRV_PIC32MZW_AUTH_TYPE_WPA2WPA3_PERSONAL:
+            {
+                SYS_CONSOLE_PRINT("SAE/PSK  ", 9);
+                break;
+            }
+
+            case WDRV_PIC32MZW_AUTH_TYPE_WPA3_PERSONAL:
+            {
+                SYS_CONSOLE_PRINT("SAE      ", 9);
+                break;
+            }
+#endif
+            default:
+            {
+                SYS_CONSOLE_PRINT("Not Avail");
+                break;
+            }
+        }
+
+        SYS_CONSOLE_PRINT(" %02d %02X:%02X:%02X:%02X:%02X:%02X %.*s\r\n", bssInfo.ctx.channel,
+            bssInfo.ctx.bssid.addr[0], bssInfo.ctx.bssid.addr[1], bssInfo.ctx.bssid.addr[2],
+            bssInfo.ctx.bssid.addr[3], bssInfo.ctx.bssid.addr[4], bssInfo.ctx.bssid.addr[5],
+            bssInfo.ctx.ssid.length, bssInfo.ctx.ssid.name);
+    }
+
+    return true;
+}
+
 static void APP_APNotifyCallback(DRV_HANDLE handle, WDRV_PIC32MZW_ASSOC_HANDLE associationHandle, WDRV_PIC32MZW_CONN_STATE currentState)
 {
     WDRV_PIC32MZW_MAC_ADDR macAddr;
@@ -171,6 +246,41 @@ static void APP_RfMacConfigStatus(void)
             SYS_CONSOLE_PRINT("APP: RF and MAC configurations are set successfully\r\n");
         }
     }
+}
+
+void APP_Scan(uint8_t channel, SCAN_TYPE scanType, uint16_t scanTime)
+{
+    if ((channel > 13) && (channel < 255))
+    {
+        SYS_CONSOLE_MESSAGE("APP: Invalid channel \r\n");
+        return;
+    }
+    
+    SYS_CONSOLE_PRINT("APP: channel: %d scanType: %d\r\n",channel, scanType);
+    
+    if(scanType == ACTIVE)
+    {
+        if (WDRV_PIC32MZW_STATUS_OK != WDRV_PIC32MZW_BSSFindSetScanParameters(appData.wdrvHandle, scanTime, 0))
+        {
+            SYS_CONSOLE_MESSAGE("APP Error: updating Scan Parameters\r\n");
+            return;
+        }
+    }
+    else
+    {
+        if (WDRV_PIC32MZW_STATUS_OK != WDRV_PIC32MZW_BSSFindSetScanParameters(appData.wdrvHandle, 0, scanTime))
+        {
+            SYS_CONSOLE_MESSAGE("APP Error: updating Scan Parameters\r\n");
+            return;
+        }
+    }
+
+    if (WDRV_PIC32MZW_STATUS_OK != WDRV_PIC32MZW_BSSFindFirst(appData.wdrvHandle, channel, scanType, APP_BSSFindNotifyCallback))
+    {
+        SYS_CONSOLE_MESSAGE("APP Error: scan fail\r\n");
+    }
+
+    return;
 }
 
 bool APP_APStart()

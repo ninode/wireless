@@ -73,6 +73,12 @@ typedef enum {
 
 typedef enum
 {
+    PASSIVE,
+    ACTIVE
+}SCAN_TYPE;
+
+typedef enum
+{
     /* Application's state machine's initial state. */
     APP_STATE_INIT=0,
     APP_STATE_WDRV_INIT_READY,
@@ -187,6 +193,8 @@ void APP_DRIVER_Initialize ( void );
  */
 
 void APP_DRIVER_Tasks( void );
+
+void APP_Scan(uint8_t channel, SCAN_TYPE scanType, uint16_t scanTime);
 void APP_RegDomainGet(uint8_t regDomainSelect);
 
 
@@ -201,4 +209,3 @@ void APP_RegDomainGet(uint8_t regDomainSelect);
 /*******************************************************************************
  End of File
  */
-

@@ -185,10 +185,10 @@ static bool APP_BSSFindNotifyCallback(DRV_HANDLE handle, uint8_t index, uint8_t 
             }
         }
 
-        SYS_CONSOLE_PRINT(" %02d %02X:%02X:%02X:%02X:%02X:%02X %s\r\n", bssInfo.ctx.channel,
+        SYS_CONSOLE_PRINT(" %02d %02X:%02X:%02X:%02X:%02X:%02X %.*s\r\n", bssInfo.ctx.channel,
             bssInfo.ctx.bssid.addr[0], bssInfo.ctx.bssid.addr[1], bssInfo.ctx.bssid.addr[2],
             bssInfo.ctx.bssid.addr[3], bssInfo.ctx.bssid.addr[4], bssInfo.ctx.bssid.addr[5],
-            bssInfo.ctx.ssid.name);
+            bssInfo.ctx.ssid.length, bssInfo.ctx.ssid.name);
     }
 
     return true;
