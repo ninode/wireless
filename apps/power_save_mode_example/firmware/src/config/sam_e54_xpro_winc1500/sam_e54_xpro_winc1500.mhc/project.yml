@@ -335,13 +335,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: B51F93A5873769DC9149F86C5BE8F2B2
-- generatedChecksum: 61C9AB6F078D218812B7C0B0399822BE
+- generatedChecksum: CB3A90D20B6E340FF37EF5D1EE567112
   logicalPath: config\sam_e54_xpro_winc1500\driver\winc
   name: wdrv_winc.c
   physicalPath: driver\winc
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 61C9AB6F078D218812B7C0B0399822BE
+  userChecksum: CB3A90D20B6E340FF37EF5D1EE567112
 - generatedChecksum: 1C250277649C756DDA1BF1A3DFF46C83
   logicalPath: config\sam_e54_xpro_winc1500\driver\winc
   name: wdrv_winc_assoc.c
