@@ -1245,50 +1245,6 @@ int CRYPT_RNG_Initialize(CRYPT_RNG_CTX*);
 
 //******************************************************************************
 /* Function:
-    int CRYPT_RNG_Deinitialize(CRYPT_RNG_CTX* rng)
-
-  Summary:
-	Deinitializes the random number generator.
-
-  Description:
-	This function deinitializes the context that stores information relative to
-	random number generation.
-
-  Precondition:
-	CRYPT_RNG_Initialize must have been called.
-	
-  Parameters:
-    rng		- Pointer to random number generator context.
-
-  Returns:
-	- negative 	- An error occurred.
-	- 0			- An invalid pointer was not passed to the function.
-
-  Example:
-    <code>
-	#define RANDOM_BYTE_SZ 32
-
-	int           ret;
-	CRYPT_RNG_CTX mcRng;
-	byte          out[RANDOM_BYTE_SZ];
-	
-	ret = CRYPT_RNG_Initialize(&mcRng);
-	
-	ret = CRYPT_RNG_Get(&mcRng, &out[0]);
-
-    ret = CRYPT_RNG_BlockGenerate(&mcRng, out, RANDOM_BYTE_SZ);
-
- 	ret = CRYPT_RNG_Deinitialize(&mcRng);
-    </code>
-
-  Remarks:
-*/
-
-#define CRYPT_RNG_Deinitialize CRYPT_RNG_Deinitialize
-int CRYPT_RNG_Deinitialize(CRYPT_RNG_CTX* rng);
-
-//******************************************************************************
-/* Function:
     int CRYPT_RNG_Get(CRYPT_RNG_CTX* rng, unsigned char* b)
 
   Summary:

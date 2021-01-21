@@ -1028,13 +1028,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 96CA80FDB674661B17B39C27AE003029
-- generatedChecksum: 1020E22480177726B38D5144CA5CA838
+- generatedChecksum: 4BE99D11DB0A02EF9666A55E6AF01FA6
   logicalPath: config\pic32mz_w1_curiosity_qt7\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 1020E22480177726B38D5144CA5CA838
+  userChecksum: 4BE99D11DB0A02EF9666A55E6AF01FA6
 - generatedChecksum: B4966A4C731289A8806C1BE1BFFEC7E4
   logicalPath: config\pic32mz_w1_curiosity_qt7\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_assoc.c
@@ -1098,13 +1098,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 88B7B790381917B6FFCB50872FCBAB9A
-- generatedChecksum: A44E0C91CA156944DA7FC67ADF024EDB
+- generatedChecksum: 4E8BCA2668E5E6CF8AC6B403637047BB
   logicalPath: config\pic32mz_w1_curiosity_qt7\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_sta.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: A44E0C91CA156944DA7FC67ADF024EDB
+  userChecksum: 4E8BCA2668E5E6CF8AC6B403637047BB
 - generatedChecksum: 9C097D0AA1849F8BF60A0435EB8B7C1A
   logicalPath: wolfcrypt
   name: wolfevent.c

@@ -69,6 +69,13 @@ children:
         children:
         - {type: Value, value: 'true'}
   - type: Boolean
+    attributes: {id: wolfcrypt_random}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: lib_wolfcrypt, value: 'true'}
+  - type: Boolean
     attributes: {id: wolfcrypt_sha1_hw}
     children:
     - type: Attributes

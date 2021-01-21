@@ -62,6 +62,24 @@
 // *****************************************************************************
 
 
+/*** Macros for GPIO_RB9 pin ***/
+#define GPIO_RB9_Set()               (LATBSET = (1<<9))
+#define GPIO_RB9_Clear()             (LATBCLR = (1<<9))
+#define GPIO_RB9_Toggle()            (LATBINV= (1<<9))
+#define GPIO_RB9_OutputEnable()      (TRISBCLR = (1<<9))
+#define GPIO_RB9_InputEnable()       (TRISBSET = (1<<9))
+#define GPIO_RB9_Get()               ((PORTB >> 9) & 0x1)
+#define GPIO_RB9_PIN                  GPIO_PIN_RB9
+
+/*** Macros for GPIO_RB8 pin ***/
+#define GPIO_RB8_Set()               (LATBSET = (1<<8))
+#define GPIO_RB8_Clear()             (LATBCLR = (1<<8))
+#define GPIO_RB8_Toggle()            (LATBINV= (1<<8))
+#define GPIO_RB8_OutputEnable()      (TRISBCLR = (1<<8))
+#define GPIO_RB8_InputEnable()       (TRISBSET = (1<<8))
+#define GPIO_RB8_Get()               ((PORTB >> 8) & 0x1)
+#define GPIO_RB8_PIN                  GPIO_PIN_RB8
+
 
 // *****************************************************************************
 /* GPIO Port

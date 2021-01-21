@@ -306,11 +306,23 @@ const TCPIP_DHCPS_MODULE_CONFIG tcpipDHCPSInitData =
 /*** DNS Server Initialization Data ***/
 const TCPIP_DNSS_MODULE_CONFIG tcpipDNSServerInitData =
 { 
-    .deleteOldLease			= TCPIP_DNSS_DELETE_OLD_LEASE,
-    .replyBoardAddr			= TCPIP_DNSS_REPLY_BOARD_ADDR,
-    .IPv4EntriesPerDNSName 	= TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS,
-	.IPv6EntriesPerDNSName 	= 0,
+    .deleteOldLease         = TCPIP_DNSS_DELETE_OLD_LEASE,
+    .replyBoardAddr         = TCPIP_DNSS_REPLY_BOARD_ADDR,
+    .IPv4EntriesPerDNSName  = TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS,
+    .IPv6EntriesPerDNSName  = 0,
 };
+
+
+/*** IPv4 Initialization Data ***/
+
+
+const TCPIP_IPV4_MODULE_CONFIG  tcpipIPv4InitData = 
+{
+    .arpEntries = TCPIP_IPV4_ARP_SLOTS, 
+};
+
+
+
 
 
 
@@ -327,7 +339,7 @@ TCPIP_STACK_HEAP_EXTERNAL_CONFIG tcpipHeapConfig =
 
 const TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] =
 {
-	/*** Network Configuration Index 0 ***/
+    /*** Network Configuration Index 0 ***/
     {
         TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX0,       // interface
         TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0,            // hostName
@@ -341,7 +353,7 @@ const TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] 
         TCPIP_NETWORK_DEFAULT_INTERFACE_FLAGS_IDX0,      // startFlags
        &TCPIP_NETWORK_DEFAULT_MAC_DRIVER_IDX0,           // pMacObject
     },
-	/*** Network Configuration Index 1 ***/
+    /*** Network Configuration Index 1 ***/
     {
         TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX1,       // interface
         TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX1,            // hostName
@@ -361,7 +373,7 @@ const size_t TCPIP_HOSTS_CONFIGURATION_SIZE = sizeof (TCPIP_HOSTS_CONFIGURATION)
 
 const TCPIP_STACK_MODULE_CONFIG TCPIP_STACK_MODULE_CONFIG_TBL [] =
 {
-    {TCPIP_MODULE_IPV4,             0},
+    {TCPIP_MODULE_IPV4,             &tcpipIPv4InitData},
 
     {TCPIP_MODULE_ICMP,             0},                             // TCPIP_MODULE_ICMP
 
@@ -401,7 +413,7 @@ const size_t TCPIP_STACK_MODULE_CONFIG_TBL_SIZE = sizeof (TCPIP_STACK_MODULE_CON
  ********************************************************************/
 
 
-SYS_MODULE_OBJ TCPIP_STACK_Init()
+SYS_MODULE_OBJ TCPIP_STACK_Init(void)
 {
     TCPIP_STACK_INIT    tcpipInit;
 
@@ -499,6 +511,26 @@ const SYS_DEBUG_INIT debugInit =
 // *****************************************************************************
 // *****************************************************************************
 
+/*******************************************************************************
+  Function:
+    void STDIO_BufferModeSet ( void )
+
+  Summary:
+    Sets the buffering mode for stdin and stdout
+
+  Remarks:
+ ********************************************************************************/
+static void STDIO_BufferModeSet(void)
+{
+
+    /* Make stdin unbuffered */
+    setbuf(stdin, NULL);
+
+    /* Make stdout unbuffered */
+    setbuf(stdout, NULL);
+}
+
+
 
 
 /*******************************************************************************
@@ -513,8 +545,12 @@ const SYS_DEBUG_INIT debugInit =
 
 void SYS_Initialize ( void* data )
 {
+
     /* Start out with interrupts disabled before configuring any modules */
     __builtin_disable_interrupts();
+
+    STDIO_BufferModeSet();
+
 
   
     CLK_Initialize();
@@ -528,6 +564,8 @@ void SYS_Initialize ( void* data )
 	GPIO_Initialize();
 
     NVM_Initialize();
+
+	UART3_Initialize();
 
     CORETIMER_Initialize();
 	UART1_Initialize();

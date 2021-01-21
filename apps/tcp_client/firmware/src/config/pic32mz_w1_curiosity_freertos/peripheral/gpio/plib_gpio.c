@@ -57,9 +57,13 @@
 */
 void GPIO_Initialize ( void )
 {
+    /* Disable JTAG since at least one of its pins is configured for Non-JTAG function */
+    CFGCON0bits.JTAGEN = 0;
+
     /* PORTA Initialization */
 
     /* PORTB Initialization */
+    ANSELBCLR = 0x300; /* Digital Mode Enable */
 
     /* PORTC Initialization */
 

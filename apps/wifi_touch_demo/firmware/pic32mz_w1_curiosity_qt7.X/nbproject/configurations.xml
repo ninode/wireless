@@ -891,7 +891,7 @@
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mz_w1_curiosity_qt7;../src/packs/PIC32MZ1025W104132_DFP"/>
+                  value="../src;../src/config/pic32mz_w1_curiosity_qt7;../src/packs/PIC32MZ1025W104132_DFP;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

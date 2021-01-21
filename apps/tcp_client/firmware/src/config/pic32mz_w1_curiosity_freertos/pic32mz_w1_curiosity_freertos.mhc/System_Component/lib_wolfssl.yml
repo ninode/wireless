@@ -5,13 +5,6 @@ children:
 - type: Symbols
   children:
   - type: Boolean
-    attributes: {id: wolfssl}
-    children:
-    - type: Values
-      children:
-      - type: Dynamic
-        attributes: {id: net_Pres, value: 'true'}
-  - type: Boolean
     attributes: {id: wolfsslDTLS}
     children:
     - type: Values
