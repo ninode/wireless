@@ -68,33 +68,6 @@ void _DRV_BA414E_Tasks(  void *pvParameters  )
     }
 }
 
-void _SYS_CMD_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        SYS_CMD_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
-
-static void _WDRV_PIC32MZW1_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        WDRV_PIC32MZW_Tasks(sysObj.drvWifiPIC32MZW1);
-    }
-}
-
-void _SYS_WIFI_Task(  void *pvParameters  )
-{
-    while(1)
-    {
-        SYS_WIFI_Tasks(sysObj.syswifi);
-        vTaskDelay(1 / portTICK_PERIOD_MS);
-    }
-}
-
 /* Handle for the APP_Tasks. */
 TaskHandle_t xAPP_Tasks;
 
@@ -112,6 +85,43 @@ void _TCPIP_STACK_Task(  void *pvParameters  )
     while(1)
     {
         TCPIP_STACK_Task(sysObj.tcpip);
+        vTaskDelay(1 / portTICK_PERIOD_MS);
+    }
+}
+
+void _SYS_CMD_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        SYS_CMD_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+
+
+void _NET_PRES_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        NET_PRES_Tasks(sysObj.netPres);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+
+static void _WDRV_PIC32MZW1_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        WDRV_PIC32MZW_Tasks(sysObj.drvWifiPIC32MZW1);
+    }
+}
+
+void _SYS_WIFI_Task(  void *pvParameters  )
+{
+    while(1)
+    {
+        SYS_WIFI_Tasks(sysObj.syswifi);
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
@@ -136,6 +146,7 @@ void SYS_Tasks ( void )
 {
     /* Maintain system services */
     
+
     xTaskCreate( _SYS_CMD_Tasks,
         "SYS_CMD_TASKS",
         SYS_CMD_RTOS_STACK_SIZE,
@@ -143,7 +154,6 @@ void SYS_Tasks ( void )
         SYS_CMD_RTOS_TASK_PRIORITY,
         (TaskHandle_t*)NULL
     );
-
 
 
 
@@ -171,21 +181,31 @@ void SYS_Tasks ( void )
     );
 
 
-    xTaskCreate( _SYS_WIFI_Task,
-        "SYS_WIFI_Tasks",
-        SYS_WIFI_RTOS_SIZE,
-        (void*)NULL,
-        SYS_WIFI_RTOS_PRIORITY,
-        (TaskHandle_t*)NULL
-    );
-
-
 
     xTaskCreate( _TCPIP_STACK_Task,
         "TCPIP_STACK_Tasks",
         TCPIP_RTOS_STACK_SIZE,
         (void*)NULL,
         TCPIP_RTOS_PRIORITY,
+        (TaskHandle_t*)NULL
+    );
+
+
+
+    xTaskCreate( _NET_PRES_Tasks,
+        "NET_PRES_Tasks",
+        NET_PRES_RTOS_STACK_SIZE,
+        (void*)NULL,
+        NET_PRES_RTOS_TASK_PRIORITY,
+        (TaskHandle_t*)NULL
+    );
+
+
+    xTaskCreate( _SYS_WIFI_Task,
+        "SYS_WIFI_Tasks",
+        SYS_WIFI_RTOS_SIZE,
+        (void*)NULL,
+        SYS_WIFI_RTOS_PRIORITY,
         (TaskHandle_t*)NULL
     );
 

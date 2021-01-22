@@ -538,6 +538,74 @@ static void SYS_WIFI_ScanHandler
     }
 }
 
+static void SYS_WIFI_TCPIP_DHCP_EventHandler
+(
+    TCPIP_NET_HANDLE hNet, 
+    TCPIP_DHCP_EVENT_TYPE evType, 
+    const void* param
+) 
+{
+    IPV4_ADDR ipAddr;
+    IPV4_ADDR gateWayAddr;
+    bool provConnStatus = false;
+    switch (evType) 
+    {
+        case DHCP_EVENT_BOUND:
+        {
+
+            /* TCP/IP Stack BOUND event indicates
+               PIC32MZW1 has received the IP address from connected HOMEAP */
+            ipAddr.Val = TCPIP_STACK_NetAddress(hNet);
+            if (ipAddr.Val) 
+            {
+                gateWayAddr.Val = TCPIP_STACK_NetAddressGateway(hNet);
+                SYS_CONSOLE_PRINT("IP address obtained = %d.%d.%d.%d \r\n",
+                        ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]);
+                SYS_CONSOLE_PRINT("Gateway IP address = %d.%d.%d.%d \r\n",
+                        gateWayAddr.v[0], gateWayAddr.v[1], gateWayAddr.v[2], gateWayAddr.v[3]);
+
+                /* Update the application(client) on receiving IP address */
+                SYS_WIFI_CallBackFun(SYS_WIFI_CONNECT, &ipAddr, g_wifiSrvcCookie);
+                provConnStatus = true;
+
+                /* Update the Wi-Fi provisioning service on receiving the IP Address, 
+                   The Wi-Fi provisioning service has to start the TCP server socket
+                   when IP address is assigned from HOMEAP to STA.only applicable 
+                   if user has enable TCP Socket configuration from MHC */
+                SYS_WIFIPROV_CtrlMsg(g_wifiSrvcProvObj,SYS_WIFIPROV_CONNECT,&provConnStatus,sizeof(bool));
+            }
+            break;
+        }
+
+        case DHCP_EVENT_CONN_ESTABLISHED:
+        {
+            break;
+        }
+
+        case DHCP_EVENT_CONN_LOST:
+        {
+
+            /* Received the TCP/IP Stack Connection Lost event,
+               PIC32MZW1 has lost IP address from connected HOMEAP */
+
+            /* Update the application(client) on lost IP address */
+            SYS_WIFI_CallBackFun(SYS_WIFI_DISCONNECT,NULL,g_wifiSrvcCookie);
+            provConnStatus = false;
+
+            /* Update the Wi-Fi provisioning service on lost IP Address, 
+               The Wi-Fi provisioning service has to stop the TCP server socket.
+               only applicable if user has enable TCP Socket configuration 
+               from MHC */
+            SYS_WIFIPROV_CtrlMsg(g_wifiSrvcProvObj,SYS_WIFIPROV_CONNECT,&provConnStatus,sizeof(bool));
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+}
 
 static SYS_WIFI_RESULT SYS_WIFI_SetScan
 (
@@ -810,6 +878,27 @@ static uint32_t SYS_WIFI_ExecuteBlock
                     {
                         /* PIC32MZW1 network handle*/
                         netHdl = TCPIP_STACK_NetHandleGet("PIC32MZW1");
+                        /* STA Mode */
+                        if (SYS_WIFI_STA == SYS_WIFI_GetMode()) 
+                        {
+                            if (true == TCPIP_DHCPS_IsEnabled(netHdl)) 
+                            {
+                                TCPIP_DHCPS_Disable(netHdl);
+                            }
+                            if ((true == TCPIP_DHCP_Enable(netHdl)) &&
+                                (TCPIP_STACK_ADDRESS_SERVICE_DHCPC == TCPIP_STACK_AddressServiceSelect(_TCPIPStackHandleToNet(netHdl), TCPIP_NETWORK_CONFIG_DHCP_CLIENT_ON))) 
+                            {
+                                    g_wifiSrvcDhcpHdl = TCPIP_DHCP_HandlerRegister(netHdl, SYS_WIFI_TCPIP_DHCP_EventHandler, NULL);
+                            }
+                        } 
+                        else if (SYS_WIFI_AP == SYS_WIFI_GetMode()) /*AP Mode*/
+                        {
+                            if (true == TCPIP_DHCP_IsEnabled(netHdl)) 
+                            {
+                                TCPIP_DHCP_Disable(netHdl);
+                            }
+                            TCPIP_DHCPS_Enable(netHdl); /*Enable DHCP Server in AP mode*/
+                        }
                     }                
                     wifiSrvcObj->wifiSrvcStatus = SYS_WIFI_STATUS_CONNECT_REQ;
                     OSAL_SEM_Post(&g_wifiSrvcSemaphore);

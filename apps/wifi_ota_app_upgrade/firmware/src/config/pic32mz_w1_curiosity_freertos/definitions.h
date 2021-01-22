@@ -56,6 +56,10 @@
 #include "peripheral/uart/plib_uart1.h"
 #include "peripheral/tmr/plib_tmr2.h"
 #include "peripheral/rng/plib_rng.h"
+#include "net_pres/pres/net_pres.h"
+#include "net_pres/pres/net_pres_encryptionproviderapi.h"
+#include "net_pres/pres/net_pres_transportapi.h"
+#include "net_pres/pres/net_pres_socketapi.h"
 #include "peripheral/spi/spi_master/plib_spi1_master.h"
 #include "system/int/sys_int.h"
 #include "system/reset/sys_reset.h"
@@ -201,6 +205,8 @@ typedef struct
     SYS_MODULE_OBJ  ba414e;
 
     SYS_MODULE_OBJ  sysTime;
+    SYS_MODULE_OBJ  netPres;
+
     SYS_MODULE_OBJ  sysConsole0;
 
 
