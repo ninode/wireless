@@ -82,7 +82,7 @@ void TcpClientCallback(uint32_t event, void *data, void* cookie)
             memset(networkBuffer, 0, sizeof (networkBuffer));
             
             SYS_NET_RecvMsg(g_tcpSrvcHandle, (uint8_t*) networkBuffer, sizeof (networkBuffer));
-            SYS_CONSOLE_PRINT("SERVER Received JSON Data: %s:%d\r\n",networkBuffer,strlen(networkBuffer));
+            SYS_CONSOLE_PRINT("SERVER Received JSON Data: %s:%zu\r\n",networkBuffer,strlen(networkBuffer));
 
             struct json_obj root,child,sub ;
             

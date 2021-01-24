@@ -219,12 +219,12 @@ void APP_Tasks ( void )
             {
                 if(download_success == true)
                 {
-                    SYS_CONSOLE_PRINT("OTA process completed successfully please reset the device for loading new image\r\n",url);
+                    SYS_CONSOLE_PRINT("OTA process completed successfully please reset the device for loading new image\r\n");
                     appData.state = APP_STATE_OTA_SUCCESS;
                 }
                 else
                 {
-                    SYS_CONSOLE_PRINT("\n\r1) SERVER MAY BE BUSY or \n\r2) IMAGE NAME IS WRONG or \n\r3) SERVER ADDRESS MAY BE WRONG \r\nPlease press reset button to initiate OTA again\r\n",url);
+                    SYS_CONSOLE_PRINT("\n\r1) SERVER MAY BE BUSY or \n\r2) IMAGE NAME IS WRONG or \n\r3) SERVER ADDRESS MAY BE WRONG \r\nPlease press reset button to initiate OTA again\r\n");
                     appData.state = APP_STATE_OTA_ERROR;
                 }
             }
