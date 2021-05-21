@@ -3,6 +3,18 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Wireless Release v3.4.1
+- Note: 'Wireless' repository moved to 'Wireless_wifi'
+- Going Forward, example applications and system services for wireless_wifi products wil reside in separate repositories.
+
+| Repository | Product family                                                                                                     |
+| ---------- | ------------------------------------------------------------------------------------------------------------------ |
+| [wireless_wifi](https://github.com/Microchip-MPLAB-Harmony/wireless_wifi) | Core wireless_wifi products repository              |
+| [wireless_apps_winc1500](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_winc1500) | Application examples for WINC1500 |
+| [wireless_apps_winc3400](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_winc3400) | Application examples for WINC3400 |
+| [wireless_apps_pic32mzw1_wfi32e01](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32mzw1_wfi32e01) | Application examples for PIC32MZW1 |
+| [wireless_system_pic32mzw1_wfi32e01](https://github.com/Microchip-MPLAB-Harmony/wireless_system_pic32mzw1_wfi32e01) | Wireless system Services for PIC32MZW1 |
+
 ## Wireless Release v3.4.0
 ### New Features
 - PIC32MZW1: WPA3 in non-RTOS mode. WPA3 support (regardless of RTOS/non-RTOS mode) is now dependent on H3 crypto release v3.6.2 or later.

@@ -6,6 +6,18 @@ nav_order: 1
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
+# Migration from Wireless to Wireless_wifi
+- Note: 'Wireless' repository moved to 'Wireless_wifi'
+- Going Forward, example applications and system services for wireless_wifi products wil reside in separate repositories.
+
+| Repository | Product family                                                                                                     |
+| ---------- | ------------------------------------------------------------------------------------------------------------------ |
+| [wireless_wifi](https://github.com/Microchip-MPLAB-Harmony/wireless_wifi) | Core wireless_wifi products repository              |
+| [wireless_apps_winc1500](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_winc1500) | Application examples for WINC1500 |
+| [wireless_apps_winc3400](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_winc3400) | Application examples for WINC3400 |
+| [wireless_apps_pic32mzw1_wfi32e01](https://github.com/Microchip-MPLAB-Harmony/wireless_apps_pic32mzw1_wfi32e01) | Application examples for PIC32MZW1 |
+| [wireless_system_pic32mzw1_wfi32e01](https://github.com/Microchip-MPLAB-Harmony/wireless_system_pic32mzw1_wfi32e01) | Wireless system Services for PIC32MZW1 |
+
 # MPLAB® Harmony 3 Wireless
 
 MPLAB® Harmony 3 is an extension of the MPLAB® ecosystem for creating
