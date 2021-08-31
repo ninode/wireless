@@ -59,6 +59,15 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
+void _DRV_SDSPI_0_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        DRV_SDSPI_Tasks(sysObj.drvSDSPI0);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
 
 void _DRV_BA414E_Tasks(  void *pvParameters  )
 {
@@ -118,6 +127,17 @@ static void _WDRV_PIC32MZW1_Tasks(  void *pvParameters  )
     }
 }
 
+
+void _SYS_FS_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        SYS_FS_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+
 void _SYS_WIFI_Task(  void *pvParameters  )
 {
     while(1)
@@ -158,9 +178,26 @@ void SYS_Tasks ( void )
 
 
 
+    xTaskCreate( _SYS_FS_Tasks,
+        "SYS_FS_TASKS",
+        SYS_FS_STACK_SIZE,
+        (void*)NULL,
+        SYS_FS_PRIORITY,
+        (TaskHandle_t*)NULL
+    );
+
+
 
     /* Maintain Device Drivers */
-        xTaskCreate( _DRV_MIIM_Task,
+        xTaskCreate( _DRV_SDSPI_0_Tasks,
+        "DRV_SD_0_TASKS",
+        DRV_SDSPI_STACK_SIZE_IDX0,
+        (void*)NULL,
+        DRV_SDSPI_PRIORITY_IDX0,
+        (TaskHandle_t*)NULL
+    );
+
+    xTaskCreate( _DRV_MIIM_Task,
         "DRV_MIIM_Tasks",
         DRV_MIIM_RTOS_STACK_SIZE,
         (void*)NULL,

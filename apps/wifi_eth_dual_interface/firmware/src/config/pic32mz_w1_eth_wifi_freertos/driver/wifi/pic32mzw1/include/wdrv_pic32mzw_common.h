@@ -55,8 +55,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "configuration.h"
-#include "definitions.h"
+#include "system_config.h"
+#include "system_definitions.h"
 #include "osal/osal.h"
 #include "wdrv_pic32mzw_debug.h"
 
@@ -114,7 +114,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     None.
-
 */
 
 typedef enum _WDRV_PIC32MZW_CHANNEL_ID
@@ -174,7 +173,6 @@ typedef enum _WDRV_PIC32MZW_CHANNEL_ID
 
   Remarks:
     None.
-
 */
 
 typedef enum _WDRV_PIC32MZW_STATUS
@@ -239,7 +237,6 @@ typedef enum _WDRV_PIC32MZW_STATUS
 
   Remarks:
     None.
-
 */
 
 typedef enum
@@ -255,6 +252,7 @@ typedef enum
 
 } WDRV_PIC32MZW_SYS_STATUS;
 
+
 // *****************************************************************************
 /*  Connection State
 
@@ -266,7 +264,6 @@ typedef enum
 
   Remarks:
     None.
-
 */
 
 typedef enum
@@ -296,7 +293,6 @@ typedef enum
 
   Remarks:
     None.
-
 */
 
 typedef struct _WDRV_PIC32MZW_SSID
@@ -319,7 +315,6 @@ typedef struct _WDRV_PIC32MZW_SSID
 
   Remarks:
     None.
-
 */
 
 typedef struct _WDRV_PIC32MZW_MAC_ADDR
@@ -342,7 +337,6 @@ typedef struct _WDRV_PIC32MZW_MAC_ADDR
 
   Remarks:
     None.
-
 */
 
 typedef uintptr_t WDRV_PIC32MZW_ASSOC_HANDLE;
@@ -382,7 +376,6 @@ typedef uintptr_t WDRV_PIC32MZW_ASSOC_HANDLE;
 
   Remarks:
     None.
-
 */
 
 typedef void (*WDRV_PIC32MZW_BSSCON_NOTIFY_CALLBACK)
@@ -415,7 +408,6 @@ typedef void (*WDRV_PIC32MZW_BSSCON_NOTIFY_CALLBACK)
 
     See WDRV_PIC32MZW_OTAUpdateFromURL, WDRV_PIC32MZW_SwitchActiveFirmwareImage,
     WDRV_PIC32MZW_HostFileRead and WDRV_PIC32MZW_HostFileErase.
-
 */
 
 typedef void (*WDRV_PIC32MZW_STATUS_CALLBACK)

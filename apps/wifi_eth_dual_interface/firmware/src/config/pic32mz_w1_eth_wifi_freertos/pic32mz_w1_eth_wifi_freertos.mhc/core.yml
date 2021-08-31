@@ -354,6 +354,60 @@ children:
       children:
       - type: User
         attributes: {value: '0'}
+  - type: File
+    attributes: {id: CACHE_HEADER_H}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: CACHE_LOCAL_H}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: CACHE_PIC32MZ_H}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: CACHE_SOURCE_PIC32MZ_C}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: CACHE_SOURCE_PIC32MZ_S}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: CACHE_SYSTEM_DEF_H}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
   - type: Integer
     attributes: {id: CAN1_CLOCK_FREQUENCY}
     children:
@@ -543,6 +597,22 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '0'}
+  - type: Boolean
+    attributes: {id: DATA_CACHE_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: File
+    attributes: {id: DEVICE_CACHE_H}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
   - type: Integer
     attributes: {id: DMAC_CLOCK_FREQUENCY}
     children:
@@ -550,6 +620,34 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '200000000'}
+  - type: Boolean
+    attributes: {id: DMA_CH_NEEDED_FOR_SPI1_Receive}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: Boolean
+    attributes: {id: DMA_CH_NEEDED_FOR_SPI1_Transmit}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: Boolean
+    attributes: {id: DMA_CH_NEEDED_FOR_SPI2_Receive}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: Boolean
+    attributes: {id: DMA_CH_NEEDED_FOR_SPI2_Transmit}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
   - type: String
     attributes: {id: ETHCLK}
     children:
@@ -761,6 +859,48 @@ children:
       - type: Dynamic
         attributes: {id: core, value: NVM_InterruptHandler}
   - type: Boolean
+    attributes: {id: EVIC_36_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: Boolean
+    attributes: {id: EVIC_36_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: String
+    attributes: {id: EVIC_36_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: SPI1_RX_InterruptHandler}
+  - type: Boolean
+    attributes: {id: EVIC_37_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: Boolean
+    attributes: {id: EVIC_37_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: String
+    attributes: {id: EVIC_37_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: SPI1_TX_InterruptHandler}
+  - type: Boolean
     attributes: {id: EVIC_38_ENABLE}
     children:
     - type: Values
@@ -879,6 +1019,48 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: 'true'}
+  - type: Boolean
+    attributes: {id: EVIC_54_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: Boolean
+    attributes: {id: EVIC_54_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: String
+    attributes: {id: EVIC_54_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: SPI2_RX_InterruptHandler}
+  - type: Boolean
+    attributes: {id: EVIC_55_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: Boolean
+    attributes: {id: EVIC_55_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: String
+    attributes: {id: EVIC_55_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: SPI2_TX_InterruptHandler}
   - type: Boolean
     attributes: {id: EVIC_62_ENABLE}
     children:
@@ -1005,6 +1187,15 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: WDRV_PIC32MZW_TasksRFTimer0ISR}
+  - type: File
+    attributes: {id: EVIC_INT_ASM}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
   - type: Combo
     attributes: {id: EVIC_PRIORITY_1ATTRIBUTE}
     children:
@@ -1152,6 +1343,13 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '0'}
+  - type: Boolean
+    attributes: {id: INSTRUCTION_CACHE_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
   - type: File
     attributes: {id: INTERRUPTS_ASM}
     children:
@@ -1230,7 +1428,7 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '419627778'}
+        attributes: {id: core, value: '419627010'}
   - type: Integer
     attributes: {id: PTG_CLOCK_FREQUENCY}
     children:
@@ -1371,20 +1569,146 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '0'}
+  - type: Boolean
+    attributes: {id: SPI1_CLOCK_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi1, value: 'true'}
   - type: Integer
     attributes: {id: SPI1_CLOCK_FREQUENCY}
     children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '0'}
+        attributes: {id: core, value: '100000000'}
+  - type: Boolean
+    attributes: {id: SPI1_RX_INTERRUPT_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi1, value: 'true'}
+  - type: Boolean
+    attributes: {id: SPI1_RX_INTERRUPT_ENABLE_UPDATE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: String
+    attributes: {id: SPI1_RX_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi1, value: SPI1_RX_InterruptHandler}
+  - type: Boolean
+    attributes: {id: SPI1_RX_INTERRUPT_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi1, value: 'true'}
+  - type: Boolean
+    attributes: {id: SPI1_TX_INTERRUPT_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi1, value: 'true'}
+  - type: Boolean
+    attributes: {id: SPI1_TX_INTERRUPT_ENABLE_UPDATE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: String
+    attributes: {id: SPI1_TX_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi1, value: SPI1_TX_InterruptHandler}
+  - type: Boolean
+    attributes: {id: SPI1_TX_INTERRUPT_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi1, value: 'true'}
+  - type: Boolean
+    attributes: {id: SPI2_CLOCK_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi2, value: 'true'}
   - type: Integer
     attributes: {id: SPI2_CLOCK_FREQUENCY}
     children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '0'}
+        attributes: {id: core, value: '100000000'}
+  - type: Boolean
+    attributes: {id: SPI2_RX_INTERRUPT_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi2, value: 'true'}
+  - type: Boolean
+    attributes: {id: SPI2_RX_INTERRUPT_ENABLE_UPDATE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: String
+    attributes: {id: SPI2_RX_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi2, value: SPI2_RX_InterruptHandler}
+  - type: Boolean
+    attributes: {id: SPI2_RX_INTERRUPT_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi2, value: 'true'}
+  - type: Boolean
+    attributes: {id: SPI2_TX_INTERRUPT_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi2, value: 'true'}
+  - type: Boolean
+    attributes: {id: SPI2_TX_INTERRUPT_ENABLE_UPDATE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: String
+    attributes: {id: SPI2_TX_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi2, value: SPI2_TX_InterruptHandler}
+  - type: Boolean
+    attributes: {id: SPI2_TX_INTERRUPT_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: spi2, value: 'true'}
   - type: Integer
     attributes: {id: SQI1_CLOCK_FREQUENCY}
     children:
@@ -1746,6 +2070,13 @@ children:
       - type: User
         attributes: {value: '0'}
   - type: Boolean
+    attributes: {id: USE_CACHE_MAINTENANCE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: sys_fs, value: 'true'}
+  - type: Boolean
     attributes: {id: USE_PPS_INPUT_0}
     children:
     - type: Values
@@ -1804,4 +2135,4 @@ children:
       - type: Dynamic
         attributes: {id: core, value: '0'}
 - type: ElementPosition
-  attributes: {x: '580', y: '20', id: core}
+  attributes: {x: '580', y: '19', id: core}

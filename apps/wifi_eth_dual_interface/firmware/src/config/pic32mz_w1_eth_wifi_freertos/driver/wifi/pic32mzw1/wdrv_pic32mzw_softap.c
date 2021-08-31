@@ -101,7 +101,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_APStart
     OSAL_CRITSECT_DATA_TYPE critSect;
 
     /* Ensure the driver handle and user pointer is valid. */
-    if ((DRV_HANDLE_INVALID == handle) || (NULL == pDcpt) || (NULL == pDcpt->pCtrl) || (NULL == pBSSCtx))
+    if ((NULL == pDcpt) || (NULL == pBSSCtx))
     {
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }
@@ -233,7 +233,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_APStop(DRV_HANDLE handle)
     DRV_PIC32MZW_WIDCTX wids;
 
     /* Ensure the driver handle is valid. */
-    if ((DRV_HANDLE_INVALID == handle) || (NULL == pDcpt) || (NULL == pDcpt->pCtrl))
+    if (NULL == pDcpt)
     {
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }

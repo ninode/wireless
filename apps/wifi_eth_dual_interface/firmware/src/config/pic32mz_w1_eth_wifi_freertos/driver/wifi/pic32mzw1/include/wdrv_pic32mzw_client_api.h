@@ -53,7 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include "configuration.h"
+#include "system_config.h"
 
 #include "wdrv_pic32mzw.h"
 #include "wdrv_pic32mzw_bssfind.h"

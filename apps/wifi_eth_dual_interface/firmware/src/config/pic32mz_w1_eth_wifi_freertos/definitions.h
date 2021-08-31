@@ -51,12 +51,19 @@
 #include <stdio.h>
 #include "crypto/crypto.h"
 #include "driver/ba414e/drv_ba414e.h"
-#include "peripheral/nvm/plib_nvm.h"
+#include "driver/sdspi/drv_sdspi.h"
 #include "system/time/sys_time.h"
-#include "peripheral/uart/plib_uart3.h"
+#include "peripheral/nvm/plib_nvm.h"
 #include "peripheral/coretimer/plib_coretimer.h"
+#include "peripheral/uart/plib_uart3.h"
 #include "peripheral/uart/plib_uart1.h"
+#include "peripheral/spi/spi_master/plib_spi2_master.h"
+#include "peripheral/spi/spi_master/plib_spi1_master.h"
+#include "driver/spi/drv_spi.h"
 #include "system/int/sys_int.h"
+#include "system/ports/sys_ports.h"
+#include "system/cache/sys_cache.h"
+#include "system/dma/sys_dma.h"
 #include "system/reset/sys_reset.h"
 #include "osal/osal.h"
 #include "system/debug/sys_debug.h"
@@ -64,13 +71,21 @@
 #include "driver/ethmac/drv_ethmac.h"
 #include "driver/miim/drv_miim.h"
 #include "system/sys_time_h2_adapter.h"
+#include "system/sys_clk_h2_adapter.h"
 #include "system/sys_random_h2_adapter.h"
 #include "system/command/sys_command.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
+#include "peripheral/cache/plib_cache.h"
 #include "peripheral/evic/plib_evic.h"
 #include "wolfssl/wolfcrypt/port/pic32/crypt_wolfcryptcb.h"
 #include "driver/wifi/pic32mzw1/include/wdrv_pic32mzw_api.h"
+#include "system/fs/sys_fs.h"
+#include "system/fs/sys_fs_media_manager.h"
+#include "system/fs/sys_fs_fat_interface.h"
+#include "system/fs/fat_fs/file_system/ff.h"
+#include "system/fs/fat_fs/file_system/ffconf.h"
+#include "system/fs/fat_fs/hardware_access/diskio.h"
 #include "system/wifi/sys_wifi.h"
 #include "system/console/sys_console.h"
 #include "system/console/src/sys_console_uart_definitions.h"
@@ -198,6 +213,9 @@ Remarks:
         
 typedef struct
 {
+    /* SDSPI0 Driver Object */
+    SYS_MODULE_OBJ drvSDSPI0;
+
 
     SYS_MODULE_OBJ  ba414e;
 
@@ -206,6 +224,9 @@ typedef struct
 
 
     SYS_MODULE_OBJ  tcpip;
+    /* SPI0 Driver Object */
+    SYS_MODULE_OBJ drvSPI0;
+
 
     SYS_MODULE_OBJ  drvMiim;
     SYS_MODULE_OBJ  sysDebug;

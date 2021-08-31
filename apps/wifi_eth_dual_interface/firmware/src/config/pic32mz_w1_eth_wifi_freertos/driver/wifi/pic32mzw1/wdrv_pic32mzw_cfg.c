@@ -39,6 +39,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <string.h>
 #include <stdbool.h>
 
+#include "system_config.h"
+#include "system_definitions.h"
 #include "wdrv_pic32mzw.h"
 #include "wdrv_pic32mzw_cfg.h"
 
@@ -119,11 +121,6 @@ void DRV_PIC32MZW_ProcessHostRsp(uint8_t *pHostRsp)
 
 bool DRV_PIC32MZW_MultiWIDInit(DRV_PIC32MZW_WIDCTX *pCtx, uint16_t bufferLen)
 {
-    if (NULL == pCtx)
-    {
-        return false;
-    }
-    
     pCtx->buffer = DRV_PIC32MZW_MemAlloc(bufferLen);
 
     if (NULL == pCtx->buffer)
@@ -148,11 +145,6 @@ bool DRV_PIC32MZW_MultiWIDAddValue(DRV_PIC32MZW_WIDCTX *pCtx, uint16_t wid, uint
 {
     DRV_WIFI_WID_TYPE_T widType;
 
-    if (NULL == pCtx)
-    {
-        return false;
-    }
-    
     if ((true == pCtx->error) || (NULL == pCtx->buffer) || (NULL == pCtx->pInPtr))
     {
         return false;
@@ -212,11 +204,6 @@ bool DRV_PIC32MZW_MultiWIDAddData(DRV_PIC32MZW_WIDCTX *pCtx, uint16_t wid, const
     int i;
     DRV_WIFI_WID_TYPE_T widType;
 
-    if (NULL == pCtx)
-    {
-        return false;
-    }
-    
     if ((true == pCtx->error) || (NULL == pCtx->buffer) || (NULL == pCtx->pInPtr))
     {
         return false;
@@ -268,21 +255,11 @@ bool DRV_PIC32MZW_MultiWIDAddData(DRV_PIC32MZW_WIDCTX *pCtx, uint16_t wid, const
 
 bool DRV_PIC32MZW_MultiWIDAddString(DRV_PIC32MZW_WIDCTX *pCtx, uint16_t wid, const char *pStr)
 {
-    if (NULL == pCtx)
-    {
-        return false;
-    }
-    
     return DRV_PIC32MZW_MultiWIDAddData(pCtx, wid, (uint8_t*)pStr, strlen(pStr));
 }
 
 bool DRV_PIC32MZW_MultiWIDAddQuery(DRV_PIC32MZW_WIDCTX *pCtx, uint16_t wid)
 {
-    if (NULL == pCtx)
-    {
-        return false;
-    }
-    
     if ((true == pCtx->error) || (NULL == pCtx->buffer) || (NULL == pCtx->pInPtr))
     {
         return false;
@@ -312,11 +289,6 @@ bool DRV_PIC32MZW_MultiWid_Write(DRV_PIC32MZW_WIDCTX *pCtx)
 {
     uint16_t length;
 
-    if (NULL == pCtx)
-    {
-        return false;
-    }
-    
     if ((NULL == pCtx->buffer) || (NULL == pCtx->pInPtr))
     {
         return false;

@@ -50,6 +50,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include <stdint.h>
 
+#include "system_config.h"
+#include "system_definitions.h"
 #include "wdrv_pic32mzw_common.h"
 #include "wdrv_pic32mzw_bssctx.h"
 #include "wdrv_pic32mzw_authctx.h"

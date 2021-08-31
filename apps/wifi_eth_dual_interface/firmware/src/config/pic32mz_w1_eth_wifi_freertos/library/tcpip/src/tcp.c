@@ -11,7 +11,7 @@
 *******************************************************************************/
 
 /*****************************************************************************
- Copyright (C) 2012-2020 Microchip Technology Inc. and its subsidiaries.
+ Copyright (C) 2012-2018 Microchip Technology Inc. and its subsidiaries.
 
 Microchip Technology Inc. and its subsidiaries.
 
@@ -65,6 +65,39 @@ THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 #define URG             (0x20)		// Urgent Flag as defined in RFC
 
 
+// TCP Header Data Structure
+typedef struct
+{
+	uint16_t    SourcePort;		// Local port number
+	uint16_t    DestPort;		// Remote port number
+	uint32_t    SeqNumber;		// Local sequence number
+	uint32_t    AckNumber;		// Acknowledging remote sequence number
+
+	struct
+	{
+		unsigned char Reserved3      : 4;
+		unsigned char Val            : 4;
+	} DataOffset;			// Data offset flags nibble
+
+	union
+	{
+		struct
+		{
+			unsigned char flagFIN    : 1;
+			unsigned char flagSYN    : 1;
+			unsigned char flagRST    : 1;
+			unsigned char flagPSH    : 1;
+			unsigned char flagACK    : 1;
+			unsigned char flagURG    : 1;
+			unsigned char Reserved2  : 2;
+		} bits;
+		uint8_t byte;
+	} Flags;				// TCP Flags as defined in RFC
+
+	uint16_t    Window;			// Local free RX buffer window
+	uint16_t    Checksum;		// Data payload checksum
+	uint16_t    UrgentPointer;	// Urgent pointer
+} TCP_HEADER;
 
 #define TCP_OPTIONS_END_OF_LIST     (0x00u)		// End of List TCP Option Flag
 #define TCP_OPTIONS_NO_OP           (0x01u)		// No Op TCP Option
@@ -207,7 +240,6 @@ static TCP_V4_PACKET*   _TxSktGetLockedV4Pkt(TCB_STUB* pSkt);
 static TCPIP_MAC_PACKET *_TxSktFreeLockedV4Pkt(TCB_STUB* pSkt);
 static TCPIP_MAC_PKT_ACK_RES TCPIP_TCP_ProcessIPv4(TCPIP_MAC_PACKET* pRxPkt);
 
-
 #endif  // defined (TCPIP_STACK_USE_IPV4)
 
 
@@ -225,7 +257,6 @@ static TCPIP_MAC_PKT_ACK_RES TCPIP_TCP_ProcessIPv6(TCPIP_MAC_PACKET* pRxPkt);
 
 #endif  // defined (TCPIP_STACK_USE_IPV6)
 
-static bool         _TCP_RxPktValidate(TCPIP_MAC_PACKET* pRxPkt);
 
 static bool         _TCP_TxPktValid(TCB_STUB * pSkt);
 
@@ -533,9 +564,8 @@ static TCPIP_MAC_PACKET* _TxSktFreeLockedV4Pkt(TCB_STUB* pSkt)
 
     return toFreePkt;
 }
+
 #endif  // defined (TCPIP_STACK_USE_IPV4)
-
-
 
 
 /*****************************************************************************
@@ -1265,19 +1295,15 @@ static void TCPIP_TCP_Process(void)
         if(tcpQuietDone)
 #endif  // (TCPIP_TCP_QUIET_TIME != 0)
         {
-            if(!_TCP_RxPktValidate(pRxPkt))
-            {   // discard packet
-                ackRes = TCPIP_MAC_PKT_ACK_STRUCT_ERR;
-            }
 #if defined (TCPIP_STACK_USE_IPV4)
-            else if((pRxPkt->pktFlags & TCPIP_MAC_PKT_FLAG_NET_TYPE) == TCPIP_MAC_PKT_FLAG_IPV4) 
+            if((pRxPkt->pktFlags & TCPIP_MAC_PKT_FLAG_NET_TYPE) == TCPIP_MAC_PKT_FLAG_IPV4) 
             {
                 ackRes = TCPIP_TCP_ProcessIPv4(pRxPkt);
             }
 #endif  // defined (TCPIP_STACK_USE_IPV4)
 
 #if defined (TCPIP_STACK_USE_IPV6)
-            else if((pRxPkt->pktFlags & TCPIP_MAC_PKT_FLAG_NET_TYPE) == TCPIP_MAC_PKT_FLAG_IPV6) 
+            if((pRxPkt->pktFlags & TCPIP_MAC_PKT_FLAG_NET_TYPE) == TCPIP_MAC_PKT_FLAG_IPV6) 
             {
                 ackRes = TCPIP_TCP_ProcessIPv6(pRxPkt);
             }
@@ -1289,38 +1315,6 @@ static void TCPIP_TCP_Process(void)
             TCPIP_PKT_PacketAcknowledge(pRxPkt, ackRes);
         }
     }
-}
-
-// validates a rx-ed TCP packet
-// returns true if OK, false if packet should be discarded
-static bool _TCP_RxPktValidate(TCPIP_MAC_PACKET* pRxPkt)
-{
-    while(true)
-    {
-        uint16_t tcpTotLength = pRxPkt->totTransportLen;
-        if(tcpTotLength < sizeof(TCP_HEADER))
-        {   // discard packet
-            break;
-        }
-
-        // check options validity
-        TCP_HEADER* pHdr = (TCP_HEADER*)pRxPkt->pTransportLayer;
-        uint8_t optionsField = pHdr->DataOffset.Val;
-        if(optionsField < TCP_DATA_OFFSET_VAL_MIN)
-        {
-           break;
-        }
-
-        if(tcpTotLength < optionsField << 2)
-        {   // no payload?
-            break;
-        }
-        
-        // OK
-        return true;
-    }
-
-    return false;
 }
 
 #if defined (TCPIP_STACK_USE_IPV4)
@@ -1604,6 +1598,11 @@ static TCPIP_MAC_PKT_ACK_RES TCPIP_TCP_ProcessIPv4(TCPIP_MAC_PACKET* pRxPkt)
 
     pTCPHdr = (TCP_HEADER*)pRxPkt->pTransportLayer;
     tcpTotLength = pRxPkt->totTransportLen;
+
+    if(tcpTotLength < sizeof(TCP_HEADER))
+    {   // discard packet
+        return TCPIP_MAC_PKT_ACK_STRUCT_ERR;
+    }
 
     pPktSrcAdd = TCPIP_IPV4_PacketGetSourceAddress(pRxPkt);
     pPktDstAdd = TCPIP_IPV4_PacketGetDestAddress(pRxPkt);
@@ -3707,6 +3706,10 @@ static TCPIP_MAC_PKT_ACK_RES TCPIP_TCP_ProcessIPv6(TCPIP_MAC_PACKET* pRxPkt)
     }
 
     dataLen = pRxPkt->totTransportLen;
+    if(dataLen < sizeof(TCP_HEADER))
+    {   // discard packet
+        return TCPIP_MAC_PKT_ACK_STRUCT_ERR;
+    }
 
 	// Calculate IP pseudoheader checksum.
     memcpy (&pseudoHeader.SourceAddress, remoteIP, sizeof (IPV6_ADDR));
@@ -3737,7 +3740,7 @@ static TCPIP_MAC_PKT_ACK_RES TCPIP_TCP_ProcessIPv6(TCPIP_MAC_PACKET* pRxPkt)
         pSkt = _TcpFindMatchingSocket(pRxPkt, remoteIP, localIP, IP_ADDRESS_TYPE_IPV6);
         if(pSkt == 0)
         {   // Send ICMP Destination Unreachable Code 4 (Port unreachable) and discard packet
-            uint16_t headerLen = pRxPkt->ipv6PktData;
+            uint16_t headerLen = pRxPkt->pktClientData;
             TCPIP_IPV6_ErrorSend ((TCPIP_NET_IF*)pRxPkt->pktIf, pRxPkt, localIP, remoteIP, ICMPV6_ERR_DU_PORT_UNREACHABLE, ICMPV6_ERROR_DEST_UNREACHABLE, 0x00000000, dataLen + headerLen + sizeof (IPV6_HEADER));
             ackRes = TCPIP_MAC_PKT_ACK_PROTO_DEST_ERR;
             break;
@@ -4651,7 +4654,7 @@ static uint16_t _GetMaxSegSizeOption(TCP_HEADER* h)
     uint8_t vOptionsBytes;
     uint8_t vOption;
     uint16_t wMSS;
-    uint8_t* pOption, *pEnd;
+    uint8_t* pOption;
 
 
 	vOptionsBytes = (h->DataOffset.Val << 2) - sizeof(*h);
@@ -4661,10 +4664,9 @@ static uint16_t _GetMaxSegSizeOption(TCP_HEADER* h)
 
     // Seek to beginning of options
     pOption = (uint8_t*)(h + 1);
-    pEnd = pOption + vOptionsBytes;
 
     // Search for the Maximum Segment Size option	
-    while(vOptionsBytes-- && pOption < pEnd)
+    while(vOptionsBytes--)
     {
         vOption = *pOption++;
 

@@ -145,6 +145,128 @@
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
+// <editor-fold defaultstate="collapsed" desc="DRV_SDSPI Instance 0 Initialization Data">
+
+/* SDSPI Client Objects Pool */
+static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0];
+
+
+/* SPI PLIB Interface Initialization for SDSPI Driver */
+const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
+
+    /* SPI PLIB WriteRead function */
+    .writeRead = (DRV_SDSPI_PLIB_WRITEREAD)SPI1_WriteRead,
+
+    /* SPI PLIB Write function */
+    .write = (DRV_SDSPI_PLIB_WRITE)SPI1_Write,
+
+    /* SPI PLIB Read function */
+    .read = (DRV_SDSPI_PLIB_READ)SPI1_Read,
+
+    /* SPI PLIB Transfer Status function */
+    .isBusy = (DRV_SDSPI_PLIB_IS_BUSY)SPI1_IsBusy,
+
+    .transferSetup = (DRV_SDSPI_PLIB_SETUP)SPI1_TransferSetup,
+
+    /* SPI PLIB Callback Register */
+    .callbackRegister = (DRV_SDSPI_PLIB_CALLBACK_REGISTER)SPI1_CallbackRegister,
+};
+
+const uint32_t drvSDSPI0remapDataBits[]= { 0x00000000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000400 };
+const uint32_t drvSDSPI0remapClockPolarity[] = { 0x00000000, 0x00000040 };
+const uint32_t drvSDSPI0remapClockPhase[] = { 0x00000000, 0x00000100 };
+
+/* SDSPI Driver Initialization Data */
+const DRV_SDSPI_INIT drvSDSPI0InitData =
+{
+    /* SD Card SPI PLIB API interface*/
+    .spiPlib                = &drvSDSPI0PlibAPI,
+
+    .remapDataBits          = drvSDSPI0remapDataBits,
+
+    .remapClockPolarity     = drvSDSPI0remapClockPolarity,
+
+    .remapClockPhase        = drvSDSPI0remapClockPhase,
+
+
+    /* SDSPI Number of clients */
+    .numClients             = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
+
+    /* SDSPI Client Objects Pool */
+    .clientObjPool          = (uintptr_t)&drvSDSPI0ClientObjPool[0],
+
+
+    .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
+
+    .sdcardSpeedHz          = DRV_SDSPI_SPEED_HZ_IDX0,
+
+    .pollingIntervalMs      = DRV_SDSPI_POLLING_INTERVAL_MS_IDX0,
+
+    .writeProtectPin        = SYS_PORT_PIN_NONE,
+
+    .isFsEnabled            = true,
+
+    /* DMA Channel for Transmit */
+    .txDMAChannel           = SYS_DMA_CHANNEL_NONE,
+
+    /* DMA Channel for Receive */
+    .rxDMAChannel           = SYS_DMA_CHANNEL_NONE,
+};
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="DRV_SPI Instance 0 Initialization Data">
+
+/* SPI Client Objects Pool */
+static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
+
+/* SPI PLIB Interface Initialization */
+const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
+
+    /* SPI PLIB Setup */
+    .setup = (DRV_SPI_PLIB_SETUP)SPI2_TransferSetup,
+
+    /* SPI PLIB WriteRead function */
+    .writeRead = (DRV_SPI_PLIB_WRITE_READ)SPI2_WriteRead,
+
+    /* SPI PLIB Transfer Status function */
+    .isBusy = (DRV_SPI_PLIB_IS_BUSY)SPI2_IsBusy,
+
+    /* SPI PLIB Callback Register */
+    .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SPI2_CallbackRegister,
+};
+
+const uint32_t drvSPI0remapDataBits[]= { 0x00000000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000400 };
+const uint32_t drvSPI0remapClockPolarity[] = { 0x00000000, 0x00000040 };
+const uint32_t drvSPI0remapClockPhase[] = { 0x00000000, 0x00000100 };
+
+/* SPI Driver Initialization Data */
+const DRV_SPI_INIT drvSPI0InitData =
+{
+    /* SPI PLIB API */
+    .spiPlib = &drvSPI0PlibAPI,
+
+    .remapDataBits = drvSPI0remapDataBits,
+
+    .remapClockPolarity = drvSPI0remapClockPolarity,
+
+    .remapClockPhase = drvSPI0remapClockPhase,
+
+    /* SPI Number of clients */
+    .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
+
+    /* SPI Client Objects Pool */
+    .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
+
+    /* DMA Channel for Transmit */
+    .dmaChannelTransmit = SYS_DMA_CHANNEL_NONE,
+
+    /* DMA Channel for Receive */
+    .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
+
+};
+
+// </editor-fold>
 
 
 /* MIIM Driver Configuration */
@@ -306,23 +428,11 @@ const TCPIP_DHCPS_MODULE_CONFIG tcpipDHCPSInitData =
 /*** DNS Server Initialization Data ***/
 const TCPIP_DNSS_MODULE_CONFIG tcpipDNSServerInitData =
 { 
-    .deleteOldLease         = TCPIP_DNSS_DELETE_OLD_LEASE,
-    .replyBoardAddr         = TCPIP_DNSS_REPLY_BOARD_ADDR,
-    .IPv4EntriesPerDNSName  = TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS,
-    .IPv6EntriesPerDNSName  = 0,
+    .deleteOldLease			= TCPIP_DNSS_DELETE_OLD_LEASE,
+    .replyBoardAddr			= TCPIP_DNSS_REPLY_BOARD_ADDR,
+    .IPv4EntriesPerDNSName 	= TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS,
+	.IPv6EntriesPerDNSName 	= 0,
 };
-
-
-/*** IPv4 Initialization Data ***/
-
-
-const TCPIP_IPV4_MODULE_CONFIG  tcpipIPv4InitData = 
-{
-    .arpEntries = TCPIP_IPV4_ARP_SLOTS, 
-};
-
-
-
 
 
 
@@ -339,7 +449,7 @@ TCPIP_STACK_HEAP_EXTERNAL_CONFIG tcpipHeapConfig =
 
 const TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] =
 {
-    /*** Network Configuration Index 0 ***/
+	/*** Network Configuration Index 0 ***/
     {
         TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX0,       // interface
         TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0,            // hostName
@@ -353,7 +463,7 @@ const TCPIP_NETWORK_CONFIG __attribute__((unused))  TCPIP_HOSTS_CONFIGURATION[] 
         TCPIP_NETWORK_DEFAULT_INTERFACE_FLAGS_IDX0,      // startFlags
        &TCPIP_NETWORK_DEFAULT_MAC_DRIVER_IDX0,           // pMacObject
     },
-    /*** Network Configuration Index 1 ***/
+	/*** Network Configuration Index 1 ***/
     {
         TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX1,       // interface
         TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX1,            // hostName
@@ -373,7 +483,7 @@ const size_t TCPIP_HOSTS_CONFIGURATION_SIZE = sizeof (TCPIP_HOSTS_CONFIGURATION)
 
 const TCPIP_STACK_MODULE_CONFIG TCPIP_STACK_MODULE_CONFIG_TBL [] =
 {
-    {TCPIP_MODULE_IPV4,             &tcpipIPv4InitData},
+    {TCPIP_MODULE_IPV4,             0},
 
     {TCPIP_MODULE_ICMP,             0},                             // TCPIP_MODULE_ICMP
 
@@ -413,7 +523,7 @@ const size_t TCPIP_STACK_MODULE_CONFIG_TBL_SIZE = sizeof (TCPIP_STACK_MODULE_CON
  ********************************************************************/
 
 
-SYS_MODULE_OBJ TCPIP_STACK_Init(void)
+SYS_MODULE_OBJ TCPIP_STACK_Init()
 {
     TCPIP_STACK_INIT    tcpipInit;
 
@@ -425,6 +535,63 @@ SYS_MODULE_OBJ TCPIP_STACK_Init(void)
 
     return TCPIP_STACK_Initialize(0, &tcpipInit.moduleInit);
 }
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="File System Initialization Data">
+
+
+const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] =
+{
+    {NULL}
+};
+
+const SYS_FS_FUNCTIONS FatFsFunctions =
+{
+    .mount             = FATFS_mount,
+    .unmount           = FATFS_unmount,
+    .open              = FATFS_open,
+    .read              = FATFS_read,
+    .close             = FATFS_close,
+    .seek              = FATFS_lseek,
+    .fstat             = FATFS_stat,
+    .getlabel          = FATFS_getlabel,
+    .currWD            = FATFS_getcwd,
+    .getstrn           = FATFS_gets,
+    .openDir           = FATFS_opendir,
+    .readDir           = FATFS_readdir,
+    .closeDir          = FATFS_closedir,
+    .chdir             = FATFS_chdir,
+    .chdrive           = FATFS_chdrive,
+    .write             = FATFS_write,
+    .tell              = FATFS_tell,
+    .eof               = FATFS_eof,
+    .size              = FATFS_size,
+    .mkdir             = FATFS_mkdir,
+    .remove            = FATFS_unlink,
+    .setlabel          = FATFS_setlabel,
+    .truncate          = FATFS_truncate,
+    .chmode            = FATFS_chmod,
+    .chtime            = FATFS_utime,
+    .rename            = FATFS_rename,
+    .sync              = FATFS_sync,
+    .putchr            = FATFS_putc,
+    .putstrn           = FATFS_puts,
+    .formattedprint    = FATFS_printf,
+    .testerror         = FATFS_error,
+    .formatDisk        = (FORMAT_DISK)FATFS_mkfs,
+    .partitionDisk     = FATFS_fdisk,
+    .getCluster        = FATFS_getclusters
+};
+
+
+const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+{
+    {
+        .nativeFileSystemType = FAT,
+        .nativeFileSystemFunctions = &FatFsFunctions
+    }
+};
+
 // </editor-fold>
 
 
@@ -565,12 +732,21 @@ void SYS_Initialize ( void* data )
 
     NVM_Initialize();
 
+    CORETIMER_Initialize();
 	UART3_Initialize();
 
-    CORETIMER_Initialize();
 	UART1_Initialize();
 
+	SPI2_Initialize();
 
+	SPI1_Initialize();
+
+
+    /* Initialize SDSPI0 Driver Instance */
+    sysObj.drvSDSPI0 = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
+
+    /* Initialize SPI0 Driver Instance */
+    sysObj.drvSPI0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (SYS_MODULE_INIT *)&drvSPI0InitData);
 
     /* Initialize the MIIM Driver */
     sysObj.drvMiim = DRV_MIIM_Initialize( DRV_MIIM_INDEX_0, (const SYS_MODULE_INIT *) &drvMiimInitData );
@@ -601,6 +777,9 @@ void SYS_Initialize ( void* data )
 
 
     CRYPT_WCCB_Initialize();
+    /*** File System Service Initialization Code ***/
+    SYS_FS_Initialize( (const void *) sysFSInit );
+
 
     APP_Initialize();
 

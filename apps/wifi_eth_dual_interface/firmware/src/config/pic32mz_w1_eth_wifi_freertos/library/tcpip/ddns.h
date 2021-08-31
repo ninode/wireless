@@ -254,7 +254,7 @@ void         TCPIP_DDNS_ServiceSet(DDNS_SERVICES svc);
 //*****************************************************************************
 /*
   Function:
-    uint32_t TCPIP_DDNS_LastIPGet(void)
+    IPV4_ADDR TCPIP_DDNS_LastIPGet(void)
 
   Summary:
     Returns the last known external IP address of the device.
@@ -272,7 +272,7 @@ void         TCPIP_DDNS_ServiceSet(DDNS_SERVICES svc);
     The last known external IP address of the device.
 	
 */
-uint32_t    TCPIP_DDNS_LastIPGet(void);
+DDNS_STATUS  TCPIP_DDNS_LastStatusGet(void);
 
 //*****************************************************************************
 /*
@@ -296,7 +296,7 @@ uint32_t    TCPIP_DDNS_LastIPGet(void);
     DDNS_STATUS indicating the status code for the most recent update.
 	
 */
-DDNS_STATUS  TCPIP_DDNS_LastStatusGet(void);
+IPV4_ADDR    TCPIP_DDNS_LastIPGet(void);
 
 // *****************************************************************************
 /*

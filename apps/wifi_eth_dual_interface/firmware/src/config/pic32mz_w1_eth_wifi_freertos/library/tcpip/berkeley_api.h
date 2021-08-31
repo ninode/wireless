@@ -54,8 +54,6 @@ THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 #ifndef _BERKELEY_API_HEADER_FILE
 #define _BERKELEY_API_HEADER_FILE
 
-#include <limits.h>
-
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

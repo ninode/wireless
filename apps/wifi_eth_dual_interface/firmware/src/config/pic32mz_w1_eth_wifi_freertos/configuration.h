@@ -110,6 +110,34 @@ extern "C" {
 #define SYS_DEBUG_USE_CONSOLE
 
 
+
+/* File System Service Configuration */
+
+#define SYS_FS_MEDIA_NUMBER               1
+#define SYS_FS_VOLUME_NUMBER              1
+
+#define SYS_FS_AUTOMOUNT_ENABLE           false
+#define SYS_FS_MAX_FILES                  1
+#define SYS_FS_MAX_FILE_SYSTEM_TYPE       1
+#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       512
+#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  2048
+#define SYS_FS_USE_LFN                    1
+#define SYS_FS_FILE_NAME_LEN              255
+#define SYS_FS_CWD_STRING_LEN             1024
+
+/* File System RTOS Configurations*/
+#define SYS_FS_STACK_SIZE                 1024
+#define SYS_FS_PRIORITY                   1
+
+#define SYS_FS_FAT_VERSION                "v0.14"
+#define SYS_FS_FAT_READONLY               false
+#define SYS_FS_FAT_CODE_PAGE              437
+#define SYS_FS_FAT_MAX_SS                 SYS_FS_MEDIA_MAX_BLOCK_SIZE
+#define SYS_FS_FAT_ALIGNED_BUFFER_LEN     512
+
+
+
+
 #define SYS_CONSOLE_DEVICE_MAX_INSTANCES   			1
 #define SYS_CONSOLE_UART_MAX_INSTANCES 	   			1
 #define SYS_CONSOLE_USB_CDC_MAX_INSTANCES 	   		0
@@ -123,6 +151,29 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* SDSPI Driver Instance 0 Configuration Options */
+#define DRV_SDSPI_INDEX_0                       0
+#define DRV_SDSPI_CLIENTS_NUMBER_IDX0           1
+#define DRV_SDSPI_CHIP_SELECT_PIN_IDX0          SYS_PORT_PIN_RA0
+#define DRV_SDSPI_SPEED_HZ_IDX0                 5000000
+#define DRV_SDSPI_POLLING_INTERVAL_MS_IDX0      1000
+
+
+
+/* SDSPI Driver Instance 0 RTOS Configurations*/
+#define DRV_SDSPI_STACK_SIZE_IDX0               256
+#define DRV_SDSPI_PRIORITY_IDX0                     1
+
+/* SDSPI Driver Common Configuration Options */
+#define DRV_SDSPI_INSTANCES_NUMBER              1
+
+/* SPI Driver Common Configuration Options */
+#define DRV_SPI_INSTANCES_NUMBER              1
+
+/* SPI Driver Instance 0 Configuration Options */
+#define DRV_SPI_INDEX_0                       0
+#define DRV_SPI_CLIENTS_NUMBER_IDX0           1
+
 
 
 /*** MIIM Driver Configuration ***/
@@ -141,7 +192,7 @@ extern "C" {
 
 
 /*** WiFi PIC32MZW1 Driver Configuration ***/
-#define WDRV_PIC32MZW1_DEVICE_USE_SYS_DEBUG
+#define WDRV_PIC32MZW_DEBUG_LEVEL               WDRV_PIC32MZW_DEBUG_TYPE_TRACE
 #define WDRV_PIC32MZW_WPA3_SUPPORT
 #define WDRV_PIC32MZW_BA414E_SUPPORT
 
@@ -170,9 +221,8 @@ extern "C" {
 /*** ICMPv4 Client Configuration ***/
 #define TCPIP_STACK_USE_ICMP_CLIENT
 #define TCPIP_ICMP_CLIENT_USER_NOTIFICATION   true
-#define TCPIP_ICMP_ECHO_REQUEST_TIMEOUT        500
-#define TCPIP_ICMP_TASK_TICK_RATE              33
-#define TCPIP_ICMP_COMMAND_ENABLE              false
+#define TCPIP_ICMP_ECHO_REQUEST_TIMEOUT       500
+#define TCPIP_ICMP_TASK_TICK_RATE             33
 
 #define SYS_WIFIPROV_NVMADDR        		0x900F0000
 #define SYS_WIFIPROV_SAVECONFIG        			true
@@ -180,7 +230,7 @@ extern "C" {
 
 /*** TCPIP MAC Configuration ***/
 #define TCPIP_EMAC_TX_DESCRIPTORS				    8
-#define TCPIP_EMAC_RX_DESCRIPTORS				    8
+#define TCPIP_EMAC_RX_DESCRIPTORS				    6
 #define TCPIP_EMAC_RX_DEDICATED_BUFFERS				4
 #define TCPIP_EMAC_RX_INIT_BUFFERS				    0
 #define TCPIP_EMAC_RX_LOW_THRESHOLD				    1
@@ -210,6 +260,10 @@ extern "C" {
 #define TCPIP_INTMAC_MODULE_ID		    			_ETH_BASE_ADDRESS
 #define TCPIP_INTMAC_PERIPHERAL_CLK  				100000000
 
+#define DRV_ETHMAC_INSTANCES_NUMBER				1
+#define DRV_ETHMAC_CLIENTS_NUMBER				1
+#define DRV_ETHMAC_INDEX	    	    		1
+#define DRV_ETHMAC_PERIPHERAL_ID				1
 #define DRV_ETHMAC_INTERRUPT_SOURCE				_ETHERNET_VECTOR
 
 #define DRV_ETHMAC_INTERRUPT_MODE        			true
@@ -256,14 +310,8 @@ extern "C" {
 #define TCPIP_ARP_CACHE_PURGE_QUANTA		    		1
 #define TCPIP_ARP_CACHE_ENTRY_RETRIES		    		3
 #define TCPIP_ARP_GRATUITOUS_PROBE_COUNT			1
-#define TCPIP_ARP_TASK_PROCESS_RATE		        	2000
+#define TCPIP_ARP_TASK_PROCESS_RATE		        	2
 #define TCPIP_ARP_PRIMARY_CACHE_ONLY		        	true
-#define TCPIP_ARP_COMMANDS false
-
-
-
-	/*** tcpip_cmd Configuration ***/
-	#define TCPIP_STACK_COMMAND_ENABLE
 
 
 
@@ -286,6 +334,17 @@ extern "C" {
 													TCPIP_NETWORK_CONFIG_IP_STATIC
 													
 #define TCPIP_NETWORK_DEFAULT_MAC_DRIVER_IDX0			WDRV_PIC32MZW1_MACObject
+
+
+
+/*** tcpip_cmd Configuration ***/
+#define TCPIP_STACK_COMMAND_ENABLE
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUESTS         4
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_DELAY    1000
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_TIMEOUT          5000
+#define TCPIP_STACK_COMMANDS_WIFI_ENABLE             	false
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_BUFF_SIZE    2000
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_DATA_SIZE    100
 
 
 
@@ -312,14 +371,7 @@ extern "C" {
 
 
 /*** IPv4 Configuration ***/
-#define TCPIP_IPV4_ARP_SLOTS                        10
 #define TCPIP_IPV4_EXTERN_PACKET_PROCESS   false
-
-#define TCPIP_IPV4_COMMANDS false
-
-#define TCPIP_IPV4_FORWARDING_ENABLE    false 
-
-
 
 
 
@@ -354,6 +406,7 @@ extern "C" {
 
 
 /*** TCPIP Heap Configuration ***/
+
 #define TCPIP_STACK_USE_EXTERNAL_HEAP
 
 #define TCPIP_STACK_MALLOC_FUNC                     malloc
@@ -483,7 +536,6 @@ extern "C" {
 #define HAVE_HASHDRBG
 #define WC_NO_HARDEN
 #define SINGLE_THREADED
-#define NO_SIG_WRAPPER
 #define NO_ERROR_STRINGS
 #define NO_WOLFSSL_MEMORY
 // ---------- FUNCTIONAL CONFIGURATION END ----------
@@ -491,16 +543,16 @@ extern "C" {
 
 /*** DNS Server Configuration ***/
 #define TCPIP_STACK_USE_DNS_SERVER
-#define TCPIP_DNSS_HOST_NAME_LEN		    	64
+#define TCPIP_DNSS_HOST_NAME_LEN		    		64
 #define TCPIP_DNSS_REPLY_BOARD_ADDR				true
-#define TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS		2
-#define TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS		1
-#define TCPIP_DNSS_TTL_TIME						600
-#define TCPIP_DNSS_TASK_PROCESS_RATE			33
+#define TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS			2
+#define TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS			1
+#define TCPIP_DNSS_TTL_TIME							600
+#define TCPIP_DNSS_TASK_PROCESS_RATE			    33
 #define TCPIP_DNSS_DELETE_OLD_LEASE				true
-#define TCPIP_DNSS_CONSOLE_CMD           false
+
 /***Maximum DNS server Cache entries. It is the sum of TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS and TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS.***/
-#define TCPIP_DNSS_CACHE_MAX_SERVER_ENTRIES     (TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS + TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS)
+#define TCPIP_DNSS_CACHE_MAX_SERVER_ENTRIES     (TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS+TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS)
 
 
 /* WIFI System Service Configuration Options */
@@ -524,9 +576,6 @@ extern "C" {
 /* SYS WIFI RTOS Configurations*/
 #define SYS_WIFI_RTOS_SIZE           		1024
 #define SYS_WIFI_RTOS_PRIORITY             1
-
-
-
 
 
 

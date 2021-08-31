@@ -88,6 +88,42 @@ IntVectorFLASH_CONTROL_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorFLASH_CONTROL_Handler
+    .extern  SPI1_RX_Handler
+
+    .section   .vector_36,code, keep
+    .equ     __vector_dispatch_36, IntVectorSPI1_RX_Handler
+    .global  __vector_dispatch_36
+    .set     nomicromips
+    .set     noreorder
+    .set     nomips16
+    .set     noat
+    .ent  IntVectorSPI1_RX_Handler
+
+IntVectorSPI1_RX_Handler:
+    portSAVE_CONTEXT
+    la    s6,  SPI1_RX_Handler
+    jalr  s6
+    nop
+    portRESTORE_CONTEXT
+    .end   IntVectorSPI1_RX_Handler
+    .extern  SPI1_TX_Handler
+
+    .section   .vector_37,code, keep
+    .equ     __vector_dispatch_37, IntVectorSPI1_TX_Handler
+    .global  __vector_dispatch_37
+    .set     nomicromips
+    .set     noreorder
+    .set     nomips16
+    .set     noat
+    .ent  IntVectorSPI1_TX_Handler
+
+IntVectorSPI1_TX_Handler:
+    portSAVE_CONTEXT
+    la    s6,  SPI1_TX_Handler
+    jalr  s6
+    nop
+    portRESTORE_CONTEXT
+    .end   IntVectorSPI1_TX_Handler
     .extern  UART1_FAULT_Handler
 
     .section   .vector_38,code, keep
@@ -142,6 +178,42 @@ IntVectorUART1_TX_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorUART1_TX_Handler
+    .extern  SPI2_RX_Handler
+
+    .section   .vector_54,code, keep
+    .equ     __vector_dispatch_54, IntVectorSPI2_RX_Handler
+    .global  __vector_dispatch_54
+    .set     nomicromips
+    .set     noreorder
+    .set     nomips16
+    .set     noat
+    .ent  IntVectorSPI2_RX_Handler
+
+IntVectorSPI2_RX_Handler:
+    portSAVE_CONTEXT
+    la    s6,  SPI2_RX_Handler
+    jalr  s6
+    nop
+    portRESTORE_CONTEXT
+    .end   IntVectorSPI2_RX_Handler
+    .extern  SPI2_TX_Handler
+
+    .section   .vector_55,code, keep
+    .equ     __vector_dispatch_55, IntVectorSPI2_TX_Handler
+    .global  __vector_dispatch_55
+    .set     nomicromips
+    .set     noreorder
+    .set     nomips16
+    .set     noat
+    .ent  IntVectorSPI2_TX_Handler
+
+IntVectorSPI2_TX_Handler:
+    portSAVE_CONTEXT
+    la    s6,  SPI2_TX_Handler
+    jalr  s6
+    nop
+    portRESTORE_CONTEXT
+    .end   IntVectorSPI2_TX_Handler
     .extern  RFSMC_Handler
 
     .section   .vector_83,code, keep

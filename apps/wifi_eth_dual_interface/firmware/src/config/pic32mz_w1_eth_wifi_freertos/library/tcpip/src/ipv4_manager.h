@@ -81,11 +81,7 @@ void TCPIP_IPV4_DeInitialize(const TCPIP_STACK_MODULE_CTRL* const stackInit);
 // (the IPv4 will comply)
 // Otherwise the packet is subject to standard IPv4 filtering mechanism
 // (matching IP interface address, broadcast, multicast, etc.)
-// hdrlen is the length of the IPv4 header
-// needed because the packet pTransportLayer and segLen are not updated yet!
-// pNetLayer is valid only! 
-// The IPV4_HEADER is NOT converted to host endianess!
-typedef bool    (*IPV4_FILTER_FUNC)(TCPIP_MAC_PACKET* pRxPkt, uint8_t hdrlen);
+typedef bool    (*IPV4_FILTER_FUNC)(TCPIP_MAC_PACKET* pRxPkt, const void* param);
 
 // a handle that a client can use
 // after the filter handler has been registered
@@ -95,11 +91,9 @@ typedef const void* IPV4_FILTER_HANDLE;
 // Returns a valid handle if the call succeeds,
 // or a null handle if the call failed.
 // Function has to be called after the IPv4 is initialized
-// active specifies if the filter is active or not
-IPV4_FILTER_HANDLE      IPv4RegisterFilter(IPV4_FILTER_FUNC handler, bool active);
-
-// activates/de-activates an IPv4 filter
-bool                    Ipv4FilterSetActive(IPV4_FILTER_HANDLE hFilter, bool active);
+// The hParam is passed by the client and will be used by the IPv4
+// when the filter call is made.
+IPV4_FILTER_HANDLE      IPv4RegisterFilter(IPV4_FILTER_FUNC handler, const void* hParam);
 
 // deregister the filter handler
 // returns true or false if no such handler registered
@@ -120,6 +114,9 @@ bool                    Ipv4DeRegisterFilter(IPV4_FILTER_HANDLE hFilter);
 //          - if true, the IPv4 header checksum is updated for the IPv4 header
 //
 void                    TCPIP_IPV4_MacPacketSwitchTxToRx(TCPIP_MAC_PACKET* pRxPkt, bool setChecksum);
+
+
+// 
 
 #endif // _IPV4_MANAGER_H_
 

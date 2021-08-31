@@ -85,7 +85,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_RegDomainGet
     OSAL_CRITSECT_DATA_TYPE critSect;
 
     /* Ensure the driver handle is valid. */
-    if ((DRV_HANDLE_INVALID == handle) || (NULL == pDcpt) || (NULL == pDcpt->pCtrl))
+    if (NULL == pDcpt)
     {
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }
@@ -164,7 +164,7 @@ WDRV_PIC32MZW_STATUS WDRV_PIC32MZW_RegDomainSet
     OSAL_CRITSECT_DATA_TYPE critSect;
 
     /* Ensure the driver handle and regulatory string pointer are valid. */
-    if ((DRV_HANDLE_INVALID == handle) || (NULL == pDcpt) || (NULL == pDcpt->pCtrl) || (NULL == pRegDomain))
+    if ((NULL == pDcpt) || (NULL == pRegDomain))
     {
         return WDRV_PIC32MZW_STATUS_INVALID_ARG;
     }

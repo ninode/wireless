@@ -27,13 +27,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 928C0B9FF116D4D3994879848B3D46F8
-- generatedChecksum: 296C1553168144A2F636B616C80C5472
+- generatedChecksum: 6BDD0ABA75AF08E642CC6E37443595A2
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: arp.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 296C1553168144A2F636B616C80C5472
+  userChecksum: 6BDD0ABA75AF08E642CC6E37443595A2
 - generatedChecksum: 401D3E9C340CBD65F24003D4197C3A54
   logicalPath: wolfcrypt
   name: asm.c
@@ -300,20 +300,27 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 211722118EDD4698FE10D65C9B352A26
-- generatedChecksum: C6CB8C6893C38EA34EEED52155373362
+- generatedChecksum: 3E6ADA61D9659AA35DE9CF1727503924
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: dhcps.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: C6CB8C6893C38EA34EEED52155373362
-- generatedChecksum: E9CB1214FB499533C6F10FAECABCB990
+  userChecksum: 3E6ADA61D9659AA35DE9CF1727503924
+- generatedChecksum: EB450FD3BF1502E0CF6912FBE68299A7
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs\fat_fs\hardware_access
+  name: diskio.c
+  physicalPath: system\fs\fat_fs\hardware_access
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: EB450FD3BF1502E0CF6912FBE68299A7
+- generatedChecksum: 29A9DCCECB3721BBDC22B949538F7BE7
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: dns.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: E9CB1214FB499533C6F10FAECABCB990
+  userChecksum: 29A9DCCECB3721BBDC22B949538F7BE7
 - generatedChecksum: FD9181915F661B98E88A37A103589920
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: dnss.c
@@ -321,13 +328,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: FD9181915F661B98E88A37A103589920
-- generatedChecksum: 2CCC0B41346FE79B85412A6AB80DAC55
+- generatedChecksum: E06978CEF70498A177F503058EFE4E90
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ba414e\src
   name: drv_ba414e.c
   physicalPath: driver\ba414e\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 2CCC0B41346FE79B85412A6AB80DAC55
+  userChecksum: E06978CEF70498A177F503058EFE4E90
 - generatedChecksum: B6BB6CB29F57E7179C0715CDC0EA0D7B
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethmac\src\dynamic
   name: drv_eth_pic32_lib.c
@@ -335,13 +342,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: B6BB6CB29F57E7179C0715CDC0EA0D7B
-- generatedChecksum: 24EB3F78101B3BD867D500661F718D6E
+- generatedChecksum: 776453584D0FD0DC8EA96E345851BBF5
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethmac\src\dynamic
   name: drv_ethmac.c
   physicalPath: driver\ethmac\src\dynamic
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 24EB3F78101B3BD867D500661F718D6E
+  userChecksum: 776453584D0FD0DC8EA96E345851BBF5
 - generatedChecksum: 797AC90C0306B7355E99B121F2DD863C
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethmac\src\dynamic
   name: drv_ethmac_lib.c
@@ -349,13 +356,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 797AC90C0306B7355E99B121F2DD863C
-- generatedChecksum: D6CAD91C8D86242B3EAB15E3343FC8E0
+- generatedChecksum: 9BF6CBA98E2E6D389653F34EFE5773B1
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethphy\src\dynamic
   name: drv_ethphy.c
   physicalPath: driver\ethphy\src\dynamic
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D6CAD91C8D86242B3EAB15E3343FC8E0
+  userChecksum: 9BF6CBA98E2E6D389653F34EFE5773B1
 - generatedChecksum: CB08C5DB15C5C9E3E5C12A15D618FD92
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethphy\src\dynamic
   name: drv_extphy_smsc8740.c
@@ -363,20 +370,55 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: CB08C5DB15C5C9E3E5C12A15D618FD92
-- generatedChecksum: 063A0626D53AF0EF665B206909725730
+- generatedChecksum: D5E363761318952A95DE3B542D5AFDA0
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\miim\src\dynamic
   name: drv_miim.c
   physicalPath: driver\miim\src\dynamic
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 063A0626D53AF0EF665B206909725730
-- generatedChecksum: EDF981AF3C0E8BE3DCF083C9EE57F570
+  userChecksum: D5E363761318952A95DE3B542D5AFDA0
+- generatedChecksum: 9F174CABFBD74C98F7FBC4AFC899B656
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: drv_pic32mzw1_crypto.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: EDF981AF3C0E8BE3DCF083C9EE57F570
+  userChecksum: 9F174CABFBD74C98F7FBC4AFC899B656
+- generatedChecksum: 9F4F2C3B56BDE5B9BEAE688718FCCEFC
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\sdspi
+  name: drv_sdspi.c
+  physicalPath: driver\sdspi\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 9F4F2C3B56BDE5B9BEAE688718FCCEFC
+- generatedChecksum: 00F6F411DC3911692EDB53DD3F68F623
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\sdspi
+  name: drv_sdspi_file_system.c
+  physicalPath: driver\sdspi\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 00F6F411DC3911692EDB53DD3F68F623
+- generatedChecksum: 1DA61A119147F17183990D1A50F824C4
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\sdspi
+  name: drv_sdspi_plib_interface.c
+  physicalPath: driver\sdspi\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 1DA61A119147F17183990D1A50F824C4
+- generatedChecksum: 2825C8A8E2EA9C55473C33EA57182BAB
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\spi
+  name: drv_spi.c
+  physicalPath: driver\spi\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 2825C8A8E2EA9C55473C33EA57182BAB
+- generatedChecksum: 11AC3E11CA4DC5B804F098EAA46B4CB4
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\spi
+  name: drv_spi_local.h
+  physicalPath: driver\spi\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 11AC3E11CA4DC5B804F098EAA46B4CB4
 - generatedChecksum: A6F503BD2E6C8E506AD6C5B4AB3ED563
   logicalPath: wolfcrypt
   name: dsa.c
@@ -454,6 +496,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: CC3306F0CBC2252FB4814A2C505B9E25
+- generatedChecksum: D76793338318EDAA924B78F23050562C
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs\fat_fs\file_system
+  name: ff.c
+  physicalPath: system\fs\fat_fs\file_system
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: D76793338318EDAA924B78F23050562C
+- generatedChecksum: 9E153A6D4F8E0EA1F6901BAED7DD80FD
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs\fat_fs\file_system
+  name: ffunicode.c
+  physicalPath: system\fs\fat_fs\file_system
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 9E153A6D4F8E0EA1F6901BAED7DD80FD
 - generatedChecksum: B7DBFD6F500AAD4713403E985EB18EAE
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: freertos_hooks.c
@@ -524,13 +580,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 3E65F4FD4E22A6BFBABE69D720D457B1
-- generatedChecksum: 125D734A577AC88ACC2C5A3E46B535DD
+- generatedChecksum: 3243942B7D6BAFC48B18E1A09F9AA94D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: icmp.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 125D734A577AC88ACC2C5A3E46B535DD
+  userChecksum: 3243942B7D6BAFC48B18E1A09F9AA94D
 - generatedChecksum: 62951755A45BA873C9775C77F461A8DF
   logicalPath: wolfcrypt
   name: idea.c
@@ -538,13 +594,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 62951755A45BA873C9775C77F461A8DF
-- generatedChecksum: 59E4108972DF3FC55FC7C6E4F129BAF5
+- generatedChecksum: A1D1139A64F2731985258C1E450B9AF6
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: initialization.c
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 59E4108972DF3FC55FC7C6E4F129BAF5
+  userChecksum: A1D1139A64F2731985258C1E450B9AF6
 - generatedChecksum: BBFE78F36AAE0A640685DAEF8063F0EB
   logicalPath: wolfcrypt
   name: integer.c
@@ -552,27 +608,27 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: BBFE78F36AAE0A640685DAEF8063F0EB
-- generatedChecksum: 160DDCAEA6F1AC281AB34CBBC8A27BA7
+- generatedChecksum: 5D518439EB99EEA654946F60FAB857A2
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: interrupts.c
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 160DDCAEA6F1AC281AB34CBBC8A27BA7
-- generatedChecksum: 29553A4629533CFCC47FDB23E11EE134
+  userChecksum: 5D518439EB99EEA654946F60FAB857A2
+- generatedChecksum: 57137CA8C294AA368EBDA51DE9F06BE7
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: interrupts_a.S
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 29553A4629533CFCC47FDB23E11EE134
-- generatedChecksum: D9070B2F1A4B462F1FC30984FCD71E56
+  userChecksum: 57137CA8C294AA368EBDA51DE9F06BE7
+- generatedChecksum: 57FA945D97E8D6D3A6937FD670365936
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: ipv4.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D9070B2F1A4B462F1FC30984FCD71E56
+  userChecksum: 57FA945D97E8D6D3A6937FD670365936
 - generatedChecksum: 3FEE521CEF14928AE38E7FA9BF6D75E6
   logicalPath: FreeRTOS\Source
   name: list.c
@@ -657,13 +713,34 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 17BCE1CFE07A12EEAB0B4D0FD781996F
-- generatedChecksum: F2AC2D52C9CBC3AB3DB067977B7ADBB2
+- generatedChecksum: 65A7BD3CB0B8FE05768B2EC9A503C3AB
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\cache
+  name: plib_cache.c
+  physicalPath: peripheral\cache
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 65A7BD3CB0B8FE05768B2EC9A503C3AB
+- generatedChecksum: 4FD2B20C75E8ABCE5AFD77297FA520F4
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\cache
+  name: plib_cache_local.h
+  physicalPath: peripheral\cache
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 4FD2B20C75E8ABCE5AFD77297FA520F4
+- generatedChecksum: 0DA10C8889278A796D0EE4C6096B57C3
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\cache
+  name: plib_cache_pic32mz.S
+  physicalPath: peripheral\cache
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 0DA10C8889278A796D0EE4C6096B57C3
+- generatedChecksum: 0F10752F35BF6F8AA826F6A48A139A27
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\clk
   name: plib_clk.c
   physicalPath: peripheral\clk
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F2AC2D52C9CBC3AB3DB067977B7ADBB2
+  userChecksum: 0F10752F35BF6F8AA826F6A48A139A27
 - generatedChecksum: 2FEFEA0D4E94F5A5F3D76BAEC3D602E5
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\coretimer
   name: plib_coretimer.c
@@ -671,13 +748,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 2FEFEA0D4E94F5A5F3D76BAEC3D602E5
-- generatedChecksum: 155814307CBE4726EBAB9B0E14E9DE5F
+- generatedChecksum: 27D6EE9B9318F693AB47D2CC2880E8FA
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\evic
   name: plib_evic.c
   physicalPath: peripheral\evic
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 155814307CBE4726EBAB9B0E14E9DE5F
+  userChecksum: 27D6EE9B9318F693AB47D2CC2880E8FA
 - generatedChecksum: F4EF123924353AD47291966BA742B8ED
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\gpio
   name: plib_gpio.c
@@ -692,6 +769,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 302870B553042ED5294917554809F0B6
+- generatedChecksum: 1894C54565C113FA18850D883EFBB3D8
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\spi\spi_master
+  name: plib_spi1_master.c
+  physicalPath: peripheral\spi\spi_master
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 1894C54565C113FA18850D883EFBB3D8
+- generatedChecksum: C2B24B150E772E0A60AF2983A27B3637
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\spi\spi_master
+  name: plib_spi2_master.c
+  physicalPath: peripheral\spi\spi_master
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: C2B24B150E772E0A60AF2983A27B3637
 - generatedChecksum: 4375381C88E24A1BB6FC1D9C4B0484FC
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\uart
   name: plib_uart1.c
@@ -881,6 +972,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: D6CF30BDCE1A813D9ACF3905EBD6A871
+- generatedChecksum: 430ED47B023F040A26D8BBB22FCA78E5
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\cache
+  name: sys_cache.c
+  physicalPath: system\cache
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 430ED47B023F040A26D8BBB22FCA78E5
 - generatedChecksum: 6A54802433B130F9F753FF71CC0B773B
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\command
   name: sys_command.c
@@ -937,6 +1035,34 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: B8C6C7356AC7841AECC7C779040F745C
+- generatedChecksum: 0A6893369C4DA0EE7906866EB6E1D310
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\dma
+  name: sys_dma.c
+  physicalPath: system\dma
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: 0A6893369C4DA0EE7906866EB6E1D310
+- generatedChecksum: EF73BB0F34AD3421FA3E2E9EC265071B
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs.c
+  physicalPath: system\fs\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: EF73BB0F34AD3421FA3E2E9EC265071B
+- generatedChecksum: E62E081A20EFF73AB7D56A3E353F8EAC
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs_fat_interface.c
+  physicalPath: system\fs\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: E62E081A20EFF73AB7D56A3E353F8EAC
+- generatedChecksum: A3A5C2DCAE28D1AE9739F0823AA02B40
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs_media_manager.c
+  physicalPath: system\fs\src
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: A3A5C2DCAE28D1AE9739F0823AA02B40
 - generatedChecksum: 640A4B35B8CDB53BD8EA5077D81386BE
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\int
   name: sys_int.c
@@ -944,13 +1070,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 640A4B35B8CDB53BD8EA5077D81386BE
-- generatedChecksum: 0BFBEF448D06ABA0D13D18E0DEF43218
+- generatedChecksum: 968CCD158C6BE34E138322227B6FE988
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\system
   name: sys_random_h2_adapter.c
   physicalPath: system
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 0BFBEF448D06ABA0D13D18E0DEF43218
+  userChecksum: 968CCD158C6BE34E138322227B6FE988
 - generatedChecksum: 47B584985982B2FF32628D4CB874CB4D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\reset
   name: sys_reset.c
@@ -1000,41 +1126,41 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: FED2C78FCFDFAEC2E4AC890703B77760
-- generatedChecksum: 37F2C03E34F54C3FF6241EEA9E5792CC
+- generatedChecksum: 0F867D3FFF49EE55E9E2EFDADAE5F8CC
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: tasks.c
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 37F2C03E34F54C3FF6241EEA9E5792CC
-- generatedChecksum: D1ABB4D71D616179AC47C0D67CFD8CD7
+  userChecksum: 0F867D3FFF49EE55E9E2EFDADAE5F8CC
+- generatedChecksum: C50D4D83EA06CD7DC6E10B0878DD1C9F
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcp.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D1ABB4D71D616179AC47C0D67CFD8CD7
-- generatedChecksum: 0FEB82639119926B19E5A42E2686B939
+  userChecksum: C50D4D83EA06CD7DC6E10B0878DD1C9F
+- generatedChecksum: 86EAA184A02EEE4ACBD958AB3F97D694
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_commands.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 0FEB82639119926B19E5A42E2686B939
-- generatedChecksum: 0911DB28A8AA8D2EDEC039BD1BA1CED1
+  userChecksum: 86EAA184A02EEE4ACBD958AB3F97D694
+- generatedChecksum: F22D17B11199A388E0F9C4FD74E22F27
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_heap_alloc.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 0911DB28A8AA8D2EDEC039BD1BA1CED1
-- generatedChecksum: DDF1671B5954B50D77C968B5E36F4C08
+  userChecksum: F22D17B11199A388E0F9C4FD74E22F27
+- generatedChecksum: 3428C22E1F3850974889C80141DC0C24
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_heap_external.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: DDF1671B5954B50D77C968B5E36F4C08
+  userChecksum: 3428C22E1F3850974889C80141DC0C24
 - generatedChecksum: 41E9DA13FC2CC263ACF1F2373500E7F4
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_helper_c32.S
@@ -1042,34 +1168,34 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 41E9DA13FC2CC263ACF1F2373500E7F4
-- generatedChecksum: 1CE622F2FD734DFCA1625E009EEED1D3
+- generatedChecksum: DD2130BF9E09422310695E5BF29FE924
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_helpers.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 1CE622F2FD734DFCA1625E009EEED1D3
-- generatedChecksum: 59722079372E3453FE76BE41EAC933B7
+  userChecksum: DD2130BF9E09422310695E5BF29FE924
+- generatedChecksum: C953B958CE307FB42E0BF3C9A5746DA0
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_manager.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 59722079372E3453FE76BE41EAC933B7
-- generatedChecksum: 5A25A79EFC070534190D40826D08046B
+  userChecksum: C953B958CE307FB42E0BF3C9A5746DA0
+- generatedChecksum: 9B8F85A0F8C486F8D947108A33FBFC7A
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_notify.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 5A25A79EFC070534190D40826D08046B
-- generatedChecksum: D4FC3460FFCC726F3A663E70B0062C3E
+  userChecksum: 9B8F85A0F8C486F8D947108A33FBFC7A
+- generatedChecksum: 2D460FF0C3038C6E3535883E7FCBB382
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_packet.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D4FC3460FFCC726F3A663E70B0062C3E
+  userChecksum: 2D460FF0C3038C6E3535883E7FCBB382
 - generatedChecksum: EBB33B5C775123DB42EA5780A42C9C8E
   logicalPath: wolfcrypt
   name: tfm.c
@@ -1084,13 +1210,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: F1B86F6E1527FD59A8713B67564F2898
-- generatedChecksum: AEFF1E63FDF1C6AD4E6980FC756F2280
+- generatedChecksum: BCFC83921A03CA68A17293C1A2B647B3
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: udp.c
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: AEFF1E63FDF1C6AD4E6980FC756F2280
+  userChecksum: BCFC83921A03CA68A17293C1A2B647B3
 - generatedChecksum: 589F903BB9E8BC49A0D781032EBFA915
   logicalPath: wolfcrypt
   name: wc_dsp.c
@@ -1119,13 +1245,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 96CA80FDB674661B17B39C27AE003029
-- generatedChecksum: 4BE99D11DB0A02EF9666A55E6AF01FA6
+- generatedChecksum: 58B32EF41D099AC29A89CF3BC3173647
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 4BE99D11DB0A02EF9666A55E6AF01FA6
+  userChecksum: 58B32EF41D099AC29A89CF3BC3173647
 - generatedChecksum: B4966A4C731289A8806C1BE1BFFEC7E4
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_assoc.c
@@ -1133,69 +1259,69 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: B4966A4C731289A8806C1BE1BFFEC7E4
-- generatedChecksum: 600AE2D3D8645356B8718031C065B20D
+- generatedChecksum: 6B24C34E15E200934A26D9186F984FD9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_authctx.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 600AE2D3D8645356B8718031C065B20D
-- generatedChecksum: 9BABBE3618FB74882C2994E59B5B104D
+  userChecksum: 6B24C34E15E200934A26D9186F984FD9
+- generatedChecksum: 241F73C322364AFA9FC5994F26DB408D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_bssctx.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 9BABBE3618FB74882C2994E59B5B104D
-- generatedChecksum: D2CF80F22B31DF03E21566765191FA47
+  userChecksum: 241F73C322364AFA9FC5994F26DB408D
+- generatedChecksum: FEC2B03396948510FAE7DCFB901F4E3E
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_bssfind.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: D2CF80F22B31DF03E21566765191FA47
-- generatedChecksum: F75F93AE29395E5E9BD9AD8974C1F25C
+  userChecksum: FEC2B03396948510FAE7DCFB901F4E3E
+- generatedChecksum: 8A4EF1EC563F68F4D51990E8D69A7F43
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_cfg.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F75F93AE29395E5E9BD9AD8974C1F25C
-- generatedChecksum: 542D049ED79838796D43EE873249288A
+  userChecksum: 8A4EF1EC563F68F4D51990E8D69A7F43
+- generatedChecksum: 3827D436CDB2ABD8923A7562D6663B1D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_int.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 542D049ED79838796D43EE873249288A
-- generatedChecksum: 8650C162A2C1C16E8BEB1C8D3AE644A4
+  userChecksum: 3827D436CDB2ABD8923A7562D6663B1D
+- generatedChecksum: 322793232C2F388D95DC8A3E447FEA4E
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_ps.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 8650C162A2C1C16E8BEB1C8D3AE644A4
-- generatedChecksum: 39565D1946C4FEF5C8BF75EA5730AE98
+  userChecksum: 322793232C2F388D95DC8A3E447FEA4E
+- generatedChecksum: 74B0CF85E5F1760DE20FA3812920B6C6
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_regdomain.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 39565D1946C4FEF5C8BF75EA5730AE98
-- generatedChecksum: 88B7B790381917B6FFCB50872FCBAB9A
+  userChecksum: 74B0CF85E5F1760DE20FA3812920B6C6
+- generatedChecksum: 04959FC7FB5454B795132E93A517EFB9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_softap.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 88B7B790381917B6FFCB50872FCBAB9A
-- generatedChecksum: 4E8BCA2668E5E6CF8AC6B403637047BB
+  userChecksum: 04959FC7FB5454B795132E93A517EFB9
+- generatedChecksum: 15FA18B7D49DA315C20E30F7E1CB9CFA
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1
   name: wdrv_pic32mzw_sta.c
   physicalPath: driver\wifi\pic32mzw1
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 4E8BCA2668E5E6CF8AC6B403637047BB
+  userChecksum: 15FA18B7D49DA315C20E30F7E1CB9CFA
 - generatedChecksum: 9C097D0AA1849F8BF60A0435EB8B7C1A
   logicalPath: wolfcrypt
   name: wolfevent.c
@@ -1497,13 +1623,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 774011E09B9B257B4F572704E6AB9713
-- generatedChecksum: 200FFBAC1EF1950119E7247375D24408
+- generatedChecksum: 1D4CC5FE79FCD167BFFCB787A26E7E4A
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethmac\src\dynamic
   name: _eth_dcpt_lists.h
   physicalPath: driver\ethmac\src\dynamic
   security: NON_SECURE
   type: HEADER
-  userChecksum: 200FFBAC1EF1950119E7247375D24408
+  userChecksum: 1D4CC5FE79FCD167BFFCB787A26E7E4A
 - generatedChecksum: BB24E129AA5617E2D53C193FC74D53FA
   logicalPath: wolfcrypt
   name: aes.h
@@ -1560,13 +1686,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 89DF4B678ADE3866BC65D898BA592489
-- generatedChecksum: 4D5B02D44EF03BD1C8E8B1D40392CBFD
+- generatedChecksum: 909E5C77288B7D08A98F375C0D79A7B8
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: berkeley_api.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 4D5B02D44EF03BD1C8E8B1D40392CBFD
+  userChecksum: 909E5C77288B7D08A98F375C0D79A7B8
 - generatedChecksum: D24505F81C0F11274D502E0135E16982
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: berkeley_manager.h
@@ -1651,13 +1777,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: BBE2AB9763E7BB36934A49D9681301A3
-- generatedChecksum: 7C00F8C4D1BE12695582F4C90A295AA6
+- generatedChecksum: 218DAF7EFC335BA2B23E0A120EB419A5
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: configuration.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: 7C00F8C4D1BE12695582F4C90A295AA6
+  userChecksum: 218DAF7EFC335BA2B23E0A120EB419A5
 - generatedChecksum: E2213F8AC22EC0D94CED6269EA154195
   logicalPath: wolfcrypt
   name: cpuid.h
@@ -1861,13 +1987,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 9C03157AED4C1852AA0A6C55C4400D8E
-- generatedChecksum: 858410DFAED3C81F2190A621BCC4D4BC
+- generatedChecksum: 2A3DC8C5C634DFAF0FA48919D3340DDC
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: ddns.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 858410DFAED3C81F2190A621BCC4D4BC
+  userChecksum: 2A3DC8C5C634DFAF0FA48919D3340DDC
 - generatedChecksum: 7959E2B94CEE186632B984636D40C252
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: ddns_manager.h
@@ -1875,13 +2001,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 7959E2B94CEE186632B984636D40C252
-- generatedChecksum: AED6791C530E4F3A3AD4975713BA3908
+- generatedChecksum: AD9CD435AC0ACE8F951565A5DA1CE04D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: definitions.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: AED6791C530E4F3A3AD4975713BA3908
+  userChecksum: AD9CD435AC0ACE8F951565A5DA1CE04D
 - generatedChecksum: 1EA4EDD5EA90F43EC407DE32441159A9
   logicalPath: FreeRTOS\Source\include
   name: deprecated_definitions.h
@@ -1903,6 +2029,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 5D5C52527AB1435153DB9B50ADE6B79D
+- generatedChecksum: 1CA1C2C02834207DCB4B0E3C00338FCC
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos
+  name: device_cache.h
+  physicalPath: ''
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 1CA1C2C02834207DCB4B0E3C00338FCC
 - generatedChecksum: 0B7AB76436B1576BB704F1DFCC3DBF70
   logicalPath: wolfcrypt
   name: dh.h
@@ -1931,13 +2064,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 9341D2B7667B93086E81BF9AC28788B5
-- generatedChecksum: BF0A01B5943F9E5AAE23E5CBF99D2DFB
+- generatedChecksum: 72F93F8A0406CEF313128DE711BBB334
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: dhcps.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: BF0A01B5943F9E5AAE23E5CBF99D2DFB
+  userChecksum: 72F93F8A0406CEF313128DE711BBB334
 - generatedChecksum: E4B4C8DE8FA457275D1BB5F0200142E7
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: dhcps_manager.h
@@ -1966,13 +2099,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 0C8653B6A722BB2AD0B8B397E7543AE8
-- generatedChecksum: D314761ACC1B11280620BA93731BB3DC
+- generatedChecksum: 9671A8F16112EF866B4FC7F7231BECBE
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: dhcpv6_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: D314761ACC1B11280620BA93731BB3DC
+  userChecksum: 9671A8F16112EF866B4FC7F7231BECBE
+- generatedChecksum: 630DFA1824A5279838B4330DA2FF3E5E
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs\fat_fs\hardware_access
+  name: diskio.h
+  physicalPath: system\fs\fat_fs\hardware_access
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 630DFA1824A5279838B4330DA2FF3E5E
 - generatedChecksum: 5123AFE76FCBF3EDC0AD747B127D4432
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: dns.h
@@ -1987,13 +2127,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 3C30E019511126511DD7756487D1E1A6
-- generatedChecksum: B8DD388997E63177A68C8164326B7E95
+- generatedChecksum: F0635D5847B5F5099E603AD14BEF302C
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: dns_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: B8DD388997E63177A68C8164326B7E95
+  userChecksum: F0635D5847B5F5099E603AD14BEF302C
 - generatedChecksum: C4F7D4F4F9302B3A6B508B4F114B12ED
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: dnss.h
@@ -2064,20 +2204,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: F0FD687F00DD012EC6592B767F559F84
-- generatedChecksum: 69B8741A96D1F831E76775AD8F7203BF
+- generatedChecksum: B3A9A7E13CFD047369FD21330E6B5D82
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethmac\src\dynamic
   name: drv_ethmac_lib.h
   physicalPath: driver\ethmac\src\dynamic
   security: NON_SECURE
   type: HEADER
-  userChecksum: 69B8741A96D1F831E76775AD8F7203BF
-- generatedChecksum: F7EBA7B26B8383A78811B34A357B339E
+  userChecksum: B3A9A7E13CFD047369FD21330E6B5D82
+- generatedChecksum: 85EBBF0204A53FB327C039A853A3E5E3
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethmac\src
   name: drv_ethmac_local.h
   physicalPath: driver\ethmac\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: F7EBA7B26B8383A78811B34A357B339E
+  userChecksum: 85EBBF0204A53FB327C039A853A3E5E3
 - generatedChecksum: 23553F32930FE81E131D17012FFCC39F
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethphy
   name: drv_ethphy.h
@@ -2085,13 +2225,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 23553F32930FE81E131D17012FFCC39F
-- generatedChecksum: 156AE414A88FC91C5F63722E4684B756
+- generatedChecksum: B42335B8FC997454960091169EBF91A9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethphy\src
   name: drv_ethphy_local.h
   physicalPath: driver\ethphy\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 156AE414A88FC91C5F63722E4684B756
+  userChecksum: B42335B8FC997454960091169EBF91A9
 - generatedChecksum: 7903EEEDDF8FF93523B69EEEB1056519
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\ethphy\src\dynamic
   name: drv_extphy_regs.h
@@ -2106,13 +2246,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 5A6227E8B683F008D9B1CF9D2B26C5D9
-- generatedChecksum: DE9A328A47FEC185CB88AA4AB3A875D1
+- generatedChecksum: CCB1F6B894C7236C9630C0BEBADA0667
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\miim
   name: drv_miim.h
   physicalPath: driver\miim
   security: NON_SECURE
   type: HEADER
-  userChecksum: DE9A328A47FEC185CB88AA4AB3A875D1
+  userChecksum: CCB1F6B894C7236C9630C0BEBADA0667
 - generatedChecksum: BEACD2465E21419C956C727F5393369E
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\miim\src
   name: drv_miim_local.h
@@ -2127,20 +2267,62 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 70A1EB83CE2F2835969832CB05D3903E
-- generatedChecksum: 1B53F77101D890EFAA0BC95145771C1B
+- generatedChecksum: 16D8B7FA6D4A86E38F45D526EA7018BE
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: drv_pic32mzw1.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 1B53F77101D890EFAA0BC95145771C1B
-- generatedChecksum: DDD131AAE2C978645E64A718960A8B77
+  userChecksum: 16D8B7FA6D4A86E38F45D526EA7018BE
+- generatedChecksum: C17C4495EBA779235FF94E6FD679A987
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: drv_pic32mzw1_crypto.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: DDD131AAE2C978645E64A718960A8B77
+  userChecksum: C17C4495EBA779235FF94E6FD679A987
+- generatedChecksum: 341441BD242D06D0382178FB46ECDAC1
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\sdspi
+  name: drv_sdspi.h
+  physicalPath: driver\sdspi
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 341441BD242D06D0382178FB46ECDAC1
+- generatedChecksum: 0267D52E586FE1972033D3269C6EA9BB
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\sdspi
+  name: drv_sdspi_definitions.h
+  physicalPath: driver\sdspi
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 0267D52E586FE1972033D3269C6EA9BB
+- generatedChecksum: 3502D1F8717DD7E1395BE624F96ECC0C
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\sdspi
+  name: drv_sdspi_local.h
+  physicalPath: driver\sdspi\src
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 3502D1F8717DD7E1395BE624F96ECC0C
+- generatedChecksum: DE2BF6F3DC35F9CEC69C04FF3F487619
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\sdspi
+  name: drv_sdspi_plib_interface.h
+  physicalPath: driver\sdspi\src
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: DE2BF6F3DC35F9CEC69C04FF3F487619
+- generatedChecksum: 53AD078A2F507226A6BDA2DBFEA03430
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\spi
+  name: drv_spi.h
+  physicalPath: driver\spi
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 53AD078A2F507226A6BDA2DBFEA03430
+- generatedChecksum: 0A25F1E0706985E1D58AACA1A07810CD
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\spi
+  name: drv_spi_definitions.h
+  physicalPath: driver\spi
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 0A25F1E0706985E1D58AACA1A07810CD
 - generatedChecksum: 3E3E734C734720F661C02A4746724A85
   logicalPath: wolfcrypt
   name: dsa.h
@@ -2197,6 +2379,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: EE7C80EBE568604198376F4CF64A0412
+- generatedChecksum: FD5F600EA8957BBC8E0325408BE3C811
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs\fat_fs\file_system
+  name: ff.h
+  physicalPath: system\fs\fat_fs\file_system
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: FD5F600EA8957BBC8E0325408BE3C811
+- generatedChecksum: B98362FC34D709E2D88A54F45EB7182F
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs\fat_fs\file_system
+  name: ffconf.h
+  physicalPath: system\fs\fat_fs\file_system
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: B98362FC34D709E2D88A54F45EB7182F
 - generatedChecksum: 8016A8BEE5B269941D8362B249B001FC
   logicalPath: wolfcrypt
   name: fips_test.h
@@ -2309,13 +2505,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: A283D25AF7C2CD5942A50D786EC51EA7
-- generatedChecksum: FF835EB7D118EF855E6E57875D34E366
+- generatedChecksum: 21016D43296DC680E12BFCF24EA50FF7
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: http_net.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: FF835EB7D118EF855E6E57875D34E366
+  userChecksum: 21016D43296DC680E12BFCF24EA50FF7
 - generatedChecksum: 9DCEB3DF03BECF42A9DFC59911C2F460
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: http_net_manager.h
@@ -2414,41 +2610,41 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 4D85CCC6B81B358A4BBA15FFDB03BD23
-- generatedChecksum: 4AF5AFEB8DD29C37B7F92636F3F7109E
+- generatedChecksum: 06FCF9E409C71C504F447029248E72AD
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: ipv4.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 4AF5AFEB8DD29C37B7F92636F3F7109E
-- generatedChecksum: 703326FC6C157BCAFF01E7A6FC6EC5FA
+  userChecksum: 06FCF9E409C71C504F447029248E72AD
+- generatedChecksum: 03953A4B9F3E95E54AD7F68EFB6A3E1F
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: ipv4_manager.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 703326FC6C157BCAFF01E7A6FC6EC5FA
-- generatedChecksum: 5C258EB1DCC7371E66352C5D9ECC6B16
+  userChecksum: 03953A4B9F3E95E54AD7F68EFB6A3E1F
+- generatedChecksum: C4600C5F5654BB25C8B503870ACE59C9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: ipv4_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 5C258EB1DCC7371E66352C5D9ECC6B16
-- generatedChecksum: 60F0C9CE1871A3B85F04CE67BA983C26
+  userChecksum: C4600C5F5654BB25C8B503870ACE59C9
+- generatedChecksum: 882FE98ABC43412C37B5C5B942696054
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: ipv6.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 60F0C9CE1871A3B85F04CE67BA983C26
-- generatedChecksum: 5A8BAED78CF961169B211E15AE4C94FC
+  userChecksum: 882FE98ABC43412C37B5C5B942696054
+- generatedChecksum: C71B4213F098B79253CB18893364F9E3
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: ipv6_manager.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 5A8BAED78CF961169B211E15AE4C94FC
+  userChecksum: C71B4213F098B79253CB18893364F9E3
 - generatedChecksum: 061DE00A92364E78F280B2917ECE2F60
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: ipv6_private.h
@@ -2694,6 +2890,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 2DD5C784E74790E02FDCDDEF856431F6
+- generatedChecksum: 24BC8C10232FA4332F1DE3BB31302AE6
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\cache
+  name: plib_cache.h
+  physicalPath: peripheral\cache
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 24BC8C10232FA4332F1DE3BB31302AE6
+- generatedChecksum: 3D2558D7758EF020BBF792820203C0A2
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\cache
+  name: plib_cache_pic32mz.h
+  physicalPath: peripheral\cache
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 3D2558D7758EF020BBF792820203C0A2
 - generatedChecksum: 9238A3759A2C6748FE493370DE35B5E0
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\clk
   name: plib_clk.h
@@ -2729,6 +2939,27 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: FBB2DEFAADE0488ACAFA5C5FB807B149
+- generatedChecksum: 8B538ED26B7B1F9177E6F490AAE66B57
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\spi\spi_master
+  name: plib_spi1_master.h
+  physicalPath: peripheral\spi\spi_master
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 8B538ED26B7B1F9177E6F490AAE66B57
+- generatedChecksum: A49DF9975AD635E363B13B53F58639DB
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\spi\spi_master
+  name: plib_spi2_master.h
+  physicalPath: peripheral\spi\spi_master
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: A49DF9975AD635E363B13B53F58639DB
+- generatedChecksum: CFA758C8B7258190473EF7C60C4BA4E9
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\spi\spi_master
+  name: plib_spi_master_common.h
+  physicalPath: peripheral\spi\spi_master
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: CFA758C8B7258190473EF7C60C4BA4E9
 - generatedChecksum: D5B124F7B292B92BE6CA0A7BDFD6F62F
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\peripheral\uart
   name: plib_uart1.h
@@ -2932,13 +3163,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: F34B891E9DE36AD7C2FFC02B57BF01DC
-- generatedChecksum: 7C5B70974FFD5BFF1370DFCCA9CC7D1B
+- generatedChecksum: DC65A078911DBDE68E8ECED3E54367A4
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: snmpv3.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 7C5B70974FFD5BFF1370DFCCA9CC7D1B
+  userChecksum: DC65A078911DBDE68E8ECED3E54367A4
 - generatedChecksum: 3337D044F519EA39F86B10A570514DE4
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: snmpv3_private.h
@@ -2995,6 +3226,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 7C71A9D2BEF16AC21C17ED5C2452C263
+- generatedChecksum: AFAAF7D896D57569CA4CF73BB3339481
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\cache
+  name: sys_cache.h
+  physicalPath: system\cache
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: AFAAF7D896D57569CA4CF73BB3339481
+- generatedChecksum: 74919575DBEDD9EDC7F917EC8353BC1B
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system
+  name: sys_clk_h2_adapter.h
+  physicalPath: system
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 74919575DBEDD9EDC7F917EC8353BC1B
 - generatedChecksum: CD4D57FA548C4424287C649841CA2843
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\command
   name: sys_command.h
@@ -3016,6 +3261,55 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 6972608768DDBE6E37A2D81B83DF490B
+- generatedChecksum: 4A7FFAD7ACF8378CEC16FBF2BC2368BE
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\dma
+  name: sys_dma.h
+  physicalPath: system\dma
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 4A7FFAD7ACF8378CEC16FBF2BC2368BE
+- generatedChecksum: 42E557EFE638D7A736FB88AA84F085F1
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\dma
+  name: sys_dma_mapping.h
+  physicalPath: system\dma
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 42E557EFE638D7A736FB88AA84F085F1
+- generatedChecksum: 093944968954D1C41C73DDD55219E6AB
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs.h
+  physicalPath: system\fs
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 093944968954D1C41C73DDD55219E6AB
+- generatedChecksum: 67904617BD60BD3657328D85DC8C48F7
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs_fat_interface.h
+  physicalPath: system\fs
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 67904617BD60BD3657328D85DC8C48F7
+- generatedChecksum: 0D162D1868A187FDC092657020E668D8
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs_local.h
+  physicalPath: system\fs\src
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 0D162D1868A187FDC092657020E668D8
+- generatedChecksum: D0DEC824B933722219A05F00A4CD5BB4
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs_media_manager.h
+  physicalPath: system\fs
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: D0DEC824B933722219A05F00A4CD5BB4
+- generatedChecksum: E50782BD59B15F2EAAF53AAD818793EE
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\fs
+  name: sys_fs_media_manager_local.h
+  physicalPath: system\fs\src
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: E50782BD59B15F2EAAF53AAD818793EE
 - generatedChecksum: 821A17F3E8B2B33F953ED3352A3FF1E9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src\common
   name: sys_fs_shell.h
@@ -3037,6 +3331,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: FC7B55936A09E0CA1395AE4DFB1A188F
+- generatedChecksum: 5D12C990BEEF029AF81885587A366CA5
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\ports
+  name: sys_ports.h
+  physicalPath: system\ports
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: 5D12C990BEEF029AF81885587A366CA5
+- generatedChecksum: BC6E1661BF4CAC21B70F5F56A0D7BBDB
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system\ports
+  name: sys_ports_mapping.h
+  physicalPath: system\ports
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: BC6E1661BF4CAC21B70F5F56A0D7BBDB
 - generatedChecksum: CC82E295FFA4816608E4FBD92054673A
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\system
   name: sys_random_h2_adapter.h
@@ -3128,6 +3436,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 8B63F287FA72CE91B257CF1A0BAF36B7
+- generatedChecksum: A1CB3454D5A9393479E09211BEEDDD49
+  logicalPath: config\pic32mz_w1_eth_wifi_freertos\system
+  name: system_media.h
+  physicalPath: system
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: A1CB3454D5A9393479E09211BEEDDD49
 - generatedChecksum: 1C75A8A6B60598A2FD0D533F57839B72
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\system
   name: system_module.h
@@ -3149,27 +3464,27 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: F779E377BF46D856247D545681CD753A
-- generatedChecksum: CFFB51E0D54B26C90B61FEEDE2A1CF68
+- generatedChecksum: 009C58B72C4782B4A5379A0AD9312781
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcp_manager.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: CFFB51E0D54B26C90B61FEEDE2A1CF68
-- generatedChecksum: 2CAF6C5D06D5DBE937D8FA1E3A2A37A2
+  userChecksum: 009C58B72C4782B4A5379A0AD9312781
+- generatedChecksum: 733DA465A5B37F6C2699E4158F28260D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcp_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 2CAF6C5D06D5DBE937D8FA1E3A2A37A2
-- generatedChecksum: 3D9217B81F879D63FD2860F40A4E148F
+  userChecksum: 733DA465A5B37F6C2699E4158F28260D
+- generatedChecksum: 302CDA79381677C983993F26CDDD7C03
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: tcpip.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 3D9217B81F879D63FD2860F40A4E148F
+  userChecksum: 302CDA79381677C983993F26CDDD7C03
 - generatedChecksum: 60B94F95E8C1F65E61E54288D55B0319
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: tcpip_announce.h
@@ -3226,69 +3541,48 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 9BD49A3E7D6D6EC45A4A7A86646ABF7E
-- generatedChecksum: 0CF2711B1B9B89985D4FF6132D13DB21
+- generatedChecksum: D5161A94DF7E078E572395B5BF5E007D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: tcpip_helpers.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 0CF2711B1B9B89985D4FF6132D13DB21
-- generatedChecksum: 3FB4AF6DF0E1AFAAC7AB7D042672EC20
+  userChecksum: D5161A94DF7E078E572395B5BF5E007D
+- generatedChecksum: 5CBAE9C163BFB45A1B1E30FC5E47CCB1
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_helpers_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 3FB4AF6DF0E1AFAAC7AB7D042672EC20
-- generatedChecksum: 1CD194FD08DB3210706416F182E80CC2
+  userChecksum: 5CBAE9C163BFB45A1B1E30FC5E47CCB1
+- generatedChecksum: 4715FD4874944658D526C6D1946351EA
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: tcpip_mac.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 1CD194FD08DB3210706416F182E80CC2
-- generatedChecksum: B7D36B1790981F64981959105D89F6BF
-  logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
-  name: tcpip_mac_bridge.h
-  physicalPath: library\tcpip
-  security: NON_SECURE
-  type: HEADER
-  userChecksum: B7D36B1790981F64981959105D89F6BF
-- generatedChecksum: E293518EF5BA0DF251C449FAA69D54A5
-  logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
-  name: tcpip_mac_bridge_manager.h
-  physicalPath: library\tcpip\src
-  security: NON_SECURE
-  type: HEADER
-  userChecksum: E293518EF5BA0DF251C449FAA69D54A5
-- generatedChecksum: 2E946E4B94B4E221CBF8379C477C8C0F
-  logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
-  name: tcpip_mac_bridge_private.h
-  physicalPath: library\tcpip\src
-  security: NON_SECURE
-  type: HEADER
-  userChecksum: 2E946E4B94B4E221CBF8379C477C8C0F
-- generatedChecksum: 4A677072FE7CB4B37767226CF9F19E5C
+  userChecksum: 4715FD4874944658D526C6D1946351EA
+- generatedChecksum: EDCD867D1ADF51C4EA100FF0C762A858
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: tcpip_mac_object.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: 4A677072FE7CB4B37767226CF9F19E5C
-- generatedChecksum: DF4A57443EEF976E1564F28FE4FDBD52
+  userChecksum: EDCD867D1ADF51C4EA100FF0C762A858
+- generatedChecksum: 0C3C041C56E04827FF4D50B6418E49C9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: tcpip_manager.h
   physicalPath: library\tcpip
   security: NON_SECURE
   type: HEADER
-  userChecksum: DF4A57443EEF976E1564F28FE4FDBD52
-- generatedChecksum: B5B45B6AB4198A8677CFC7207BA8A8C1
+  userChecksum: 0C3C041C56E04827FF4D50B6418E49C9
+- generatedChecksum: CE3A0056AFA840D8CE94493BD0EA1339
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_manager_control.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: B5B45B6AB4198A8677CFC7207BA8A8C1
+  userChecksum: CE3A0056AFA840D8CE94493BD0EA1339
 - generatedChecksum: 5851ABD4B6100EED203CA27DFB90C598
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_module_manager.h
@@ -3296,20 +3590,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 5851ABD4B6100EED203CA27DFB90C598
-- generatedChecksum: B35526101B0CB88DB7C403BE62AEEAAF
+- generatedChecksum: 308BF9F7C2E5D36C09E8A6FA4DF21A6B
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_notify.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: B35526101B0CB88DB7C403BE62AEEAAF
-- generatedChecksum: 1550A33FF53B128BB73DD937F610E51B
+  userChecksum: 308BF9F7C2E5D36C09E8A6FA4DF21A6B
+- generatedChecksum: 106EBCECF7F2BC6A1AF843F4D5832D29
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_packet.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 1550A33FF53B128BB73DD937F610E51B
+  userChecksum: 106EBCECF7F2BC6A1AF843F4D5832D29
 - generatedChecksum: DC1E2AF5915B13D6256FCE85F2B82FD6
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tcpip_private.h
@@ -3373,13 +3667,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 58971D61817236E727FF8264989191AA
-- generatedChecksum: C2AAC713674159F9D3E194CF34D2B07B
+- generatedChecksum: 9F7E59BE92CC3C9C5A70E0F4C9CC6ABD
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: tftpc_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: C2AAC713674159F9D3E194CF34D2B07B
+  userChecksum: 9F7E59BE92CC3C9C5A70E0F4C9CC6ABD
 - generatedChecksum: 24B5F4E19C395CDB02D5EE3AFC463C17
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip
   name: tftps.h
@@ -3429,20 +3723,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 23248DE45F9EC71D5484DF1895031B07
-- generatedChecksum: 4FCF3368C518DD173D08099B1DFB89D5
+- generatedChecksum: 327D2250281E4D5462216E55E257AC39
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: udp_manager.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: 4FCF3368C518DD173D08099B1DFB89D5
-- generatedChecksum: C99E758A00938DD4FF1F7209697D49E5
+  userChecksum: 327D2250281E4D5462216E55E257AC39
+- generatedChecksum: CC96982EE362827C5CA55CC1E1955DE9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: udp_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: C99E758A00938DD4FF1F7209697D49E5
+  userChecksum: CC96982EE362827C5CA55CC1E1955DE9
 - generatedChecksum: null
   logicalPath: config\pic32mz_w1_eth_wifi_freertos
   name: user.h
@@ -3478,13 +3772,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 9319F13D04651BC9D4E8F95124463700
-- generatedChecksum: 59F74DAFF7ADAD7E075C0EDFE591DA47
+- generatedChecksum: 9009B7592E2ED389FFD175666ED12BE1
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 59F74DAFF7ADAD7E075C0EDFE591DA47
+  userChecksum: 9009B7592E2ED389FFD175666ED12BE1
 - generatedChecksum: 2DE07A292D19C4B61F9C1C5E3BEA8521
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_api.h
@@ -3499,62 +3793,62 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: D72F58DC09278DAA6162F98DC6AA9384
-- generatedChecksum: 52A9182AF3C19556B34BF7911D2CC505
+- generatedChecksum: 03D6A0F9E791ECFB6AA1ED9FBDB58E7D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_authctx.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 52A9182AF3C19556B34BF7911D2CC505
-- generatedChecksum: 23066D5903305D057D63739B1278E71D
+  userChecksum: 03D6A0F9E791ECFB6AA1ED9FBDB58E7D
+- generatedChecksum: 514B209DD4B2D08119A9FDDAAF57DA0D
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_bssctx.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 23066D5903305D057D63739B1278E71D
-- generatedChecksum: 8EE4661020AAFC0880254C04B1AC57B7
+  userChecksum: 514B209DD4B2D08119A9FDDAAF57DA0D
+- generatedChecksum: E3CA8D3CD02EF8ED46CBE0BA29DC04FB
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_bssfind.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 8EE4661020AAFC0880254C04B1AC57B7
-- generatedChecksum: 57080B300A6B80BD51CCD891802AA1B7
+  userChecksum: E3CA8D3CD02EF8ED46CBE0BA29DC04FB
+- generatedChecksum: 7833D4FDB373E746A684650E687424B9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_cfg.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 57080B300A6B80BD51CCD891802AA1B7
-- generatedChecksum: 39B4405BCDF9593815F5084E15C7C681
+  userChecksum: 7833D4FDB373E746A684650E687424B9
+- generatedChecksum: 85492F2A0975683C4E920921A7E74E9F
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_client_api.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 39B4405BCDF9593815F5084E15C7C681
-- generatedChecksum: F61C0CC3BFD928CC824C6A2E4EED9D98
+  userChecksum: 85492F2A0975683C4E920921A7E74E9F
+- generatedChecksum: 6364A726BC25361EACDBCF65D9EA6352
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_common.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: F61C0CC3BFD928CC824C6A2E4EED9D98
-- generatedChecksum: 1DAD23FA7A48EDAA2480EA34D68E686B
+  userChecksum: 6364A726BC25361EACDBCF65D9EA6352
+- generatedChecksum: B1E6629B2152EF82EC95F880483B9EDE
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_debug.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 1DAD23FA7A48EDAA2480EA34D68E686B
-- generatedChecksum: 9555FF23EA618D54118491918E1F212E
+  userChecksum: B1E6629B2152EF82EC95F880483B9EDE
+- generatedChecksum: 656A948D14AD7529306EA47544965016
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_mac.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 9555FF23EA618D54118491918E1F212E
+  userChecksum: 656A948D14AD7529306EA47544965016
 - generatedChecksum: DF63F3AF170F9E4A216DD42F135D3DDF
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_ps.h
@@ -3569,20 +3863,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 52479B728365FF83544CC917BC29EBF2
-- generatedChecksum: 07DAAA030B8D16FD632057A93C54BB40
+- generatedChecksum: 429050A6E7A882D7E10F8C87E46982F9
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_softap.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 07DAAA030B8D16FD632057A93C54BB40
-- generatedChecksum: 8033BA84B114E1E1B446B55BF9AE4D0D
+  userChecksum: 429050A6E7A882D7E10F8C87E46982F9
+- generatedChecksum: D4C515FDD5270A351AD82A27864F69B1
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\driver\wifi\pic32mzw1\include
   name: wdrv_pic32mzw_sta.h
   physicalPath: driver\wifi\pic32mzw1\include
   security: NON_SECURE
   type: HEADER
-  userChecksum: 8033BA84B114E1E1B446B55BF9AE4D0D
+  userChecksum: D4C515FDD5270A351AD82A27864F69B1
 - generatedChecksum: 7BA0E120CC2D9C1FC867F4C211D47BF3
   logicalPath: wolfcrypt
   name: wolfevent.h
@@ -3611,13 +3905,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 0E950005D87D16C0541FF1A9A2B6F3D0
-- generatedChecksum: FB4820371DD01C777345A47950B59C25
+- generatedChecksum: 806FC5EE30ADDD45CA6BAE79A4D39F6B
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: zero_conf_link_local_private.h
   physicalPath: library\tcpip\src
   security: NON_SECURE
   type: HEADER
-  userChecksum: FB4820371DD01C777345A47950B59C25
+  userChecksum: 806FC5EE30ADDD45CA6BAE79A4D39F6B
 - generatedChecksum: E7D07DA850B2609D51D1BF383B3DCA73
   logicalPath: config\pic32mz_w1_eth_wifi_freertos\library\tcpip\src
   name: zero_conf_manager.h
@@ -3695,6 +3989,12 @@ settings:
   key: extra-include-directories
   security: NON_SECURE
   value: ../src;../src/config/pic32mz_w1_eth_wifi_freertos;../src/packs/PIC32MZ1025W104132_DFP;
+- append: true
+  category: C32
+  delimiter: ;
+  key: extra-include-directories
+  security: NON_SECURE
+  value: ;../src/config/pic32mz_w1_eth_wifi_freertos/system/fs/fat_fs/file_system;../src/config/pic32mz_w1_eth_wifi_freertos/system/fs/fat_fs/hardware_access
 - append: false
   category: C32
   delimiter: ''
@@ -3755,6 +4055,12 @@ settings:
   key: extra-include-directories
   security: NON_SECURE
   value: ../src;../src/config/pic32mz_w1_eth_wifi_freertos;../src/packs/PIC32MZ1025W104132_DFP;
+- append: true
+  category: C32CPP
+  delimiter: ;
+  key: extra-include-directories
+  security: NON_SECURE
+  value: ;../src/config/pic32mz_w1_eth_wifi_freertos/system/fs/fat_fs/file_system;../src/config/pic32mz_w1_eth_wifi_freertos/system/fs/fat_fs/hardware_access
 - append: false
   category: C32CPP
   delimiter: ''

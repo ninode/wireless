@@ -42,7 +42,7 @@ THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
-#if defined(__mips__)
+#if !defined(__PIC32C__) && !defined(__SAMA5D2__) && !defined(__SAM9X60__)
 #include <sys/kmem.h>
 #endif
 
@@ -53,18 +53,21 @@ THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 
 // min heap alignment
 // always power of 2
-#if (CACHE_LINE_SIZE >= 8u)
-typedef struct __attribute__((aligned(CACHE_LINE_SIZE)))
+#if defined(__PIC32MZ__) || defined(__PIC32WK__)
+typedef struct __attribute__((aligned(16)))
 {
-    uint64_t     pad[CACHE_LINE_SIZE / 8];
+    uint64_t     pad[2];
 }_heap_Align;
-#elif (CACHE_LINE_SIZE >= 4u)
+#elif defined(__PIC32C__) || defined(__SAMA5D2__) || defined(__SAM9X60__)
+typedef struct __attribute__((aligned(32)))
+{
+    uint32_t     pad[8];
+}_heap_Align;
+#else   // PIC32MX, PIC32MK
 typedef uint32_t _heap_Align;
-#else
-#error "TCP/IP Heap: incorrect CACHE_LINE_SIZE!"
-#endif // (CACHE_LINE_SIZE >= 8u) 
+#endif  // defined(__PIC32MZ__) || defined(__PIC32WK__)
 
-typedef union __attribute__((aligned(CACHE_LINE_SIZE))) _tag_headNode
+typedef union __attribute__((aligned(16))) _tag_headNode
 {
     _heap_Align x;
     struct

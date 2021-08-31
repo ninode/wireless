@@ -281,7 +281,7 @@ typedef enum
 */
 typedef struct
 {
-    const char    *communityName;
+    char    *communityName;
 }TCPIP_SNMP_COMMUNITY_CONFIG;
 
 // *****************************************************************************
@@ -301,16 +301,16 @@ typedef struct
 */
 typedef struct
 {
-    const char    *username;           /**< user name string */
+    char    *username;           /**< user name string */
     STD_BASED_SNMPV3_SECURITY_LEVEL security_level;      /**< security level: auth, priv combination */
 
     /* auth protocol */
     SNMPV3_HMAC_HASH_TYPE     usm_auth_proto;      /**< auth type: md5, sha1 */
-    const char *usm_auth_password;  /**< passphrase string for authentication */
+    char *usm_auth_password;  /**< passphrase string for authentication */
 
     /* priv protocol */
     SNMPV3_PRIV_PROT_TYPE     usm_priv_proto;      /**< priv type: DES */
-    const char *usm_priv_password;  /**< passphrase string for privacy */
+    char *usm_priv_password;  /**< passphrase string for privacy */
 
 } TCPIP_SNMPV3_USM_USER_CONFIG;
 // *****************************************************************************
@@ -329,7 +329,7 @@ typedef struct
 */
 typedef struct
 {
-    const char *secname;
+    char *secname;
     STD_BASED_SNMP_SECURITY_MODEL  mp_model;
     STD_BASED_SNMP_SECURITY_MODEL  sec_model;
     STD_BASED_SNMPV3_SECURITY_LEVEL sec_level;
@@ -354,7 +354,7 @@ typedef struct
     bool trapEnable;    /* true = agent can send the trap, false = agent shouldn't send the trap */
     bool snmp_trapv2_use; /* true = agent uses Trap version v2 and false = uses Tarp version 1*/
     bool snmpv3_trapv1v2_use; /* SNMPv3 trap should be true , only if SNMP version is 3 */
-    const char* snmp_bib_file;
+    char* snmp_bib_file;
     TCPIP_SNMP_COMMUNITY_CONFIG *read_community_config; /* read-only Community configuration*/
     TCPIP_SNMP_COMMUNITY_CONFIG *write_community_config; /* write-only Community configuration*/
     TCPIP_SNMPV3_USM_USER_CONFIG *usm_config; /* SNMPv3 USM configuration*/

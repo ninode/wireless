@@ -33,9 +33,9 @@ uint32_t SYS_RANDOM_CryptoGet( void )
 {
     union
     {
-        uint32_t    u32;
         uint8_t     u8[4];
-    }sUint = {0};
+        uint32_t    u32;
+    }sUint = {};
 
     CRYPT_RNG_CTX rngCtx;
     

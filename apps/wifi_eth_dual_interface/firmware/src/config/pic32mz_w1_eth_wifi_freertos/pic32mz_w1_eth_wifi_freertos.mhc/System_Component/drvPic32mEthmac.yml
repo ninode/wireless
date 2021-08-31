@@ -34,4 +34,4 @@ children:
         children:
         - {type: Value, value: NETCONFIG_MAC_Dependency}
 - type: ElementPosition
-  attributes: {x: '127', y: '482', id: drvPic32mEthmac}
+  attributes: {x: '523', y: '760', id: drvPic32mEthmac}

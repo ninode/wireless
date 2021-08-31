@@ -11,20 +11,6 @@ children:
       children:
       - type: Dynamic
         attributes: {id: tcpipNetConfig, value: '2'}
-  - type: Integer
-    attributes: {id: TCPIP_STACK_NETWORK_MAC_BRIDGE_COUNT}
-    children:
-    - type: Values
-      children:
-      - type: Dynamic
-        attributes: {id: tcpipNetConfig, value: '-1'}
-  - type: Boolean
-    attributes: {id: TCPIP_STACK_USE_MAC_BRIDGE}
-    children:
-    - type: Values
-      children:
-      - type: Dynamic
-        attributes: {id: tcpipNetConfig, value: 'false'}
 - type: Instances
   children:
   - type: InstanceComponent
@@ -74,15 +60,6 @@ children:
           children:
           - type: Dynamic
             attributes: {id: tcpipNetConfig_0, value: WDRV_PIC32MZW1_MACObject}
-      - type: Boolean
-        attributes: {id: TCPIP_NETWORK_MACBRIDGE_ADD_IDX0}
-        children:
-        - type: Attributes
-          children:
-          - type: Boolean
-            attributes: {id: visible}
-            children:
-            - {type: Value, value: 'true'}
       - type: Boolean
         attributes: {id: TCPIP_STACK_NETWORK_CONFIG_IDX0}
         children:
@@ -203,4 +180,4 @@ children:
             children:
             - {type: Value, value: libdrvPic32mEthmac}
 - type: ElementPosition
-  attributes: {x: '402', y: '368', id: tcpipNetConfig}
+  attributes: {x: '382', y: '548', id: tcpipNetConfig}

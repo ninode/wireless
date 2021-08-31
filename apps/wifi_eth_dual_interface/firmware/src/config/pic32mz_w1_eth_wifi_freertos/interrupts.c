@@ -61,9 +61,13 @@
 
 void CORE_TIMER_InterruptHandler( void );
 void NVM_InterruptHandler( void );
+void SPI1_RX_InterruptHandler( void );
+void SPI1_TX_InterruptHandler( void );
 void UART1_FAULT_InterruptHandler( void );
 void UART1_RX_InterruptHandler( void );
 void UART1_TX_InterruptHandler( void );
+void SPI2_RX_InterruptHandler( void );
+void SPI2_TX_InterruptHandler( void );
 void WDRV_PIC32MZW_TasksRFSMCISR( void );
 void WDRV_PIC32MZW_TasksRFMACISR( void );
 void WDRV_PIC32MZW_TasksRFTimer0ISR( void );
@@ -86,6 +90,16 @@ void FLASH_CONTROL_Handler (void)
     NVM_InterruptHandler();
 }
 
+void SPI1_RX_Handler (void)
+{
+    SPI1_RX_InterruptHandler();
+}
+
+void SPI1_TX_Handler (void)
+{
+    SPI1_TX_InterruptHandler();
+}
+
 void UART1_FAULT_Handler (void)
 {
     UART1_FAULT_InterruptHandler();
@@ -99,6 +113,16 @@ void UART1_RX_Handler (void)
 void UART1_TX_Handler (void)
 {
     UART1_TX_InterruptHandler();
+}
+
+void SPI2_RX_Handler (void)
+{
+    SPI2_RX_InterruptHandler();
+}
+
+void SPI2_TX_Handler (void)
+{
+    SPI2_TX_InterruptHandler();
 }
 
 void RFSMC_Handler (void)
