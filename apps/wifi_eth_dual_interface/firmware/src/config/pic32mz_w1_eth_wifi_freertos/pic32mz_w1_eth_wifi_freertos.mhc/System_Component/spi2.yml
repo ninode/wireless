@@ -66,4 +66,4 @@ children:
         children:
         - {type: Value, value: drv_spi_SPI_dependency}
 - type: ElementPosition
-  attributes: {x: '547', y: '604', id: spi2}
+  attributes: {x: '547', y: '603', id: spi2}

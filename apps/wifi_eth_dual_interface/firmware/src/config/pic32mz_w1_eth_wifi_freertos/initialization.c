@@ -150,6 +150,8 @@
 /* SDSPI Client Objects Pool */
 static DRV_SDSPI_CLIENT_OBJ drvSDSPI0ClientObjPool[DRV_SDSPI_CLIENTS_NUMBER_IDX0];
 
+/* SDSPI Transfer Objects Pool */
+static DRV_SDSPI_BUFFER_OBJ drvSDSPI0TransferObjPool[DRV_SDSPI_QUEUE_SIZE_IDX0];
 
 /* SPI PLIB Interface Initialization for SDSPI Driver */
 const DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
@@ -195,6 +197,11 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
     /* SDSPI Client Objects Pool */
     .clientObjPool          = (uintptr_t)&drvSDSPI0ClientObjPool[0],
 
+    /* SDSPI Transfer Objects Pool */
+    .bufferObjPool          = (uintptr_t)&drvSDSPI0TransferObjPool[0],
+
+    /* SDSPI Transfer Objects Queue Size */
+    .bufferObjPoolSize      = DRV_SDSPI_QUEUE_SIZE_IDX0,
 
     .chipSelectPin          = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
 
@@ -220,6 +227,9 @@ const DRV_SDSPI_INIT drvSDSPI0InitData =
 /* SPI Client Objects Pool */
 static DRV_SPI_CLIENT_OBJ drvSPI0ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX0];
 
+/* SPI Transfer Objects Pool */
+static DRV_SPI_TRANSFER_OBJ drvSPI0TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX0];
+
 /* SPI PLIB Interface Initialization */
 const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
 
@@ -239,6 +249,17 @@ const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
 const uint32_t drvSPI0remapDataBits[]= { 0x00000000, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000400 };
 const uint32_t drvSPI0remapClockPolarity[] = { 0x00000000, 0x00000040 };
 const uint32_t drvSPI0remapClockPhase[] = { 0x00000000, 0x00000100 };
+
+const DRV_SPI_INTERRUPT_SOURCES drvSPI0InterruptSources =
+{
+    /* Peripheral has more than one interrupt vectors */
+    .isSingleIntSrc                        = false,
+
+    /* Peripheral interrupt lines */
+    .intSources.multi.spiTxReadyInt      = -1,
+    .intSources.multi.spiTxCompleteInt   = _SPI2_TX_VECTOR,
+    .intSources.multi.spiRxInt           = _SPI2_RX_VECTOR,
+};
 
 /* SPI Driver Initialization Data */
 const DRV_SPI_INIT drvSPI0InitData =
@@ -264,6 +285,14 @@ const DRV_SPI_INIT drvSPI0InitData =
     /* DMA Channel for Receive */
     .dmaChannelReceive  = SYS_DMA_CHANNEL_NONE,
 
+    /* SPI Queue Size */
+    .transferObjPoolSize = DRV_SPI_QUEUE_SIZE_IDX0,
+
+    /* SPI Transfer Objects Pool */
+    .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
+
+    /* SPI interrupt sources (SPI peripheral and DMA) */
+    .interruptSources = &drvSPI0InterruptSources,
 };
 
 // </editor-fold>

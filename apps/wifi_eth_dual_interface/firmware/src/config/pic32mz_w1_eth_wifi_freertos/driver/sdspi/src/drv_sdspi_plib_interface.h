@@ -17,7 +17,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -112,35 +112,15 @@ void _DRV_SDSPI_TX_DMA_CallbackHandler(
 );
 
 // *****************************************************************************
-/* SDSPI Write Block
-
-  Summary:
-    Transfers a block (512) bytes of data over SPI using either DMA if it is
-    configured or using the SPI PLIB.
-
-  Description:
-
-  Remarks:
-    The function blocks on a semaphore which is released from the interrupt
-    handler (either DMA handler or the SPI PLIB handler) once the transfer is
-    complete.
-*/
-
-bool _DRV_SDSPI_SPIBlockWrite(
-    DRV_SDSPI_OBJ* dObj,
-    void* pWriteBuffer
-);
-
-// *****************************************************************************
 /* SD Card SPI Write
 
   Summary:
-    Writes the requested number of bytes to the SD Card
+    Submits a write request to the SPI PLIB
 
   Description:
 
   Remarks:
-    This is a blocking implementation. This function does not block on a semaphore.
+    This is a non-blocking implementation.
 */
 
 bool _DRV_SDSPI_SPIWrite(
@@ -153,12 +133,12 @@ bool _DRV_SDSPI_SPIWrite(
 /* SD Card SPI Write With CS Disabled
 
   Summary:
-    Writes the requested number of bytes to the SD Card with CS disabled
+    Submits a write request to the SPI PLIB with CS disabled
 
   Description:
 
   Remarks:
-    This is a blocking implementation. This function does not block on a semaphore.
+    This is a non-blocking implementation.
 */
 
 bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
@@ -168,35 +148,15 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
 );
 
 // *****************************************************************************
-/* SDSPI Read Block
-
-  Summary:
-    Transfers a block (512) bytes of data over SPI using either DMA (if it is
-    configured) or using the SPI PLIB.
-
-  Description:
-
-  Remarks:
-    The function blocks on a semaphore which is released from the interrupt
-    handler (either DMA handler or the SPI PLIB handler) once the transfer is
-    complete.
-*/
-
-bool _DRV_SDSPI_SPIBlockRead(
-    DRV_SDSPI_OBJ* dObj,
-    void* pReadBuffer
-);
-
-// *****************************************************************************
 /* SD Card SPI read
 
   Summary:
-    Reads the requested number of bytes from the SD Card
+    Submits a read request to the SPI PLIB.
 
   Description:
 
   Remarks:
-    This is a blocking implementation. This function does not block on a semaphore.
+    This is a non-blocking implementation.
 */
 
 bool _DRV_SDSPI_SPIRead(
@@ -266,7 +226,7 @@ bool _DRV_SDSPI_CmdResponseTimerStart(
     Stops the SD card timer.
 
   Description:
-    The registered event handler is called when the time period elapses.
+    None.
 
   Remarks:
 
